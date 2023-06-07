@@ -1,0 +1,17 @@
+  .detail {
+      margin: 0px 15px;
+  }
+
+  h5 {
+      font-size: 16px;
+  }
+
+  h6 {
+      font-size: 14px;
+  }
+
+  @media only screen and (max-width:568px){
+    .detail {
+        margin: 0px 0px;
+    }
+  }

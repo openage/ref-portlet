@@ -1,0 +1,94 @@
+{
+  "params": {
+    "view": "rows",
+    "type": "bau",
+    "endless": "false",
+    "showFilters": false,
+    "showMembers": true,
+    "showTimeLogs": false,
+    "selectedParent": "false"
+  },
+  "context": [
+    {
+      "code": "refresh",
+      "type": "icon"
+    },
+    {
+      "code": "close",
+      "type": "icon"
+    }
+  ],
+  "search": {
+    "view": "filters",
+    "params": [
+      {
+        "label": "Subject",
+        "key": "subject",
+        "control": "input"
+      },
+      {
+        "label": "Tags",
+        "key": "tags",
+        "control": "input"
+      },
+      {
+        "label": "Code",
+        "key": "code",
+        "control": "input",
+        "config": {
+          "trigger": "#",
+          "op": "eq"
+        }
+      }
+    ]
+  },
+  "stats": {
+    "areaCode": "test-case"
+  },
+  "divs": [
+    {
+      "code": "primary-stats",
+      "hideFilters": true,
+      "style": {
+        "container": {
+          "style": {
+            "margin-bottom": "10px"
+          }
+        },
+        "widgets": {
+          "class": "two"
+        }
+      }
+    },
+    {
+      "code": "time-log-total",
+      "hideFilters": true,
+      "style": {
+        "container": {
+          "style": {
+            "margin-bottom": "10px"
+          }
+        },
+        "widgets": {
+          "class": "two"
+        }
+      }
+    }
+  ],
+  "sections": {
+    "new": {},
+    "tasks": {
+      "view": "table",
+      "fields": [
+        "icon",
+        "code",
+        "subject",
+        "effort"
+      ],
+      "paging": {
+        "limit": 50,
+        "sort": "priority"
+      }
+    }
+  }
+}

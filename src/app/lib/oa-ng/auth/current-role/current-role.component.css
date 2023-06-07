@@ -1,0 +1,50 @@
+.profile-row {
+  display: flex;
+  flex-direction: row;
+  padding-top: 15px;
+}
+
+.profile-row .avatar {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+
+.profile-row .content {
+  min-width: 150px;
+  margin: 0 10px;
+  /* padding-right: 80px; */
+}
+
+.profile-row .content .sub-text {
+  top: -10px;
+  position: relative;
+}
+
+.profile-row .content h3 {
+  /* font-weight: 100; */
+  /* padding-bottom: 5px; */
+
+  font-weight: normal;
+  font-size: larger;
+}
+
+@media only screen and (max-width:568px) {
+  .profile-row .content{
+    display:none;
+  }
+
+  .profile-row{
+    padding-top:7px;
+  }
+}
+
+@media only screen and (min-width:768px) and (max-width:1023px) {
+  .profile-row .content {
+    min-width: 110px;
+  }
+}

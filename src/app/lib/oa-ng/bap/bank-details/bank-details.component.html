@@ -1,0 +1,83 @@
+<ng-container [ngSwitch]="view">
+  <ng-container *ngSwitchCase="'card'">
+    <div class="my-2 z-elevation bankList p-2" [class.selectedBank]="properties.account === selectedBankDetail.account"
+      *ngIf="properties.account !== selectedBankDetail.account">
+
+      <div class="selectionCheck">
+        <span>
+          <mat-icon class="mx-1 pointer " (click)="onEdit(properties)">edit</mat-icon>
+          <i *ngIf="properties.account === selectedBankDetail.account" class="status-active md ml-auto"></i>
+        </span>
+      </div>
+      <div class="flex-row two">
+        <div>
+          <div>
+            <span>Beneficiary Details</span>
+          </div>
+
+          <div> <label>Name:</label>{{properties.beneficiaryName}}</div>
+          <div><label>Phone:</label>{{properties.beneficiaryPhone}}</div>
+          <div><label>Email:</label>{{properties.beneficiaryEmail}}</div>
+        </div>
+        <div>
+          <div>
+            <span>Bank Details</span>
+          </div>
+          <div><label>Account No:</label>{{properties.account}}</div>
+          <div> <label>IFSC:</label>{{properties.ifscCode}}</div>
+          <div> <label>Bank:</label>{{properties.bankName}}</div>
+          <div><label>Branch:</label>{{properties.branch}}</div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngSwitchCase="'edit'">
+    <div class="form-container flex-row two">
+      <div>
+        <div>
+          <span>Beneficiary Details</span>
+        </div>
+        <mat-form-field appearance="outline">
+          <label for="benefName">Name</label>
+          <input matInput name="benefName" id="benefName" [disabled]="readonly" [(ngModel)]="newBank.beneficiaryName"
+            type="string">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <label for="benefEmail">Email</label>
+          <input matInput name="benefEmail" id="benefEmail" [disabled]="readonly" [(ngModel)]="newBank.beneficiaryEmail"
+            type="string">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <label for="benefPhone">Phone</label>
+          <input matInput name="benefPhone" id="benefPhone" [disabled]="readonly" [(ngModel)]="newBank.beneficiaryPhone"
+            type="number">
+        </mat-form-field>
+      </div>
+      <div>
+        <div>
+          <span>Bank Details</span>
+        </div>
+        <mat-form-field appearance="outline">
+          <label for="accountNumber">Account Number</label>
+          <input matInput name="accountNumber" id="accountNumber" [disabled]="readonly" [(ngModel)]="newBank.account"
+            type="string">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <label for="ifscCode">IFSC Code</label>
+          <input matInput name="ifscCode" id="ifscCode" [disabled]="readonly" [(ngModel)]="newBank.ifscCode"
+            type="string">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <label for="bankName">Bank Name</label>
+          <input matInput name="bankName" id="bankName" [disabled]="readonly" [(ngModel)]="newBank.bankName"
+            type="string">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <label for="branch">Branch</label>
+          <input matInput name="branch" id="branch" [disabled]="readonly" [(ngModel)]="newBank.branch" type="string">
+        </mat-form-field>
+      </div>
+    </div>
+  </ng-container>
+
+</ng-container>

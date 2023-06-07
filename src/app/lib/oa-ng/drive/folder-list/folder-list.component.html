@@ -1,0 +1,63 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+<ng-container [ngSwitch]="view">
+  <div *ngSwitchCase="'list'">
+    <div class="row">
+      <div class="col-1 customPadding">
+        <mat-checkbox [checked]="allDeleted" (change)="selectedAll($event.checked)" class="checkBox"></mat-checkbox>
+      </div>
+      <div class="col-7">
+        <label>Folder</label>
+      </div>
+      <div class="col-4" style="text-align: center">
+        <img src="../../../../assets/icons/deleteFolder.svg" matTooltip="Delete"
+          style="margin-right: 10px; margin-top: -5px;" (click)="delete()">
+        <img src="../../../../assets/icons/createFolder.svg" matTooltip="Create Folder"
+          (click)="newFolder = !newFolder">
+      </div>
+    </div>
+    <hr>
+    <div class="row" *ngFor="let folder of items">
+      <div class="col-1">
+        <mat-checkbox class="checkBox" [checked]="folder.isDeleted" (change)="onFolderSelect($event, folder)">
+        </mat-checkbox>
+      </div>
+      <mat-card class="folder" [class.folderActive]="folder.isSelected" (click)="onSelect(folder)">
+        <div class="col-2">
+          <img src="../../../../assets/icons/folders-list.svg" *ngIf="!folder.isSelected" class="folderIcon">
+          <img src="../../../../assets/icons/active/foldersActive.svg" *ngIf="folder.isSelected" class="folderIcon">
+        </div>
+        <div class="col-9" [class.textActive]="folder.isSelected">
+          <span class="capitalize">{{folder.name}}</span>
+        </div>
+      </mat-card>
+    </div>
+    <div *ngIf="newFolder">
+      <drive-new-folder (created)="onFolderCreate($event)"></drive-new-folder>
+    </div>
+  </div>
+
+  <div class="main" *ngSwitchCase="'folder'">
+    <div class="header">
+      <h5>Folders</h5>
+      <span class="spacer"></span>
+      <div *ngIf="createFolder">
+        <button (click)="onNew()" class="primary" mat-raised-button>New</button>
+      </div>
+    </div>
+    <ng-template [ngIf]="items.length" [ngIfElse]="noData">
+      <div class="flex-row">
+        <ng-container *ngFor="let folder of items">
+          <div (click)="onFolderSelect('', folder)" class="folderCard controls-row">
+            <div class="material-icons"> folder </div>
+            <div class="folderName">{{folder.name ? folder.name : folder.code}} ({{folder?.entity?.id}})</div>
+          </div>
+        </ng-container>
+      </div>
+      <app-paginator [pager]="pager" [total]="pager.total" [size]="50" [fetchByLimit]="false"></app-paginator>
+    </ng-template>
+    <ng-template #noData>
+      <oa-no-data-found [message]="'No Folders Found'"></oa-no-data-found>
+    </ng-template>
+  </div>
+
+</ng-container>

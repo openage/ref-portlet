@@ -1,0 +1,19 @@
+<div class="form-container flex-row">
+  <mat-form-field appearance="outline">
+    <label for="role-type">{{label}}</label>
+    <input id="role-type" #userInput [formControl]="control" [matAutocomplete]="roleTypePicker" matInput type="text"
+      [placeholder]="placeholder" [(ngModel)]="roleType" [readonly]="readonly" [required]="required">
+    <div class="caret-down">
+      <i matSuffix class="fa fa-caret-down"></i>
+    </div>
+
+    <mat-autocomplete panelWidth="auto" autoActiveFirstOption #roleTypePicker="matAutocomplete"
+      [displayWith]="displayEmployee" (optionSelected)="onOptionSelected($event)">
+
+      <mat-option *ngFor="let item of items" [value]="item">
+        {{item.name}}
+      </mat-option>
+
+    </mat-autocomplete>
+  </mat-form-field>
+</div>

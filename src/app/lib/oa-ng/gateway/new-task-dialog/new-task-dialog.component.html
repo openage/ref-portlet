@@ -1,0 +1,35 @@
+<div mat-dialog-header>
+  <div class="header">
+    <h4>{{heading}}</h4>
+    <span class="spacer"></span>
+    <mat-icon class="subtle" (click)="dialog.close()">close</mat-icon>
+  </div>
+</div>
+
+<div mat-dialog-content>
+  <div>
+    <label for="subject">Subject</label>
+    <div class="oa-input">
+      <input [(ngModel)]="task.subject">
+    </div>
+  </div>
+
+  <div>
+    <label for="description">Description</label>
+    <oa-content-editor [value]="task.description" (changed)="task.description=$event"></oa-content-editor>
+  </div>
+
+  <div *ngIf="relatedTask">
+    <label for="subTasks">SubTasks</label>
+    <div>
+      <gateway-task-list [parent]="relatedTask" [isClosed]="false" [view]="'table'" [columns]="columns" #taskList></gateway-task-list>
+    </div>
+  </div>
+
+</div>
+
+<div mat-dialog-actions>
+  <span class="spacer"></span>
+  <button mat-button (click)="dialog.close()">Cancel</button>
+  <button mat-raised-button (click)="onCreate()" color="primary">Create</button>
+</div>

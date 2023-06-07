@@ -1,0 +1,13 @@
+<div class="row assign">
+  <div class="col-lg-4 col-md-12 col-sm-12">
+    <img src="../../../assets/icons/plus.png" style="height: 20px; float: left;margin-right: 10px;margin-bottom: 10px;">
+    <h5>Assign RFP/Q</h5>
+    <div class="contentRfq">
+      <mat-select placeholder="Select User">
+        <mat-option>
+          <mat-option *ngFor="let item of items" [value]="items">{{item.profile.firstName}}</mat-option>
+        </mat-option>
+      </mat-select>
+    </div>
+  </div>
+</div>

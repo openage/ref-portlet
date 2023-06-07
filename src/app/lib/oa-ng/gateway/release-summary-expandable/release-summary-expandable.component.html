@@ -1,0 +1,16 @@
+<div class="controls-row">
+  <div>
+    <div class="version">{{release.code}}</div>
+    <div class="sub-text">{{release.name}}</div>
+  </div>
+  <button *ngIf="isExpanded" class="subtle" [routerLink]="['releases', release.id]">
+    pop out
+  </button>
+</div>
+
+<div *ngIf="release.isClosed">
+  {{release.description}}
+</div>
+
+<h5>Tasks</h5>
+<gateway-task-list [project]="release.project" [release]="release"></gateway-task-list>

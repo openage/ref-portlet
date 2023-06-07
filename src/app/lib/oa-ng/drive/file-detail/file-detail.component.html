@@ -1,0 +1,246 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+<ng-container [ngSwitch]="view">
+  <ng-container *ngIf="properties">
+
+    <ng-container *ngSwitchCase="'card'">
+      <div [class.ready-for-drop]="readyForDrop"
+        class="file-card stacked drop-zone {{properties.status}} mat-elevation-z1">
+        <div (click)="show()" class="content spacer stacked" [style.background]="'url('+ properties.thumbnail + ')'">
+          <div class="header">
+            <i *ngIf="('submitted|active|canceled'.indexOf(properties.status) !== -1) && !readonly"
+              class="md status-{{properties.status}}"></i>
+            <span class="spacer"></span>
+          </div>
+          <div class="spacer"></div>
+          <ng-container *ngIf="content; then showContent; else showPlaceholder"></ng-container>
+          <ng-template #showContent>
+            <i *ngIf="!properties.thumbnail" class="lg active {{icon}}"></i>
+          </ng-template>
+          <div class="spacer"></div>
+        </div>
+        <div class="summary">
+          <div class="file-detail-section">
+            <div (click)="show()">
+              <h5 class="fileName">{{properties.name}}<span
+                  *ngIf="properties.identifier">:{{properties.identifier}}</span>
+              </h5>
+              <span class="sm sub-text">
+                <ng-container
+                  *ngIf="'draft|placeholder'.indexOf(properties.status) !== -1; then showMimeTypes; else showTimeStamp">
+                </ng-container>
+              </span>
+            </div>
+            <div class="more-options-section">
+              <mat-icon *ngIf="properties.status !== 'not-applicable'" class="subtle" [matMenuTriggerFor]="menu">
+                more_vert
+              </mat-icon>
+            </div>
+          </div>
+          <mat-menu #menu="matMenu">
+            <button *ngIf="'submitted|active|canceled'.indexOf(properties.status) !== -1" (click)="onOpen()"
+              mat-menu-item>Show</button>
+            <button
+              *ngIf="'submitted|active'.indexOf(properties.status) !== -1 && !auth.hasPermission('customer.normal')"
+              (click)="update({status: 'canceled'})" mat-menu-item>Reject</button>
+            <button mat-menu-item
+              *ngIf="checkPermissions('remove') || ('submitted|canceled|placeholder'.indexOf(properties.status) !== -1)"
+              (click)="remove()">Remove</button>
+            <ng-container *ngIf="'placeholder|draft|submitted|canceled'.indexOf(properties.status) !== -1">
+              <button mat-menu-item (click)="showUploadDialog()">Upload</button>
+              <button *ngIf="properties.status !== 'not-applicable' && !auth.hasPermission('customer.normal')"
+                (click)="notApplicable()" mat-menu-item>Not
+                Applicable</button>
+            </ng-container>
+            <ng-container
+              *ngIf="'submitted'.indexOf(properties.status) !== -1 && permissions && auth.hasPermission(permissions.activate)">
+              <button (click)="update({status: 'active'})" mat-menu-item>Accept</button>
+              <button (click)="update({status: 'canceled'})" mat-menu-item>Reject</button>
+            </ng-container>
+          </mat-menu>
+        </div>
+      </div>
+      <ng-template #showPlaceholder>
+        <mat-icon *ngIf="(properties.status !== 'not-applicable') && properties.isPlaceholder" color="primary"
+          class="x-lg">
+          add</mat-icon>
+        <mat-icon *ngIf="(properties.status === 'not-applicable') && properties.isPlaceholder"
+          [matTooltip]="properties?.meta['not-applicable']?.message" color="primary" class="x-lg">
+          image_not_supported</mat-icon>
+        <i *ngIf="!properties.isPlaceholder" class="lg active {{icon}}"></i>
+      </ng-template>
+      <ng-template #showMimeTypes>
+        File Type : PDF, IMG, PNG
+      </ng-template>
+      <ng-template #showTimeStamp>
+        <span *ngIf="properties.from && properties.till">{{properties.from | date: 'dd/MM/y'}} - {{properties.till |
+          date:
+          'dd/MM/y'}}</span>
+        <span *ngIf="properties.from && !properties.till">From: {{properties.from | date: 'dd/MM/y'}}</span>
+        <span *ngIf="!properties.from && properties.till">Expires: {{properties.till | date: 'dd/MM/y'}}</span>
+        <span *ngIf="!properties.from && !properties.till">{{properties.timeStamp | date: 'dd/MM/y'}}</span>
+      </ng-template>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'row-item'">
+      <div class="flex-row">
+        <div class="index">{{index+1}}</div>
+        <div class="name">
+          <div class="controls-row">
+            <img *ngIf="properties.thumbnail" class="thumbnail pointer spacing" [src]="properties.thumbnail"
+              (click)="onOpen()">
+            <mat-icon *ngIf="properties.mimeType === 'link'" class="thumbnail subtle spacing" (click)="onOpen()">link
+            </mat-icon>
+            <mat-icon *ngIf="!properties.thumbnail &&(!properties.content || !properties.content.url)"
+              class="thumbnail add-icon spacing">add</mat-icon>
+            <div>
+              <div>{{properties?.name}}</div>
+              <div><span class="sub-text">{{properties?.identifier}}</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="uploader">
+          <div class="controls-row"
+            *ngIf="properties.creator.profile && properties.content && (properties.content.name || properties.content.url)">
+            <oa-avatar class="pointer spacing" [value]="properties.creator"></oa-avatar>
+            <div>
+              <div>{{properties.creator.profile.firstName}} {{properties.creator.profile.lastName}}</div>
+              <div><span class="sub-text">{{properties.timeStamp| date: 'd MMM, y'}}</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="comman-field">{{properties.from?(properties.from| date: 'd MMM, y'):'-- --'}}</div>
+        <div class="comman-field">{{properties.till?(properties.till| date: 'd MMM, y'):'-- --'}}</div>
+        <div class="comman-field">{{properties.status| uppercase}}</div>
+        <div class="actions centered-text">
+          <ng-container *ngTemplateOutlet="menulayout"> </ng-container>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'grouped-row-item'">
+      <ng-container [ngSwitch]="properties.status">
+        <div class="flex-row" *ngSwitchCase="'draft'">
+          <div class="table-name">{{properties?.name}}</div>
+          <div class="table-description">{{properties?.description || properties?.meta?.description}}</div>
+          <div class="table-type">{{properties?.mimeType}}</div>
+          <div class="table-action">
+            <ng-container *ngTemplateOutlet="menulayout"> </ng-container>
+          </div>
+        </div>
+        <div class="flex-row" *ngSwitchCase="'canceled'">
+          <div class="table-name">{{properties?.name}}</div>
+          <div class="table-description">{{properties?.description|| properties?.meta?.description}}
+            <label class="sub-text"></label>
+          </div>
+          <div class="table-type">{{properties?.mimeType}}</div>
+          <div class="table-action">
+            <ng-container *ngTemplateOutlet="menulayout"></ng-container>
+          </div>
+        </div>
+        <div class="flex-row"
+          *ngSwitchCase="properties.status === 'active'||properties.status === 'submitted' ? properties.status : ''">
+          <div class="table-name">{{properties?.name}}</div>
+          <div class="table-description">
+            <div class="controls-row"
+              *ngIf="properties.creator.profile && properties.content && (properties.content.name || properties.content.url)">
+              <oa-avatar class="pointer spacing" [value]="properties.creator"></oa-avatar>
+              <div>
+                <div>{{properties.creator.profile.firstName}} {{properties.creator.profile.lastName}}</div>
+                <div><span class="sub-text">{{properties.timeStamp| date: 'd MMM, y'}}</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="table-type">{{properties?.mimeType}}</div>
+          <div class="table-action">
+            <ng-container *ngTemplateOutlet="menulayout"> </ng-container>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'file-input'">
+      <div>
+        <label for="name" *ngIf="!!properties.name && !options.labelHidden">{{properties.name}}</label>
+        <ng-container *ngIf="properties.url || (properties.content && properties.content.url)">
+          <!-- <input name="name" numbersOnly type="text" class="pointer" (click)="service.download(properties)" [(ngModel)]="properties.identifier" [disabled]="true"> -->
+          <!-- <img *ngIf="properties.thumbnail" class="thumbnail pointer spacing" [src]="properties.thumbnail"
+            (click)="onOpen()">
+          <mat-icon *ngIf="properties.mimeType === 'link'" class="thumbnail subtle spacing" (click)="onOpen()">link
+          </mat-icon> -->
+
+          <div class="oa-input pointer" (click)="service.download(properties)">
+            <span>{{properties.identifier}}</span>
+            <mat-icon class="ml-auto" color="primary">download</mat-icon>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="!readonly && (!properties.url && (!properties.content || !properties.content.url))">
+          <!-- <input name="name" numbersOnly type="text" [(ngModel)]="properties.identifier" class="pointer" (click)="showUploadDialog()" [disabled]="true"> -->
+          <div class="oa-input pointer" (click)="showUploadDialog()">
+            <span>{{properties.identifier}}</span>
+            <mat-icon class="ml-auto" color="primary">upload</mat-icon>
+          </div>
+        </ng-container>
+
+      </div>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'icon'">
+      <div>
+        <ng-container *ngIf="properties.url || (properties.content && properties.content.url)">
+          <mat-icon class="ml-auto cursorPointer" (click)="service.download(properties)" color="primary">download
+          </mat-icon>
+        </ng-container>
+      </div>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'attachment'">
+      <div class="oa-input">
+        <div class="m-0 p-1 d-flex flex-row  pointer w-100" (click)="service.download(properties)">
+          <span class="text-left">{{properties.name||properties.identifier}}</span>
+
+        </div>
+
+        <mat-icon class="m-0 p-0 pointer" (click)="remove()">close</mat-icon>
+        <!-- <div class="controls-row summary">
+          <h5>Add New File</h5>
+        </div> -->
+      </div>
+    </ng-container>
+
+    <ng-template #menulayout>
+      <ng-container class="controls-row">
+        <mat-icon *ngIf="'submitted|active|canceled'.indexOf(properties.status) !== -1" (click)="onOpen()"
+          class="subtle">
+          visibility
+        </mat-icon>
+        <mat-icon *ngIf="'placeholder|draft|submitted|canceled'.indexOf(properties.status) !== -1"
+          (click)="showUploadDialog()" class="subtle">upload
+        </mat-icon>
+        <!-- *ngIf="properties.status !== 'not-applicable'&&'submitted|active|canceled'.indexOf(properties.status) === -1" -->
+        <mat-icon *ngIf="properties.status !== 'not-applicable' && !auth.hasPermission('customer.normal')"
+          class="subtle" [matMenuTriggerFor]="menu">more_vert
+        </mat-icon>
+      </ng-container>
+      <mat-menu #menu="matMenu">
+        <!-- <button *ngIf="'submitted|active|canceled'.indexOf(properties.status) !== -1" (click)="onOpen()"
+          mat-menu-item>Show</button> -->
+        <button *ngIf="'submitted|active'.indexOf(properties.status) !== -1" (click)="update({status: 'canceled'})"
+          mat-menu-item>Reject</button>
+        <button mat-menu-item
+          *ngIf="checkPermissions('remove') || ('submitted|canceled|placeholder'.indexOf(properties.status) !== -1)"
+          (click)="remove()">Remove</button>
+        <ng-container *ngIf="'placeholder|draft|submitted|canceled'.indexOf(properties.status) !== -1">
+          <!-- <button mat-menu-item (click)="showUploadDialog()">Upload</button> -->
+          <button *ngIf="properties.status !== 'not-applicable'" (click)="notApplicable()" mat-menu-item>Not
+            Applicable</button>
+        </ng-container>
+        <ng-container
+          *ngIf="'submitted'.indexOf(properties.status) !== -1 && permissions && auth.hasPermission(permissions.activate)">
+          <button (click)="update({status: 'active'})" mat-menu-item>Accept</button>
+          <button (click)="update({status: 'canceled'})" mat-menu-item>Reject</button>
+        </ng-container>
+      </mat-menu>
+    </ng-template>
+
+  </ng-container>
+</ng-container>

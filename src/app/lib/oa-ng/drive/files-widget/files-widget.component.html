@@ -1,0 +1,40 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+<div *ngIf="properties">
+  <p class="div-title">{{properties.description}}</p>
+  <div *ngIf="view === 'cards'" class="flex-row four folders-list">
+    <div *ngFor="let files of properties.files " class="main-div">
+      <div class="imgDiv">
+        <img [src]="files.url">
+      </div>
+      <div class="title-div">{{files.name}}</div>
+      <div class="disc-div"> {{files.description}}</div>
+      <div class="detail-btn">
+        <p>Read More</p>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="view === 'stack'" class="flex-row">
+    <div *ngFor="let files of properties.files">
+      <ng-container *ngIf="files.url">
+        <div class="detailBox flex-3-1">
+          <div>
+            <div class="title">{{files.name}}</div>
+            <div class="content"> {{files.content}}</div>
+          </div>
+          <div class="imgDiv"> <img [src]="files.url" width="200px"></div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="!files.url">
+        <div class="detail-box">
+          <div class="title">{{files.name}}</div>
+          <div class="content"> {{files.content}}</div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+  <div *ngIf="view === 'grid'" class="flex-row four project-box">
+    <div *ngFor="let files of properties.files">
+      <img [src]="files.url">
+    </div>
+  </div>
+</div>

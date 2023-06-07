@@ -1,0 +1,12 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+
+<ng-container [ngSwitch]="view">
+  <ng-container *ngSwitchCase="'tabs'">
+    <div class="tabs horizontal with-actions">
+      <div *ngFor="let type of items" (click)="onSelect(type)" [ngClass]="{active: selectedType?.id === type?.id}">
+        {{type.label}}
+      </div>
+      <span class="spacer"></span>
+    </div>
+  </ng-container>
+</ng-container>

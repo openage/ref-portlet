@@ -1,0 +1,109 @@
+<ng-container [ngSwitch]="view">
+    <div *ngSwitchCase="'dialog'">
+        <ng-container [ngSwitch]="type">
+
+            <div *ngSwitchCase="'email'">
+                <div>
+                    <div class="controls-row">
+                        <label>{{label}} <span *ngIf="mandatory" class="inputMandatory">*</span></label>
+                        <span class="spacer"></span>
+                        <div>
+                            <mat-hint class="error" *ngIf="valueError">Email {{valueError}}</mat-hint>
+                            <span class="verifierd" *ngIf="value && !valueError && activated">
+                                Verified
+                            </span>
+                        </div>
+                    </div>
+                    <div class="oa-input">
+                        <input type="text" [(ngModel)]="value" [placeholder]="placeholder" [maxLength]="maxLength"
+                            [readonly]="readonly" (change)="validateTextOnly()">
+
+                        <span *ngIf="value && !valueError && !activated && !readonly" class="cursorPointer getOtp"
+                            (click)="createSession()">Get
+                            Otp</span>
+
+                        <span *ngIf="value && !valueError && activated">
+                            <svg class="checkmark" viewBox="0 0 52 52">
+                                <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+                                <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                            </svg>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <ng-container *ngSwitchCase="'mobile'">
+                <div>
+                    <div class="controls-row">
+                        <label>{{label}} <span *ngIf="mandatory" class="inputMandatory">*</span></label>
+                        <span class="spacer"></span>
+                        <div>
+                            <mat-hint class="error" *ngIf="valueError">Mobile {{valueError}}</mat-hint>
+                        </div>
+                    </div>
+                    <div class="oa-input">
+                        <input type="text" numbersOnly [(ngModel)]="value" [placeholder]="placeholder"
+                            [maxLength]="maxLength" [readonly]="readonly" (change)="validateTextOnly()">
+                    </div>
+                </div>
+            </ng-container>
+
+        </ng-container>
+    </div>
+
+    <div *ngSwitchCase="'bottom'">
+        <ng-container [ngSwitch]="type">
+            <div *ngSwitchCase="'email'">
+                <div *ngIf="!onlyOtp">
+                    <div class="controls-row">
+                        <label>{{label}} <span *ngIf="mandatory" class="inputMandatory">*</span></label>
+                        <span class="spacer"></span>
+                        <div>
+                            <mat-hint class="error" *ngIf="valueError">Email {{valueError}}</mat-hint>
+                            <span class="verifierd" *ngIf="value && !valueError && activated">
+                                Verified
+                            </span>
+                        </div>
+                    </div>
+                    <div class="oa-input">
+                        <input type="text" [(ngModel)]="value" [placeholder]="placeholder" [maxLength]="maxLength"
+                            [readonly]="readonly" (change)="validateTextOnly()">
+
+                        <span *ngIf="value && !valueError && !activated && !readonly && !session"
+                            class="cursorPointer center getOtp" (click)="createSession()">Get Otp</span>
+
+                        <span *ngIf="value && !valueError && !activated && !readonly && session"
+                            class="cursorPointer center getOtp" (click)="resendOtp()">Resend Otp</span>
+
+                        <span *ngIf="value && !valueError && activated">
+                            <svg class="checkmark" viewBox="0 0 52 52">
+                                <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+                                <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                            </svg>
+                        </span>
+                    </div>
+                </div>
+
+                <div *ngIf="!readonly && session &&  showOtpSection">
+                    <core-validate-otp-inline #otp [label]="'Enter Otp'" [session]="session" [view]="otpView"
+                        (onSuccess)="onSuccess($event)" (onError)="sessionError.emit($event)"
+                        (onDiscard)="onDiscard.emit($event)">
+                    </core-validate-otp-inline>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+
+    <div *ngSwitchCase="'onlyOtp-validate'">
+        <ng-container [ngSwitch]="type">
+            <div *ngSwitchCase="'email'">
+                <div *ngIf="!readonly && session && showOtpSection">
+                    <core-validate-otp-inline #otp [session]="session" (onSuccess)="onSuccess($event)"
+                        (onDiscard)="onDiscard.emit($event)">
+                    </core-validate-otp-inline>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+
+</ng-container>

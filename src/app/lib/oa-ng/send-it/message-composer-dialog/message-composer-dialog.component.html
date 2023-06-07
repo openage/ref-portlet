@@ -1,0 +1,149 @@
+<div mat-dialog-title class="controls-row">
+  <h4>Email Composer</h4>
+  <span class="spacer"></span>
+  <button mat-icon-button mat-dialog-close class="close-icon" (click)="dialogRef.close()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<div mat-dialog-content class="form-container">
+  <ng-container [ngSwitch]="view">
+    <ng-container *ngSwitchCase="'invoice'">
+      <ng-container
+        *ngTemplateOutlet="recipients;context:{recipientsArr:toCustomers,options:{label:'To Customer',typeOfUser:'customer',userSelectorBoolean:customerUserSelector}}">
+      </ng-container>
+      <ng-container
+        *ngTemplateOutlet="recipients;context:{recipientsArr:toInternal,options:{label:'To Internal',typeOfUser:'internal',userSelectorBoolean:internalUserSelector}}">
+      </ng-container>
+    </ng-container>
+
+    <ng-container *ngSwitchDefault>
+      <ng-container
+        *ngTemplateOutlet="recipients;context:{recipientsArr:message.to,options:{userSelectorBoolean:showUsersSelection}}">
+      </ng-container>
+    </ng-container>
+  </ng-container>
+
+  <ng-template #recipients let-recipientsArr="recipientsArr" let-options="options">
+    <label>{{options?.label||'To'}}</label>
+    <div class="oa-input chipInput to">
+      <mat-chip-list #chipList>
+        <ng-container *ngFor="let item of recipientsArr">
+          <mat-chip [removable]="true" class="to pointer" (click)="userClicked(item)">
+            <ng-container *ngIf="!item.user">
+              <ng-container *ngTemplateOutlet="profileView; context:{profile:item.profile,email:item.email}">
+              </ng-container>
+            </ng-container>
+            <ng-container *ngIf="!!item.user">
+              <ng-container *ngTemplateOutlet="profileView; context:{profile:item.user.profile,email:item.user.email}">
+              </ng-container>
+            </ng-container>
+            <mat-icon *ngIf="!to.includes(item.email)" class="subtle" matChipRemove
+              (click)="removeUser(item,{typeOfUser:options.typeOfUser})">
+              cancel
+            </mat-icon>
+          </mat-chip>
+        </ng-container>
+        <div class="input-user-div" (clickOutside)="options.userSelectorBoolean=false">
+          <input [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            (focus)="isProcessing = true" [matChipInputAddOnBlur]="addOnBlur"
+            (matChipInputTokenEnd)="addTo($event,{typeOfUser:options.typeOfUser})">
+          <div class="user-selection-div mat-elevation-z2 " *ngIf="options.userSelectorBoolean">
+            <div *ngFor="let user of optionUsers" class="value input flex-row p-3 pointer"
+              (click)="addToMail(user,options?.typeOfUser)">
+              <div class="my-auto">
+                <oa-avatar [value]="user" [size]="18"></oa-avatar>
+              </div>
+              <div>
+                <p class="m-0">{{user.profile?.firstName + ' '+user.profile?.lastName | name}}</p>
+                <p class="sub-text m-0">{{user.type.name}}
+                  <span class="sub-text m-0" *ngIf="user.organization?.name"> ({{user.organization?.name}})</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-chip-list>
+
+    </div>
+  </ng-template>
+
+
+  <ng-template #profileView let-profile="profile" let-email="email">
+    <oa-avatar *ngIf="profile?.pic?.url" [value]="profile" [view]="'pic'" class="mr-1">
+    </oa-avatar>
+    <!-- {{test({profile,email})}} -->
+    <span>
+      {{profile?.firstName||profile?.lastName?
+      (profile?.firstName+' '+profile?.lastName)
+      :email }}
+    </span>
+  </ng-template>
+  <!-- <div *ngIf="item?.isSelected" class="user-details">
+    <div class="user-section section mat-elevation-z2">
+      <div class="header"> {{item.profile.firstName||item.profile.lastName?
+        (item.profile.firstName+' '+item.profile.lastName)
+        :item.email }}</div>
+      <div class="oa-field">
+        <div class="label">Name: </div>
+        <div class="value"></div>
+      </div>
+      <div class="oa-field ">
+        <div class="label">Email:</div>
+        <div class="value"></div>
+      </div>
+      <div class="oa-field ">
+        <div class="label">Designation: </div>
+        <div class="value"></div>
+      </div>
+      <div class="oa-field">
+        <div class="label">Phone: </div>
+        <div class="value"></div>
+      </div>
+    </div>
+  </div> -->
+
+  <div *ngIf="!modes" class="flex-row three">
+    <mat-checkbox [(ngModel)]="message.modes.email">Email</mat-checkbox>
+    <mat-checkbox [(ngModel)]="message.modes.sms">SMS</mat-checkbox>
+    <mat-checkbox [(ngModel)]="message.modes.push">Push</mat-checkbox>
+  </div>
+
+  <label>Subject</label>
+  <div class="oa-input">
+    <input [(ngModel)]="message.subject">
+  </div>
+
+  <label>Body</label>
+  <!-- <div class="oa-textarea scrollable" contenteditable="true" [innerHTML]="message.body" (blur)="message.body=$event.target.innerHTML">
+  </div> -->
+  <oa-content-editor [toolbar]="null" [value]="message.body" (changed)="setContent($event)"></oa-content-editor>
+
+  <div *ngIf="showAttahcments">
+    <label>Attachments</label>
+    <div class="controls-row">
+      <ng-container *ngIf="message.attachments && message.attachments.length">
+        <ng-container *ngFor="let attachment of message.attachments; let i= index">
+          <div class="attachmentDiv">
+            <div class="cursorPointer" (click)="openAttachment(attachment)">{{attachment.filename}}</div>
+            <mat-icon class="subtle attachmentClose" (click)="removeAttachment(i)">cancel</mat-icon>
+          </div>
+        </ng-container>
+      </ng-container>
+      <div (click)="addAttachment.emit(true)">
+        <div class="justify-content-center pointer">
+          <span class="spacer"></span>
+          <mat-icon class="pointer subtle">add_circle_outline</mat-icon>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div mat-dialog-actions class="buttons controls-row" *ngIf="!hideButton">
+  <span class="spacer"></span>
+  <button mat-button (click)="dialogRef.close()">Cancel</button>
+  <button mat-raised-button color="primary"
+    [disabled]="isProcessing || !message.subject || !message.body || !message.to || !message.to.length"
+    (click)="send()">Send</button>
+</div>

@@ -1,0 +1,17 @@
+<div class="main" [class.hidden]="!isCurrent">
+  <div class="header">
+    <h5>{{page?.title}}</h5>
+    <span class="spacer"></span>
+    <button mat-icon-button (click)="onRefresh()">
+      <mat-icon>refresh</mat-icon>
+    </button>
+  </div>
+  <app-query-builder *ngIf="showFilters" [filters]="filters" (apply)="applyFilter($event)" (reset)="resetFilters()">
+  </app-query-builder>
+  <directory-employee-list #list [readonly]="true" (selected)="onSelect($event)" [supervisor]="selectedSupervisor"
+    [employeeTypes]="selectedEmployeeTypes" [userTypes]="selectedUserType" [designation]="selectedDesignation"
+    [division]="selectedDivision" [department]="selectedDepartment" [name]="selectedName" [code]="selectedCode"
+    [view]="isCurrent? 'table': 'list'">
+  </directory-employee-list>
+</div>
+<router-outlet></router-outlet>

@@ -1,0 +1,11 @@
+<div [class.hidden]="!isCurrent">
+  <div class="header">
+    <h4 class="primary">{{page.title}}</h4>
+    <span class="spacer"></span>
+  </div>
+  <ng-container *ngIf="isEmployee">
+    <!-- <app-employee-viewer #summary [code]="code" [readonly]="readonly" (fetched)="onFetch($event)" #details>
+    </app-employee-viewer> -->
+  </ng-container>
+</div>
+<router-outlet></router-outlet>

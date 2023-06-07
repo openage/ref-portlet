@@ -1,0 +1,10 @@
+<div layout="row" layout-align="end center" *ngIf="items?.length" class="menu flex-row">
+  <ng-container *ngFor="let item of items">
+    <ng-container [ngSwitch]="item.type">
+      <ng-container *ngSwitchCase="'hidden'"></ng-container>
+      <!-- <oa-share *ngSwitchCase="'share'" [modes]="item.options" [members]="item?.config?.members"
+        [entity]="item?.config?.entity" [options]="item?.config?.options"></oa-share> -->
+      <oa-action *ngSwitchDefault [view]="item.view || view" [item]="item"></oa-action>
+    </ng-container>
+  </ng-container>
+</div>

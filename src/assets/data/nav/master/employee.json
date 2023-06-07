@@ -1,0 +1,27 @@
+{
+  "params": {
+    "view": "employee-role-details"
+  },
+  "context": [
+    {
+      "code": "refresh"
+    },
+    {
+      "code": "close",
+      "type": "icon"
+    }
+  ],
+  "divs": [
+    {
+      "code": "r-1",
+      "permissions": [],
+      "style": {
+        "container": {
+          "style": {
+            "margin-top": "0px"
+          }
+        }
+      }
+    }
+  ]
+}

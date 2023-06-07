@@ -1,0 +1,83 @@
+{
+  "context": [
+    {
+      "code": "refresh",
+      "type": "icon"
+    },
+    {
+      "code": "types",
+      "type": "icon",
+      "title": "Types",
+      "icon": "category",
+      "options": []
+    },
+    {
+      "code": "share",
+      "type": "icon",
+      "title": "Share",
+      "options": [
+        "email",
+        "chat",
+        "copy"
+      ]
+    },
+    {
+      "title": "Uploader",
+      "type": "icon",
+      "code": "upload",
+      "icon": "file_upload",
+      "options": [
+        {
+          "title": "Time logs",
+          "value": "timelog"
+        },
+        {
+          "title": "Efforts",
+          "value": "efforts"
+        }
+      ]
+    },
+    {
+      "code": "close",
+      "type": "icon"
+    }
+  ],
+  "area": {
+    "code": "sprint-dashboard"
+  },
+  "divs": [
+    {
+      "code": "r-1"
+    }
+  ],
+  "sections": [
+    {
+      "code": "details",
+      "view": "summary"
+    },
+    {
+      "code": "sprints",
+      "title": "Sprints",
+      "view": "table"
+    },
+    {
+      "code": "tasks",
+      "title": "Actions",
+      "view": "table"
+    },
+    {
+      "code": "members",
+      "view": "list",
+      "style": {
+        "container": {},
+        "header": {},
+        "body": {}
+      }
+    },
+    {
+      "code": "documents",
+      "title": "Documents",
+      "view": "grid"
+    }
+  ]
+}

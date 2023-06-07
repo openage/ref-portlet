@@ -1,0 +1,38 @@
+<!-- <ng-component [ngSwitch]="view">
+  <div *ngSwitchCase="'input'">
+    <label [attr.for]="inputId" *ngIf="label">{{label}}</label>
+    <div [class.ready-for-drop]="readyForDrop" class="oa-input drop-zone" (click)="fileInput.click()">
+      <div class="input" [attr.for]="inputId">{{value? value.name: ''}}</div>
+      <mat-icon class="subtle sm">attach_file</mat-icon>
+    </div>
+  </div>
+  <div *ngIf="'zone'" [attr.for]="inputId" [class.ready-for-drop]="readyForDrop" class="drop-zone"
+    (click)="fileInput.click()">
+    <ng-content></ng-content>
+  </div>
+</ng-component>
+
+<input autocomplete="off" class="file-input" [accept]="accept" [attr.id]="inputId" #fileInput type="file"
+  (change)="onFileSelected($event)"> -->
+
+<ng-container [ngSwitch]="view">
+  <ng-container *ngSwitchCase="'input'">
+    <label [attr.for]="inputId" *ngIf="label">{{label}}</label>
+    <div [class.ready-for-drop]="readyForDrop" class="oa-input drop-zone" (click)="fileInput.click()">
+      <div class="input" [attr.for]="inputId">{{value? value.name: ''}}</div>
+      <mat-icon class="subtle x-lg attachment-icon">attachment</mat-icon>
+      <input autocomplete="off" class="file-input" [accept]="accept" [attr.id]="inputId" #fileInput type="file"
+        (change)="onFileSelected($event)">
+    </div>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'layout'">
+    <div [class.ready-for-drop]="readyForDrop" class="drop-zone ">
+      <div [attr.for]="inputId" (click)="fileInput.click()">
+        <ng-content></ng-content>
+      </div>
+      <input class="file-input" [accept]="accept" #fileInput [attr.id]="inputId" type="file"
+        (change)="onFileSelected($event)">
+    </div>
+  </ng-container>
+</ng-container>

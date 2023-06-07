@@ -1,0 +1,40 @@
+<div class="profile-row" *ngIf="role" (click)="onClick()">
+  <oa-avatar [value]="url || role" type="thumbnail"></oa-avatar>
+  <div class="content">
+    <h3>{{role.profile.firstName}}<span *ngIf="role.profile.lastName">&nbsp;{{role.profile.lastName}}</span></h3>
+    <span class="sub-text designation"><ng-container *ngIf="isImpersonateSession">Impersonating as </ng-container>{{role.type.name}}</span>
+    <!--
+    <ng-container *ngIf="role.employee else showRoleType">
+      <ng-container *ngIf="role.employee.designation && role.employee.designation.name; else showEmployee">
+        <span class="sub-text designation" >{{role.employee.designation.name}}</span>
+      </ng-container>
+      <ng-template #showEmployee>
+        <span class="sub-text designation">Employee</span>
+      </ng-template>
+    </ng-container>
+    <ng-template #showRoleType>
+      <span class="sub-text designation">{{role.type.name}}</span>
+    </ng-template>
+    -->
+  </div>
+</div>
+<!-- <div class="current-user" *ngIf="currentRole && currentRole.organization">
+  <auth-current-role></auth-current-role>
+  <div class="org-logo">
+    <img src="{{role.organization.logo}}">
+    <img src="../../../assets/icons/AMB.png">
+  </div>
+  <div class="user-info">
+    <div>Welcome,</div>
+    <div>
+      <h5>{{currentRole.organization.name}}</h5>
+      <mat-icon [matMenuTriggerFor]="userMenu">arrow_drop_down</mat-icon>
+    </div>
+    <div class="sub-text">
+      <span *ngIf="currentRole.organization.type === 'hospital'">Hospital ID:</span>
+      <span *ngIf="currentRole.organization.type === 'provider'">Provider ID:</span>
+      <span>{{currentRole.organization.code}}</span>
+    </div>
+  </div>
+
+</div> -->

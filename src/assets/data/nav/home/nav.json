@@ -1,0 +1,49 @@
+{
+  "code": "dashboard",
+  "title": "Dashboard",
+  "url": "/home/dashboard",
+  "icon": "mat-dashboard",
+  "permissions": [
+    "user"
+  ],
+  "items": [
+    {
+      "code": "dashboard.my",
+      "title": "Home",
+      "url": "/home/dashboard/my",
+      "icon": "oa-my-dashboard",
+      "meta": {
+        "ref": "/assets/data/nav/home/dashboard-my.json"
+      }
+    },
+    {
+      "code": "home.inbox",
+      "icon": "oa-inbox",
+      "title": "Inbox",
+      "url": "/home/inbox",
+      "meta": {
+        "ref": "/assets/data/nav/home/inbox.json"
+      }
+    },
+    {
+      "code": "home.tasks",
+      "icon": "fa-tasks",
+      "title": "To Do",
+      "url": "/home/tasks",
+      "meta": {
+        "ref": "/assets/data/nav/home/tasks.json"
+      },
+      "items": [
+        {
+          "code": "home.task.details",
+          "icon": "oa-todo",
+          "title": "Task Details",
+          "url": "/home/tasks/:code",
+          "meta": {
+            "ref": "/assets/data/nav/home/task.json"
+          }
+        }
+      ]
+    }
+  ]
+}

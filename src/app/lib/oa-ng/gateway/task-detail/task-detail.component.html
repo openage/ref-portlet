@@ -1,0 +1,184 @@
+<ng-container [ngSwitch]="view" *ngIf="properties">
+  <div *ngSwitchCase="'slides'" class="section">
+    <div class="header">
+      <div class="input subject spacer" [class.selected]="properties.isSelected" (focus)="properties.isSelected = true"
+        contenteditable="true" (blur)="updateSubject($event)" (keyup)="updateSubject($event)">
+        {{properties.subject}}
+      </div>
+    </div>
+    <!-- <oa-slides [slides]="slides" (changed)="onSlidesUpdate($event)">
+    </oa-slides> -->
+  </div>
+
+  <ng-container *ngSwitchCase="'details'">
+    <ng-container *ngFor="let column of columns" [ngSwitch]="column.code">
+      <div *ngSwitchCase="'subject'" [class]="column.class">
+        <oa-input [value]="properties.subject" [options]="{ inline: true, trigger: 'finish'}" [preFix]="{
+        code: properties?.workflow?.code,
+        icon: properties?.workflow?.icon,
+        title: properties?.workflow?.name,
+        style: 'md'
+      }" (changed)="updateSubject($event)" (selected)="properties.isSelected = $event">
+        </oa-input>
+        <!-- <div class="input subject spacer" [class.selected]="properties.isSelected" (focus)="properties.isSelected = true"
+        contenteditable="true" (blur)="updateSubject($event)" (keyup)="updateSubject($event)">
+        {{properties.subject}}</div> -->
+      </div>
+
+      <div *ngSwitchCase="'editor'" [class]="column.class">
+        <oa-object-editor [definition]="column || templates?.editor?.meta" [value]="properties"
+          (changed)="onMetaUpdate($event)">
+        </oa-object-editor>
+      </div>
+      <div *ngSwitchCase="'description'" [class]="column.class">
+        <oa-input type="html" [value]="properties.description" (changed)="properties.description = $event">
+        </oa-input>
+        <div class="flex-row">
+          <span class="spacer"></span>
+          <button mat-raised-button class="primary" color="primary"
+            (click)="onDescriptionUpdate(properties.description)">Save</button>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+
+  <div *ngSwitchCase="'attributes'" class="attributes">
+
+    <ng-container *ngFor="let column of columns" [ngSwitch]="column.code">
+      <div *ngSwitchCase="'assignee'">
+        <label>{{column.label || 'Assignee'}}</label>
+        <directory-user-picker placeholder="" [value]="properties.assignee" (changed)="onAssigneeUpdate($event)">
+        </directory-user-picker>
+      </div>
+
+      <div *ngSwitchCase="'priority'">
+        <label>{{column.label || 'Priority'}}</label>
+        <oa-icon-toggler view="select" type="priority" [items]="priorities" [value]="properties.priority"
+          (changed)="onPriorityChange($event)">
+        </oa-icon-toggler>
+      </div>
+      <div *ngSwitchCase="'points'">
+        <label>{{column.label || 'Points'}}</label>
+        <oa-icon-toggler view="select" type="points" [items]="points" [value]="properties.points"
+          (changed)="onPointsChanged($event)">
+        </oa-icon-toggler>
+      </div>
+
+      <div *ngSwitchCase="'progress'">
+        <div class="controls-row">
+          <label>{{column.label || 'Progress'}}</label>
+          <span class="spacer"></span>
+          <div *ngIf="properties.burnt" class="sub-text">consumed: {{properties.burnt*60 |time: 'clockWiseShort'}}</div>
+        </div>
+        <div class="oa-input">
+          <oa-progress class="spacer" view="bar" [content]="'total'" [value]="properties?.meta.closedPoints"
+            [total]="properties.points" [size]="30"></oa-progress>
+        </div>
+      </div>
+
+      <div *ngSwitchCase="'estimate'">
+        <div class="controls-row">
+          <label>{{column.label || 'Estimate'}}</label>
+          <span class="spacer"></span>
+          <div *ngIf="properties.burnt" class="sub-text">consumed: {{properties.burnt*60 |time: 'clockWiseShort'}}</div>
+        </div>
+        <oa-value-editor [value]="{
+        value: properties.size || 0,
+        unit: { code: 'min' }
+      }" type="span" (changed)="onSizeChanged($event)"></oa-value-editor>
+      </div>
+
+      <div *ngSwitchCase="'dueDate'" class="oa-input-group">
+        <label>{{column.label || 'Due Date'}}</label>
+        <oa-date-picker view="date" [value]="properties?.plan?.finish" (change)="onDueDateChange($event)">
+        </oa-date-picker>
+      </div>
+
+      <div *ngSwitchCase="'sprint'">
+        <label>{{column.label || 'Sprint'}}</label>
+        <gateway-sprint-list [value]="properties.sprint" [items]="sprints" (changed)="onSprintChange($event)">
+        </gateway-sprint-list>
+      </div>
+
+      <div *ngSwitchCase="'parent'">
+        <gateway-task-picker [label]="column.label || 'Parent'" [value]="properties.parent"
+          (changed)="onParentChange($event)">
+        </gateway-task-picker>
+      </div>
+
+      <div *ngSwitchCase="'category'">
+        <gateway-category-picker [label]="column.label || 'Category'" [searchField]="'text'" [params]="{
+        'project-id': (properties.project && properties.project.id) ? properties.project.id: null
+      }" [value]="properties.category" (changed)="updateCategory($event)">
+        </gateway-category-picker>
+      </div>
+
+      <div *ngSwitchCase="'tags'">
+        <label>{{ column.label ||'Tags'}}</label>
+        <oa-tags [values]="properties.tags" (changed)="onTagsChange($event)"></oa-tags>
+      </div>
+
+      <!-- <hr class="divider"> -->
+      <div *ngSwitchCase="'type'">
+        <label>{{column.label ||'Type'}}</label>
+        <gateway-workflow-list [value]="properties.workflow" [items]="workflows" (changed)="onWorkflowChange($event)">
+        </gateway-workflow-list>
+      </div>
+
+      <div *ngSwitchCase="'owner'">
+        <label>{{column.label ||'Owner'}}</label>
+        <directory-user-picker placeholder="" [value]="properties.owner" (changed)="updateOwner($event)">
+        </directory-user-picker>
+      </div>
+
+      <div *ngSwitchCase="'release'">
+        <label>{{column.label ||'Release'}}</label>
+        <gateway-release-list [value]="properties.release" [items]="releases" (changed)="onReleaseChange($event)">
+        </gateway-release-list>
+      </div>
+    </ng-container>
+  </div>
+
+  <!-- <oa-content-editor [value]="properties.description" view="inline" (changed)="onDescriptionUpdate($event)">
+    </oa-content-editor> -->
+  <div *ngSwitchCase="'row'" class="section">
+    <div class="body" [innerHTML]="properties.description">
+      <!--
+
+      <oa-input [value]="properties.description" control="rich" [options]="{multiline: true}"
+        (changed)="onDescriptionUpdate($event)">
+      </oa-input> -->
+    </div>
+    <div class="flex-row footer">
+      <gateway-sprint-list label="Sprint" [value]="properties.sprint" [items]="sprints"
+        (changed)="onSprintChange($event)">
+      </gateway-sprint-list>
+      <span class="spacer"></span>
+      <gateway-category-picker label="Category" [searchField]="'text'" [params]="{
+        'project-id': (properties.project && properties.project.id) ? properties.project.id: null
+      }" [value]="properties.category" (changed)="updateCategory($event)">
+      </gateway-category-picker>
+      <span class="spacer"></span>
+      <oa-tags [values]="properties.tags" (changed)="onTagsChange($event)"></oa-tags>
+      <span class="spacer"></span>
+      <div *ngIf="more && more.extras && more.extras.length">
+        <mat-icon class="subtle" [matMenuTriggerFor]="menu">more_vert</mat-icon>
+        <mat-menu #menu="matMenu">
+          <button *ngFor="let item of more.extras" (click)="item.event(properties)"
+            mat-menu-item>{{item.title}}</button>
+        </mat-menu>
+      </div>
+    </div>
+  </div>
+
+  <div *ngSwitchCase="'card'">
+
+  </div>
+
+  <div *ngSwitchDefault>
+    <div class="input subject spacer" [class.selected]="properties.isSelected" (focus)="properties.isSelected = true"
+      contenteditable="true" (blur)="updateSubject($event)" (keyup)="updateSubject($event)">
+      {{properties.subject}}
+    </div>
+  </div>
+</ng-container>

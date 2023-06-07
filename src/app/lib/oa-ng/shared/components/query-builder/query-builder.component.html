@@ -1,0 +1,108 @@
+<ng-container [ngSwitch]="view">
+  <div *ngSwitchCase="'inline'">
+    <div class="flex-row" *ngIf="mainFilters && mainFilters.length">
+      <ng-container *ngFor="let filter of mainFilters">
+        <ng-container *ngIf="filter.control !== 'context' && !filter.isHidden">
+          <ng-container *ngTemplateOutlet="inlineFilter; context: {filter: filter}"></ng-container>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+
+  <ng-container *ngSwitchCase="'noView'"></ng-container>
+  <form type="submit" *ngSwitchDefault>
+    <div class="flex-row three" *ngIf="mainFilters && mainFilters.length">
+      <ng-container *ngFor="let filter of mainFilters">
+        <ng-container *ngIf="filter.control !== 'context'">
+          <ng-container *ngTemplateOutlet="filterRef; context: {filter: filter}"></ng-container>
+        </ng-container>
+      </ng-container>
+    </div>
+    <div class="controls-row footer" *ngIf="!options.hideSearch">
+      <div class="spacer"></div>
+      <button mat-raised-button color="primary" (click)="onApply()">{{options.labels.apply}}</button>
+      <button mat-button class="resetbtn" (click)="onReset()">Reset</button>
+      <div class="spacer"></div>
+    </div>
+    <button mat-mini-fab class="more" color="default" *ngIf="otherFilters && otherFilters.length"
+      (click)="showMore = !showMore" matTooltip="more filters" [matTooltipPosition]="'above'">
+      <mat-icon *ngIf="!showMore">keyboard_arrow_down</mat-icon>
+      <mat-icon *ngIf="showMore">keyboard_arrow_up</mat-icon>
+    </button>
+    <div class="flex-row three" [class.hide]="!showMore" *ngIf="otherFilters && otherFilters.length">
+      <ng-container *ngFor="let filter of filters">
+        <ng-container *ngIf="filter.control !== 'context'">
+          <ng-container *ngTemplateOutlet="filterRef; context: {filter: filter}"></ng-container>
+        </ng-container>
+      </ng-container>
+    </div>
+
+  </form>
+
+</ng-container>
+
+<ng-template #filterRef let-filter="filter">
+  <div>
+    <label [ngClass]="{'required':filter.config.required}">{{filter.label}}</label>
+    <ng-container [ngSwitch]="filter.control">
+      <oa-date-picker *ngSwitchCase="'date-picker'" (select)="onDateSelect(filter, $event)"
+        [value]="filter.value.default">
+      </oa-date-picker>
+
+      <div *ngSwitchCase="'text-input'" class="oa-input">
+        <input type="text" name="{{filter.key}}" class="{{filter.config.class}}" [style]="filter.config.style"
+          [value]="filter.value.default || ''" placeholder="{{filter.config.placeholder}}"
+          (change)="onTextChange(filter, $event)">
+      </div>
+
+      <mat-select *ngSwitchCase="'select'" class="mat-select {{filter.config.class}}" [style]="filter.config.style">
+        <mat-option disabled>Select an {{filter.label}}</mat-option>
+        <mat-option *ngFor="let item of filter.config.options" [value]="item.value"
+          (click)="onSelectChange(filter, item)">
+          {{item.label}}
+        </mat-option>
+      </mat-select>
+
+      <ng-container *ngSwitchCase="'autocomplete'">
+        <oa-autocomplete [value]="null" [url]="filter.config.url" [options]="{
+  search: {
+  field: filter.config.paramField || 'text',
+  params: filter.config.params
+  }
+  }" (changed)="onAutoCompleteSelect(filter,$event)"></oa-autocomplete>
+      </ng-container>
+    </ng-container>
+  </div>
+</ng-template>
+
+<ng-template #inlineFilter let-filter="filter">
+  <ng-container [ngSwitch]="filter.control">
+    <oa-date-picker *ngSwitchCase="'date-picker'" [placeholder]="filter.label" (select)="onDateSelect(filter, $event)"
+      [value]="filter.value.default" class="inlineFilters">
+    </oa-date-picker>
+
+    <div *ngSwitchCase="'text-input'" class="oa-input inlineFilters">
+      <input type="text" name="{{filter.key}}" class="{{filter.config.class}}" [style]="filter.config.style"
+        [value]="filter.value.default || ''" placeholder="{{filter.config.placeholder}}"
+        (change)="onTextChange(filter, $event)">
+    </div>
+    <div>
+      <mat-select *ngSwitchCase="'select'" class="oa-input-group {{filter.config.class}}" [style]="filter.config.style"
+        [value]="filter.value?.default || ''" [disabled]="filter.disabled">
+        <mat-option disabled>Select an {{filter.label}}</mat-option>
+        <mat-option *ngFor="let item of filter.config.options" [value]="item.value"
+          (click)="onSelectChange(filter, item)">
+          {{item.label}}
+        </mat-option>
+      </mat-select>
+    </div>
+    <ng-container *ngSwitchCase="'autocomplete'">
+      <oa-autocomplete [value]="null" [url]="filter.config.url" [options]="{
+  search: {
+  field: filter.config.paramField || 'text',
+  params: filter.config.params
+  }
+  }" (changed)="onAutoCompleteSelect(filter,$event)"></oa-autocomplete>
+    </ng-container>
+  </ng-container>
+</ng-template>

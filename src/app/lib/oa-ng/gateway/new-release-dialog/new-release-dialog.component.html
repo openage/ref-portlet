@@ -1,0 +1,32 @@
+<div mat-dialog-header>
+  <h4 mat-dialog-title>New Release</h4>
+</div>
+
+<div mat-dialog-content>
+
+  <div>
+    <mat-form-field>
+      <mat-label>Type</mat-label>
+      <select matNativeControl required [(ngModel)]="release.type" cdkFocusInitial>
+        <option value="patch">Patch</option>
+        <option value="minor">Minor</option>
+        <option value="major">Major</option>
+        <option value="custom">Custom</option>
+      </select>
+    </mat-form-field>
+  </div>
+  <div *ngIf="release.type === 'custom'">
+    <mat-form-field>
+      <input matInput placeholder="Version" [(ngModel)]="release.code" required>
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field>
+      <input matInput placeholder="Name" [(ngModel)]="release.name">
+    </mat-form-field>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="cancel()">Cancel</button>
+  <button mat-raised-button (click)="proceed()" color="primary">Proceed</button>
+</div>

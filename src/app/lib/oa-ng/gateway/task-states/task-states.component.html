@@ -1,0 +1,89 @@
+<ng-container [ngSwitch]="view">
+  <ng-container *ngSwitchCase="'pill'">
+    <span class="pill-box" [class.with-value]="task?.currentStatus?.code !== 'new'"
+      [class.primary]="task?.currentStatus?.code === 'in-progress'"
+      [class.accent]="task?.currentStatus?.code === 'resolved'" [class.warn]="task?.currentStatus?.code === 'blocked'">
+      <span [class.value]="task?.currentStatus?.code !== 'new'">{{task?.currentStatus?.name}}</span>
+    </span>
+  </ng-container>
+
+
+  <div class="controls-row stepper" *ngSwitchCase="'stepper'">
+    <ng-container *ngFor="let item of items;let i=index;">
+      <div class="hr-line spacer {{item.style}}"></div>
+
+      <div *ngIf="view === 'stepper'" (mousemove)="item.isSelected=true" (mouseout)="item.isSelected=false"
+        class="{{item.isCurrent?'active':'circle'}} styled {{item.style || 'default'}}"
+        [class.done]="item.user && !item.isCurrent" [class.in-progress]="item.isCurrent"
+        [class.not-started]="!item.user && !item.isCurrent">
+        <span class="index">{{i+1}}</span><span *ngIf="item.isCurrent">{{item.name|name}} </span>
+        <div *ngIf="item.isCurrent && item.estimate > 0" class="time-left" [class.overdue]="item.isOverdue">
+          <ng-container *ngIf="item.estimate > item.consumed">{{(item.estimate -
+            item.consumed)| time: 'span'}} left</ng-container>
+          <ng-container *ngIf="item.estimate < item.consumed">{{(item.consumed -
+            item.estimate)| time: 'span'}} overdue</ng-container>
+        </div>
+        <ng-container *ngIf="item.isSelected">
+          <ng-container *ngTemplateOutlet="template; context: { item: item }"> </ng-container>
+        </ng-container>
+        <!-- container -->
+      </div>
+
+      <div *ngIf="view === 'journey'" (mousemove)="item.isSelected=true" (mouseout)="item.isSelected=false"
+        class="{{item.isCurrent?'active':'square'}} styled {{item.style || 'default'}}"
+        [class.done]="item.user && !item.isCurrent" [class.in-progress]="item.isCurrent"
+        [class.not-started]="!item.user && !item.isCurrent">
+        <span>{{item.name|name}} </span>
+        <ng-container *ngIf="item.isSelected">
+          <ng-container *ngTemplateOutlet="template; context: { item: item }"> </ng-container>
+        </ng-container>
+      </div>
+
+      <div class="hr-line spacer {{item.style}}"></div>
+    </ng-container>
+
+    <ng-template #template let-item="item">
+      <div class="state-details section mat-elevation-z2" *ngIf="item.isSelected">
+        <div class="header">{{item.name|name}}</div>
+        <div *ngIf="item.user" class="oa-field">
+          <mat-icon class="label">person_outline</mat-icon>
+          <div class="value">{{item.user.profile| name}}</div>
+        </div>
+        <div class="oa-field" *ngIf="item.finishDate">
+          <mat-icon class="label">today</mat-icon>
+          <div class="value">{{item.finishDate | time: 'HH:mm:ss DD MMM YYYY'}}</div>
+        </div>
+
+        <div *ngIf="item.eta" class="oa-field">
+          <mat-icon class="label">today</mat-icon>
+          <div class="value">{{item.eta| time: 'HH:mm:ss DD MMM YYYY'}}</div>
+        </div>
+
+        <div class="oa-field" *ngIf="!item.finishDate && item.dueDate">
+          <mat-icon class="label">timeline</mat-icon>
+          <div class="value">{{task.dueDate | time: 'merged'}}</div>
+        </div>
+        <div class="oa-field" *ngIf="item.consumed">
+          <mat-icon class="label" [class.overdue]="item.isOverdue">timer</mat-icon>
+          <div class="value">{{item.consumed |time: 'span'}} <span *ngIf="item.isOverdue">({{(item.consumed -
+              item.estimate)| time: 'span'}} overdue)</span></div>
+        </div>
+        <div class="oa-field" *ngIf="!item.consumed && item.estimate>0">
+          <mat-icon class="label" [class.overdue]="item.isOverdue">timer</mat-icon>
+          <div class="value">estimate {{item.estimate| time: 'span'}}</div>
+        </div>
+
+        <div *ngIf="task && task.meta && task.meta[item.code]" class="oa-field">
+          <mat-icon class="label">description</mat-icon>
+          <div class="value">{{task?.meta[item.code]?.message}}</div>
+        </div>
+      </div>
+    </ng-template>
+
+  </div>
+</ng-container>
+
+
+
+<!-- [class.origin]="!item.user&&(item.code.includes('.')&&item.code.includes('dispatchment'))" -->
+<!-- [class.destination]="!item.user&&(item.code.includes('.')&&item.code.includes('receive'))" -->

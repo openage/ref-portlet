@@ -1,0 +1,76 @@
+.dateText{
+    text-align: end;
+    font-size: 8px;
+    color: #8895A9;
+    margin: 0px;
+    float: right;
+}
+
+.controls-row {
+    margin-bottom: 20px;
+}
+
+.fromDiv{
+    color: var(--primary);
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.detail {
+    color: #8895A9;
+    font-size: 9px;
+    font-size: 12px;
+    margin-bottom: 5px;
+    pointer-events: none;
+}
+
+.title {
+    color: #1A1A1A;
+    font-size: 14px;
+    margin: 0px;
+    font-weight: bold;
+}
+
+mat-icon{
+    cursor: pointer;
+}
+
+.fixDiv{
+    height: 300px;
+    overflow: auto;
+}
+
+.btnDiv{
+    float: right;
+}
+
+/* width */
+
+::-webkit-scrollbar {
+    width: 8px !important;
+}
+
+
+/* Track */
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1 !important;
+    border-radius: 15px !important;
+}
+
+
+/* Handle */
+
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1 !important;
+    border-radius: 15px !important;
+}
+
+.dialog-header {
+    align-items: center;
+}
+
+.bold {
+    font-weight: bold;
+    color: var(--primary);
+}

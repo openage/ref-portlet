@@ -1,0 +1,6 @@
+<div class="main" [class.hidden]="!isCurrent">
+  <insight-report-type-list *ngIf="areaCode" #list [area]="areaCode" (selected)="onSelect($event)">
+  </insight-report-type-list>
+</div>
+
+<router-outlet></router-outlet>

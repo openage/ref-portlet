@@ -1,0 +1,31 @@
+<div [ngSwitch]="view" class="branding {{class}}" [style]="style">
+
+  <ng-container *ngSwitchCase="'logo'">
+    <div class="oa oa-icon {{class}}" style="background-image: url({{logoUrl}});">
+    </div>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'title'">
+    <ng-container *ngTemplateOutlet="showPage;"></ng-container>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'organization'">
+    <ng-container *ngTemplateOutlet="showOrganization;"></ng-container>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'tenant'">
+    <ng-container *ngTemplateOutlet="showTenant;"></ng-container>
+  </ng-container>
+</div>
+
+<ng-template #showPage>
+  <h2 *ngIf="currentPage?.title; else showOrganization">{{currentPage?.title}}</h2>
+</ng-template>
+
+<ng-template #showOrganization>
+  <h2 *ngIf="currentOrganization?.name; else showTenant">{{currentOrganization.name}}</h2>
+</ng-template>
+
+<ng-template #showTenant>
+  <h2>{{currentTenant.name}}</h2>
+</ng-template>

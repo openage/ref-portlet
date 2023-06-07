@@ -1,0 +1,55 @@
+<div class="sTrackig" *ngIf="list && list.length">
+  <div class="row first headingDiv">
+    <div class="col-3">
+      <!-- <div> <label>Date and Time</label> </div> -->
+    </div>
+    <div class="col-9">
+      <div class="row">
+        <div class="col-4"></div>
+        <div class="col-8"><label>Activity</label></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="journalDiv" *ngFor="let item of list; let tindex= index">
+
+    <ng-container *ngFor="let activity of item.activities; let i= index">
+      <div class="row" *ngIf="i === 0">
+        <div class="col-3 aJournalDiv" [class.active]="activity.actualTime">
+          <div class="spacer"></div>
+          <div>
+            <div>{{item.date}}</div>
+            <div class="sub-text">{{item.day}}</div>
+          </div>
+        </div>
+        <div class="col-9"></div>
+      </div>
+
+      <div class="row" *ngIf="activity.event && activity.event.length">
+        <div class="col-3 controls-row" [class.active]="activity.actualTime">
+          <div class="spacer"></div>
+          <div *ngIf="activity.type === 'location'" class="location">{{activity.location}}</div>
+          <i class="sm xx eventIcon" [class]="activity.type || 'event'" [class.active]="activity?.actualTime"></i>
+        </div>
+
+        <div class="col-9">
+          <div class="row">
+            <div class="col-4">
+              <div *ngIf="activity.type !== 'location'">{{activity.expectedTime | time: 'hh:mm A'}}</div>
+            </div>
+            <div class="col-8 controls-row">
+              <ng-container>
+                <span *ngFor="let event of activity.event; let i= index">{{event}} {{i < activity.event.length-1?'/ ':''}}</span>
+              </ng-container>
+              <!-- <ng-container *ngIf="!activity.event">{{activity.formattedEventStr}}</ng-container> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+  </div>
+</div>
+
+<oa-no-data-found *ngIf="!list.length" [message]="' No Tracking Found'">
+                    </oa-no-data-found>

@@ -1,0 +1,285 @@
+ :root {
+   --primary: #0793CC;
+   --primaryBackdrop: #0021477a;
+   --primaryBackground: #5C6BC0;
+   --primaryTextColor: #ffffff;
+
+   --accent: #FFC107;
+   --accentBackground: #ffe8a47a;
+   --accentTextColor: #002147;
+
+   --secondary: #515151;
+   --secondaryBackground: #ffffff;
+
+   --disabled: #bfbdbd;
+   --disabledBackground: #C2C2C2;
+
+   --defaultBackdrop: #999999;
+   --defaultBackground: #F4F8FC;
+
+   --error: #ce0c0c;
+   --warnBackground: #ffd4d4;
+
+   --warn: #ff9666;
+   --warnBackground: #ffdccc;
+
+   --info: #3F51B5;
+   --default: #515151;
+   --success: #5b7a21;
+ }
+
+ /* html,
+body {
+  height: 100%;
+} */
+
+ body {
+   margin: 0;
+   font-family: "Rubik", sans-serif !important;
+ }
+
+ .www-container {
+   background-image: url('/assets/themes/checklist/images/background.png');
+   background-repeat: no-repeat;
+   background-attachment: fixed;
+   background-position: center center;
+ }
+
+ .landing.page {
+   margin: 0;
+ }
+
+ .landing>.header-container {
+   display: none;
+ }
+
+ .app-container {
+   background: var(--defaultBackground);
+ }
+
+ .nav-container {
+   background: #ffffff;
+ }
+
+ .app-container>.header-container {
+   border-bottom: solid 1px var(--disabledBackground);
+   background: var(--defaultBackground);
+ }
+
+ .www-container>.header-container {
+   display: none;
+   /* width: 100vw;
+   background: var(--accent);
+   opacity: 80%; */
+ }
+
+ .www-container>.footer-container {
+   display: none;
+ }
+
+ .page-container.with-header {
+   margin-top: 70px;
+ }
+
+ .page {
+   margin: 10px 10px 0 10px;
+ }
+
+ .page>.context-container {
+   height: 30px;
+   padding-top: 5px;
+ }
+
+ .context-container .back {
+   margin-right: 10px;
+ }
+
+ .context-container>.title {
+   color: var(--secondary);
+   font-size: 20px;
+   font-weight: bold;
+   margin-right: 10px;
+   /* margin-bottom: 10px; */
+ }
+
+
+ .search-bar {
+   background: none;
+   margin: 10px 0;
+ }
+
+ .search-bar>.search-item {
+   min-width: 150px;
+ }
+
+ div.table>header {
+   /* text-transform: uppercase; */
+   color: var(--default);
+   font-weight: bold;
+ }
+
+ .data-row-expanded,
+ .data-row {
+   background: #ffffff;
+   box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
+   margin-bottom: 10px;
+   border-radius: 3px;
+   min-height: 50px;
+   border-bottom: none;
+ }
+
+ .data-row-expanded>.data-row,
+ .data-row-expanded>.data-row:hover {
+   background: #ffffff;
+   box-shadow: none;
+   margin-bottom: 10px;
+   border-radius: initial;
+ }
+
+ .data-row-expanded:hover,
+ .data-row:hover {
+   box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);
+   transition: ease-in 300ms;
+ }
+
+ .data-row-expanded>.details {
+   background: var(--defaultBackground);
+   margin: 5px;
+   padding: 10px;
+ }
+
+
+ .header>.col.index,
+ .data-row>.col.index {
+   width: 100px;
+   text-align: right;
+ }
+
+ .header>.col.actions,
+ .data-row>.col.actions {
+   width: 150px;
+   text-align: center;
+ }
+
+ .mat-card {
+   border-radius: 0;
+ }
+
+ i.logo {
+   background-image: url("/assets/themes/checklist/logo.png");
+ }
+
+
+ /* .custom-dialog-container .mat-dialog-container {
+  top: 67px;
+  left: 495px;
+  width: 395px;
+  border-radius: 12px;
+}
+
+.mat-card {
+  box-shadow: 0px 3px 6px #00000029 !important;
+  font-family: 'Poppins' !important;
+}
+
+.mat-form-field {
+  display: inline-block;
+  position: relative;
+  text-align: left;
+  margin-bottom: -25px;
+  width: 100%;
+}
+
+input.mat-input-element {
+  height: 30px;
+  background: #f5f5f5;
+  font-family: 'Poppins' !important;
+  font-size: 13px;
+  padding-left: 8px;
+  padding-right: 8px;
+  border-radius: 2px;
+}
+
+textarea.mat-input-element {
+  height: 30px;
+  background: #f5f5f5;
+  font-family: 'Poppins' !important;
+  font-size: 13px;
+  padding-left: 8px !important;
+  padding-right: 8px !important;
+  border-radius: 2px;
+  padding-top: 4px !important;
+}
+
+.mat-raised-button {
+  border-radius: 25px !important;
+  min-width: 100px;
+  outline: none !important;
+  font-family: poppins !important;
+}
+
+.mat-select {
+  height: 30px;
+  background: #f5f5f5;
+  font-family: 'Poppins' !important;
+  font-size: 13px;
+  padding-top: 8px;
+  padding-left: 8px;
+}
+
+.mat-select>.mat-select-arrow-wrapper {
+  padding-top: 12px;
+}
+
+.mat-select-arrow-wrapper {
+  display: table-cell;
+  background-image: url(https://openage.github.io/themes/checklist/v1/icons/organisational-setup/profile/dropdown-arrow.svg);
+  background-repeat: no-repeat;
+  vertical-align: middle;
+}
+
+.mat-select-arrow {
+  opacity: 0;
+}
+
+.mat-datepicker-toggle {
+  position: absolute;
+}
+
+.mat-datepicker-toggle-default-icon {
+  color: var(--primary);
+}
+
+.mat-form-field-infix>label {
+  color: #6A6A6A !important;
+  font-size: 12px !important;
+}
+
+.header>h5 {
+  font-size: 14px;
+}
+
+.mat-table {
+  width: 100%
+}
+
+.mat-header-cell {
+  background: #f6f3fb !important;
+  color: black !important;
+}
+
+.mat-cell {
+  color: rgba(0, 0, 0, .54) !important;
+}
+
+th.mat-header-cell {
+  border-bottom-color: white !important;
+}
+
+td.mat-cell {
+  padding-right: 10px !important;
+}
+
+.customPadding-dialog-container .mat-dialog-container {
+  padding: 0px !important;
+} */

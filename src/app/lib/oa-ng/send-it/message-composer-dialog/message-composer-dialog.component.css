@@ -1,0 +1,77 @@
+.btnDiv {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.chipInput {
+  min-height: 40px;
+  padding: 4px;
+  height: auto;
+}
+
+.btnDiv>.mat-raised-button:first-child {
+  margin-left: auto;
+  margin-right: 5px;
+}
+
+.btnDiv>.mat-raised-button:last-child {
+  margin-right: auto;
+  margin-left: 5px;
+}
+
+label {
+  margin-top: 4px;
+}
+
+.to {
+  overflow: unset;
+}
+
+.to mat-chip {
+  background: none;
+  border: 1px solid var(--disabledBackground);
+  border-radius: 15px;
+}
+
+.to input {
+  width: auto !important;
+  border: none;
+}
+
+.mat-chip-list {
+  width: inherit;
+}
+
+.text-box {
+  min-height: 300px;
+}
+
+.user-details {
+  position: absolute;
+}
+
+.input-user-div {
+  /* position: relative; */
+}
+
+.user-selection-div {
+  position: absolute;
+  background: white;
+  z-index: 99;
+  width: 300px;
+  max-height: 250px;
+  overflow-y: auto;
+}
+.attachmentDiv {
+  border: 1px solid var(--disabledBackground);
+  border-radius: 4px;
+  padding: 5px 10px;
+  position: relative;
+  margin-right: 20px;
+}
+
+.attachmentClose {
+  position: absolute;
+  top: -12px;
+  right: -11px;
+}

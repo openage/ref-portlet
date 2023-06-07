@@ -1,0 +1,39 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+<div [ngSwitch]="view">
+  <div *ngSwitchCase="'cards'" class="flex-row four folders-list">
+    <div *ngFor="let item of items" class="main-div">
+      <div class="imgDiv">
+        <img [src]="item.url">
+      </div>
+      <div class="title-div">{{item.name}}</div>
+      <div class="disc-div"> {{item.description}}</div>
+      <div class="detail-btn">
+        <p>Read More</p>
+      </div>
+    </div>
+  </div>
+  <div *ngSwitchCase="'stack'" class="flex-row">
+    <div *ngFor="let item of items">
+      <ng-container *ngIf="item.url">
+        <div class="detailBox flex-3-1">
+          <div>
+            <div class="title">{{item.name}}</div>
+            <div class="content"> {{item.content}}</div>
+          </div>
+          <div class="imgDiv"> <img [src]="item.url" width="200px"></div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="!item.url">
+        <div class="detail-box">
+          <div class="title">{{item.name}}</div>
+          <div class="content"> {{item.content}}</div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+  <div *ngSwitchCase="'grid'" class="flex-row four project-box">
+    <div *ngFor="let item of items">
+      <img [src]="item.url">
+    </div>
+  </div>
+</div>

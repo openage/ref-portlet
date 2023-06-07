@@ -1,0 +1,13 @@
+<div mat-dialog-title class="controls-row">
+  <h4>Template Uploader</h4>
+  <div class="spacer"></div>
+  <mat-icon (click)="dialog.close()" class="pointer">close</mat-icon>
+</div>
+<div mat-dialog-content>
+  <shared-file-uploader [uploader]="uploader" [samples]="samples" [options]="options" #fileUploader></shared-file-uploader>
+</div>
+<div mat-dialog-actions class="buttons">
+  <span class="spacer"></span>
+  <button mat-button class="btnUpld" (click)="onCancel()">Cancel</button>
+  <button mat-raised-button class="btnUpld" color="primary" (click)="onUpload()">Upload</button>
+</div>

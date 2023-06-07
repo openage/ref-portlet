@@ -1,0 +1,21 @@
+<div class="main" [class.hidden]="!isCurrent">
+    <div class="header">
+        <h5>{{page?.title}}</h5>
+        <span class="spacer"></span>
+        <!-- <button mat-raised-button class="primary" (click)="detail.save()">save</button> -->
+    </div>
+    <div class="header">
+        <span class="spacer"></span>
+        <gateway-task-states #gatewayStates *ngIf="release" [task]="release" view="stepper"></gateway-task-states>
+        <span class="spacer"></span>
+        <gateway-release-actions *ngIf="release" [release]="release" [view]="'action'"
+            (updated)="onStatusUpdate($event)" #workflow>
+        </gateway-release-actions>
+    </div>
+
+    <div *ngIf="projectCode">
+        <gateway-release #detail [code]="releaseCode" [project]="projectCode" (fetched)="setRelease($event)">
+        </gateway-release>
+    </div>
+</div>
+<router-outlet></router-outlet>

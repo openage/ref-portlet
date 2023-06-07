@@ -1,0 +1,101 @@
+.list>*>div {
+  background-color: #ffffff;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.list>* {
+  margin-bottom: 10px;
+}
+
+.list label {
+  font-size: smaller;
+  font-weight: 100;
+  margin-right: 10px;
+}
+
+.header {
+  padding-top: 0 !important;
+}
+
+.centered {
+  align-items: center;
+}
+
+.heading {
+  color: #444444;
+  font-weight: 600;
+}
+
+.tag {
+  width: 67px;
+  height: 24px;
+  background: #FEDFE1;
+  border-radius: 4px;
+  text-align: center;
+  color: #EA2330;
+  font-size: 12px;
+  padding: 4px
+}
+
+.heading-color {
+  color: #444444
+}
+
+.date {
+  font-size: 14px;
+}
+
+.logo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.amount {
+  font-size: 14px !important;
+}
+
+.section>.header {
+  margin-bottom: 0px;
+}
+
+.section>.footer {
+  margin-top: 0px;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.link {
+  margin-left: 10px;
+  margin-bottom: 2px;
+}
+
+.status-bar {
+  width: 100%
+}
+
+.spacing {
+  margin-right: 5px;
+  ;
+}
+
+.heading {
+  color: var(--primary)
+}
+.editor-div{
+  width:65%;
+  position: relative;
+}
+.contact-person{
+  bottom:0;  
+}
+.invoice-edit-section{
+  justify-content: space-between;
+}
+.total-container{
+  max-width:65%;
+}

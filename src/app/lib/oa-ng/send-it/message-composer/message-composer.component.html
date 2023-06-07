@@ -1,0 +1,31 @@
+<div class="form-container">
+  <label>To</label>
+  <div class="oa-input chipInput">
+    <mat-chip-list #chipList>
+      <mat-chip *ngFor="let item of message.to" [removable]="true">
+        <oa-avatar [value]="item.user" [view]="'text'"></oa-avatar>
+        <mat-icon *ngIf="!to.includes(item.user.email)" class="subtle" matChipRemove (click)="removeTo(item.user)">
+          cancel
+        </mat-icon>
+      </mat-chip>
+      <input placeholder="To" [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="addTo($event)">
+    </mat-chip-list>
+  </div>
+
+  <div *ngIf="!modes" class="flex-row three">
+    <mat-checkbox [(ngModel)]="message.modes.email">Email</mat-checkbox>
+    <mat-checkbox [(ngModel)]="message.modes.sms">SMS</mat-checkbox>
+    <mat-checkbox [(ngModel)]="message.modes.push">Push</mat-checkbox>
+  </div>
+  <label>Subject</label>
+  <div class="oa-input">
+    <input placeholder="Subject" [(ngModel)]="message.subject">
+  </div>
+  <label>Body</label>
+  <oa-content-editor [value]="content" (changed)="setContent($event)"></oa-content-editor>
+  <div class="btnDiv">
+    <button mat-raised-button color="primary" [disabled]="!message.subject || !message.body"
+      (click)="send()">Send</button>
+  </div>
+</div>

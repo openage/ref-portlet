@@ -1,0 +1,453 @@
+.lds-facebook {
+  /* display: inline-block; */
+  position: relative;
+  width: 64px;
+  height: 64px;
+  margin: auto;
+}
+
+.lds-facebook div {
+  display: inline-block;
+  position: absolute;
+  left: 6px;
+  width: 13px;
+  background: var(--primary);
+  animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+}
+
+.lds-facebook div:nth-child(1) {
+  left: 6px;
+  animation-delay: -0.24s;
+}
+
+.lds-facebook div:nth-child(2) {
+  left: 26px;
+  animation-delay: -0.12s;
+}
+
+.lds-facebook div:nth-child(3) {
+  left: 45px;
+  animation-delay: 0;
+}
+
+.cover-progress-bar {
+  width: 70% !important;
+  margin: auto;
+}
+
+.inline-progress-bar {
+  margin: 20px auto !important;
+}
+
+@keyframes lds-facebook {
+  0% {
+    top: 6px;
+    height: 51px;
+  }
+
+  50%,
+  100% {
+    top: 19px;
+    height: 26px;
+  }
+}
+
+.inline,
+.cover {
+  display: block;
+  left: 0;
+  width: 100%;
+  z-index: 1111;
+}
+
+.cover {
+  top: 0;
+  position: absolute;
+  height: 100%;
+  background-color: var(--defaultBackground);
+  /* background-color: rgba(0, 0, 0, 0.3); */
+
+  // background-image: radial-gradient(circle farthest-side, #fceabb, #f8b500);
+}
+
+.inline {
+  top: 38%;
+  position: relative;
+}
+
+.outer {
+  display: table;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(256, 256, 256, 0.8);
+  border-radius: 10px;
+}
+
+.inline .outer {
+  height: inherit;
+  width: inherit;
+}
+
+.middle {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.inner {
+  margin-left: auto;
+  margin-right: auto;
+  width: 400px;
+  /*whatever width you want*/
+}
+
+/* .processing {
+  position: fixed;
+  z-index: 999;
+  height: 2em;
+  width: 2em;
+  overflow: show;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.processing:before {
+  content: '';
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+} */
+
+.lds-roller {
+  display: inline-block;
+  position: relative;
+  /* width: 40px;
+  height: 40px; */
+  padding-bottom: 20px;
+}
+
+.lds-roller div {
+  animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  transform-origin: 16px 16px;
+}
+
+.lds-roller div:after {
+  content: " ";
+  display: block;
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: #6934B4;
+  margin: -3px 0 0 -3px;
+}
+
+.lds-roller div:nth-child(1) {
+  animation-delay: -0.036s;
+}
+
+.lds-roller div:nth-child(1):after {
+  top: 25px;
+  left: 25px;
+}
+
+.lds-roller div:nth-child(2) {
+  animation-delay: -0.072s;
+}
+
+.lds-roller div:nth-child(2):after {
+  top: 27px;
+  left: 22px;
+}
+
+.lds-roller div:nth-child(3) {
+  animation-delay: -0.108s;
+}
+
+.lds-roller div:nth-child(3):after {
+  top: 28px;
+  left: 19px;
+}
+
+.lds-roller div:nth-child(4) {
+  animation-delay: -0.144s;
+}
+
+.lds-roller div:nth-child(4):after {
+  top: 29px;
+  left: 16px;
+}
+
+.lds-roller div:nth-child(5) {
+  animation-delay: -0.18s;
+}
+
+.lds-roller div:nth-child(5):after {
+  top: 28px;
+  left: 12px;
+}
+
+.lds-roller div:nth-child(6) {
+  animation-delay: -0.216s;
+}
+
+.lds-roller div:nth-child(6):after {
+  top: 27px;
+  left: 9px;
+}
+
+.lds-roller div:nth-child(7) {
+  animation-delay: -0.252s;
+}
+
+.lds-roller div:nth-child(7):after {
+  top: 25px;
+  left: 7px;
+}
+
+.lds-roller div:nth-child(8) {
+  animation-delay: -0.288s;
+}
+
+.lds-roller div:nth-child(8):after {
+  top: 22px;
+  left: 5px;
+}
+
+@keyframes lds-roller {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.cover-stepper {
+  display: grid;
+}
+
+.stepper {
+  background-color: white;
+  padding: 34px;
+  margin: auto;
+  width: 60%;
+  border-radius: 2px;
+}
+
+.circle {
+  border-radius: 50%;
+  margin-left: 0;
+  height: 50px;
+  width: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.stepper .hr-line {
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: 0;
+}
+
+.hr-line.default {
+  border-top: 3px solid var(--defaultBackdrop);
+}
+
+.hr-line.active,
+.hr-line.completed {
+  border-top: 3px solid var(--primary);
+}
+
+.text {
+  position: absolute;
+  margin-top: 80px;
+  font-size: large;
+  text-transform: capitalize;
+  background: transparent !important;
+}
+
+.text.default {
+  color: var(--disabled);
+}
+
+.text.active,
+.text.completed {
+  color: var(--primary);
+}
+
+span {
+  font-size: large
+}
+
+.circle.styled.active {
+  animation: activeStep 2s infinite;
+}
+
+.download {
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  text-align: center;
+  border: 1px solid var(--defaultBackground);
+  animation: activeStep 1s infinite;
+}
+
+.download-icon {
+  opacity: 1;
+  animation: fade-in-out 1s infinite;
+}
+
+.spinner-background .mat-progress-spinner {
+  display: inline;
+}
+
+
+:host ::ng-deep .background circle {
+  stroke-opacity: 0.3 !important;
+}
+
+
+@keyframes fade-in-out {
+  0% {
+    opacity: 0;
+    transform: translateY(0)
+  }
+
+  25% {
+    opacity: 0.5;
+    transform: translateY(3px);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translateY(6px);
+  }
+
+  75% {
+    opacity: 0.5;
+    transform: translateY(9px);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+@keyframes activeStep {
+  0% {
+    box-shadow: 0 0 0 0 rgba(33, 131, 221, 0.4);
+  }
+
+  70% {
+    box-shadow: 0 0 0 10px rgba(33, 131, 221, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(33, 131, 221, 0);
+  }
+}
+
+@media only screen and (max-width:568px) {
+  .stepper {
+    padding: 5x 0 10px 0;
+  }
+}
+
+
+
+
+
+
+.middleallign {
+  height: inherit;
+  max-height: 100%;
+  width: 100%;
+  text-align: center;
+  vertical-align: middle;
+  /* padding-top: 12.5%; */
+}
+
+
+
+.lds-ellipsis {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+
+.lds-ellipsis div {
+  position: absolute;
+  top: 33px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--primary);
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+
+.lds-ellipsis div:nth-child(1) {
+  left: 8px;
+  animation: lds-ellipsis1 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(2) {
+  left: 8px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(3) {
+  left: 32px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(4) {
+  left: 56px;
+  animation: lds-ellipsis3 0.6s infinite;
+}
+
+@keyframes lds-ellipsis1 {
+  0% {
+    transform: scale(0);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes lds-ellipsis3 {
+  0% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(0);
+  }
+}
+
+@keyframes lds-ellipsis2 {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  100% {
+    transform: translate(24px, 0);
+  }
+}

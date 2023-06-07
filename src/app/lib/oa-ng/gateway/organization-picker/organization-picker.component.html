@@ -1,0 +1,35 @@
+<ng-container [ngSwitch]="view">
+  <oa-autocomplete *ngSwitchCase="'picker'" [value]="value && value.code? value : null " [options]="{
+    label: placeholder,
+    search: {
+      field: 'name',
+      params: {
+        type: type
+      },
+      limit: 10
+    },
+    preFetch: true,
+    templates: {
+      value: valueTemplate,
+      placeholder: placeholderTemplate
+    }
+  }" [api]="organizationService" (changed)="onSelect($event)" [readonly]="readonly">
+  </oa-autocomplete>
+</ng-container>
+
+<ng-template #valueTemplate let-item="value">
+  <div [class.readonly]="readonly" class="value input">
+    <ng-container *ngIf="options.show.icon">
+      <img class="avatar" *ngIf="item.logo && item.logo.url" [src]="item.logo.url">
+      <img class="avatar" *ngIf="!item.logo || !item.logo.url" src="/assets/images/customers/default.png">
+    </ng-container>
+    <span>{{item.name}}</span>
+  </div>
+</ng-template>
+
+<ng-template #placeholderTemplate>
+  <div class="input">
+    <label>{{placeholder}}</label>
+    <div class="sub-text">Search</div>
+  </div>
+</ng-template>

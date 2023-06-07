@@ -1,0 +1,34 @@
+<div mat-dialog-title class="controls-row">
+  <h4>{{label}}</h4>
+  <div class="spacer"></div>
+  <mat-icon class="pointer" (click)="dialogRef.close()">close</mat-icon>
+</div>
+
+<div mat-dialog-content class="row">
+  <div class="col-12">
+    <div class="form-container flex-row  billing-entity-form two">
+      <mat-form-field appearance="outline">
+        <label for="name">Name<span class="mandatory">*</span></label>
+        <input matInput id="name" name="name" [(ngModel)]="entity.name" (change)="onNameChange($event)" type="string">
+      </mat-form-field>
+
+      <bap-billing-entity-gst-editor [value]="entity.gst" (valueChanged)="onGSTChange($event)"
+        (errored)="error.gst = $event" [required]="true">
+      </bap-billing-entity-gst-editor>
+
+      <mat-form-field appearance="outline">
+        <label for="nav">Nav Code</label>
+        <input matInput id="nav" name="nav" [(ngModel)]="entity.navCode" (change)="onNavCodeChange($event)"
+          type="string">
+      </mat-form-field>
+
+      <oa-address-editor [value]="entity.address" (changed)="entity.address = $event"></oa-address-editor>
+    </div>
+  </div>
+</div>
+
+<div mat-dialog-actions class="buttons controls-row">
+  <span class="spacer"></span>
+  <button mat-button (click)="dialogRef.close()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="onRequest()">Request</button>
+</div>

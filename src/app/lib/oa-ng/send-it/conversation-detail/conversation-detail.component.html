@@ -1,0 +1,86 @@
+<!-- <processing-indicator *ngIf="isProcessing"></processing-indicator> -->
+<div class="listMessages" *ngIf="view === 'line'">
+  <div class="messageCard" *ngFor="let item of items">
+    <div class="controls-row">
+      <div>
+        <ng-container *ngIf="item.body; else msgIcon">
+          <span (click)="open(item)" class="material-icons cursorPointer">mail_outline</span>
+        </ng-container>
+        <ng-template #msgIcon>
+          <span class="material-icons">chat_bubble_outline</span>
+        </ng-template>
+      </div>
+      <div>
+        <div (click)="open(item)" class="subject">{{item.subject}}</div>
+      </div>
+    </div>
+    <div class="controls-row marginBottom">
+      <div class="time">{{item.date | time: 'ago'}}</div>
+      <div class="spacer"></div>
+      <oa-avatar [value]="item.from.profile" type="micro"></oa-avatar>
+      <!-- <div class="from">{{item.from.profile.firstName}} {{item.from.profile.lastName || ''}}</div> -->
+    </div>
+  </div>
+</div>
+
+<div class="chat-box" *ngIf="view === 'chat-box'">
+  <div class="messageCard" *ngFor="let item of items">
+    <div class="row">
+      <div>
+        <oa-avatar [value]="item.from.profile" type="button"></oa-avatar>
+      </div>
+      <div>
+        <div class="controls-row">
+          <div class="chat-box-profile">{{item.from.profile.firstName}} {{item.from.profile.lastName || ''}}</div>
+          <div class="spacer"></div>
+          <div class="chat-box-time">{{item.date | time: 'ago'}}</div>
+        </div>
+        <div (click)="open(item)" class="chat-box-subject">{{item.subject}}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="listMessages" *ngIf="!view">
+  <div class="messageCard" *ngFor="let item of items">
+    <div class="controls-row">
+      <div class="from">{{item.from.profile.firstName}} {{item.from.profile.lastName || ''}}</div>
+      <div class="spacer"></div>
+      <div class="time">{{item.date | time: 'ago'}}</div>
+    </div>
+    <div (click)="open(item)" class="subject">{{item.subject}}</div>
+  </div>
+</div>
+
+<div class="message-list" *ngIf="view === 'card'">
+  <div *ngFor="let item of items" class="mat-elevation-z2 message">
+    <div class="from">{{item.from.profile.firstName}} {{item.from.profile.lastName || ''}}</div>
+    <div class="subject">
+      {{item.subject}}
+    </div>
+    <div class="time">{{item.date | time: 'ago'}}</div>
+  </div>
+</div>
+
+<div class="message-detail" *ngIf="view === 'notes'">
+  <div *ngFor="let item of items let i = index">
+    <div class="row">
+      <div class="col-1">
+        <img *ngIf="item.from.profile.pic.url" src="{{item.from.profile.pic.url}}" class="pic">
+      </div>
+      <div class="col-11">
+        <div class="controls-row">
+          <div class="from">{{item.from.profile.firstName}} {{item.from.profile.lastName || ''}}</div>
+          <div class="spacer"></div>
+          <div class="time">{{item.date | time: 'ago'}}</div>
+        </div>
+        <div id='note-{{i}}' class="subject">
+          {{injectBody('note-'+ i, item.subject)}}
+        </div>
+      </div>
+    </div>
+    <hr>
+  </div>
+</div>
+
+<app-paginator *ngIf="limit" [pager]="pager" [total]="pager.total"></app-paginator>

@@ -1,0 +1,55 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+
+<div mat-dialog-title class="controls-row mt-n2">
+    <h4><b>Edit Proforma Invoice</b></h4>
+    <span class="spacer"></span>
+    <button mat-icon-button mat-dialog-close class="close-icon mt-n1 mr-n2" (click)="dialogRef.close()">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+
+<mat-dialog-content class="mat-typography">
+    <div class="header">
+        <div></div>
+        <span class="spacer"></span>
+        <mat-slide-toggle [checked]="changeAmount" (change)="changeAmount = $event.checked">Change Amount
+        </mat-slide-toggle>
+    </div>
+
+    <div *ngIf="!changeAmount">
+        <div class=" flex-1-1-1 mt-2">
+            <div class="d-flex flex-row-2 w-100 mx-2">
+                <label class="my-auto">Document No.</label>
+                <div class="oa-input w-50 mx-2">
+                    <input [ngModel]="invoice.code | uppercase" (ngModelChange)="invoice.code = $event" uppercase>
+                </div>
+            </div>
+
+            <div class="d-flex flex-row-2 w-100 mx-2">
+                <label class="my-auto">Document Type</label>
+                <mat-select class="w-50 oa-input" [(ngModel)]="invoice.type">
+                    <mat-option *ngFor="let type of types" [value]="type.code" [disabled]="['proforma', 'credit'].includes(type.code)">{{type.name}}</mat-option>
+                </mat-select>
+            </div>
+
+            <div class="d-flex w-100 mx-2">
+                <label class="my-auto">File</label>
+                <button mat-button class="primary w-50 mx-2" [disabled]="!invoice.id" (click)="fileUploader()">Upload
+                    Invoice</button>
+            </div>
+
+        </div>
+    </div>
+
+    <div *ngIf="changeAmount">
+        <bap-invoice-editor [invoice]="invoice" [readonly]="false" [config]="editorConfig"></bap-invoice-editor>
+    </div>
+
+
+</mat-dialog-content>
+
+<hr>
+<div mat-dialog-actions class="buttons controls-row flex-row-reverse mt-auto">
+    <button mat-raised-button color="primary" (click)="onSave()">Save</button>
+    <button mat-button mat-dialog-close (click)="dialogRef.close()">Cancel</button>
+</div>

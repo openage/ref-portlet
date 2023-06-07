@@ -1,0 +1,25 @@
+<div mat-dialog-title class="controls-row">
+  <h4>Training Link</h4>
+  <span class="spacer"></span>
+  <!-- <i class="sm file-link active cursorPointer" (click)="openInTab()"></i> -->
+  <button mat-icon-button mat-dialog-close class="close-icon" (click)="dialogRef.close()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<div mat-dialog-content>
+  <div class="controls-row">
+    <div class="spacer"></div>
+    <!-- <div class="linkCard">
+      <i class="lg file-link active cursorPointer" (click)="openInTab()"></i>
+    </div> -->
+    <iframe width="450px" height="250px" src="https://www.youtube.com/embed/yD8iIS1-jo4" allow="fullscreen"
+      frameborder="0"></iframe>
+    <div class="spacer"></div>
+  </div>
+</div>
+
+<div mat-dialog-actions class="btnDiv controls-row">
+  <span class="spacer"></span>
+  <button mat-raised-button (click)="dialogRef.close()">View Later</button>
+  <button mat-raised-button color="primary" (click)="dontShow()">Got It</button>
+</div>

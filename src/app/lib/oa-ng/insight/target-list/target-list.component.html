@@ -1,0 +1,157 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+
+<ng-container [ngSwitch]="view">
+  <ng-container [ngSwitchCase]="'table'" *ngTemplateOutlet="table"></ng-container>
+</ng-container>
+
+<!-- <ng-template #grid>
+  <div class="row">
+    <div *ngFor="let item of items" class="col-xxl-4 col-xl-4 col-lg-6 col-md-6 col-sm-12" (click)="select(item)">
+      <mat-card class="mb-3">
+        <div class="header">
+          <div class="w-75">
+            <p class="target-label">{{ item.type.label }}</p>
+            <span class="text-capitalize target-period">
+              ({{ item.type.period }})
+            </span>
+            <div class="flex-row two bottom-bar">
+              <div class="target-achieved">
+                <label>Your Target:</label> {{ getMyTarget(item.target) }}
+              </div>
+              <div class="target-achieved">
+                <label>Achieved:</label> {{ item.achieved?.my || 0 }}
+              </div>
+            </div>
+          </div>
+          <span class="spacer"></span>
+          <div class="target-stat">
+            <p>Total Target</p>
+            <span>{{ item.target.value }}</span>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+</ng-template> -->
+
+
+<ng-template #table>
+  <div class="table table-responsive-sm" *ngIf="items.length; else noData">
+    <div class="header">
+      <div class="period">Period</div>
+      <div class="cluster">Cluster</div>
+      <div class="user">User</div>
+      <div class="achieved">Achieved</div>
+      <div class="target">Target</div>
+      <div class="action"></div>
+    </div>
+    <ng-container *ngFor="let item of items" [class.disabled]="item.isProcessing">
+      <ng-container *ngTemplateOutlet="item.isSelected ? editRow : detailRow; context: { item: item }"></ng-container>
+    </ng-container>
+    <a *ngIf="auth.hasPermission(['system.manage'])" class="add-row" (click)="addPeriod()">Add Period</a>
+  </div>
+  <app-paginator [pager]="pager" [total]="pager.total"></app-paginator>
+</ng-template>
+
+<ng-template #noData>
+  <oa-no-data-found [message]="'No targets has been assigned'">
+    <button *ngIf="auth.hasPermission(['system.manage'])" mat-raised-button (click)="addPeriod()">Add Target</button>
+  </oa-no-data-found>
+</ng-template>
+
+<ng-template #addRow>
+  <div class="data-row">
+    <div class="period">
+      <button mat-stroked-button color="primary" (click)="addPeriod()">Add Period</button>
+    </div>
+    <div class="cluster"></div>
+    <div class="user"></div>
+    <div class="achieved"></div>
+    <div class="target"></div>
+    <div class="action"></div>
+  </div>
+</ng-template>
+
+
+<ng-template #detailRow let-item="item">
+  <div class="data-row" (click)="onSelect(item, !item.isSelected)">
+    <div class="period">{{item.date | date: 'MMMM yyyy'}}</div>
+    <div class="cluster">{{item?.meta?.cluster}}</div>
+    <div class="user">{{item.user?.profile?.firstName}} {{item.user?.profile?.lastName}}</div>
+    <div class="achieved">{{item.type.unit}} {{item.achieved | value:'comma'}}</div>
+    <div class="target">{{item.type.unit}} {{item.value | value:'comma'}}</div>
+    <div class="action"><span class="material-icons pointer"> expand_more </span></div>
+  </div>
+</ng-template>
+
+<ng-template #editRow let-item="item">
+  <div class="data-row border-none" *ngFor="let member of item.team; let i = index">
+
+    <div class="period"><span *ngIf="i === 0">{{item.date | date: 'MMMM yyyy'}}</span></div>
+    <div class="cluster"><span *ngIf="i === 0">{{item?.meta?.cluster}}</span></div>
+
+    <div class="user">
+      <ng-container *ngIf="member.status !== 'new';else userPicker">
+        <span *ngIf="item.user.id === member.user.id">You</span>
+        <div *ngIf="item.user.id !== member.user.id">
+          <span>{{member.user.profile.firstName}}</span>
+          <span *ngIf="member.user.profile.lastName">{{' ' + member.user.profile.lastName }}</span>
+        </div>
+      </ng-container>
+
+      <ng-template #userPicker>
+        <directory-user-picker [placeholder]="''"
+          [roleTypeCode]="['operator-head', 'operator', 'sales-head', 'sales-agent', 'business-head', 'pricing-agent']"
+          (changed)="member.user = $event">
+        </directory-user-picker>
+      </ng-template>
+    </div>
+
+    <div class="achieved">
+      <span *ngIf="!auth.hasPermission(['system.manage', 'business.manage'])">{{item.type.unit}} {{member.achieved |
+        value:'comma'}}</span>
+      <div *ngIf="auth.hasPermission(['system.manage', 'business.manage'])" class="oa-input">
+        <input matInput [(ngModel)]="member.achieved" type="text" [min]="0" numbersOnly>
+      </div>
+    </div>
+
+    <div class="target">
+      <span *ngIf="!auth.hasPermission(['system.manage', 'business.manage'])">{{item.type.unit}} {{((item.user?.id !==
+        member.user?.id) ? member.value:
+        getOwnerTarget(item)) | value:'comma'}}</span>
+      <div class="oa-input" *ngIf="auth.hasPermission(['system.manage', 'business.manage'])">
+        <input matInput [(ngModel)]="member.value" type="text" [min]="0" numbersOnly>
+      </div>
+    </div>
+
+    <div class="action">
+      <span class="material-icons pointer" *ngIf="i === 0" (click)="onSelect(item, !item.isSelected)"> expand_less
+      </span>
+      <span class="material-icons pointer remove-member" *ngIf="i !== 0 && member.status === 'new'"
+        (click)="removeMember(item, i)">
+        remove_circle_outline </span>
+    </div>
+  </div>
+
+  <div class="data-row total-border">
+    <div class="period"></div>
+    <div class="cluster"></div>
+    <div class="user">
+      <!-- <span class="primary-color pointer" (click)="addMember(item)">+ Add Member</span> -->
+      <a class="add-row" (click)="addMember(item)">Delegate</a>
+    </div>
+    <div class="achieved"></div>
+    <div class="target"></div>
+    <div class="action"><button mat-raised-button class="primary" [disabled]="item.isProcessing"
+        (click)="onSave(item)">Save</button></div>
+  </div>
+
+  <div class="data-row">
+    <div class="period"></div>
+    <div class="cluster"></div>
+    <div class="user">Total</div>
+    <div class="achieved">{{item.type.unit}} {{item.achieved | value:'comma'}}</div>
+    <div class="target">{{item.type.unit}} {{item.value | value:'comma'}}</div>
+    <div class="action"></div>
+  </div>
+</ng-template>

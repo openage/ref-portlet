@@ -1,0 +1,33 @@
+<div mat-dialog-title class="controls-row">
+  <h4>Permissions Editor</h4>
+  <div class="spacer"></div>
+  <mat-icon (click)="dialog.close()" class="pointer">close</mat-icon>
+</div>
+
+<div mat-dialog-content>
+  <ng-container *ngFor="let group of groups">
+    <mat-accordion class="headers-align" multi>
+      <mat-expansion-panel style="margin: 5px;">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{group.name}}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <ng-container *ngFor="let item of group.permissions">
+          <div>
+            <mat-checkbox class="checkbox-margin" (change)="togglePermissions($event, item.code)"
+              [(ngModel)]="item.isEdit">
+              {{item.name}} ({{item.code}})
+            </mat-checkbox>
+          </div>
+        </ng-container>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </ng-container>
+</div>
+
+<div mat-dialog-actions class="buttons controls-row">
+  <span class="spacer"></span>
+  <button mat-button (click)="dialog.close()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="save()">Save</button>
+</div>

@@ -1,0 +1,135 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+
+<ng-container *ngFor="let item of items">
+  <ng-container *ngTemplateOutlet="layoutTemplate; context: { div: item }"> </ng-container>
+</ng-container>
+<ng-template #layoutTemplate let-div="div">
+  <div *ngIf="auth.hasPermission(div.permissions)" [ngStyle]="div.style" [ngClass]="div.class"
+    [class.editing]="isEditing">
+    <div *ngIf="isEditing && div.code" class="edit label">
+      {{div.code}}
+    </div>
+    <div *ngIf="div.title" [ngStyle]="div.title.style" class="title" [class.hide]="isEditing"
+      [ngClass]="div.title.class">
+      {{div.title.text}}
+    </div>
+    <ng-container *ngIf="div.body||div.body !== 'undefined'">
+      <div *ngIf="div.body.html" [innerHtml]="sanitizer.bypassSecurityTrustHtml(div.body.html)"
+        [ngStyle]="div.body?.style" [ngClass]="div.body?.class"></div>
+    </ng-container>
+    <div *ngIf="div.widgets && div.widgets.items && div.widgets.items.length" class="flex-row page-div widgets"
+      [ngStyle]="div.widgets.style" [ngClass]="div.widgets.class">
+      <ng-container *ngFor="let item of div.widgets.items">
+        <ng-container *ngIf="auth.hasPermission(item.permissions)">
+          <ng-container *ngTemplateOutlet=" widgetTemplate; context: { widget: item }"> </ng-container>
+        </ng-container>
+      </ng-container>
+    </div>
+
+    <div *ngIf="div.divs && div.divs.items && div.divs.items.length" [ngStyle]="div.divs.style"
+      [ngClass]="div.divs?.class">
+      <ng-container [ngSwitch]="div.view">
+        <ng-container *ngSwitchCase="'tab'">
+          <div class="tabs horizontal tabs-container">
+            <span class="spacer"></span>
+            <ng-container *ngFor="let item of div.divs.items">
+              <div class="" *ngIf="auth.hasPermission(item.permissions)" [ngClass]="{active: item.isSelected }"
+                (click)="onTabSelect(item, div.divs.items)">
+                {{item.title.text}}
+              </div>
+            </ng-container>
+            <span class="spacer"></span>
+          </div>
+          <ng-container *ngFor="let item of div.divs.items">
+            <div class="title-hidden" *ngIf="auth.hasPermission(item.permissions)" [class.hidden]="!item.isSelected">
+              <ng-container *ngTemplateOutlet="layoutTemplate; context: { div: item }"> </ng-container>
+            </div>
+          </ng-container>
+        </ng-container>
+        <ng-container *ngSwitchDefault>
+          <ng-container *ngFor="let item of div.divs.items">
+            <ng-container *ngIf="auth.hasPermission(item.permissions)">
+              <ng-container *ngTemplateOutlet="layoutTemplate; context: { div: item }"> </ng-container>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #widgetTemplate let-item="widget">
+  <div class="widget" [class.mat-elevation-z2]="isEditing">
+    <div *ngIf="isEditing && item.code" class="edit clickable" (click)="onItemEdit(item)">
+      {{item.code || ''}}
+    </div>
+    <div [ngClass]="item.container.class" [ngStyle]="item.container.style">
+      <div class="widget-header flex-row">
+        <div class="widget-title" *ngIf="item.title" [ngStyle]="item.title.style" [ngClass]="item.title.class"
+          [class.hide]="isEditing">
+          {{item.title.text}}
+        </div>
+        <span class="spacer"></span>
+        <div>
+          <app-query-builder [view]="filterView" [filters]="item.filters" (apply)="onApplyFilter(item, $event)">
+          </app-query-builder>
+        </div>
+        <ng-container *ngIf="item.actions && item.actions.length > 0">
+          <ng-container *ngFor="let action of item.actions">
+            <oa-action *ngIf="auth.hasPermission(action.permissions)" [item]="getAction(item, action)"></oa-action>
+          </ng-container>
+        </ng-container>
+      </div>
+      <div class="widget-body" [ngStyle]="item.style" [ngClass]="item?.class">
+        <div *ngIf="item.body.html" [innerHtml]="item.body.html"></div>
+        <ng-container *ngIf="item.widget?.code" [ngSwitch]="item.widget.code">
+          <app-quick-links *ngSwitchCase="'quick-links'" [items]="item.items" [config]="item.widget.config">
+          </app-quick-links>
+          <drive-folders-widget *ngSwitchCase="'folders-widget'" [config]="item.widget.config"></drive-folders-widget>
+          <drive-files-widget *ngSwitchCase="'files-widget'" [config]="item.widget.config">
+          </drive-files-widget>
+          <drive-file-widget *ngSwitchCase="'file-widget'" [config]="item.widget.config">
+          </drive-file-widget>
+          <drive-folder-widget *ngSwitchCase="'folder-widget'" [config]="item.widget.config">
+          </drive-folder-widget>
+          <insight-grid-widget *ngSwitchCase="'grid-widget'" (selected)="onSelect($event)" [type]="item"
+            [params]="item.params" [version]="item.version" [view]="view">
+          </insight-grid-widget>
+          <insight-target-widget *ngSwitchCase="'target-widget'" (selected)="onSelect($event)" [type]="item"
+            [params]="item.params" [version]="item.version">
+          </insight-target-widget>
+          <insight-profile-widget *ngSwitchCase="'profile-widget'" (selected)="onSelect($event)" [type]="item"
+            [params]="item.params" [version]="item.version">
+          </insight-profile-widget>
+          <insight-table-widget *ngSwitchCase="'table-widget'" (selected)="onSelect($event)" [type]="item"
+            [params]="item.params" [version]="item.version" [columnTemplate]="columnTemplate">
+          </insight-table-widget>
+          <insight-graph-widget *ngSwitchCase="'bar-graph-widget'" (selected)="onSelect($event)" [type]="item"
+            [params]="item.params" [version]="item.version">
+          </insight-graph-widget>
+          <insight-dual-bar-widget *ngSwitchCase="'dual-bar-graph-widget'" (selected)="onSelect($event)" [type]="item"
+            [params]="item.params" [version]="item.version">
+          </insight-dual-bar-widget>
+          <insight-single-bar-widget *ngSwitchCase="'single-bar-graph-widget'" (selected)="onSelect($event)"
+            [type]="item" [params]="item.params" [version]="item.version">
+          </insight-single-bar-widget>
+          <insight-pie-chart-widget *ngSwitchCase="'pie-chart-widget'" (selected)="onSelect($event)" [type]="item"
+            [params]="item.params" [version]="item.version">
+          </insight-pie-chart-widget>
+          <insight-calendar-widget *ngSwitchCase="'calendar-widget'" (selected)="onSelect($event)" [type]="item"
+            [params]="item.params" [version]="item.version"></insight-calendar-widget>
+          <oa-under-construction *ngSwitchCase="'under-construction'" [title]="item.widget.title">
+          </oa-under-construction>
+          <ng-container *ngSwitchDefault>
+            <ng-container *ngIf="templates">
+              <ng-container *ngTemplateOutlet="templates; context: { widget: item }"> </ng-container>
+            </ng-container>
+            <oa-no-data-found *ngIf="!templates" [message]=" item.widget.code + ' widget not found'"></oa-no-data-found>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<processing-indicator *ngIf="isProcessing"> </processing-indicator>

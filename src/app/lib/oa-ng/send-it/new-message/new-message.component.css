@@ -1,0 +1,33 @@
+.container {
+    margin-left: 2px;
+}
+
+h6 {
+    color: black;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+.mat-form-field {
+    width: 100%;
+
+}
+
+.custom {
+    margin-left: 10px;
+    margin-bottom: 30px;
+}
+
+.changeWidth{
+    width: 80% !important;
+    margin-right: 15px;
+}
+
+.newMessageSection {
+    padding-left: 5px;
+    padding-right: 10px;
+}
+
+.material-icons {
+    color: var(--primary)
+}

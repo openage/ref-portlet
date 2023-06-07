@@ -1,0 +1,91 @@
+.banner {
+  background-color: #EB7803;
+  // min-width: 500px;
+  // position: absolute;
+  // float: right;
+  // right: 5px;
+}
+
+.close {
+  float: right;
+}
+
+.warning {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  &>span {
+    color: #FFF9F7;
+    margin-left: 5px;
+  }
+}
+
+.mat-icon {
+  color: #FFF9F7;
+}
+
+.search-bar-included {
+  margin-top: 155px;
+
+  .main {
+    height: calc(100vh - 180px);
+  }
+}
+
+app-nav {
+  width: 60px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  z-index: 101;
+  box-shadow: 0 1px 4px 0px #00000033, 0 0px 0px 0 #00000024, 0 0px 0px 0 #0000001f;
+
+  &.nav-expanded {
+    width: 150px;
+  }
+}
+
+.app-container {
+  width: calc(100vw - 60px);
+  margin-left: 60px;
+
+  &.nav-expanded {
+    width: calc(100vw - 150px);
+    margin-left: 150px;
+  }
+}
+
+.env {
+  position: fixed;
+  top: 90vh;
+  background: black;
+  color: #fff;
+  padding: 5px;
+  border-radius: 10px 0 0 10px;
+  right: 0;
+  z-index: 1000;
+}
+
+mat-sidenav.menu {
+  width: 60px;
+}
+
+@media only screen and (max-width:568px) {
+  app-nav {
+    width: 100%;
+    top: auto;
+    height: 55px;
+    bottom: 0;
+    position: fixed;
+  }
+
+
+
+  .page-container {
+    margin-top: 140px;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+}

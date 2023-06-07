@@ -1,0 +1,72 @@
+<ng-container [ngSwitch]="view">
+  <div *ngSwitchCase="'side'" class="nav-container">
+    <!-- <div class="logo-container" (click)="uxService.showSideNav(true)"> -->
+    <!-- <img class="logo"  src="../../../../assets/images/logo.png"> -->
+    <!-- <oa-avatar [value]="logo" [size]="65" [shape]="'square'" [border]="'none'"></oa-avatar> -->
+    <!-- <img class="logo" *ngIf="logo" [src]="logo.url">
+      <img class="logo" *ngIf="!logo" src="/assets/images/logo.png" width="50px"> -->
+
+    <!-- <i class="logo xx-md"></i> -->
+    <!-- <br> -->
+    <!-- </div> -->
+    <div class="nav-content-div">
+      <mat-nav-list dense>
+        <ng-container *ngFor="let nav of navs">
+          <ng-container *ngIf="auth.hasPermission(nav.permissions) && nav.view !== 'hidden'">
+            <div class="list-header controls-row" [class.extended]="isExpanded" (click)="select(nav)" tabindex="-1">
+              <div *ngIf="!isExpanded" class="spacer"></div>
+              <oa-icon [value]="nav.icon" [class]="isExpanded ? 'md transition' : 'x-md transition'"
+                [title]="isExpanded ? undefined : nav.title"></oa-icon>
+              <div *ngIf="!isExpanded" class="spacer"></div>
+
+              <div *ngIf="isExpanded" class="title-arrow-div controls-row">
+                <span class="nav-item-name">{{nav.title}}</span>
+                <!-- <div>
+                  <mat-icon>chevron_right</mat-icon>
+                </div> -->
+              </div>
+
+              <!-- <div *ngIf="nav.icon.url" class="main-menu-icon"
+              [style.background.url]="'url('+ nav.icon.activeUrl + ')'"></div> -->
+            </div>
+            <!-- {{nav.title}} -->
+            <!-- <i *ngIf="!nav.current" class="material-icons leftIcon">keyboard_arrow_right</i>
+            <i *ngIf="nav.current" class="material-icons leftIcon">keyboard_arrow_down</i> -->
+            <!-- <div class="list-items" *ngIf="nav.current">
+            <ng-container *ngFor="let item of nav.items">
+              <a *ngIf="auth.hasPermission(item.permissions)" [routerLink]="item.routerLink" mat-list-item
+                routerLinkActive="active-link" #rla9="routerLinkActive">
+                <h5>{{item.title}}</h5>
+              </a>
+            </ng-container>
+          </div> -->
+          </ng-container>
+        </ng-container>
+      </mat-nav-list>
+      <div class="nav-footer">
+        <div class="controls-row">
+          <div class="spacer"></div>
+          <oa-icon-toggler type="expand-r" view="mini-fab" [(value)]="isExpanded"
+            (changed)="extend()"></oa-icon-toggler>
+
+          <!-- <div *ngIf="isExpanded">Collapse</div> -->
+          <!-- <div class="list-header controls-row">
+            <mat-icon class="subtle">{{isExpanded ? 'chevron_left' : 'chevron_right'}}</mat-icon>
+            <div *ngIf="isExpanded" class="title-arrow-div controls-row">
+              <span>Collapse Sidebar</span>
+            </div>
+          </div>
+          <div class="spacer"></div> -->
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div *ngSwitchCase="'header'" class="controls-row oa-nav">
+    <ng-container *ngFor="let nav of navs">
+      <div [class.active]="isActive(nav)">
+        <h4 (click)="select(nav)" tabindex="-1">{{nav.title}}</h4>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>

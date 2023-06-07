@@ -1,0 +1,73 @@
+<div *ngIf="isInitialized" [class.hidden]="isBlocked" class="{{theme.type}} {{theme.code}}">
+  <ng-container *ngIf="hasRole; then appLayout else wwwLayout"></ng-container>
+  <div *ngIf="envName" class="env">{{envName}}</div>
+</div>
+<processing-indicator *ngIf="isBlocked"></processing-indicator>
+
+<ng-template #appLayout>
+  <app-nav (isExpand)="onExpand($event)" [class.nav-expanded]="isNavExpanded"></app-nav>
+  <div class="app-container" [class.nav-expanded]="isNavExpanded">
+    <div *ngIf="hasHeader" class="header-container">
+      <app-header></app-header>
+    </div>
+    <!-- <div class="page-container {{styles?.content?.class}}" [class.with-header]="inSideApp"
+    [class.search-bar-included]="isSearchBarIncluded"> -->
+    <div class="page-container {{styles?.content?.class}}" [class.with-header]="hasHeader">
+      <ng-component *ngTemplateOutlet="pageContent"></ng-component>
+
+      <!-- <ng-container *ngIf="currentEntity; else pageContent">
+        <app-side-bar [entity]="currentEntity">
+          <ng-component *ngTemplateOutlet="pageContent"></ng-component>
+        </app-side-bar>
+      </ng-container> -->
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #pageContent>
+  <div class="page" *ngIf="!pullDown; else comingSoonLayout">
+    <div class="controls-row context-container {{styles?.context?.class}}">
+      <oa-action *ngIf="back" [item]="back" class="back"></oa-action>
+      <div class="title">{{title}}</div>
+      <div class="spacer"></div>
+      <oa-context-menu [items]="menu"></oa-context-menu>
+    </div>
+    <div class="page-content">
+      <oa-alert [value]="warnings" view="banner" [class]="styles?.banner?.class"></oa-alert>
+      <oa-search (visible)="onSearchBarVisible($event)" view="bar"></oa-search>
+      <ng-container *ngIf="!pullDown; else comingSoonLayout">
+        <!-- <core-page-divs *ngIf="page?.meta?.divs" [divs]="page?.meta?.divs"></core-page-divs> -->
+
+        <core-page-divs *ngIf="page?.meta?.divs" [divs]="page?.meta?.divs"
+          [areaCode]="page?.meta?.area?.code || page?.meta?.areaCode || page?.code" (selected)="onStatSelect($event)">
+
+          <!-- <core-page-divs [isEditing]="isEditing" [divs]="page?.meta?.divs" [templates]="templates" [areaCode]="'dashboard'"
+      (selected)="onStatSelect($event)" [filters]="filters"> -->
+        </core-page-divs>
+
+        <router-outlet> </router-outlet>
+        <!-- <oa-core-tasks-progress-footer></oa-core-tasks-progress-footer> -->
+      </ng-container>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #wwwLayout>
+  <div class="www-container">
+    <div *ngIf="hasHeader" class="header-container">
+      <app-header></app-header>
+    </div>
+    <div class="page-container {{styles?.content?.class}}" [class.with-header]="hasHeader">
+      <div class="page" *ngIf="!pullDown; else comingSoonLayout">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+    <div class="footer-container">
+      <app-footer></app-footer>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #comingSoonLayout>
+  <oa-under-construction view="commingSoon"></oa-under-construction>
+</ng-template>

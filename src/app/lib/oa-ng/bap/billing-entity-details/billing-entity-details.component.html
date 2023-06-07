@@ -1,0 +1,27 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+<ng-container [ngSwitch]="view">
+  <ng-container *ngIf="properties">
+    <ng-container *ngSwitchCase="'detail'" class="flex-row two">
+      <bap-billing-entity-picker [placeholder]="'Billing Entity'" [display]="'name'"
+        [organization]="properties.organization" (changed)="onChange($event)" [disabled]="!properties.organization"
+        [value]="properties">
+      </bap-billing-entity-picker>
+      <div *ngIf="properties.address" class="controls-row spacing">
+        <div>
+          <div>{{properties.address.line1}}</div>
+          <div>
+            <span *ngIf="properties.address.city">{{properties.address.city}}, </span>
+            <span *ngIf="properties.address.state">{{properties.address.state}}</span>
+          </div>
+          <div *ngIf="properties.address.pinCode" class="sub-text">{{properties.address.pinCode}}</div>
+        </div>
+      </div>
+      <div class="spacing">
+        <label>Nav Code:</label><span *ngIf="properties.gst">{{properties.navCode}}</span>
+      </div>
+      <div class="spacing">
+        <label>GSTN:</label><span *ngIf="properties.gst">{{properties.gst}}</span>
+      </div>
+    </ng-container>
+  </ng-container>
+</ng-container>

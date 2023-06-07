@@ -1,0 +1,451 @@
+.icon {
+  height: 20px;
+  float: left;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.fileName {
+  padding: 5px 30px;
+}
+
+.fileName:hover {
+  background: var(--defaultBackdrop);
+}
+
+.addMore {
+  padding: 5px 30px;
+  color: var(--primary);
+}
+
+.noData {
+  text-align: center;
+}
+
+.closeIconDiv {
+  text-align: end;
+}
+
+.minus-icon{
+  height: 15px;
+  margin-top: 2.5px;
+  float: left;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.wordWrap> span{
+  float: right;
+}
+
+.galleryMinus-icon{
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  height: 22px;
+  margin-top: 2.5px;
+  float: right;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.minusIcon{
+  height: 15px;
+  float: right;
+  cursor: pointer;
+}
+
+a{
+  color: #6AC259;
+}
+
+.img-div{
+  min-height: 100px;
+  width: 100%;
+  margin: 0px;
+  padding-bottom: 10px;
+}
+.certificates-div{
+  min-height: 100px;
+  width: 100%;
+  margin: 0px;
+  padding-bottom: 10px;
+}
+.background{
+  background-size: cover;
+  background-position: center;
+  border-radius: 5px;
+  height: 95px;
+  width: 100%;
+}
+
+.background-video{
+  border-radius: 5px;
+  height: 95px;
+  width: 100%;
+}
+.imgCard{
+  padding: 0px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  margin-left: 5px;
+  margin-right: 5px;
+  height: 95px;
+  max-width: 31%;
+  flex: none; 
+  cursor: pointer;
+}
+.certificatesCard{
+  padding: 0px;
+  margin-right: 0px;
+  margin-bottom: 4px;
+  margin-left: 5px;
+  margin-right: 5px;
+  height: 100px;
+  max-width: 16%;
+  flex: none; 
+  cursor: pointer;
+}
+.certificates{
+  background-size: cover;
+  background-position: center;
+  height: 100px;
+  width: 100%;
+}
+
+.gridViewRow{
+  margin: 0px;
+  text-align: center;
+}
+
+.textWrap{
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  margin-top: 15px;
+  height: 150px;
+  height: 160px;
+  padding-top: 10px;
+}
+
+.textWrap:hover{
+  background: rgba(236, 236, 236, 1);
+  border-radius: 10px;
+}
+
+.folderListDeleteIcon{
+  visibility: hidden;
+}
+
+.textWrap:hover .folderListDeleteIcon{
+  visibility: visible;
+  visibility: visible;
+  height: 33px;
+  float: right;
+  cursor: pointer;
+  margin-top: -10px;
+  margin-right: -10px;
+}
+
+.upload-cardGrid{
+  border: 2px dotted rgba(197, 200, 208, 1);
+  text-align: center;
+  border-radius: 8px;
+  padding: 10px;
+  height: 160px;
+  margin-top: 15px;
+  cursor: pointer;
+}
+
+.upload-card{
+  border: 2px dotted rgba(197, 200, 208, 1);
+  text-align: center;
+  border-radius: 8px;
+  padding: 10px;
+  height: 150px;
+  margin-top: 15px;
+  cursor: pointer;
+}
+
+.uploadText{
+  color: rgba(197, 200, 208, 1);   
+  font-size: 14px;
+}
+
+.folderList{
+  color: rgba(90, 90, 90, 1);
+}
+
+.imgspan{
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.upload-card-background{
+  background: rgba(249, 249, 249, 1);
+  border-radius: 8px;
+  padding: 80px;
+}
+
+.col-4 , .col-2{
+  text-align: center;
+}
+
+.col-5{
+  word-break: break-all;
+  overflow: hidden;
+}
+
+.customMargin{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.mat-mini-fab{
+  height: 30px;
+  width: 30px;
+  background: #ffffff;
+  line-height: 0px;
+  margin-bottom: 5px;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+}
+
+.nameOfItem {
+  width: 177px;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.uploadPoint{
+  text-align: center;
+  height: 95px;
+  max-width: 31%;
+  margin-bottom: 4px;
+  margin-left: 6px;
+  padding-top: 15px;
+}
+
+.adjustUploadPoint{
+  height: 95px;
+  max-width: 31%;
+  margin-bottom: 4px;
+  margin-left: 6px;
+  padding-top: 15px;
+}
+
+.uploadPointTwo{
+  text-align: center;
+  height: 95px;
+  max-width: 16%;
+  margin-bottom: 4px;
+  margin-left: 6px;
+  padding-top: 25px;
+}
+
+.profilePic{
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 140px;
+  width: 140px;
+  border-radius: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.wordWrap{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+@media screen and (min-width: 800px) and (max-width: 1080px){
+  .upload-card-background {
+    background: rgba(249, 249, 249, 1);
+    border-radius: 8px;
+    padding: 40px
+  }
+}
+
+
+@media only screen and (min-width: 1900px) {
+  .minus-icon{
+    height: 22.95px;
+    width: 22.95px;
+    margin-top: 0px;
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  .galleryMinus-icon{
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    height: 26px;
+    margin-top: 2.5px;
+    float: right;
+    cursor: pointer;
+    z-index: 2;
+  }
+  .icon {
+    height: 22.95px;
+    width: 22.95px;
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 10px;
+  } 
+  a{
+    color: #6AC259;
+    font-size: 15px;
+  }
+  .upload-card-background{
+    background: rgba(249, 249, 249, 1);
+    border-radius: 8px;
+    padding: 80px;
+    padding-top: 150px;
+    height: 491px;
+    margin-left: auto;
+  }
+  .upload-card{
+    height: 145px;
+    width: 135px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .imgCard{
+    padding: 0px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    margin-left: 5px;
+    margin-right: 5px;
+    height: 140px;
+    max-width: 220.29px;
+    flex: none; 
+  }
+  .background{
+    background-size: cover;
+    background-position: center;
+    border-radius: 8px;
+    height: 140px;
+    width: 100%;
+    flex: none; 
+  }
+  .certificatesCard{
+    padding: 0px;
+    margin-right: 0px;
+    margin-bottom: 4px;
+    margin-left: 5px;
+    margin-right: 5px;
+    height: 162px;
+    max-width: 115px;
+    flex: none; 
+  }
+  .certificates{
+    background-size: cover;
+    background-position: center;
+    height: 162px;
+    width: 100%;
+  }
+  .uploadPoint {
+    text-align: center;
+    height: 95px;
+    max-width: 31%;
+    margin-bottom: 4px;
+    margin-left: 6px;
+    padding-top: 50px;
+  }
+  .uploadPointTwo{
+    text-align: center;
+    height: 95px;
+    max-width: 16%;
+    margin-bottom: 4px;
+    margin-left: 6px;
+    padding-top: 50px;
+  }
+} 
+
+.mat-table {
+  /* color: black; */
+  /* font-weight: bolder; */
+  width: 100%;
+}
+
+.spacing {
+  margin-right: 5px;
+}
+
+.centered-text {
+  text-align: center
+}
+.row-container{
+  width: 100% !important;
+}
+
+.index{
+  width:12%;
+}
+.name{
+  width:18%;
+}
+.uploader{
+  width:15%
+}
+.comman-field{
+  width:15%;
+  text-align: center;
+}
+
+.actions{
+  width:10%
+}
+.add-row{
+  color: var(--accent)!important;
+  font-size: smaller;
+  padding-left: 10px;
+}
+
+.table-name, .table-description, .table-type {
+  width: 30%
+}
+
+.table-action {
+  width: 10%;
+}
+
+@media only screen and (max-width:568px) {
+  .flex-row.five {
+    justify-content: center;
+  }
+
+  .list-file-area{
+    overflow-x:scroll;
+  }
+
+  .list-file-area .table{
+    width:740px;
+  }
+
+  .table-name {
+    width: 22% !important;
+  }
+
+  .index {
+    width: 9%;
+  }
+
+  .table-action{
+    width: 18%;
+    padding-right:0px;
+  }
+
+  .table-name, .table-description, .table-type {
+    word-break:break-all;
+  }
+}
+.file-tags{
+  
+}

@@ -1,0 +1,6 @@
+<div class="main">
+  <div class="card">
+    <processing-indicator *ngIf="isProcessing"></processing-indicator>
+    <send-it-message-detail *ngIf="code" [code]="code"></send-it-message-detail>
+  </div>
+</div>

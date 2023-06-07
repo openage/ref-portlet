@@ -1,0 +1,10 @@
+<div class="container">
+  <i class="{{class || 'x-lg'}} {{icon || 'error-no-data'}}"></i>
+  <div class="text-capitalize">{{message}}</div>
+  <div *ngIf="actions && actions.length" class="row">
+    <span class="spacer"></span>
+    <oa-action *ngFor="let action of actions" [value]="action"></oa-action>
+    <span class="spacer"></span>
+  </div>
+  <ng-content></ng-content>
+</div>

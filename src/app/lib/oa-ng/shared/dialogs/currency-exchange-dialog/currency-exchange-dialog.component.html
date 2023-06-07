@@ -1,0 +1,55 @@
+<div mat-dialog-title class="controls-row">
+  <h4>Currency Exchange</h4>
+  <span class="spacer"></span>
+  <button *ngIf="true" mat-icon-button mat-dialog-close class="close-icon" (click)="onCancel()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<div mat-dialog-content class="minWidth">
+  <div class="table">
+    <div class="header flex-1-1">
+      <div class="w-50">From</div>
+      <div class="w-50 flex-row">
+        <div><span>To</span></div>
+        <div class="currency-selector ml-auto">
+          <mat-select [value]="currency.name || currency.code" (selectionChange)="onCurrencyCodeChange($event.value)">
+            <mat-option *ngFor="let item of list" [value]="item.code">{{item.name}}</mat-option>
+          </mat-select>
+        </div>
+      </div>
+    </div>
+    <div *ngFor="let ratioItem of currency.ratio| keyvalue;let i = index" class="data-row flex-1-1">
+      <div class="w-50 flex-row">
+        <div class="currency-selector ml-auto">
+          <mat-select [value]="ratioItem.key" (selectionChange)="onRatioKeyChange(ratioItem.key, $event.value)">
+            <mat-option *ngFor="let item of list" [value]="item.code">{{item.name}}</mat-option>
+          </mat-select>
+        </div>
+        <span class="spacer"></span>
+      </div>
+      <div class="w-50">
+        <!-- <input type="number" [(ngModel)]="ratioItem.value" (change)="onRatioValueChange(ratioItem.key, $event.value)"
+          class="oa-input text-right"> -->
+      </div>
+    </div>
+    <!-- Add New Ratio Currency -->
+    <label class="add-new">Add New Currency</label>
+    <div class="data-row flex-1-1">
+      <div class="w-50 flex-row">
+        <div class="currency-selector ml-auto">
+          <mat-select (selectionChange)="addNewRatioKey($event.value)">
+            <mat-option *ngFor="let item of list" [value]="item.code">{{item.name}}</mat-option>
+          </mat-select>
+        </div>
+        <span class="spacer"></span>
+      </div>
+      <div class="w-50">
+      </div>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions class="footer">
+  <div class="spacer"></div>
+  <button color="primary" mat-button (click)="onCancel()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="onSave()">Save</button>
+</div>

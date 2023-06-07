@@ -1,0 +1,15 @@
+<ul class="timeline" *ngIf="items.length">
+  <ng-container *ngFor="let item of items">
+    <li class="release" (click)="show(item)">
+      <div class="date-of-release">
+        <h5>{{item.code}}</h5>
+        <span class="sub-text">{{item.actual.finish | date}}</span>
+      </div>
+
+      <div class="content">
+        <h5>{{item.name}}</h5>
+        <p>{{item.description}}</p>
+      </div>
+    </li>
+  </ng-container>
+</ul>

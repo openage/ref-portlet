@@ -1,0 +1,9 @@
+<div class="main" [class.hidden]="!isCurrent">
+  <div class="header">
+    <h5>{{page.title}}</h5>
+    <span class="spacer"></span>
+  </div>
+  <drive-folder-detail #details [code]="code" (selected)="onSelect($event)" [view]="'grid'">
+  </drive-folder-detail>
+</div>
+<router-outlet></router-outlet>

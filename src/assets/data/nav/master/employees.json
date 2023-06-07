@@ -1,0 +1,41 @@
+{
+  "context": [
+    {
+      "code": "add"
+    },
+    {
+      "code": "refresh"
+    },
+    {
+      "code": "close",
+      "type": "icon"
+    }
+  ],
+  "search": {
+    "params": [
+      {
+        "label": "Name",
+        "key": "text",
+        "control": "input"
+      },
+      {
+        "label": "Status",
+        "key": "status",
+        "control": "input"
+      }
+    ]
+  },
+  "columns": [
+    "name",
+    "email",
+    "status",
+    "action"
+  ],
+  "add": {
+    "title": "Add Member",
+    "view": "simple"
+  },
+  "permissions": [
+    "employee.all"
+  ]
+}

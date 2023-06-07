@@ -1,0 +1,88 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+
+<oa-table [definition]="options" [items]="items" [detailsTemplate]="rowDetails" [actionTemplate]="actionCell">
+</oa-table>
+
+<!--
+<div [ngSwitch]="view">
+  <ng-container *ngSwitchCase="'list'">
+    <div class="table" *ngIf="items.length; else noData">
+      <div class="header">
+        <div class="name">Name</div>
+        <div class="description">Description</div>
+        <div class="team">Team</div>
+        <div class="actions"></div>
+      </div>
+      <div class="data-row" *ngFor="let item of items;" [class.processing]="item.isProcessing">
+        <div class="name">{{item.name}}</div>
+        <div class="description">{{item.description}}</div>
+        <div class="team">
+          <gateway-member-list (selected)="onDataSelect(item, $event)" [values]="item.members" view="summary">
+          </gateway-member-list>
+        </div>
+        <div class="actions">
+          <span class="spacer"></span>
+          <oa-action [item]="showIssues(item)"></oa-action>
+          <oa-action [item]="showIssues(item, 'story')"></oa-action>
+          <oa-action [item]="showIssues(item, 'defect')"></oa-action>
+          <oa-action [item]="showIssues(item, 'releases')"></oa-action>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngSwitchCase="'grid'">
+    <div class="flex-row four">
+      <div *ngFor="let item of items" class="section card">
+
+        <div class="header pointer primary" (click)="onSelect(item)">{{item.name}}</div>
+
+        <div class="body">
+          <div [innerHTML]="item.description"></div>
+          <gateway-member-list (selected)="onDataSelect(item, $event)" [values]="item.members" view="summary">
+          </gateway-member-list>
+        </div>
+
+        <div class="flex-row five">
+          <ng-container *ngIf="item.type && item.type.workflows && item.type.workflows.length">
+            <ng-container *ngFor="let workflow of item.type.workflows">
+              <oa-action [item]="showIssues(item, workflow.code)"></oa-action>
+            </ng-container>
+          </ng-container>
+          <oa-action [item]="showIssues(item, 'releases')"></oa-action>
+        </div>
+
+      </div>
+    </div>
+  </ng-container>
+</div>
+-->
+
+<ng-template #rowDetails let-item="item" let-index="index">
+  <div class="section">
+    <div class="body">
+      <div [innerHTML]="item.description"></div>
+      <gateway-member-list (selected)="onDataSelect(item, $event)" [values]="item.members" view="summary">
+      </gateway-member-list>
+    </div>
+    <div class="flex-row five">
+      <ng-container *ngIf="item.type && item.type.workflows && item.type.workflows.length">
+        <ng-container *ngFor="let workflow of item.type.workflows">
+          <oa-action [item]="showIssues(item, workflow)"></oa-action>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #actionCell let-item="item" let-index="index">
+  <oa-action [item]="showIssues(item)"></oa-action>
+  <ng-container *ngFor="let workflow of item.type.workflows">
+    <oa-action [item]="showIssues(item, workflow)"></oa-action>
+  </ng-container>
+  <oa-action [item]="showIssues(item, 'release')"></oa-action>
+  <oa-icon value="mat-chevron_right" title="Details" view="icon" (click)="onSelect(item)"></oa-icon>
+</ng-template>
+
+<ng-template #noData>
+  <oa-no-data-found [message]="'No Data Found!'"></oa-no-data-found>
+</ng-template>

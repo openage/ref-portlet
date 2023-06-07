@@ -1,0 +1,33 @@
+.date {
+  width: 14%
+}
+
+.activity {
+  width: 12%;
+}
+
+.effort {
+  width: 10%;
+}
+
+.comment {
+  width: 26%
+}
+
+.action {
+    width: 8%;
+}
+
+.task {
+  width: 30%
+}
+
+@media only screen and (max-width:414px) {
+  .status {
+    width: 5%;
+  }
+
+  .date {
+    width: 28%;
+  }
+}

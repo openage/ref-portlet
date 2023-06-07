@@ -1,0 +1,29 @@
+.beneficiary {
+  width: 24%;
+}
+
+.contact {
+  width: 24%;
+}
+
+.account {
+  width: 24%;
+}
+
+.branch {
+  width: 23%;
+}
+.action{
+  width: 5%;
+
+}
+.data-row{
+    border-bottom: 1px solid var(--disabledBackground)
+}
+.header{
+    border-bottom: 1px solid var(--disabledBackground) !important;
+}
+.link {
+  color: var(--accent);
+  font-size: 12px;
+}

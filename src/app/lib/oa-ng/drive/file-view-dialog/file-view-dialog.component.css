@@ -1,0 +1,5 @@
+.dialog-content {
+    max-height: 500px;
+    width:850px;
+    overflow: auto;
+}

@@ -1,0 +1,14 @@
+.otp {
+    padding-left: 20%;
+}
+
+.otp input {
+    width: 10%;
+    border-radius: 2px !important;
+    border: solid #ccc 1px;
+    font-size: 205%;
+    margin: 1px;
+    background-color: #eee;
+    text-align: center;
+    height: 50px;
+}

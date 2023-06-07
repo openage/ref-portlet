@@ -1,0 +1,125 @@
+<ng-container [ngSwitch]="view">
+  <div *ngSwitchCase="'summary'" class="team-summary flex-row">
+    <div *ngFor="let item of values" class="member clickable flex-row"
+      [class.selected]="item?.user?.id === value?.user?.id" (click)="onSelect(item)">
+      <oa-avatar [value]="item.user"></oa-avatar>
+      <div [class.hidden]="item?.user?.id !== value?.user?.id">{{item?.user?.profile | name}}</div>
+    </div>
+  </div>
+
+  <div *ngSwitchCase="'member-list'" class="team-list">
+    <div class="section">
+      <div class="header">
+        <label class="heading">{{role.name}}</label>
+        <div class="iconDiv">
+          <mat-icon *ngIf="!isEditing" (click)="isEditing = true" class="subtle">add_circle_outline</mat-icon>
+          <mat-icon *ngIf="isEditing" (click)="isEditing = false" class="subtle">remove_circle_outline</mat-icon>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="isEditing" class="searchBox">
+      <oa-autocomplete [options]="{
+        search: {
+          field: 'text',
+          params: role.searchParams,
+          limit: 5
+        },
+        templates: {
+          value: autoCompleteValueTemplate,
+          placeholder: placeholderTemplate
+        }
+      }" [api]="api" (changed)="attach($event)" [readonly]="readonly">
+      </oa-autocomplete>
+    </div>
+    <mat-chip-list #chipList>
+      <mat-chip *ngFor="let item of values" [removable]="!readonly">
+        <span class="chip-text" *ngTemplateOutlet="valueTemplate; context: { value: item.user }"></span>
+        <mat-icon class="closeIcon" matChipRemove (click)="detach(item.user)">cancel</mat-icon>
+      </mat-chip>
+    </mat-chip-list>
+  </div>
+
+  <div *ngSwitchCase="'grouped'">
+    <ng-container *ngIf="values.length">
+      <table mat-table [dataSource]="values">
+        <ng-container matColumnDef="member">
+          <th mat-header-cell *matHeaderCellDef>Member</th>
+          <td mat-cell *matCellDef="let item" [class.processing]="item.isProcessing">
+            {{item?.user?.profile?.firstName}} {{item?.user?.profile?.lastName}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="roles">
+          <th mat-header-cell *matHeaderCellDef>Roles</th>
+          <td mat-cell *matCellDef="let item" [class.processing]="item.isProcessing">
+            <mat-chip-list #chipList>
+              <mat-chip *ngFor="let roleType of item.roleTypes" [removable]="!readonly">
+                <span class="chip-text">{{roleType.name}}</span>
+                <mat-icon class="closeIcon" matChipRemove (click)="role=roleType;detach(item.user)">cancel</mat-icon>
+              </mat-chip>
+            </mat-chip-list>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef>Action</th>
+          <td mat-cell *matCellDef="let item" [class.processing]="item.isProcessing">
+            <mat-icon class="subtle" (click)="detach(item.user)">delete</mat-icon>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="['member','roles','action']; sticky: true">
+        </tr>
+        <tr mat-row *matRowDef="let row; columns: ['member','roles','action'];">
+        </tr>
+      </table>
+    </ng-container>
+    <oa-no-data-found *ngIf="!values.length" [message]="'No members found'"></oa-no-data-found>
+  </div>
+
+  <div *ngSwitchDefault class="team-list">
+    <div class="controls-row">
+      <label class="heading">{{role.name}}</label>
+      <div class="spacer"></div>
+      <div>
+        <mat-icon *ngIf="!isEditing" (click)="isEditing = true" class="subtle">add_circle_outline</mat-icon>
+        <mat-icon *ngIf="isEditing" (click)="isEditing = false" class="subtle">remove_circle_outline</mat-icon>
+      </div>
+    </div>
+    <div *ngIf="isEditing" class="picker">
+      <oa-autocomplete [options]="{
+        search: {
+          field: 'text',
+          params: role.searchParams,
+          limit: 5
+        },
+        templates: {
+          value: autoCompleteValueTemplate,
+          placeholder: placeholderTemplate
+        }
+      }" [api]="api" (changed)="attach($event)" [readonly]="readonly">
+      </oa-autocomplete>
+    </div>
+    <mat-chip-list #chipList>
+      <mat-chip *ngFor="let item of values" [removable]="!readonly">
+        <span class="chip-text" *ngTemplateOutlet="valueTemplate; context: { value: item.user }"></span>
+        <mat-icon class="closeIcon" matChipRemove (click)="detach(item.user)">cancel</mat-icon>
+      </mat-chip>
+    </mat-chip-list>
+  </div>
+
+</ng-container>
+
+<ng-template #autoCompleteValueTemplate let-item="value">
+  <oa-avatar [value]="item" [size]="28"></oa-avatar>
+  <span class="ml-2"> {{item?.profile | name}} </span>
+</ng-template>
+
+<ng-template #valueTemplate let-item="value">
+  <span (click)="selected.emit(item)">
+    {{item?.profile | name}}
+  </span>
+</ng-template>
+
+<ng-template #placeholderTemplate>
+  Search
+</ng-template>

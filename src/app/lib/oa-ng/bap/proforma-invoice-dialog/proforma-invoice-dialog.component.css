@@ -1,0 +1,8 @@
+ mat-dialog-content {
+     display: block;
+     margin: 0 -24px;
+     padding: 0 24px;
+     max-height: 72vh;
+     min-height: 20vh;
+     overflow: auto;
+ }

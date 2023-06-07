@@ -1,0 +1,14 @@
+.card-wrap {
+    font-weight: bold;
+}
+.mat-form-field {
+    width: 100%;
+    padding: 0 15px;
+  color: black;
+}
+
+.custom-padding {
+  height: 100%;
+  overflow: hidden;
+  padding-top: 10px;
+}

@@ -1,0 +1,78 @@
+<div class="main">
+  <ng-container *ngIf="areaCode && reportTypeCode">
+    <core-page-divs [divs]="divs.meta.divs" [areaCode]="areaCode + '.'+ reportTypeCode" [filters]="filters"
+      (selected)="true"></core-page-divs>
+  </ng-container>
+  <ng-container *ngIf="report && !isCreating">
+    <div class="header">
+      <h5>{{reportType?.name}}</h5>
+      <span class="spacer"></span>
+      <ng-container *ngIf="report && !isCreating && reportType?.download?.excel?.headers?.length">
+        <button mat-raised-button color="primary" *ngIf="report && !isCreating && report.status === 'draft'"
+          (click)="generate()">Download</button>
+        <ng-container [ngSwitch]="report.status">
+          <button *ngSwitchCase="'new'" mat-raised-button disabled>Queued</button>
+          <button *ngSwitchCase="'in-progress'" mat-raised-button disabled>Generating</button>
+          <button *ngSwitchCase="'ready'" mat-raised-button color="primary" (click)="download()">Download</button>
+          <ng-container *ngSwitchCase="'errored'">Failed</ng-container>
+        </ng-container>
+      </ng-container>
+      <mat-icon (click)="closeReport()">close</mat-icon>
+    </div>
+    <div class="main">
+      <insight-report-data [report]="report" [reportType]="reportType" [detailsTemplate]="detailsTemplate"
+        [cellTemplate]="cellTemplate" [columnFilters]="columnFilters" (selected)="onStatSelect($event)"
+        [templateParams]="filters">
+      </insight-report-data>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="!report && reportType">
+    <!-- <div class="header">
+      <h5>Previous Searches</h5> -->
+    <!-- <h5>Downloads</h5>
+    <span class="spacer"></span> -->
+    <!-- <button mat-icon-button (click)="reports.showPrevious()" [disabled]="!reports.previousEnabled">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+    <button mat-icon-button (click)="getReportLists()">
+      <mat-icon>loop</mat-icon>
+    </button>
+    <button mat-icon-button (click)="reports.showNext()" [disabled]="!reports.nextEnabled">
+      <mat-icon>chevron_right</mat-icon>
+    </button> -->
+    <!-- </div> -->
+    <div class="main">
+      <insight-report-list [reportType]="reportType" (selected)="selectReport($event)"></insight-report-list>
+    </div>
+  </ng-container>
+</div>
+<ng-template #detailsTemplate let-data="data" let-details="details" let-template="template">
+  <ng-container [ngSwitch]="template">
+    <ng-container *ngSwitchCase="'reportType'">
+      <core-page-divs [divs]="[{code:'report'}]" [filterView]="'noView'"
+        [areaCode]="'drill-down-reports.'+reportType.code" (selected)="onStatSelect($event)"
+        [filters]="details.filters">
+      </core-page-divs>
+    </ng-container>
+    <ng-container *ngSwitchDefault>
+      Template for {{template}} is not defined
+    </ng-container>
+  </ng-container>
+</ng-template>
+
+<ng-template #cellTemplate let-template="template">
+  <ng-container [ngSwitch]="template.code">
+    <send-it-message-button *ngSwitchCase="'message'" [template]="template.config.template" [data]="template.params">
+    </send-it-message-button>
+    <!-- <oa-input-with-http *ngSwitchCase="'input'" [params]="template.params" [filters]="template.filters">
+    </oa-input-with-http> -->
+    <div *ngSwitchDefault>
+      Template for {{template.code}} is not defined
+    </div>
+  </ng-container>
+</ng-template>
+
+<ng-template #widgetDialogColumnTemplate let-data="data" let-template="template">
+  <ng-container [ngSwitch]="template">
+  </ng-container>
+</ng-template>

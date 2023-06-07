@@ -1,0 +1,27 @@
+<ng-container *ngIf="!user">
+
+
+  <form class="form form-container">
+    <mat-form-field>
+      <!-- <mat-icon matPrefix><img class="email"></mat-icon> -->
+      <mat-label>Type your email address</mat-label>
+      <input matInput [(ngModel)]="email" name="email" type="email" (keydown.enter)="next()">
+    </mat-form-field>
+
+    <div class="controls-row">
+      <span class="spacer"></span>
+      <button mat-raised-button class="nxtBtn" color="primary" [disabled]="isProcessing" (click)="next()">Next</button>
+    </div>
+  </form>
+
+</ng-container>
+
+<ng-container *ngIf="user">
+  <oa-input label="OTP Confirmation" type="otp" [(value)]="otp" [required]="true"></oa-input>
+  <div class="controls-row confBtn">
+    <span class="spacer"></span>
+    <button mat-raised-button (click)="cancel()">Cancel</button>
+    <button mat-raised-button color="primary" [disabled]="isProcessing" (click)="confirm()">Confirm</button>
+    <span class="spacer"></span>
+  </div>
+</ng-container>

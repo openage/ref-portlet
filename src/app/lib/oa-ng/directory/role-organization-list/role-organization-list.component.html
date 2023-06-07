@@ -1,0 +1,68 @@
+<ng-container [ngSwitch]="view">
+
+  <processing-indicator *ngIf="isProcessing"></processing-indicator>
+  <ng-container *ngIf="organizations.length">
+    <table mat-table [dataSource]="organizations" *ngIf="view === 'table'">
+
+
+      <ng-container matColumnDef="orgName">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td class="pointer org-name" (click)="select(item)" mat-cell *matCellDef="let item"
+          [class.deleted]="item.isDeleted" [class.processing]="item.isProcessing">
+          <img *ngIf="item.logo && item.logo.url" [src]="item.logo.url">
+          <img *ngIf="!item.logo || !item.logo.url" src="/assets/images/customers/default.png">
+          <span>{{item.name}}</span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td class="pointer" (click)="select(item)" mat-cell *matCellDef="let item" [class.deleted]="item.isDeleted"
+          [class.processing]="item.isProcessing">
+          {{item.email || '--'}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="phone">
+        <th mat-header-cell *matHeaderCellDef>Phone</th>
+        <td class="pointer" (click)="select(item)" mat-cell *matCellDef="let item" [class.deleted]="item.isDeleted"
+          [class.processing]="item.isProcessing">
+          {{item.phone || '--'}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let item" [class.deleted]="item.isDeleted" [class.processing]="item.isProcessing">
+          <button mat-icon-button [disabled]="item.isProcessing" matTooltip="view" (click)="select(item)">
+            <mat-icon>keyboard_arrow_right</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="columns, sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: columns"></tr>
+    </table>
+
+    <!-- <app-paginator [pager]="pager" [total]="pager.total"></app-paginator> -->
+  </ng-container>
+
+  <div *ngSwitchCase="'shortList'">
+    <div *ngFor="let item of organizations">
+      <div class="paddingLeft">
+        <div class="controls-row">
+          <div class="subjectText">{{item.name}}</div>
+          <div class="spacer"></div>
+          <div>
+          </div>
+        </div>
+        <!-- <div class="controls-row">
+          <div><span class="material-icons">schedule</span></div>
+          <div class="timeDiv">Date: {{item.createdOn | date: 'd MMM y'}}</div>
+        </div> -->
+      </div>
+      <hr>
+    </div>
+  </div>
+
+</ng-container>

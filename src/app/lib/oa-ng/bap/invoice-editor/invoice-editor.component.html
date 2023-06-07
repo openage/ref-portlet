@@ -1,0 +1,214 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+
+<div class="px-3 pb-3" *ngIf="show">
+  <div name="editInvoice" class="p-2 pt-0 mt-1  invoice-editor section separated">
+    <div class="header">
+      <h5>{{invoice.id ? 'Invoice Editor' : 'New Invoice'}}</h5>
+      <span class="spacer"></span>
+      <!-- <gateway-task-states *ngIf="invoice.meta && invoice?.meta?.taskCode" [code]="invoice?.meta?.taskCode"
+        (fetched)="task=$event"></gateway-task-states> -->
+      <span class="spacer"></span>
+      <gateway-task-actions *ngIf="invoice.meta && invoice?.meta?.taskCode" [code]="invoice?.meta?.taskCode"
+        (updated)="onTaskUpdate($event)">
+      </gateway-task-actions>
+      <button mat-icon-button (click)="sendEmail('customer|invoice')">
+        <mat-icon>outgoing_mail</mat-icon>
+      </button>
+      <button mat-icon-button (click)="sendEmail('customer|invoice|approve|acknowledgement')">
+        <mat-icon>perm_phone_msg</mat-icon>
+      </button>
+
+      <!-- <mat-icon *ngIf="invoice.id" [matMenuTriggerFor]="invoiceOptions" class="pointer">more_vert</mat-icon> -->
+      <mat-menu #invoiceOptions="matMenu">
+        <button mat-menu-item (click)="requestForPayment(invoice)"><span>Request A Payment</span></button>
+      </mat-menu>
+    </div>
+
+    <div class=" flex-1-1-1 w-100">
+
+      <ng-container *ngIf="invoice.isPayable; then sellerOrganization; else buyerOrganization"></ng-container>
+
+      <ng-container *ngIf="invoice.isPayable; then sellerBillingEntity; else buyerBillingEntity"></ng-container>
+
+      <div class="d-flex flex-row-2 w-100 " *ngIf="invoice.isPayable">
+        <label for="tds" class="my-auto">TDS</label>
+        <div class="oa-input w-50 mx-2">
+          <input [(ngModel)]="invoice.meta.tds" [disabled]="readonly" numbersOnly>
+          <!-- <oa-unit-picker [type]="'tds'" [value]="invoice.meta.tdsPercentage"
+            (changed)="onTdsPercentageChange($event.code)" [readonly]="readonly">
+          </oa-unit-picker> -->
+        </div>
+      </div>
+    </div>
+
+
+    <div class=" flex-1-1-1 w-100 mt-2">
+      <div class="d-flex flex-row-2 w-100 mx-2">
+        <label class="my-auto">Document No.</label>
+        <input class="oa-input w-50 mx-2" [ngModel]="invoice.code | uppercase" (ngModelChange)="invoice.code = $event"
+          [disabled]="readonly" uppercase>
+      </div>
+
+      <div class="d-flex flex-row-2 w-100 mx-2">
+        <label class="my-auto">Document Type</label>
+        <mat-select class="w-50 oa-input mx-2" [(ngModel)]="invoice.type" [disabled]="readonly">
+          <mat-option *ngFor="let type of types" [value]="type.code">{{type.code| name}}</mat-option>
+        </mat-select>
+      </div>
+
+      <div class="d-flex  w-100">
+        <label class="my-auto">Due Amount</label>
+        <!-- <input class="oa-input w-50 mx-2" [(ngModel)]="invoice.dueAmount" [disabled]="readonly"> -->
+        <oa-value-editor class="w-50" [readonly]='true' [decimal]="2" [type]="'currency'" [value]="{
+          value: invoice.dueAmount ? invoice.dueAmount.toFixed(2) : invoice.dueAmount,
+          unit: {
+            code: invoice?.currency?.name || 'INR'
+          }
+      }" (change)="onDueAmountChange($event)"></oa-value-editor>
+      </div>
+
+    </div>
+
+    <div class=" flex-1-1-1 mt-2">
+
+      <div class="d-flex flex-row-2 w-100 mx-2">
+        <label class="my-auto">Date </label>
+        <oa-date-picker class="w-50 mx-2" [value]="invoice.date" [readonly]="readonly" (change)="onDateChange($event)">
+        </oa-date-picker>
+      </div>
+
+      <div class="d-flex w-100 mx-2">
+        <label class="my-auto">Received Date </label>
+        <oa-date-picker class="w-50 mx-2" [value]="invoice.receivedDate" [readonly]="readonly"
+          (change)="onRecievedDateChange($event)">
+        </oa-date-picker>
+      </div>
+
+      <div class="d-flex w-100 mx-2">
+        <label class="my-auto">Due Date </label>
+        <oa-date-picker class="w-50 mx-2" [value]="invoice.dueDate" [readonly]="readonly"
+          (change)="onDueDateChange($event)">
+        </oa-date-picker>
+      </div>
+
+    </div>
+    <div class="d-flex flex-1-1-1 mt-2">
+      <div class="d-flex w-100 mx-2">
+        <label class="my-auto">File</label>
+        <button mat-button class="primary w-50 mx-2" [disabled]="!invoice.id || readonly" (click)="openDialog()">Upload
+          Invoice</button>
+      </div>
+
+      <div class="d-flex w-100 mx-2" *ngIf="invoice.isPayable">
+        <label class="my-auto">Add Bank</label>
+        <ng-container *ngIf="!invoice.bankDetail?.account||!invoice.bankDetail?.ifscCode">
+          <button mat-button class="primary p-0 w-50 my-auto mx-2" [disabled]="readonly" (click)="bankDetails()">
+            {{!invoice.bankDetail?.account||!invoice.bankDetail?.ifscCode?'Add Details' :
+            invoice.bankDetail?.account+'/'+invoice.bankDetail?.ifscCode}}
+          </button>
+        </ng-container>
+        <ng-container *ngIf="invoice.bankDetail?.account||invoice.bankDetail?.ifscCode">
+          <div class="oa-input w-50 mx-2 my-auto" (click)="bankDetails()">
+            <input [disabled]="true" class="bank-input"
+              [(ngModel)]="invoice.bankDetail.account+'/'+invoice.bankDetail.ifscCode">
+            <mat-icon class="my-auto subtle bank-edit-icon">edit</mat-icon>
+          </div>
+        </ng-container>
+      </div>
+
+      <div class="d-flex w-100 mx-2">
+
+      </div>
+
+    </div>
+  </div>
+
+  <bap-line-items-editor class="separated mb-1" [view]="'vendor'" [invoice]="invoice" [currency]="invoice.currency"
+    [readonly]="readonly" (editorChange)="onEditorChange(invoice)">
+  </bap-line-items-editor>
+
+  <div class="flex-row separated my-2">
+    <div class="">
+      <ng-container *ngTemplateOutlet="currencyChips; context: {invoice: invoice}"></ng-container>
+    </div>
+    <span class="spacer"></span>
+    <!-- <button mat-raised-button class="primary mr-1" (click)="onReset()">Reset</button> -->
+  </div>
+  <div *ngIf="!invoice.isPayable" class="separated pb-2">
+    <h5>Documents</h5>
+    <!-- <drive-file-list [view]="'attachment'" [entity]="{id:invoice.id, type:'invoice'}" [label]="'attachment'"
+      [folder]="'root|invoice-detail'">
+    </drive-file-list> -->
+    <!-- <drive-folder-detail #documents [code]="'root|invoice-detail'" [visibility]="1" [readonly]="true"
+      [entity]="{id:invoice.id, type:'invoice'}" [view]="'attachment'"></drive-folder-detail> -->
+  </div>
+  <div class="footer w-100 ">
+    <div class="w-100 d-flex">
+      <div class="mt-auto header">
+        <button *ngIf="!readonly" mat-raised-button color="primary" class="primary"
+          (click)="onSave(invoice)">Save</button>
+        <!-- <button mat-raised-button *ngIf="invoice.id" class="primary" (click)="select(invoice)"> View </button> -->
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+
+<!---------------------------------------- Templates ----------------------------------------------->
+
+<ng-template #sellerOrganization>
+  <div class="d-flex flex-row-2 w-100 mx-2">
+    <label for="vendor" class="my-auto">Vendor</label>
+    <mat-select [id]="'vendor'" class="w-50 mx-2 oa-input" [(ngModel)]="invoice.sellerOrganization.code"
+      placeholder="Select Vendor" [disabled]="readonly">
+      <mat-option *ngIf="!vendors.length" selected>No Vendor Available</mat-option>
+      <mat-option *ngFor="let vendor of vendors" [value]="vendor.code">{{vendor.name | titlecase}}</mat-option>
+    </mat-select>
+  </div>
+</ng-template>
+
+<ng-template #buyerOrganization>
+  <div class="d-flex flex-row-2 w-100 mx-2">
+    <label for="customer" class="my-auto">Customer</label>
+    <div class="oa-input w-50 mx-2">
+      <input [ngModel]="invoice.buyerOrganization?.name" [disabled]="true">
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #sellerBillingEntity>
+  <div class="d-flex flex-row-2 w-100 mx-2">
+    <label for="billing" class="my-auto">Vendor Billing Entity</label>
+    <div class="w-50 mx-2">
+      <bap-billing-entity-picker [value]="invoice.sellerBillingEntity" [organization]="invoice.sellerOrganization"
+        [readonly]="readonly" (changed)="invoice.sellerBillingEntity = $event"></bap-billing-entity-picker>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #buyerBillingEntity>
+  <div class="d-flex flex-row-2 w-100 mx-2">
+    <label for="billing" class="my-auto">Customer Billing Entity</label>
+    <div class="w-50 mx-2">
+      <bap-billing-entity-picker [value]="invoice.buyerBillingEntity" [organization]="invoice.buyerOrganization"
+        [readonly]="readonly" (changed)="invoice.buyerBillingEntity = $event"></bap-billing-entity-picker>
+    </div>
+  </div>
+</ng-template>
+
+
+<ng-template #currencyChips>
+  <div class=" d-flex controls-row">
+    <ng-container *ngFor="let item of invoice.currency.ratio | keyvalue">
+
+      <div class="ratio-chip d-flex my-1" (click)="openCurrencyEditorDialog()">
+        <span class="ratio-key inline-flex">{{item.key}}:</span>
+        <span class="ratio-value inline-flex">{{item.value}}&nbsp;{{invoice.currency.name ||
+          invoice.currency.code}}</span>
+
+      </div>
+    </ng-container>
+  </div>
+</ng-template>

@@ -1,0 +1,23 @@
+<div class="main" [class.hidden]="!isCurrent">
+  <processing-indicator *ngIf="isProcessing"></processing-indicator>
+
+  <ng-container *ngIf="selectedProject">
+    <div class="w-p scrollable">
+      <div>
+        <div class="action-bar">
+          <span class="spacer"></span>
+          <button mat-raised-button class="primary" (click)="onCreate()">Create</button>
+        </div>
+        <gateway-task-new  [view]="view" [project]="selectedProject" [task]="task"  [parent]="null" [placeholder]="'New Task'" #details>
+        </gateway-task-new>
+      </div>
+      <div class="section">
+        <div class="body highlighted">
+          <gateway-task-new  [view]="'attributes'" [project]="selectedProject" [task]="task">
+          </gateway-task-new>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>
+<router-outlet></router-outlet>

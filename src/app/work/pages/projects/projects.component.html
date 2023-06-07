@@ -1,0 +1,11 @@
+<div class="main" [class.hidden]="!isCurrent">
+  <processing-indicator *ngIf="isProcessing"></processing-indicator>
+  <div *ngIf="isInitialized" class="sections">
+    <ng-container *ngIf="sections.projects" class="section">
+      <gateway-project-list #list [options]="sections.projects" (selected)="onSelect($event)" [my]="true"
+        (selectedData)="onDataSelect($event)" [view]="selectedView">
+      </gateway-project-list>
+    </ng-container>
+  </div>
+</div>
+<router-outlet></router-outlet>

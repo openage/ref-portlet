@@ -1,0 +1,20 @@
+<div mat-dialog-title class="controls-row">
+  <h4>{{config.title}}</h4>
+  <span class="spacer"></span>
+  <button mat-icon-button mat-dialog-close class="close-icon" (click)="dialogRef.close()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<div mat-dialog-content>
+  <ng-container>
+    <gateway-task-list [view]="'table'" [parent]="parent" [columns]="columns" (selected)="onChecked($event)">
+    </gateway-task-list>
+  </ng-container>
+</div>
+
+<div mat-dialog-actions class="buttons controls-row">
+  <span class="spacer"></span>
+  <button *ngIf="!config.hide.cancel" mat-button (click)="dialogRef.close()">{{config.cancel.title}}</button>
+  <button mat-raised-button [color]="config.save.color || 'primary'" (click)="onSave()"
+    [disabled]="disabled">{{config.save.title}}</button>
+</div>

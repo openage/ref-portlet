@@ -1,0 +1,528 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+<ng-container *ngIf="properties">
+  <ng-container *ngIf="view === 'finance'">
+    <div class="section">
+      <div class="header">
+        <h5>Line Items</h5>
+        <span class="spacer"></span>
+        <!-- <button mat-raised-button class="primary" (click)="onReset()">Reset</button> -->
+        <button mat-raised-button class="primary" (click)="onSave(this.properties)">Save</button>
+      </div>
+      <div class="table">
+        <div class="header">
+          <div class="no" [matTooltip]="'GL Number'">No</div>
+          <div class="description">Description</div>
+          <div class="no" [matTooltip]="'HSN/SAC Number'">SAC</div>
+          <!-- <div class="unit">Units</div> -->
+          <div class="per-unit">Rate</div>
+          <div class="amount ">Amount in INR</div>
+          <div class="amount">Taxable Amount</div>
+          <div class="gst" [matTooltip]="''">CGST<ng-container>{{this.properties.isPayable?"(in INR)":"(%)"}}
+            </ng-container>
+          </div>
+          <div class="gst" [matTooltip]="''">SGST<ng-container>{{this.properties.isPayable?"(in INR)":"(%)"}}
+            </ng-container>
+          </div>
+          <div class="gst" [matTooltip]="''">UGST<ng-container>{{this.properties.isPayable?"(in INR)":"(%)"}}
+            </ng-container>
+          </div>
+          <div class="gst" [matTooltip]="''">IGST<ng-container>{{this.properties.isPayable?"(in INR)":"(%)"}}
+            </ng-container>
+          </div>
+          <div class="gst-total">GST Total</div>
+          <div class="total">Total</div>
+          <div *ngIf="!readonly" class="action"></div>
+        </div>
+        <div *ngFor="let item of properties.lineItems;let i = index" class="data-row">
+          <div class="no">
+            <div class="oa-input">
+              <input [(ngModel)]="item.glNumber" numbersOnly>
+            </div>
+          </div>
+          <div class="description">
+            <div class="oa-input">
+              <input [(ngModel)]="item.name">
+            </div>
+          </div>
+          <div class="no">
+            <div class="oa-input">
+              <input [(ngModel)]="item.sac" numbersOnly>
+            </div>
+          </div>
+          <!-- <div class="unit">
+            <div class="oa-input">
+              <input type="number" [(ngModel)]="item.units" (input)="onChange(item)" numbersOnly [disabled]="readonly">
+            </div>
+          </div> -->
+          <div class="per-unit">
+            <div class="oa-input ">
+              <input type="number" [(ngModel)]="item.rate.amount" (input)="onChange(item)" numbersOnly
+                [disabled]="readonly">
+              <oa-unit-picker [type]="'currency'" [value]="item.rate.currency" [readonly]="readonly"
+                (changed)="item.rate.currency = $event.code;onChange(item)"></oa-unit-picker>
+            </div>
+          </div>
+          <div class="amount">
+            <div class="oa-input">
+              <input
+                [value]="(item.rate?.amount * (this.properties?.currency?.ratio[item?.rate?.currency] || 1)).toFixed(2)"
+                disabled>
+            </div>
+          </div>
+          <div class="amount">
+            <div class="oa-input">
+              <input [value]="item?.taxableAmount" disabled>
+            </div>
+          </div>
+          <div class="gst text-right">
+            <ng-container *ngFor="let tax of item.taxes">
+              <ng-container *ngIf="tax.type.code === 'cgst'">
+                <ng-container *ngTemplateOutlet="taxTemplate; context: {tax: tax, lineItem: item}"></ng-container>
+              </ng-container>
+            </ng-container>
+          </div>
+          <div class="gst text-right ">
+            <ng-container *ngFor="let tax of item.taxes">
+              <ng-container *ngIf="tax.type.code === 'sgst'">
+                <ng-container *ngTemplateOutlet="taxTemplate; context: {tax: tax, lineItem: item}"></ng-container>
+              </ng-container>
+            </ng-container>
+          </div>
+          <div class="gst text-right">
+            <ng-container *ngFor="let tax of item.taxes">
+              <ng-container *ngIf="tax.type.code === 'ugst'">
+                <ng-container *ngTemplateOutlet="taxTemplate; context: {tax: tax, lineItem: item}"></ng-container>
+              </ng-container>
+            </ng-container>
+          </div>
+          <div class="gst text-right">
+            <ng-container *ngFor="let tax of item.taxes">
+              <ng-container *ngIf="tax.type.code === 'igst'">
+                <ng-container *ngTemplateOutlet="taxTemplate; context: {tax: tax, lineItem: item}"></ng-container>
+              </ng-container>
+            </ng-container>
+          </div>
+          <div class="gst-total">
+            <div class="oa-input">
+              <input [value]="item.taxAmount" disabled>
+            </div>
+          </div>
+          <div class="total">
+            <div class="oa-input">
+              <input [value]="item.amount" disabled>
+            </div>
+          </div>
+          <div *ngIf="!readonly && properties.lineItems.length>1" class="action">
+            <mat-icon class="subtle" (click)="removeLineItem(i)"
+              [matTooltip]="'This action will remove the line item from the invoice'">remove_circle_outline</mat-icon>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="!readonly">
+        <a class="add-row" href="javascript:void(0)" (click)="addLineItem()">Add Line Item</a>
+      </div>
+      <hr>
+      <div class="table">
+        <div class="data-row">
+          <div class="margin"></div>
+          <div class="amount text-right">Total</div>
+          <div class="amount text-right"> {{total.taxable | value: 'comma'}}</div>
+          <div class="gst text-right">{{total.cgst | value: 'comma'}}</div>
+          <div class="gst text-right"> {{total.sgst | value: 'comma'}}</div>
+          <div class="gst text-right"> {{total.ugst | value: 'comma'}}</div>
+          <div class="gst text-right">{{total.igst | value: 'comma'}}</div>
+          <div class="gst-total text-right">{{total.tax | value: 'comma'}}</div>
+          <div class="total text-right">{{properties.amount | value: 'comma'}}</div>
+          <div *ngIf="!readonly" class="action"></div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="properties.remarks || properties.status !== 'approved'" class="section">
+      <div class="header">
+        <label>Terms & Conditions</label>
+        <span class="spacer"></span>
+      </div>
+      <oa-content-editor [readonly]="false" *ngIf="properties.status !== 'approved' && properties.status"
+        [value]="properties.remarks" (changed)="onSaveRemarks($event)"></oa-content-editor>
+      <div *ngIf="properties.status === 'approved'" [innerHTML]="properties.remarks"></div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="view === 'vendor'">
+    <div class="section">
+      <div class="table">
+        <div class="header px-0 text-center order-header">
+          <div class="order-no text-left" [matTooltip]="'GL Number'">GL No</div>
+          <!-- <div class="order-charge"></div> -->
+          <div class="order-description">Description</div>
+          <div class="order-sac">SAC/HSN</div>
+          <div class="order-per-unit">Amount</div>
+          <div class="order-units">Units</div>
+          <div class="order-amount px-2 text-center">Amount Without GST<br><span class="w-100 text-center">
+              (in {{properties.currency.name}})</span>
+          </div>
+          <div class="order-gst" [matTooltip]="''">CGST<br>(in INR)</div>
+          <div class="order-gst" [matTooltip]="''">SGST<br>(in INR)</div>
+          <div class="order-gst" [matTooltip]="''">UGST<br>(in INR)</div>
+          <div class="order-gst" [matTooltip]="''">IGST<br>(in INR)</div>
+          <div class="order-gst-total">GST Total<br>(in INR)</div>
+          <div class="order-total">Total</div>
+          <div *ngIf="!readonly" class="order-action"></div>
+        </div>
+        <div *ngFor="let item of properties.lineItems;let i = index" class="data-row">
+          <div class="order-no">
+            <div class="oa-input">
+              <input [(ngModel)]="item.glNumber" [disabled]="readonly" numbersOnly>
+            </div>
+          </div>
+          <div class="order-description">
+            <div class="pr-1">
+              <oa-autocomplete [placeholder]="'Charge'" [value]="item" [disabled]="readonly" [options]="{
+                            templates: {
+                              value: descriptionValueTemplate
+                                      },
+                            search: {
+                              field: 'text',
+                              params: searchParams,
+                              limit: 5
+                            }}" [api]="chargeService" (changed)="onChargeSelect($event,item)">
+              </oa-autocomplete>
+              <!-- <input [(ngModel)]="item.name"> -->
+            </div>
+          </div>
+          <div class="order-sac">
+            <div class="oa-input">
+              <input [(ngModel)]="item.sac" [disabled]="readonly" numbersOnly>
+            </div>
+          </div>
+          <div class="order-per-unit">
+            <div class="oa-input">
+              <input type="number" [(ngModel)]="item.rate.amount" (input)="onChange(item)" numbersOnly
+                [disabled]="readonly">
+              <oa-unit-picker [type]="'currency'" [value]="item.rate.currency" [readonly]="readonly"
+                (changed)="item.rate.currency = $event.code; onChange(item)"></oa-unit-picker>
+            </div>
+          </div>
+          <div class="order-units ">
+            <div class="oa-input">
+              <input type="number" [(ngModel)]="item.units" (input)="onChange(item)" numbersOnly [disabled]="readonly">
+            </div>
+          </div>
+
+          <div class="order-amount m-0">
+            <div class="oa-input inline">
+              <input [value]="item?.taxableAmount" class="text-right" disabled>
+            </div>
+          </div>
+          <div class="order-gst text-right">
+            <ng-container *ngFor="let tax of item.taxes">
+              <ng-container *ngIf="tax.type.code === 'cgst'">
+                <ng-container *ngTemplateOutlet="taxTemplate; context: {tax: tax, lineItem: item}"></ng-container>
+              </ng-container>
+            </ng-container>
+          </div>
+          <div class="order-gst text-right ">
+            <ng-container *ngFor="let tax of item.taxes">
+              <ng-container *ngIf="tax.type.code === 'sgst'">
+                <ng-container *ngTemplateOutlet="taxTemplate; context: {tax: tax, lineItem: item}"></ng-container>
+              </ng-container>
+            </ng-container>
+          </div>
+          <div class="order-gst text-right">
+            <ng-container *ngFor="let tax of item.taxes">
+              <ng-container *ngIf="tax.type.code === 'ugst'">
+                <ng-container *ngTemplateOutlet="taxTemplate; context: {tax: tax, lineItem: item}"></ng-container>
+              </ng-container>
+            </ng-container>
+          </div>
+          <div class="order-gst text-right">
+            <ng-container *ngFor="let tax of item.taxes">
+              <ng-container *ngIf="tax.type.code === 'igst'">
+                <ng-container *ngTemplateOutlet="taxTemplate; context: {tax: tax, lineItem: item}"></ng-container>
+              </ng-container>
+            </ng-container>
+          </div>
+          <div class="order-gst-total">
+            <div class="oa-input inline">
+              <input [value]="item.taxAmount" class="text-right" disabled>
+            </div>
+          </div>
+          <div class="order-total">
+            <div class="oa-input inline">
+              <input [value]="item.amount" class="text-right" disabled>
+            </div>
+          </div>
+          <div class="order-action">
+            <mat-icon *ngIf="!readonly && properties.lineItems.length>1" class="subtle" (click)="removeLineItem(i)"
+              [matTooltip]="'This action will remove the line item from the invoice'">remove_circle_outline</mat-icon>
+          </div>
+        </div>
+      </div>
+      <div>
+        <a class="add-row" *ngIf="!readonly" href="javascript:void(0)" (click)="addLineItem()">Add Line Item</a>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="view === 'customer'">
+    <div class="section">
+      <div class="table">
+        <div class="header text-center customer-header">
+          <div class="customer-no text-left" [matTooltip]="'GL Number'">GL No</div>
+          <div class="customer-description">Description</div>
+          <div class="customer-per-unit">Amount</div>
+          <!-- <div class="customer-unit">Units</div> -->
+          <!-- <div class="customer-conversion">Units</div> -->
+          <div class="customer-amount px-2 text-center">Amount Without GST<br><span class="w-100 text-center">
+              (in {{properties.currency.name}})</span>
+          </div>
+          <div class="customer-gst" [matTooltip]="''">CGST<br>(in %)</div>
+          <div class="customer-gst" [matTooltip]="''">SGST<br>(in %)</div>
+          <div class="customer-gst" [matTooltip]="''">UGST<br>(in %)</div>
+          <div class="customer-gst" [matTooltip]="''">IGST<br>(in %)</div>
+          <div class="customer-gst-total">GST Total<br>(in INR)</div>
+          <div class="customer-total">Total</div>
+          <div *ngIf="!readonly" class="customer-action"></div>
+        </div>
+        <div *ngFor="let item of properties.lineItems;let i = index" class="data-row">
+          <div class="customer-no">
+            <div class="oa-input">
+              <input [(ngModel)]="item.glNumber" numbersOnly [disabled]="readonly">
+            </div>
+          </div>
+          <div class="customer-description">
+            <div class="oa-input">
+              <input [(ngModel)]="item.name" [disabled]="readonly">
+            </div>
+          </div>
+          <div class="customer-per-unit">
+            <div class="oa-input inline">
+              <input type="number" [(ngModel)]="item.rate.amount" (input)="onChange(item)" numbersOnly
+                [disabled]="(!readonly && options.editUnit) ? false : true">
+              <oa-unit-picker [type]="'currency'" [value]="item.rate.currency"
+                [readonly]="(!readonly && options.editUnit) ? false : true"
+                (changed)="item.rate.currency = $event.code;onChange(item)"></oa-unit-picker>
+            </div>
+            <!-- <span *ngIf="!properties.id" class="sub-text  px-2">Max: {{item.rate.currency}}
+                  {{item?.meta?.amountPendingToBeBilled |
+                  value:'comma'}}</span> -->
+          </div>
+          <!-- <div class="customer-unit">
+            <div class="oa-input inline">
+              <input type="number" [(ngModel)]="item.units" (input)="onChange(item)" numbersOnly
+                [disabled]="(!readonly && options.editUnit) ? false : true">
+            </div>
+          </div> -->
+          <!-- <div class="customer-conversion ">
+            <div class="oa-input">
+              <input type="number" [(ngModel)]="item.rate.conversion" (input)="onChange(item)" numbersOnly
+                [disabled]="readonly">
+            </div>
+          </div> -->
+
+          <div class="customer-amount px-2 m-0">
+            <div class="oa-input inline">
+              <input [value]="item?.taxableAmount" class="text-right" disabled>
+            </div>
+          </div>
+          <div class="customer-gst text-right">
+            <ng-container *ngFor="let tax of item.taxes">
+              <ng-container *ngIf="tax.type.code === 'cgst'">
+                <ng-container *ngTemplateOutlet="taxTemplate; context: {tax: tax, lineItem: item}"></ng-container>
+              </ng-container>
+            </ng-container>
+          </div>
+          <div class="customer-gst text-right ">
+            <ng-container *ngFor="let tax of item.taxes">
+              <ng-container *ngIf="tax.type.code === 'sgst'">
+                <ng-container *ngTemplateOutlet="taxTemplate; context: {tax: tax, lineItem: item}"></ng-container>
+              </ng-container>
+            </ng-container>
+          </div>
+          <div class="customer-gst text-right">
+            <ng-container *ngFor="let tax of item.taxes">
+              <ng-container *ngIf="tax.type.code === 'ugst'">
+                <ng-container *ngTemplateOutlet="taxTemplate; context: {tax: tax, lineItem: item}"></ng-container>
+              </ng-container>
+            </ng-container>
+          </div>
+          <div class="customer-gst text-right">
+            <ng-container *ngFor="let tax of item.taxes">
+              <ng-container *ngIf="tax.type.code === 'igst'">
+                <ng-container *ngTemplateOutlet="taxTemplate; context: {tax: tax, lineItem: item}"></ng-container>
+              </ng-container>
+            </ng-container>
+          </div>
+          <div class="customer-gst-total">
+            <div class="oa-input inline">
+              <input [value]="item.taxAmount" class="text-right" disabled>
+            </div>
+          </div>
+          <div class="customer-total">
+            <div class="oa-input inline">
+              <input [value]="item.amount" class="text-right" disabled>
+            </div>
+          </div>
+
+          <div *ngIf="!readonly && properties.lineItems.length>1" class="customer-action">
+            <mat-icon class="subtle" (click)="removeLineItem(i)"
+              [matTooltip]="'This action will remove the line item from the invoice'">remove_circle_outline</mat-icon>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="!readonly && options.addLineItem">
+        <a class="add-row" href="javascript:void(0)" (click)="addLineItem()">Add Line Item</a>
+      </div>
+      <!-- <div>
+        <ng-container *ngTemplateOutlet="currencyChips; context: {currency: properties.currency}"></ng-container>
+      </div> -->
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="view === 'actionItems'">
+    <div class="action-items rounded my-1">
+      <div class="section">
+        <div class="table">
+          <div class="header text-center">
+            <div class="customer-no text-left" [matTooltip]="'GL Number'">GL No</div>
+            <div class="customer-description">Description</div>
+            <div class="customer-per-unit">Amount</div>
+            <!-- <div class="customer-unit">Units</div> -->
+            <!-- <div class="customer-conversion">Units</div> -->
+            <div class="customer-amount px-2 text-center">Amount Without GST<br><span class="w-100 text-center">
+                (in {{properties.currency.name}})</span>
+            </div>
+            <div class="customer-gst" [matTooltip]="''">CGST<br><span class="sub-text">(in INR)</span></div>
+            <div class="customer-gst" [matTooltip]="''">SGST<br><span class="sub-text">(in INR)</span></div>
+            <div class="customer-gst" [matTooltip]="''">UGST<br><span class="sub-text">(in INR)</span></div>
+            <div class="customer-gst" [matTooltip]="''">IGST<br><span class="sub-text">(in INR)</span></div>
+            <div class="customer-gst-total">GST Total<br><span class="sub-text">(in INR)</span></div>
+            <div class="customer-total">Total</div>
+            <div *ngIf="!readonly" class="customer-action"></div>
+          </div>
+          <div *ngFor="let item of properties.lineItems;let i = index" class="data-row">
+            <div class="customer-no">
+              <div class="oa-input">
+                <input [(ngModel)]="item.glNumber" numbersOnly [disabled]="readonly">
+              </div>
+            </div>
+            <div class="customer-description">
+              <div class="oa-input">
+                <input [(ngModel)]="item.name" [disabled]="readonly">
+              </div>
+            </div>
+            <div class="customer-per-unit">
+              <div class="oa-input inline">
+                <input type="text" [(ngModel)]="item.rate.amount" (input)="onChange(item)" numbersOnly
+                  [disabled]="true">
+                <oa-unit-picker [type]="'currency'" [value]="item.rate.currency" [readonly]="true"
+                  (changed)="item.rate.currency = $event.code;onChange(item)"></oa-unit-picker>
+              </div>
+              <!-- <span *ngIf="!properties.id" class="sub-text  px-2">Max: {{item.rate.currency}}
+                  {{item?.meta?.amountPendingToBeBilled |
+                  value:'comma'}}</span> -->
+            </div>
+            <!-- <div class="customer-unit">
+              <div class="oa-input inline">
+                <input type="number" [(ngModel)]="item.units" (input)="onChange(item)" numbersOnly [disabled]="true">
+              </div>
+            </div> -->
+            <!-- <div class="customer-conversion ">
+            <div class="oa-input">
+              <input type="number" [(ngModel)]="item.rate.conversion" (input)="onChange(item)" numbersOnly
+                [disabled]="readonly">
+            </div>
+          </div> -->
+
+            <div class="customer-amount px-2 m-0">
+              <div class="oa-input inline">
+                <input [value]="item?.taxableAmount" class="text-right" disabled>
+              </div>
+            </div>
+            <div class="customer-gst text-right">
+              <ng-container *ngFor="let tax of item.taxes">
+                <ng-container *ngIf="tax.type.code === 'cgst'">
+                  <ng-container *ngTemplateOutlet="taxTemplate; context: {tax: tax, lineItem: item}"></ng-container>
+                </ng-container>
+              </ng-container>
+            </div>
+            <div class="customer-gst text-right ">
+              <ng-container *ngFor="let tax of item.taxes">
+                <ng-container *ngIf="tax.type.code === 'sgst'">
+                  <ng-container *ngTemplateOutlet="taxTemplate; context: {tax: tax, lineItem: item}"></ng-container>
+                </ng-container>
+              </ng-container>
+            </div>
+            <div class="customer-gst text-right">
+              <ng-container *ngFor="let tax of item.taxes">
+                <ng-container *ngIf="tax.type.code === 'ugst'">
+                  <ng-container *ngTemplateOutlet="taxTemplate; context: {tax: tax, lineItem: item}"></ng-container>
+                </ng-container>
+              </ng-container>
+            </div>
+            <div class="customer-gst text-right">
+              <ng-container *ngFor="let tax of item.taxes">
+                <ng-container *ngIf="tax.type.code === 'igst'">
+                  <ng-container *ngTemplateOutlet="taxTemplate; context: {tax: tax, lineItem: item}"></ng-container>
+                </ng-container>
+              </ng-container>
+            </div>
+            <div class="customer-gst-total">
+              <div class="oa-input inline">
+                <input [value]="item.taxAmount" class="text-right" disabled>
+              </div>
+            </div>
+            <div class="customer-total">
+              <div class="oa-input inline">
+                <input [value]="item.amount" class="text-right" disabled>
+              </div>
+            </div>
+
+            <div *ngIf="!readonly && properties.lineItems.length>1" class="customer-action">
+              <mat-icon class="subtle" (click)="removeLineItem(i)"
+                [matTooltip]="'This action will remove the line item from the invoice'">remove_circle_outline</mat-icon>
+            </div>
+          </div>
+        </div>
+        <!-- <div *ngIf="!readonly">
+        <a class="add-row" href="javascript:void(0)" (click)="addLineItem()">Add Line Item</a>
+      </div> -->
+        <!-- <div>
+        <ng-container *ngTemplateOutlet="currencyChips; context: {currency: properties.currency}"></ng-container>
+      </div> -->
+      </div>
+    </div>
+  </ng-container>
+
+</ng-container>
+
+<ng-template #currencyChips let-currency="currency">
+  <div class="controls-row">
+    <ng-container *ngFor="let item of currency.ratio | keyvalue">
+      <div class="ratio-chip">
+        <span class="ratio-key">{{item.key}}:</span>
+        <span class="ratio-value">{{item.value}}&nbsp;{{currency.name || currency.code}}</span>
+      </div>
+    </ng-container>
+  </div>
+</ng-template>
+
+<ng-template #taxTemplate let-tax="tax" let-lineItem="lineItem">
+  <div class="oa-input d-flex float-right" [matTooltip]="tax.amount">
+    <input type="text" [(ngModel)]="tax.amount" (input)="onChange(lineItem)" [disabled]="readonly" numbersOnly>
+    <oa-unit-picker [type]="'margin'" [value]="tax.value" (changed)="onGstChange($event, tax, lineItem)"
+      [readonly]="readonly"></oa-unit-picker>
+  </div>
+  <!-- <span class="sub-text  px-2">{{tax?.amount | value:'comma'}}</span> -->
+</ng-template>
+
+<ng-template #valueTemplate let-item="value">
+  <div>
+    {{item.name}}
+  </div>
+</ng-template>
+<ng-template #descriptionValueTemplate let-item="value">
+  <div>
+    {{item.name}}
+  </div>
+</ng-template>

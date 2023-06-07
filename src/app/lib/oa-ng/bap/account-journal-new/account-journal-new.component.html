@@ -1,0 +1,48 @@
+<div mat-dialog-title class="controls-row">
+    <h4>New Entity</h4>
+    <span class="spacer"></span>
+    <button mat-icon-button mat-dialog-close class="close-icon" (click)="dialogRef.close()">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+
+<div mat-dialog-content>
+
+    <div>
+        <label for="date">Date<span class="mandatory">*</span></label>
+        <oa-date-picker [label]="''" [value]="journal.date" (change)="journal.date = $event">
+        </oa-date-picker>
+    </div>
+
+    <div>
+        <label for="amount">Amount<span class="mandatory">*</span></label>
+        <div class="oa-input">
+            <input [id]="'amount'" numbersOnly type="text" maxlength="11" [(ngModel)]="journal.amount">
+        </div>
+    </div>
+
+    <div>
+        <label for="type">Type<span class="mandatory">*</span></label>
+        <div>
+            <mat-select [id]="'type'" [(ngModel)]="journal.type" placeholder="Select type">
+                <mat-option [value]="'credit'">Credit</mat-option>
+                <mat-option [value]="'debit'">Debit</mat-option>
+            </mat-select>
+        </div>
+    </div>
+
+    <div>
+        <label for="remark" class="required">Remarks</label>
+        <div class="oa-textarea">
+            <textarea [id]="'remark'" [placeholder]="'Enter remarks here'"
+                [(ngModel)]="journal.remarks"></textarea>
+        </div>
+    </div>
+
+</div>
+
+<div mat-dialog-actions class="buttons controls-row mt-2">
+    <span class="spacer"></span>
+    <button mat-button (click)="dialogRef.close()">Cancel</button>
+    <button mat-raised-button color="primary" (click)="onSubmit()">Submit</button>
+</div>

@@ -1,0 +1,27 @@
+<div class="main" [class.hidden]="!isCurrent">
+  <div class="header">
+    <h5>{{page?.title}}</h5>
+
+    <span class="spacer"></span>
+    <!-- <gateway-state-picker *ngIf="!isSearching" [view]="'toggler'" [workflow]="'directory|customer-onboarding'"
+      (changed)="onStateSelect($event)"></gateway-state-picker> -->
+
+    <div>
+      <button (click)="onNew()" class="primary" mat-raised-button>New</button>
+    </div>
+  </div>
+  <core-page-divs [divs]="page?.meta?.divs" [areaCode]="'customer-list-page'" (selected)="onStatSelect($event)">
+  </core-page-divs>
+  <span class="spacer"></span>
+  <oa-tabs-search [options]="page?.meta?.search" (selected)="onSearch($event)"></oa-tabs-search>
+  <span class="spacer"></span>
+  <div class="main">
+    <sales-customer-list (selected)="onSelect($event)" [type]="type" [user]="'my'" [name]="searchText" [sector]="sector"
+      [status]="selectedStatus" [highRegion]="highRegion" [mediumRegion]="mediumRegion" [lowRegion]="lowRegion"
+      [category]="category" [email]="email" [phone]="phone" [revenuePotential]="revenuePotential"
+      [clientSource]="clientSource" [salesAgent]="salesAgent" [pricingAgent]="pricingAgent" [operator]="operator"
+      [businessHead]="businessHead" #list>
+    </sales-customer-list>
+  </div>
+</div>
+<router-outlet></router-outlet>

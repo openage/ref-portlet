@@ -1,0 +1,45 @@
+<div *ngIf="!afterSignUp" class="form-container">
+  <form>
+    <mat-form-field appearance="outline">
+      <label [class.error]="emailError">Enter Email Address</label>
+      <div class="textBox">
+        <input matInput [(ngModel)]="email" type="email" name="email" required (change)="validateEmailOnly()">
+      </div>
+      <div class="err">
+        <mat-hint class="error" *ngIf="emailError">{{emailError}}</mat-hint>
+      </div>
+    </mat-form-field>
+
+    <div class="recaptcha-div">
+      <oa-recaptcha (token)="token = $event"></oa-recaptcha>
+    </div>
+
+    <div class="con">
+      <span class="spacer"></span>
+      <button mat-raised-button color="primary" [disabled]="isProcessing || !token || (email && emailError) || (!email)"
+        (click)="afterSignUpTab()">Continue</button>
+    </div>
+
+    <mat-hint>
+      <div class="paddingAccount">Already Registered? <a (click)="login()">Login</a>
+      </div>
+    </mat-hint>
+
+  </form>
+
+</div>
+
+<div *ngIf="afterSignUp" class="form-container">
+  <p class="padding"> We've sent you a link to confirm your email address. Please check your inbox and click on that
+    link to complete your profile.</p>
+  <div class="con1">
+    <span class="spacer"></span>
+    <button mat-raised-button color="primary" (click)="login()">OK</button>
+  </div>
+
+  <div class="paddingLogin">
+    <span>Didn't get any link? <button type="button" class="btn btn-link" (click)="resendOtp()">Resend
+        link</button></span>
+  </div>
+
+</div>

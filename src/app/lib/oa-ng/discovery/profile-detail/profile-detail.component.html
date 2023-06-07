@@ -1,0 +1,13 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+<div class="cont-div" *ngIf="properties">
+  <div *ngIf="!properties.isUnCreated">
+    <label>Referral Code</label>
+    <div class="oa-input">
+      <input type="text" [(ngModel)]="properties.code">
+      <mat-icon *ngIf="properties.code" matTooltip="Save" class="subtle pointer" (click)="saveCode()">save</mat-icon>
+    </div>
+  </div>
+  <div class="buttonCont" *ngIf="properties.isUnCreated">
+      <button mat-raised-button color="primary" (click)="createProfile()">Generate Referral Code</button>
+  </div>
+</div>

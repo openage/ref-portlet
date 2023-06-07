@@ -1,0 +1,21 @@
+.custom {
+    text-align-last: center;
+}
+
+img.ng-star-inserted {
+    border-style: solid;
+    border-color: lightgrey;
+    margin-bottom: 1rem;
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 0rem;
+    font-weight: bold;
+    font-size: medium;
+}
+
+.h5, h5{
+    font-size: 14px;
+    color: grey;
+}

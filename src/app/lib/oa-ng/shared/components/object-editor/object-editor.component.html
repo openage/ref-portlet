@@ -1,0 +1,44 @@
+<ng-container [ngSwitch]="view">
+  <ng-container *ngSwitchCase="'table'">
+    <oa-table [definition]="definition" [items]="value" (save)="save.emit($event)" (delete)="delete.emit($event)">
+    </oa-table>
+  </ng-container>
+
+  <ng-container *ngSwitchDefault>
+    <div *ngTemplateOutlet="objectContainer; context:{object : definition}"></div>
+
+    <div class="footer buttons">
+      <span class="spacer"></span>
+      <button mat-raised-button color="secondary" (click)="onReset()">Reset</button>
+      <button mat-raised-button color="primary" (click)="onSubmit(definition.fields)">Submit</button>
+    </div>
+  </ng-container>
+</ng-container>
+
+<ng-template #objectContainer let-object="object">
+  <ng-container *ngIf="object">
+    <div [class]="object?.style?.container?.class" [style]="object?.style?.container?.style">
+      <label>{{object.label}}</label>
+    </div>
+
+    <div *ngIf="object.fields && object.fields.length" [class]="object?.style?.fields?.class"
+      [style]="object?.style?.fields?.style">
+      <ng-container *ngFor="let field of object.fields">
+
+        <ng-container [ngSwitch]="field.control">
+          <ng-container *ngSwitchCase="(field.control | typeof) === 'object' ? field.control : ''">
+            <ng-container *ngTemplateOutlet="objectContainer; context:{object : field.control}"></ng-container>
+          </ng-container>
+
+          <ng-container *ngSwitchDefault>
+            <ng-container *ngIf="!field.isHidden">
+              <oa-field-editor [item]="field" [isFormSubmit]="isFormSubmit" (errored)="errors=$event"></oa-field-editor>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+
+      </ng-container>
+    </div>
+
+  </ng-container>
+</ng-template>

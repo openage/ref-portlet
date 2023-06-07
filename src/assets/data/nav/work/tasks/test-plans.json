@@ -1,0 +1,122 @@
+{
+  "params": {
+    "view": "rows",
+    "type": "test-plan",
+    "endless": "false",
+    "showFilters": false,
+    "showMembers": true,
+    "showTimeLogs": false,
+    "selectedParent": "false"
+  },
+  "context": [
+    {
+      "code": "filters",
+      "type": "icon",
+      "style": "peacock"
+    },
+    {
+      "code": "refresh",
+      "type": "icon"
+    },
+    {
+      "code": "close",
+      "type": "icon"
+    }
+  ],
+  "search": {
+    "view": "filters",
+    "params": [
+      {
+        "label": "View",
+        "key": "view",
+        "control": "selector",
+        "value": "priority-view",
+        "options": [
+          {
+            "label": "Prioritized",
+            "value": "priority-view"
+          },
+          {
+            "label": "Sprints",
+            "value": "sprint-view"
+          },
+          {
+            "label": "Categorized",
+            "value": "category-view"
+          },
+          {
+            "label": "By Status",
+            "value": "status-view"
+          }
+        ]
+      },
+      {
+        "label": "Subject",
+        "key": "subject",
+        "control": "input"
+      },
+      {
+        "label": "Tags",
+        "key": "tags",
+        "control": "input"
+      },
+      {
+        "label": "Code",
+        "key": "code",
+        "control": "input",
+        "config": {
+          "trigger": "#",
+          "op": "eq"
+        }
+      }
+    ]
+  },
+  "stats": {
+    "areaCode": "test-plan"
+  },
+  "divs": [
+    {
+      "code": "primary-stats",
+      "hideFilters": true,
+      "style": {
+        "container": {
+          "style": {
+            "margin-bottom": "10px"
+          }
+        },
+        "widgets": {
+          "class": "two"
+        }
+      }
+    },
+    {
+      "code": "time-log-total",
+      "hideFilters": true,
+      "style": {
+        "container": {
+          "style": {
+            "margin-bottom": "10px"
+          }
+        },
+        "widgets": {
+          "class": "two"
+        }
+      }
+    }
+  ],
+  "sections": {
+    "new": {},
+    "tasks": {
+      "view": "table",
+      "fields": [
+        "icon",
+        "code",
+        "subject"
+      ],
+      "paging": {
+        "limit": 50,
+        "sort": "priority"
+      }
+    }
+  }
+}

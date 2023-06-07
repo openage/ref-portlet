@@ -1,0 +1,17 @@
+<ng-container [ngSwitch]="view" *ngIf="properties">
+  <ng-container *ngSwitchCase="'chips'">
+    <ng-container>
+      <mat-chip-list #chipList>
+        <mat-chip *ngFor="let item of properties.values; let i = index" [removable]="!readonly">
+          <span>{{item?.name}}</span>
+          <mat-icon class="closeIcon" matChipRemove (click)="removeValue(i)">cancel</mat-icon>
+        </mat-chip>
+        <mat-icon class="label cursorPointer" matTooltip="{{addTag ? 'Close': 'Add'}}"
+          (click)="showSelecter.emit(!addTag); addTag = !addTag">
+          <span *ngIf="!addTag">add_circle_outline</span>
+          <span *ngIf="addTag">highlight_off</span>
+        </mat-icon>
+      </mat-chip-list>
+    </ng-container>
+  </ng-container>
+</ng-container>

@@ -1,0 +1,23 @@
+{
+  "divs": [
+    {
+      "layout": {
+        "class": "flex-row",
+        "divs": [
+          {
+            "class": "left"
+          },
+          {
+            "class": "middle",
+            "body": {
+              "text": "error"
+            }
+          },
+          {
+            "class": "right"
+          }
+        ]
+      }
+    }
+  ]
+}

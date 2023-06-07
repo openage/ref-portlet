@@ -1,0 +1,25 @@
+<div [ngSwitch]="view" [matTooltip]="text | name">
+  <ng-container *ngSwitchCase="'avatar'">
+    <ng-container *ngTemplateOutlet="avatar"></ng-container>
+  </ng-container>
+
+  <div *ngSwitchCase="'selectable'" class="selectable controls-row" [class.selected]="selected">
+    <ng-container *ngTemplateOutlet="avatar"></ng-container>
+    <span *ngIf="selected" (click)="onClick()">{{text | name}}</span>
+  </div>
+
+  <span *ngSwitchCase="'text'" (click)="onClick()">{{text | name}}</span>
+  <ng-container>
+    <div *ngSwitchCase="'pic'" [ngStyle]="style" (click)="onClick()"></div>
+  </ng-container>
+</div>
+
+<ng-template #avatar>
+  <ngx-avatars *ngIf="url" [style]="style" [src]="url" [size]="size" [textSizeRatio]="1" [round]="shape === 'round'"
+    (clickOnAvatar)="onClick()">
+  </ngx-avatars>
+
+  <ngx-avatars *ngIf="!url" [style]="style" name="{{text}}" [size]="size" [round]="shape === 'round'" initialsSize="3"
+    (clickOnAvatar)="onClick()">
+  </ngx-avatars>
+</ng-template>

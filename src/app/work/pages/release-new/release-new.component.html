@@ -1,0 +1,11 @@
+<div class="main" [class.hidden]="!isCurrent">
+    <div class="header">
+        <h5>{{page.title}}</h5>
+        <span class="spacer"></span>
+        <button mat-raised-button class="primary" (click)="detail.save()">Create</button>
+    </div>
+    <div *ngIf="projectCode">
+        <gateway-release #detail [project]="projectCode" (created)="onCreate($event)"></gateway-release>
+    </div>
+</div>
+<router-outlet></router-outlet>

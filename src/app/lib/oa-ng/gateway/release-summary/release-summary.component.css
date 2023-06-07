@@ -1,0 +1,78 @@
+.release-container {
+    width: 350px;
+    padding: 5px;
+}
+
+.release-container>.mat-card {
+    height: auto;
+}
+
+.release-header {
+    height: 40px;
+}
+
+.project {
+    text-align: center;
+    margin-top: 10px;
+    font-size: x-large;
+}
+
+.version {
+    color: var(--primary);
+    text-align: center;
+    font-size: large;
+    margin-bottom: 5px;
+    text-align: center;
+    width: 100%;
+}
+
+.version.rolled-back {
+    color: var(--warn);
+}
+
+.sub-text {
+    /* color: var(--accent); */
+    text-align: center;
+    width: 100%;
+    position: relative;
+    top: -10px;
+}
+
+.material-icons {
+    font-size: 18px;
+}
+
+.col-2 {
+    margin-left: 90%;
+    z-index: 2;
+}
+
+.mat-card-actions {
+    margin-left: -20px;
+    margin-right: 20px;
+    padding: -8px 0;
+    margin-bottom: -45px;
+}
+
+
+
+.notes {
+    text-align: center;
+    font-size: large;
+    font-weight: 100;
+    /* margin-top: 10px; */
+}
+
+.wip.notes {
+    color: var(--accent);
+}
+
+.final.notes {
+    color: var(--secondary);
+    font-size: initial;
+    /* text-align: justify; */
+}
+
+.notes .error {
+    color: var(--warn)
+}

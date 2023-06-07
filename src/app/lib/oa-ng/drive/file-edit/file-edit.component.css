@@ -1,0 +1,24 @@
+.content {
+  height: 90vh;
+  overflow-y: scroll;
+}
+
+.cardSection {
+  height: 180px;
+  width: 200px;
+  box-shadow: 0 0 0 0 rgb(0 0 0 / 20%), 0 0 0 0 rgb(0 0 0 / 14%), 0 0 0 0 rgb(0 0 0 / 12%);
+  margin: 15px;
+  border: 1px solid var(--defaultBackground);
+  padding: 15px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.card {
+  min-height: 400px;
+  padding: 15px;
+}
+
+img {
+  max-width: 100%;
+}

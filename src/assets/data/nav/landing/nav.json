@@ -1,0 +1,14 @@
+{
+  "code": "auth",
+  "title": "Identity",
+  "items": [
+    {
+      "code": "auth.login",
+      "url": "https://identity.actionitems.in/landing/login"
+    },
+    {
+      "code": "auth.signup",
+      "url": "https://identity.actionitems.in/landing/signup"
+    }
+  ]
+}

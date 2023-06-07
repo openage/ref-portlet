@@ -1,0 +1,19 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+<div class="flex-row three">
+  <div *ngFor="let item of items">
+    <ng-container *ngIf="auth.hasPermission(item.permissions)">
+      <mat-card (click)="select(item)">
+        <div class="controls-row">
+          <div class="">
+            <span>{{item.name}}</span>
+            <div class="sub-text">{{item.description}}</div>
+          </div>
+          <span class="spacer"></span>
+          <img *ngIf="item.icon" class="icon" [src]="item.icon">
+          <img *ngIf="!item.icon" class="icon" src="../../../../assets/reports/default-icon.svg">
+        </div>
+      </mat-card>
+    </ng-container>
+  </div>
+</div>
+<app-paginator [pager]="pager" [total]="pager.total"></app-paginator>

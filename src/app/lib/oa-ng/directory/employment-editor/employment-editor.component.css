@@ -1,0 +1,64 @@
+h3 {
+    text-align: center;
+}
+
+.empInfo {
+    height: 335px;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.card-wrap {
+    font-weight: bold;
+}
+
+.mat-form-field {
+    width: 100%;
+    padding: 0 15px;
+}
+
+.mat-raised-button {
+    margin-left: auto;
+    margin-right: 25px;
+}
+.pic{
+    width: 100%;
+    margin-top: 15px;
+    margin-left: 17px;
+}
+.image{
+    width: 100%;
+}
+
+#container {
+    width: 100%;
+    /*border-radius: 25px;*/
+    border: 1px solid Black;
+    position: relative;
+  }
+  
+  #x {
+      position: absolute;
+      background: red;
+      color: white;
+      top: -10px;
+      right: -10px;
+  }
+
+  .mat-select {
+    display: inline-block;
+    width: 100%;
+    outline: 0;
+    background: #f1f1f1;
+    height: 30px;
+    background: var(--defaultBackground);
+    padding: 5px 0px;
+  }
+
+  mat-datepicker-toggle.mat-datepicker-toggle {
+    position: absolute;
+    top: 8px;
+    right: 0px;
+}

@@ -1,0 +1,21 @@
+<div>
+  <div class="controls-row">
+    <span class="spacer"></span>
+    <span class="dialogHeader">Create Task</span>
+    <span class="spacer"></span>
+    <span class="material-icons" (click)="dialogRef.close()">
+      close
+    </span>
+  </div>
+  <div>
+    <gateway-task-new #newTask (addSelectedFiles)="setFiles($event)" [project]="project" [entity]="entity"
+      (created)="onCreated($event)">
+    </gateway-task-new>
+  </div>
+</div>
+<div mat-dialog-actions class="controls-row">
+  <span class="spacer"></span>
+  <button mat-button (click)="dialogRef.close()">Cancel</button>
+  <!-- <button mat-raised-button [color]="'primary'" (click)="newTask.onCreate()"
+    [disabled]="!newTask.task.subject || !newTask.task.type || newTask.isProcessing">Create</button> -->
+</div>

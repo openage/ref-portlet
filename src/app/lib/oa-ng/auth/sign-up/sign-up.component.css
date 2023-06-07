@@ -1,0 +1,32 @@
+h5 {
+  text-align: center;
+  padding-top: 40px;
+}
+
+.otp {
+  padding-left: 20%;
+}
+
+.otp input {
+  width: 10%;
+  border-radius: 2px !important;
+  border: solid #ccc 1px;
+  font-size: 205%;
+  margin: 1px;
+  background-color: #eee;
+  text-align: center;
+  height: 50px;
+}
+
+mat-hint a {
+  color: var(--accent);
+  font-weight: bold;
+}
+
+input.sub-domain {
+  text-align: right;
+}
+
+.name .mat-form-field {
+  width: 48%
+}

@@ -1,0 +1,59 @@
+.profile-action {
+  padding-left: 25px;
+  padding-right: 25px;
+  border-radius: 20px;
+  margin-top: 10px;
+}
+
+.role-list {
+  max-height: 200px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.profile-row {
+  display: flex;
+  flex-direction: row;
+  margin: 0px 0px 6px 0px;
+  padding: 10px 0px 0px 6px;
+
+  &:hover {
+    box-shadow: 0 2px 3px -1px rgba(0, 0, 0, .2), 0 1px 3px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
+  }
+
+  .avatar {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+  }
+
+  .content {
+    min-width: 190px;
+    margin: 0 10px;
+
+    /* padding-top: 15px; */
+    h6 {
+      margin-top: 2px;
+    }
+
+    .sub-text {
+      top: -5px;
+      position: relative;
+    }
+
+    h3 {
+      /* font-weight: 100; */
+      /* padding-bottom: 5px; */
+
+      font-weight: normal;
+      font-size: larger;
+      margin: 0;
+    }
+  }
+
+
+}

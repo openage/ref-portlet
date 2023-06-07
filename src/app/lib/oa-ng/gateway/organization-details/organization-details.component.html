@@ -1,0 +1,8 @@
+<div class="flex-row two">
+    <ng-container *ngFor="let cMember of commonMembers">
+        <directory-user-picker [type]="cMember.code" [placeholder]="cMember.name"
+            (changed)="onMemberSet($event,cMember.code)"
+            [value]="cMember.member && cMember.member.user? cMember.member.user: null">
+        </directory-user-picker>
+    </ng-container>
+</div>

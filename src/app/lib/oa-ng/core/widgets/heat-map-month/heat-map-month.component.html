@@ -1,0 +1,28 @@
+<!-- <div class="month">
+  <i class="material-icons" (click)="previousMonth()">
+    keyboard_arrow_left
+  </i>
+  <span class="monthYear">{{selectedDate.format('MMMM ')}} {{selectedDate.format('YYYY ')}}</span>
+  <i class="material-icons" (click)="nextMonth()">
+    keyboard_arrow_right
+  </i>
+</div>
+<div class="calendar">
+  <div class="days">
+    <ng-container *ngFor="let day of daysArr">
+      <div class="daycard" [ngClass]="{'inactive ': day.status === 'disabled', 'selected': isSelected(day.date)}">
+        <div class="dateRow" *ngIf="!day.events">
+          <div class="customPaddingDate" [ngClass]="{'today': todayCheck(day)}">{{day?.date | date: 'd'}}</div>
+        </div>
+        <div class="dateRow" *ngIf="day.events && day.events.length && !todayCheck(day)">
+          <div class="customPaddingDate" [ngClass]="{'holiday': day.events && day.events.length}">
+            {{day?.date | date: 'd'}}</div>
+        </div>
+        <div class="dateRow" *ngIf="day.events && day.events.length && todayCheck(day)">
+          <div class="customPaddingDate" [ngClass]="{'todayHoliday': day.events && day.events.length}">
+            {{day?.date | date: 'd'}}</div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div> -->

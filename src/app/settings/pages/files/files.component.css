@@ -1,0 +1,5 @@
+.main > .header {
+    border-bottom: 1px solid var(--defaultBackground);
+    margin-bottom: 15px;
+    padding-bottom: 0px;
+}

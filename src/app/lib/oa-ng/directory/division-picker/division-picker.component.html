@@ -1,0 +1,14 @@
+<div class="form-container flex-row">
+  <mat-form-field appearance="outline">
+    <label for="division">{{label}}</label>
+    <input #userInput id="division" [formControl]="control" [matAutocomplete]="divisionPicker" matInput type="text"
+      [placeholder]="placeholder" [(ngModel)]="value" [readonly]="readonly" [required]="required">
+    <i matSuffix class="fa fa-caret-down"></i>
+    <mat-autocomplete autoActiveFirstOption #divisionPicker="matAutocomplete" [displayWith]="displayEmployee"
+      (optionSelected)="onOptionSelected($event)">
+      <mat-option *ngFor="let item of items" [value]="item">
+        {{item.name}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</div>

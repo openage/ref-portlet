@@ -1,0 +1,15 @@
+.mat-form-field {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.col-sm-2 {
+    text-align: center;
+}
+.row{
+    margin: auto;
+}
+.mat-toolbar{
+    justify-content: center;
+}

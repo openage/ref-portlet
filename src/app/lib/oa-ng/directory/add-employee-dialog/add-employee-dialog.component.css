@@ -1,0 +1,7 @@
+.center>button:first-child {
+    margin-right: 15px;
+}
+
+.customPaddingBottom {
+    padding-bottom: 24px;
+}

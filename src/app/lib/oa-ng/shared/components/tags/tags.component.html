@@ -1,0 +1,12 @@
+<ng-container [ngSwitch]="readonly">
+  <div class="tags pointer" *ngSwitchCase="true">
+    <span class="tag-inline" *ngFor="let item of values" (click)="selected.emit(item)">{{item}}</span>
+  </div>
+
+  <div class="oa-input" *ngSwitchCase="false">
+    <div class="tags controls-row">
+      <span *ngFor="let item of values; let i = index" (click)="removeTag(i)">{{item}}</span>
+    </div>
+    <input type="text" [(ngModel)]="newTag" (change)="addTag($event)">
+  </div>
+</ng-container>

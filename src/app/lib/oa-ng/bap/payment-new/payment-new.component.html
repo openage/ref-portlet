@@ -1,0 +1,72 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+
+<div class="defaultBackground p-2 pb-0 rounded">
+    <div class="table">
+        <div class="header pb-2">
+            <div class="number text-left required">Customer</div>
+            <div class="date required text-left">Date</div>
+            <div class="amount text-left required ">Amount Received</div>
+            <div class="mode required">Mode</div>
+            <div class="number text-left required">Transaction Id</div>
+            <div class="remarks text-left required">Remarks</div>
+            <div class="action"></div>
+        </div>
+        <div class="data-row">
+            <div class="number pr-1">
+                <oa-autocomplete [placeholder]="'Search Customer'" [options]="{
+              templates: {value: valueTemplate},
+              search: {
+                field: 'name',
+                params: searchParams,
+                limit: 5
+              }}" [api]="organizationService" (changed)="onCustomerChange($event)">
+                </oa-autocomplete>
+            </div>
+
+            <div class="date">
+                <oa-date-picker [placeholder]="'Select payment received date'" [value]="newPayment.paidDate"
+                    (change)="onDateChange($event)"></oa-date-picker>
+            </div>
+
+            <div class="amount">
+                <div class="oa-input px-2">
+                    <input type="text" [placeholder]="'Enter received amount'" class="text-right" numbersOnly
+                        [(ngModel)]="newPayment.amount">
+                    <oa-unit-picker class="pr-2" [type]="'currency'" [value]="'inr'" [readonly]="true">
+                    </oa-unit-picker>
+                </div>
+            </div>
+
+            <div class="mode">
+                <mat-select class="oa-input" [id]="'mode'" [placeholder]="'Select Mode'" [(ngModel)]="newPayment.mode">
+                    <mat-option [value]="'online'">Online</mat-option>
+                    <mat-option [value]="'cheque'">Cheque</mat-option>
+                    <mat-option [value]="'cash'">Cash</mat-option>
+                    <mat-option [value]="'tds'">TDS</mat-option>
+                </mat-select>
+            </div>
+
+            <div class="number">
+                <div class="oa-input">
+                    <input [(ngModel)]="newPayment.transactionId" [placeholder]="'Enter ' + (newPayment.mode === 'cheque' ? 'cheque number': 'transaction id')">
+                </div>
+            </div>
+
+            <div class="remarks">
+                <div class="oa-input">
+                    <input [id]="'remark'" [placeholder]="'Enter remark here ...'" [(ngModel)]="newPayment.remarks">
+                </div>
+            </div>
+
+            <div class="action">
+                <div class="mt-auto mx-auto d-flex">
+                    <button mat-raised-button class="save" color="primary" (click)="onSave()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #valueTemplate let-item="value">
+    <div mat-line> {{item.name}} </div>
+</ng-template>

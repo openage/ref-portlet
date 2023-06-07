@@ -1,0 +1,86 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+
+<ng-container *ngIf="properties" [ngSwitch]="view">
+
+  <div *ngSwitchCase="'basic'" class="flex-1-3">
+    <div class="profile-image-editor mt-4">
+      <div>
+        <img class="border-0" *ngIf="properties.logo && properties.logo.url" [src]="properties.logo.url"
+          (click)="openThumbnailSelector()">
+      </div>
+      <div *ngIf="!properties.logo || !properties.logo.url" (click)="openThumbnailSelector()" class="default border-0">
+        LOGO</div>
+      <i (click)="openThumbnailSelector()" class="md picture-upload"></i>
+    </div>
+    <div>
+
+      <oa-input label="Company Name" type="text" [(value)]="properties.name" [required]="true" [readonly]="readonly"
+        [validate]="checkOrgName" (errored)="error = $event" [options]="{format: {trim: true}}">
+      </oa-input>
+
+      <div class="flex-row three">
+        <oa-input label="Contact Person" type="text" [(value)]="properties.meta.contactPerson" [readonly]="readonly"
+          [options]="{format: {trim: true}}"></oa-input>
+        <oa-input label="Email" type="email" [(value)]="properties.email" [required]="true" [readonly]="readonly"
+          [validate]="checkPhoneOrEmail" (errored)="error = $event" [options]="{format: {trim: true}}">
+        </oa-input>
+        <oa-input label="Phone" type="phone" [(value)]="properties.phone" [options]="{format: {trim: true}}">
+        </oa-input>
+      </div>
+    </div>
+  </div>
+
+  <oa-address-editor *ngSwitchCase="'address'" [readonly]="isAccountDetails" [value]="properties.address"
+    (changed)="properties.address = $event">
+  </oa-address-editor>
+
+  <div *ngSwitchCase="'meta'" class="flex-row two">
+    <div>
+      <label for="form">Form Filled</label>
+      <mat-select name="form" [id]="'form'" [(value)]="properties.meta.formFilled">
+        <mat-option [value]="'yes'">Yes</mat-option>
+        <mat-option [value]="'no'">No</mat-option>
+      </mat-select>
+    </div>
+    <div>
+      <label for="kyc">KYC Received</label>
+      <mat-select name="kyc" [id]="'kyc'" [(value)]="properties.meta.kyc">
+        <mat-option [value]="'received'">Received</mat-option>
+        <mat-option [value]="'partial'">Partial</mat-option>
+        <mat-option [value]="'not received'">Not Received</mat-option>
+      </mat-select>
+    </div>
+    <div>
+      <label for="contract">Contract Done</label>
+      <mat-select name="contract" [id]="'contract'" [(value)]="properties.meta.contract">
+        <mat-option [value]="'yes'">Yes</mat-option>
+        <mat-option [value]="'no'">No</mat-option>
+      </mat-select>
+    </div>
+  </div>
+
+  <div *ngSwitchCase="'actionItems'" class="flex-1-3">
+    <div class="profile-image-editor mt-4">
+      <div>
+        <img class="border-0" *ngIf="properties.logo && properties.logo.url" [src]="properties.logo.url">
+      </div>
+      <div *ngIf="!properties.logo || !properties.logo.url" class="default border-0">LOGO</div>
+      <!-- <i class="md picture-upload"></i> -->
+    </div>
+    <div>
+      <oa-input label="Company Name" type="text" [(value)]="properties.name" [required]="true" [readonly]="readonly"
+        [validate]="checkOrgName" (errored)="error = $event" [options]="{format: {trim: true}}">
+      </oa-input>
+
+      <div class="flex-row three">
+        <oa-input label="Contact Person" type="text" [(value)]="properties.meta.contactPerson" [readonly]="readonly"
+          [options]="{format: {trim: true}}"></oa-input>
+        <oa-input label="Email" type="email" [(value)]="properties.email" [required]="true" [readonly]="readonly"
+          [validate]="checkPhoneOrEmail" (errored)="error = $event" [options]="{format: {trim: true}}">
+        </oa-input>
+        <oa-input label="Phone" type="phone" [(value)]="properties.phone" [options]="{format: {trim: true}}">
+        </oa-input>
+      </div>
+    </div>
+  </div>
+</ng-container>

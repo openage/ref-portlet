@@ -1,0 +1,43 @@
+<a (click)="openNotifications()" (clickOutside)="showNotifications = false" class="notify-section">
+  <p *ngIf="draftCount" class="count-badge">{{draftCount}}</p>
+  <span class="material-icons">notifications_none</span>
+</a>
+<mat-card *ngIf="showNotifications" (blur)="showNotifications = false">
+  <div class="bold align">Notifications</div>
+  <hr>
+  <!-- <div class="notification-toggle-section align">
+    <div>Enable desktop notifications</div>
+    <mat-slide-toggle [ngModel]="true" (change)="onToggleChange()"></mat-slide-toggle>
+  </div> -->
+  <div class="notifications {{display}} list">
+    <ng-container *ngIf="messages.length; then content; else noContent"></ng-container>
+    <ng-template #content>
+      <ng-container *ngFor="let item of messages; let i=index">
+        <div class="list-item" [ngClass]="{read : item.status === 'viewed'}" (click)="open(item)">
+          <div class="title">{{item.subject}}</div>
+          <div class="controls-row">
+            <div class="sub-text">{{item.from?.profile?.firstName}} {{item.from?.profile?.lastName || ''}}</div>
+            <span class="spacer"></span>
+            <div class="sub-text">{{item.date | time: 'ago'}}</div>
+          </div>
+        </div>
+      </ng-container>
+    </ng-template>
+    <ng-template #noContent>
+      <div class="imgDiv">
+        <i class="lg no-notification"></i>
+        <p class="noData">No Notifications</p>
+      </div>
+      <div class="goto-inbox pointer" (click)="onShow()">
+        <div class="goto-text">Goto Inbox</div>
+        <div><mat-icon class="goto-icon">open_in_new</mat-icon></div>
+      </div>
+    </ng-template>
+  </div>
+  <hr *ngIf="messages.length">
+  <div class="footerDiv controls-row" *ngIf="(display === 'showMin') && messages.length">
+    <!-- <p class="footerContent" (click)="display = 'showMax'">Show All</p> -->
+    <p class="footerContent" (click)="onMarkAll(messages)">Mark All</p>
+    <p class="footerContent" (click)="onShow()">Show All</p>
+  </div>
+</mat-card>

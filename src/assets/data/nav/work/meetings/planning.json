@@ -1,0 +1,117 @@
+{
+  "context": [
+    {
+      "code": "rows"
+    },
+    {
+      "code": "columns"
+    },
+    {
+      "code": "filters"
+    },
+    {
+      "code": "refresh"
+    },
+    {
+      "code": "close",
+      "type": "icon"
+    }
+  ],
+  "new": {},
+  "params": {
+    "view": "rows",
+    "groupBy": "status",
+    "showFilters": true,
+    "showMembers": true,
+    "showTimeLogs": false,
+    "closed": true,
+    "draft": true,
+    "discarded": false
+  },
+  "paging": {
+    "limit": null
+  },
+  "search": {
+    "view": "full-text",
+    "sorts": [
+      {
+        "label": "Priority",
+        "code": "priority",
+        "value": "asc",
+        "isSelected": true
+      },
+      {
+        "label": "Owner",
+        "code": "owner.code",
+        "value": "dsc"
+      },
+      {
+        "label": "Due Date",
+        "code": "plan.finish",
+        "value": "dsc"
+      }
+    ],
+    "params": [
+      {
+        "label": "View",
+        "key": "view",
+        "control": "selector",
+        "value": "priority-view",
+        "options": [
+          {
+            "label": "Sprint View",
+            "value": "sprint-view"
+          },
+          {
+            "label": "Priority View",
+            "value": "priority-view"
+          },
+          {
+            "label": "Type View",
+            "value": "type-view"
+          },
+          {
+            "label": "Category View",
+            "value": "category-view"
+          },
+          {
+            "label": "Status View",
+            "value": "status-view"
+          }
+        ]
+      },
+      {
+        "label": "Subject",
+        "key": "subject",
+        "control": "input"
+      },
+      {
+        "label": "Code",
+        "key": "code",
+        "control": "input",
+        "config": {
+          "trigger": "#",
+          "op": "eq"
+        }
+      },
+      {
+        "label": "Tag",
+        "key": "tags",
+        "control": "input"
+      },
+      {
+        "label": "Category",
+        "key": "category-code",
+        "control": "autocomplete",
+        "config": {
+          "url": {
+            "code": "gateway",
+            "addOn": "categories"
+          },
+          "paramField": "text"
+        },
+        "valueKey": "id"
+      }
+    ]
+  }
+}

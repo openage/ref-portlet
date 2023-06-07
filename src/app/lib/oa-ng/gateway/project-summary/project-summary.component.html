@@ -1,0 +1,32 @@
+<div [ngSwitch]="view" *ngIf="properties">
+  <ng-container *ngSwitchCase="'summary'">
+    <ng-container *ngTemplateOutlet="summary"></ng-container>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'viewer'">
+    <ng-container *ngTemplateOutlet="viewer"></ng-container>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'editor'">
+    <ng-container *ngIf="readonly then viewer else editor"></ng-container>
+  </ng-container>
+</div>
+
+<ng-template #summary>
+  <div class="label">
+    <span class="code">{{properties.code}}</span>{{properties.type.name}}
+  </div>
+  <div [innerHTML]="properties.description"></div>
+</ng-template>
+
+<ng-template #viewer>
+  <div class="label">
+    <span class="code">{{properties.code}}</span>{{properties.name}}
+  </div>
+  <div [innerHTML]="properties.description"></div>
+</ng-template>
+
+<ng-template #editor>
+  <oa-input label="Name" [required]="true" [(value)]="properties.name"></oa-input>
+  <oa-input type="html" [(value)]="properties.description"></oa-input>
+</ng-template>

@@ -1,0 +1,67 @@
+<!-- <div *ngIf="items.length">
+  <div *ngFor="let item of items" class="release-card">
+    <gateway-release-summary [release]="item"></gateway-release-summary>
+  </div>
+</div>
+
+<div class="release-card" *ngIf="!items.length">
+  <gateway-release-button [project]="project"></gateway-release-button>
+</div> -->
+
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+<ng-template [ngIf]="items.length" [ngIfElse]="noData">
+
+  <table mat-table [dataSource]="items">
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td class="pointer" (click)="select(item)" mat-cell *matCellDef="let item" [class.deleted]="item.isDeleted"
+        [class.processing]="item.isProcessing">
+        <ng-container>{{item.name | titlecase}}</ng-container>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="code">
+      <th mat-header-cell *matHeaderCellDef>Code</th>
+      <td class="pointer" (click)="select(item)" mat-cell *matCellDef="let item" [class.deleted]="item.isDeleted"
+        [class.processing]="item.isProcessing">
+        {{item.code || '--'}}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="duedate">
+      <th mat-header-cell *matHeaderCellDef>Due Date</th>
+      <td class="pointer" (click)="select(item)" mat-cell *matCellDef="let item" [class.deleted]="item.isDeleted"
+        [class.processing]="item.isProcessing">
+        {{item?.plan?.finish | date: 'dd-MM-yyyy' }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef>Status</th>
+      <td class="pointer" (click)="select(item)" mat-cell *matCellDef="let item" [class.deleted]="item.isDeleted"
+        [class.processing]="item.isProcessing">
+        {{item?.status?.name || '--'}}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="view">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td class="pointer" mat-cell *matCellDef="let item" [class.deleted]="item.isDeleted"
+        [class.processing]="item.isProcessing">
+        <button mat-icon-button matTooltip="View Details" class="float-right" (click)="select(item)">
+          <mat-icon>keyboard_arrow_right</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+  </table>
+
+  <app-paginator [pager]="pager" [total]="pager.total"></app-paginator>
+</ng-template>
+
+<ng-template #noData>
+  <oa-no-data-found [message]="'No data found'"></oa-no-data-found>
+</ng-template>

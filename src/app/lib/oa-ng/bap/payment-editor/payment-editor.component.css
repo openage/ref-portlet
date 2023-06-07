@@ -1,0 +1,143 @@
+.name {
+  width: 14%;
+}
+
+.number {
+  width: 12%;
+}
+
+.date {
+  width: 8%
+}
+
+.amount {
+  width: 10%;
+}
+
+.tds {
+  width: 6%;
+}
+
+.status {
+  width: 8%
+}
+
+.action {
+  width: 8%
+}
+
+.sub-text {
+  font-size: 10px !important;
+}
+
+.invoice-reference-input {
+  padding: 0 !important;
+  margin-top: 2px;
+  height: 20px;
+}
+
+.taskbar {
+  width: 70%
+}
+
+.task-action {
+  justify-content: center;
+  align-items: center;
+  width: 30%
+}
+
+a.add-row {
+  font-size: 14px !important;
+}
+
+.stats-header {
+  color: var(--primary) !important
+}
+
+.ratio-chip {
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.ratio-key {
+  border: 1px solid var(--accentBackground);
+  padding: 4px 8px;
+  border-right: none;
+  background: var(--accentBackground);
+  border-radius: 20px 0px 0px 20px;
+  color: #fff;
+}
+
+.ratio-value {
+  border: 1px solid var(--accentBackground);
+  padding: 4px 8px;
+  border-right: none;
+  border-radius: 0px 20px 20px 0px;
+}
+
+.listActive {
+  border-bottom: 0px;
+}
+
+.order-line-items {
+  background: var(--defaultBackground)
+}
+
+.file-uploader {
+  width: 10%;
+
+}
+
+.file-uploader>label {
+  display: inline-block;
+}
+
+.invoice-editor {
+  width: 100%;
+  border-bottom: 1px solid rgb(187, 187, 187);
+}
+
+.invoice-editor label {
+  width: 30%;
+}
+
+.invoice-number {
+  width: 17%
+}
+
+.invoice-amount {
+  width: 11%
+}
+
+.invoice-status {
+  width: 11%;
+  text-align: center;
+}
+
+.invoice-remarks {
+  width: 20%;
+}
+
+.invoice-action {
+  width: 8%
+}
+
+.invoice-add-new {
+  font-size: 11px;
+}
+
+.payment-editor label {
+  width: 30%
+}
+
+.link {
+  color: var(--primary);
+}
+
+.bank-input {
+  font-size: 12px;
+}
+
+.bank-edit-icon {
+  font-size: 1.3rem;
+}

@@ -1,0 +1,193 @@
+{
+  "code": "projects",
+  "icon": "fa-project-diagram",
+  "title": "Projects",
+  "url": "/projects",
+  "meta": {
+    "ref": "/assets/data/nav/projects/index.json"
+  },
+  "items": [
+    {
+      "code": "projects.new",
+      "icon": "fa-project",
+      "title": "New Project",
+      "url": "/projects/new",
+      "meta": {
+        "ref": "/assets/data/nav/projects/new.json"
+      }
+    },
+    {
+      "code": "projects.details",
+      "icon": "fa-project",
+      "title": "Project",
+      "handles": [
+        "project"
+      ],
+      "url": "/projects/:code",
+      "meta": {
+        "ref": "/assets/data/nav/projects/details.json"
+      },
+      "items": [
+        {
+          "code": "projects.releases",
+          "icon": "mat-new_releases",
+          "title": "Tasks",
+          "url": "/projects/:code/releases",
+          "meta": {
+            "ref": "/assets/data/nav/projects/releases/index.json"
+          },
+          "items": [
+            {
+              "code": "projects.releases.new",
+              "icon": "mat-new_releases",
+              "title": "New Release",
+              "url": "/projects/:code/releases/new",
+              "meta": {
+                "ref": "/assets/data/nav/projects/releases/new.json"
+              }
+            },
+            {
+              "code": "projects.releases.details",
+              "icon": "mat-new_releases",
+              "title": "Details",
+              "url": "/projects/:code/releases/:code",
+              "meta": {
+                "ref": "/assets/data/nav/projects/releases/details.json"
+              }
+            }
+          ]
+        },
+        {
+          "code": "projects.meetings",
+          "icon": "fa-task",
+          "title": "Meeting",
+          "url": "/projects/:code/meetings",
+          "meta": {
+            "ref": "/assets/data/nav/projects/meetings/index.json"
+          },
+          "items": [
+            {
+              "code": "projects.meetings.planning",
+              "icon": "fa-task",
+              "title": "Tasks",
+              "url": "/projects/:code/meetings/planning",
+              "meta": {
+                "ref": "/assets/data/nav/projects/meetings/planning.json"
+              }
+            },
+            {
+              "code": "projects.meetings.review",
+              "icon": "fa-task",
+              "title": "Tasks",
+              "url": "/projects/:code/meetings/review",
+              "meta": {
+                "ref": "/assets/data/nav/projects/meetings/review.json"
+              }
+            },
+            {
+              "code": "projects.meetings.standup",
+              "icon": "fa-task",
+              "title": "Tasks",
+              "url": "/projects/:code/meetings/standup",
+              "meta": {
+                "ref": "/assets/data/nav/projects/meetings/standup.json"
+              }
+            }
+          ]
+        },
+        {
+          "code": "projects.tasks",
+          "icon": "fa-task",
+          "title": "Tasks",
+          "url": "/projects/:code/tasks",
+          "meta": {
+            "ref": "/assets/data/nav/projects/tasks/index.json"
+          },
+          "item": [
+            {
+              "code": "projects.tasks.details",
+              "icon": "fa-task",
+              "title": "Task",
+              "url": "/projects/:code/tasks/:taskCode",
+              "meta": {
+                "ref": "/assets/data/nav/projects/tasks/details.json"
+              }
+            },
+            {
+              "code": "projects.tasks.baus",
+              "icon": "oa-workflow-bau",
+              "title": "BAU",
+              "url": "/projects/:code/tasks/baus",
+              "meta": {
+                "ref": "/assets/data/nav/projects/tasks/baus.json"
+              }
+            },
+            {
+              "code": "projects.tasks.defects",
+              "icon": "oa-workflow-defect",
+              "title": "Defects",
+              "url": "/projects/:code/tasks/defects",
+              "meta": {
+                "ref": "/assets/data/nav/projects/tasks/defects.json"
+              }
+            },
+            {
+              "code": "projects.tasks.epics",
+              "icon": "oa-workflow-epic",
+              "title": "Epics",
+              "url": "/projects/:code/tasks/epics",
+              "meta": {
+                "ref": "/assets/data/nav/projects/tasks/epics.json"
+              }
+            },
+            {
+              "code": "projects.tasks.risks",
+              "icon": "oa-workflow-risk",
+              "title": "Risks",
+              "url": "/projects/:code/tasks/risks",
+              "meta": {
+                "ref": "/assets/data/nav/projects/tasks/risks.json"
+              }
+            },
+            {
+              "code": "projects.tasks.stories",
+              "icon": "oa-workflow-story",
+              "title": "Stories",
+              "url": "/projects/:code/tasks/stories",
+              "meta": {
+                "ref": "/assets/data/nav/projects/tasks/stories.json"
+              }
+            },
+            {
+              "code": "projects.tasks.technical-stories",
+              "icon": "oa-workflow-technical-story",
+              "title": "Technical Stories",
+              "url": "/projects/:code/tasks/technical-stories",
+              "meta": {
+                "ref": "/assets/data/nav/projects/tasks/technical-stories.json"
+              }
+            },
+            {
+              "code": "projects.tasks.test-cases",
+              "icon": "oa-workflow-test-case",
+              "title": "Test Cases",
+              "url": "/projects/:code/tasks/test-cases",
+              "meta": {
+                "ref": "/assets/data/nav/projects/tasks/test-cases.json"
+              }
+            },
+            {
+              "code": "projects.tasks.test-plans",
+              "icon": "oa-workflow-test-plan",
+              "title": "Test Plans",
+              "url": "/projects/:code/tasks/test-plans",
+              "meta": {
+                "ref": "/assets/data/nav/projects/tasks/test-plans.json"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

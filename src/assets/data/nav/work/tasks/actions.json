@@ -1,0 +1,247 @@
+{
+  "params": {
+    "view": "columns",
+    "groupBy": "status",
+    "endless": "false",
+    "showFilters": false,
+    "showMembers": false,
+    "assignee": "my",
+    "showTimeLogs": true,
+    "parent": "none"
+  },
+  "context": [
+    {
+      "code": "filters",
+      "type": "icon",
+      "style": "peacock"
+    },
+    {
+      "code": "done",
+      "type": "icon",
+      "style": "tangerine"
+    },
+    {
+      "code": "draft",
+      "type": "icon",
+      "style": "tangerine"
+    },
+    {
+      "code": "refresh",
+      "type": "icon"
+    },
+    {
+      "code": "close",
+      "type": "icon"
+    }
+  ],
+  "search": {
+    "view": "filters",
+    "params": [
+      {
+        "label": "Subject",
+        "key": "subject",
+        "control": "input"
+      },
+      {
+        "label": "Type",
+        "key": "type",
+        "control": "autocomplete",
+        "config": {
+          "url": {
+            "code": "gateway",
+            "addOn": "workflows"
+          },
+          "paramField": "code"
+        },
+        "valueKey": "code"
+      },
+      {
+        "label": "Sprint",
+        "key": "sprint",
+        "control": "selector",
+        "value": "",
+        "options": [
+          {
+            "label": "Current",
+            "value": "current"
+          },
+          {
+            "label": "Backlog",
+            "value": "backlog"
+          }
+        ]
+      },
+      {
+        "label": "Priority",
+        "key": "priority",
+        "control": "selector",
+        "value": "",
+        "options": [
+          {
+            "label": "Blocker",
+            "value": 1
+          },
+          {
+            "label": "Urgent",
+            "value": 2
+          },
+          {
+            "label": "Must have",
+            "value": 3
+          },
+          {
+            "label": "Good to have",
+            "value": 4
+          },
+          {
+            "label": "Someday",
+            "value": 5
+          }
+        ]
+      },
+      {
+        "label": "Status",
+        "key": "status",
+        "control": "selector",
+        "value": "",
+        "options": [
+          {
+            "label": "Draft",
+            "value": "draft"
+          },
+          {
+            "label": "New",
+            "value": "new"
+          },
+          {
+            "label": "In Progress",
+            "value": "in-progress"
+          },
+          {
+            "label": "Resolved",
+            "value": "resolved"
+          },
+          {
+            "label": "Accepted/Accept/Done",
+            "value": "done"
+          },
+          {
+            "label": "Rework",
+            "value": "rework"
+          },
+          {
+            "label": "Blocked",
+            "value": "blocked"
+          },
+          {
+            "label": "Discarded",
+            "value": "discarded"
+          },
+          {
+            "label": "Reviewed",
+            "value": "reviewed"
+          },
+          {
+            "label": "Paused",
+            "value": "paused"
+          }
+        ]
+      },
+      {
+        "label": "Category",
+        "key": "category-code",
+        "control": "autocomplete",
+        "config": {
+          "url": {
+            "code": "gateway",
+            "addOn": "categories"
+          },
+          "paramField": "text"
+        },
+        "valueKey": "id"
+      },
+      {
+        "label": "Tags",
+        "key": "tags",
+        "control": "input"
+      },
+      {
+        "label": "Code",
+        "key": "code",
+        "control": "input",
+        "config": {
+          "trigger": "#",
+          "op": "eq"
+        }
+      }
+    ]
+  },
+  "stats": {
+    "areaCode": "standup"
+  },
+  "divs": [
+    {
+      "code": "primary-stats",
+      "hideFilters": true,
+      "style": {
+        "container": {
+          "style": {
+            "margin-bottom": "10px"
+          }
+        },
+        "widgets": {
+          "class": "two"
+        }
+      }
+    },
+    {
+      "code": "time-log-total",
+      "hideFilters": true,
+      "style": {
+        "container": {
+          "style": {
+            "margin-bottom": "10px"
+          }
+        },
+        "widgets": {
+          "class": "two"
+        }
+      }
+    }
+  ],
+  "sections": {
+    "timeLogs": {
+      "view": "standup",
+      "sort": "date",
+      "fields": [
+        "taskCode",
+        "details",
+        "effort",
+        "date"
+      ],
+      "paging": {
+        "sort": "date"
+      },
+      "empty": {
+        "code": "TIMELOGS_NDF"
+      }
+    },
+    "tasks": {
+      "view": "table",
+      "fields": [
+        "icon",
+        "code",
+        "subject",
+        "effort",
+        "status",
+        "actions",
+        "owner",
+        "dueDate"
+      ],
+      "paging": {
+        "limit": 50,
+        "sort": "planneddate"
+      }
+    }
+  }
+}

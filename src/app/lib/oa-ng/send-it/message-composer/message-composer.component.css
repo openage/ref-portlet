@@ -1,0 +1,10 @@
+.btnDiv {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.chipInput {
+    min-height: 40px;
+    padding: 4px;
+    height: auto;
+}

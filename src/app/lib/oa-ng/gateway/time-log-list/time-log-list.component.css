@@ -1,0 +1,147 @@
+.date {
+  width: 20%
+}
+
+.user {
+  width: 18%
+}
+
+.activity {
+  width: 12%
+}
+
+.effort {
+  width: 15%;
+  position: relative;
+}
+
+/* .status {
+  width: 10%
+} */
+
+.comment {
+  width: 20%
+}
+
+.action {
+  width: 15%
+}
+
+.spinner {
+  margin-left: 10px;
+}
+
+.readonly .date {
+  width: 20%
+}
+
+.readonly .user {
+  width: 13%
+}
+
+.readonly .activity {
+  width: 12%
+}
+
+.readonly .effort {
+  width: 10%
+}
+
+.readonly .status {
+  width: 10%
+}
+
+.readonly .comment {
+  width: 35%
+}
+
+.readonly .action {
+  display: none
+}
+
+
+
+
+
+@media only screen and (max-width:414px) {
+  .status {
+    width: 5%;
+  }
+
+  .date {
+    width: 28%;
+  }
+}
+
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+table{
+ width: 100%;
+}
+
+.mat-column-taskCode {
+  word-wrap: break-word !important;
+  white-space: unset !important;
+  flex: 0 0 10% !important;
+  width: 10% !important;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+.mat-column-effort {
+  word-wrap: break-word !important;
+  white-space: unset !important;
+  flex: 0 0 10% !important;
+  width: 10% !important;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+.mat-column-date {
+  word-wrap: break-word !important;
+  white-space: unset !important;
+  flex: 0 0 9% !important;
+  width: 9% !important;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+.mat-column-user {
+  word-wrap: break-word !important;
+  white-space: unset !important;
+  flex: 0 0 4% !important;
+  width: 4% !important;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+.codeColor {
+  color: var(--primary) !important;
+}
+
+.sub-text {
+  font-size: 10px !important;
+}

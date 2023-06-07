@@ -1,0 +1,19 @@
+
+.profile-image {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.profile-name {
+    margin: 5px 10px -5px 10px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    color: var(--primary);
+}
+
+.widget-grid .grid-card {
+  height: 125px;
+  width: 130px;
+}

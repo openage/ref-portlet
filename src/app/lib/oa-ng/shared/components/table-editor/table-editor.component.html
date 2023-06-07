@@ -1,0 +1,122 @@
+<div class="table">
+  <ng-container *ngTemplateOutlet="headerRow;"></ng-container>
+
+  <ng-container *ngFor="let item of items; let i=index;">
+    <ng-container *ngTemplateOutlet="dataRow; context: {
+      index: i,
+      item: item
+    }"></ng-container>
+  </ng-container>
+</div>
+
+<ng-template #headerRow>
+  <ng-container *ngIf="!headerTemplate; else headerTemplate">
+    <div class="header text{{definition?.style?.header?.class}}" [style]="definition?.style?.header?.style">
+      <ng-container *ngFor="let field of definition.fields">
+        <div *ngIf="!field.isHidden" scope="col" class="col {{field.key}} {{field .class}}" [style]="field.style">
+          <div [innerHTML]="getLabel(field)"></div>
+        </div>
+      </ng-container>
+    </div>
+  </ng-container>
+</ng-template>
+
+<ng-template #dataRow let-item="item" let-index="index">
+  <ng-container *ngIf="rowTemplate">
+    <ng-container *ngTemplateOutlet="rowTemplate; context: {
+      index: index,
+      item: item
+    }">
+    </ng-container>
+  </ng-container>
+  <ng-container *ngIf="!rowTemplate;">
+    <div [class.data-row-expanded]="item.isSelected">
+      <div class="data-row">
+        <ng-container *ngFor="let field of definition.fields">
+          <ng-container [ngSwitch]="field.key">
+            <ng-container *ngSwitchCase="'index'">
+              <ng-container *ngTemplateOutlet="indexCell; context: {
+                  field: field,
+                  index: index,
+                  item: item
+                }"></ng-container>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'action'">
+              <ng-container *ngTemplateOutlet="actionCell; context: {
+                  field: field,
+                  index: index,
+                  item: item
+                }"></ng-container>
+            </ng-container>
+
+            <ng-container *ngSwitchDefault>
+              <ng-container *ngTemplateOutlet="valueCell; context: {
+                  field: field,
+                  index: index,
+                  item: item
+                }"></ng-container>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+      </div>
+      <div *ngIf="item.isSelected && detailsTemplate" class="details">
+        <ng-container *ngTemplateOutlet="detailsTemplate; context: {
+          index: index,
+          item: item
+        }">
+        </ng-container>
+      </div>
+    </div>
+  </ng-container>
+</ng-template>
+
+<ng-template #indexCell let-item="item" let-field="field" let-index="index">
+  <div class="col index" [class]="field.class" [style]="field.style">
+    <ng-container *ngIf="indexTemplate">
+      <ng-container *ngTemplateOutlet="indexTemplate; context: {
+        field: field,
+        index: index,
+        item: item
+      }">
+      </ng-container>
+    </ng-container>
+    <ng-container *ngIf="!indexTemplate">
+      {{index + 1}}
+    </ng-container>
+  </div>
+</ng-template>
+
+<ng-template #valueCell let-item="item" let-field="field" let-index="index">
+  <div class="col {{field.key}} value {{getClass(field, item)}}" [class.editing]="item?.isEditing"
+    [style]="getStyle(field, item)" [class.clickable]="isCellClickable(field)" (click)="onCellClick(field, item)">
+    <ng-container *ngIf="cellTemplate && field.template">
+      <ng-container *ngTemplateOutlet="cellTemplate; context: {
+        field: field,
+        index: index,
+        item: item
+      }">
+      </ng-container>
+    </ng-container>
+    <ng-container *ngIf="!(cellTemplate && field.template)">
+      <oa-field-editor *ngIf="item.isEditing" [item]="field" [value]="item[field.key]">
+      </oa-field-editor>
+      <div *ngIf="!item.isEditing" [innerHTML]="getValue(field, item)"></div>
+    </ng-container>
+  </div>
+</ng-template>
+
+<ng-template #actionCell let-item="item" let-field="field" let-index="index">
+  <div class="controls-row col actions" [class]="field.class" [style]="field.style">
+    <oa-action *ngFor="let action of actions" [item]="action" [value]="item"></oa-action>
+
+    <ng-container *ngIf="actionTemplate">
+      <ng-container *ngTemplateOutlet="actionTemplate; context: {
+        field: field,
+        index: index,
+        item: item
+      }">
+      </ng-container>
+    </ng-container>
+  </div>
+</ng-template>

@@ -1,0 +1,47 @@
+<div mat-dialog-title class="controls-row">
+  <h4>{{dialogTitle}}</h4>
+  <span class="spacer"></span>
+  <mat-icon (click)="dialogRef.close()">close</mat-icon>
+</div>
+<div mat-dialog-content>
+  <div class="controls-row">
+    <div class="spacer"></div>
+    <div class="toggler">
+      <span [class.active]="view === 'upload'" (click)="view = 'upload'">Upload</span>
+      <span [class.active]="view === 'url'" (click)="view = 'url'">Url</span>
+    </div>
+    <div class="spacer"></div>
+  </div>
+
+  <div *ngIf="view === 'upload'">
+    <oa-icon-file-picker [label]="'Image File'" #fileProvider [accept]="['image/png', 'image/jpeg', 'image/jpg']"
+      (change)="setFile($event)">
+    </oa-icon-file-picker>
+    <div *ngIf="file" class="controls-row">
+      <div class="spacer"></div>
+      <drive-image-editor [ratio]="cropRatio" [okLabel]="okLabel" (cancel)="dialogRef.close()" (done)="onSave($event)"
+        [file]="file">
+      </drive-image-editor>
+      <div class="spacer"></div>
+    </div>
+  </div>
+
+  <div *ngIf="view === 'url'">
+    <div>
+      <label>Image Url</label>
+      <div class="oa-input">
+        <input (blur)="setUrl($event)">
+        <mat-icon class="subtle">insert_link</mat-icon>
+      </div>
+    </div>
+    <div class="imgDiv" *ngIf="url">
+      <img [src]="url" height="200px">
+    </div>
+  </div>
+</div>
+
+<div mat-dialog-actions class="buttons controls-row" *ngIf="view === 'url' || !file">
+  <span class="spacer"></span>
+  <button mat-button (click)="dialogRef.close()">Cancel</button>
+  <button mat-raised-button color="primary" [disabled]="!url && !file" (click)="onSave(url)">{{okLabel}}</button>
+</div>

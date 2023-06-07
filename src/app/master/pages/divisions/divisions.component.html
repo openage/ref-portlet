@@ -1,0 +1,15 @@
+<div class="main" [class.hidden]="!isCurrent">
+  <processing-indicator *ngIf="isProcessing"></processing-indicator>
+
+  <core-page-divs [divs]="page?.meta?.divs" [filters]="page?.meta?.stats?.params"
+    [areaCode]="page?.meta?.stats?.areaCode || page?.code">
+  </core-page-divs>
+  <div *ngIf="isInitialized" class="sections">
+    <directory-division-list #list (selected)="onSelect($event)" [code]="selectedCode" [status]="selectedStatus"
+      [name]="selectedName" [view]="isCurrent? 'table': 'list'">
+    </directory-division-list>
+  </div>
+</div>
+  <router-outlet></router-outlet>
+
+

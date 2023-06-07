@@ -1,0 +1,3 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+<insight-calendar-date #calendar [events]="events" [date]="date" [params]="params" (dateChange)="onDateChange($event)">
+</insight-calendar-date>

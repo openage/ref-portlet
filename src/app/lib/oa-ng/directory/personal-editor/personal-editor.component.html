@@ -1,0 +1,98 @@
+<div class="card-wrap container-cards">
+  <div class="row">
+    <div class="col-sm-6 ">
+      <mat-form-field>
+        <input matInput name="firstName" placeholder="First Name" [(ngModel)]="employee.profile.firstName"
+          [readonly]="readonly" [required]="!readonly" type="text" maxlength="100">
+      </mat-form-field>
+    </div>
+    <div class="col-sm-6 ">
+      <mat-form-field>
+        <input matInput name="lastName" placeholder="Last Name" [(ngModel)]="employee.profile.lastName" maxlength="100"
+          type="string" [readonly]="readonly" [required]="!readonly">
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6 ">
+      <mat-form-field>
+        <input matInput name="fatherName" placeholder="Father/Husband" [(ngModel)]="employee.profile.fatherName"
+          maxlength="100" type="string" [readonly]="readonly" [required]="!readonly">
+      </mat-form-field>
+    </div>
+    <div class="col-sm-6 ">
+      <mat-form-field>
+        <input matInput placeholder="DOB" class="arrtime" [matDatepicker]="joining" [(ngModel)]="employee.profile.dob"
+          numbersOnly [readonly]="readonly" [required]="!readonly">
+        <mat-datepicker-toggle [disabled]="readonly" matSuffix [for]="joining"></mat-datepicker-toggle>
+        <mat-datepicker #joining [disabled]="readonly"></mat-datepicker>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 ">
+      <mat-form-field>
+        <mat-select name="bgroup" placeholder="Blood Group" [(value)]="employee.profile.bloodGroup"
+          [disabled]="readonly" [required]="!readonly">
+          <mat-option value="0: null">Select an option</mat-option>
+          <mat-option value="A+">A+</mat-option>
+          <mat-option value="B+">B+</mat-option>
+          <mat-option value="O+">O+</mat-option>
+          <mat-option value="AB+">AB+</mat-option>
+          <mat-option value="A-">A-</mat-option>
+          <mat-option value="B-">B-</mat-option>
+          <mat-option value="O-">O-</mat-option>
+          <mat-option value="AB-">AB-</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="col-sm-6 ">
+      <mat-form-field>
+        <mat-select placeholder="Gender" [(value)]="employee.profile.gender" [disabled]="readonly"
+          [required]="!readonly">
+          <mat-option value="">Select an option</mat-option>
+          <mat-option value="male">Male</mat-option>
+          <mat-option value="female">Female</mat-option>
+          <mat-option value="others">Others</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 ">
+      <mat-form-field>
+        <input matInput numbersOnly name="phone" placeholder="Phone" [(ngModel)]="employee.phone" type="text"
+          minlength="10" maxlength="10" [readonly]="usercode === 'my'" [required]="!readonly">
+      </mat-form-field>
+    </div>
+    <div class="col-sm-6 ">
+      <mat-form-field>
+        <input matInput name="aadhaar" placeholder="Aadhaar No" [(ngModel)]="employee.config.aadhaar" maxlength="12"
+          numbersOnly [readonly]="readonly" [required]="!readonly">
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 ">
+      <!-- <mat-form-field>
+        <input matInput name="email" placeholder="Email" id="email" [(ngModel)]="employee.email" maxlength="100"
+          type="string" maxlength="100" [readonly]="readonly" [required]="!readonly">
+      </mat-form-field> -->
+      <mat-form-field>
+        <input matInput name="email" placeholder="Email" id="email" (change)="validateEmail()"
+          [(ngModel)]="employee.email" maxlength="100" type="string" maxlength="100" [readonly]="usercode === 'my'"
+          [required]="!readonly">
+        <mat-icon *ngIf="employee.email && emailError === ''" matSuffix color="primary">check</mat-icon>
+        <mat-hint class="error" *ngIf="emailError">{{emailError}}</mat-hint>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row" [class.hidden]="code === 'my'">
+    <div class="col-sm-6 ">
+      <directory-reset-password-editor [change]="readonly" [employeeCode]="employee.code" #password>
+      </directory-reset-password-editor>
+    </div>
+  </div>
+</div>

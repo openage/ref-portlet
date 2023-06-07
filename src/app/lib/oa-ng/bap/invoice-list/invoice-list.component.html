@@ -1,0 +1,471 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+
+<ng-container *ngIf="items && items.length; then dataTable; else noData"></ng-container>
+
+<ng-template #dataTable>
+  <ng-container [ngSwitch]="view">
+
+    <ng-container *ngSwitchCase="'finance'">
+
+      <table mat-table [dataSource]="items" multiTemplateDataRows>
+
+        <!-- Checkbox Column -->
+        <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="isAnySelected() && isAllSelected()"
+              [indeterminate]="isAnySelected() && !isAllSelected()" [color]="'primary'">
+            </mat-checkbox>
+          </th>
+          <td mat-cell *matCellDef="let item">
+            <mat-checkbox (click)="$event.stopPropagation()" (change)="item.isSelected = !item.isSelected"
+              [checked]="item.isSelected" [color]="'primary'">
+            </mat-checkbox>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="no">
+          <th mat-header-cell *matHeaderCellDef>S.No.</th>
+          <td mat-cell *matCellDef="let item;let i=index;" [class.deleted]="item.isDeleted"
+            [class.processing]="item.isProcessing">
+            <ng-container>
+              <span class="text-capitalize">{{i+1}}</span>
+            </ng-container>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="invoiceNumber">
+          <th mat-header-cell class="mb-auto" *matHeaderCellDef>Document Number<br>
+          </th>
+          <td mat-cell *matCellDef="let item" class="pr-4" [class.deleted]="item.isDeleted"
+            [class.processing]="item.isProcessing">
+            <div>
+              <ng-container *ngIf="!item.isPayable"><span class="text-capitalize">{{item.code|uppercase}}</span>
+              </ng-container>
+              <ng-container *ngIf="item.isPayable">
+                <span>{{item.code|uppercase}}</span>
+              </ng-container>
+            </div>
+
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="jobNumber">
+          <th mat-header-cell class="mb-auto" *matHeaderCellDef> <span class="list-sub-text">Job Number</span>
+          </th>
+          <td mat-cell *matCellDef="let item" [class.deleted]="item.isDeleted" [class.processing]="item.isProcessing">
+            <div *ngIf="item.order?.code">
+              <span class="text-capitalize sub-text list-sub-text pointer active pointer code"
+                (click)="onSelectJob(item.order?.code)">{{(item.order?.code|uppercase)||"Not Available"}}</span>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="code">
+          <th mat-header-cell *matHeaderCellDef>Code</th>
+          <td mat-cell *matCellDef="let item" [class.deleted]="item.isDeleted" [class.processing]="item.isProcessing">
+            <ng-container *ngIf="item.code">
+              <span class="text-capitalize">{{item.code}}</span>
+            </ng-container>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="customer">
+          <th mat-header-cell *matHeaderCellDef>Customer Name<br><span class="list-sub-text">Nav
+              code</span></th>
+          <td mat-cell *matCellDef="let item" [class.deleted]="item.isDeleted" [class.processing]="item.isProcessing">
+            <div *ngIf="item.buyerOrganization">
+              <span class="text-capitalize mb-auto code active pointer"
+                (click)="openDialog(item.buyerOrganization?.code)">{{item.buyerOrganization?.name}}</span>
+            </div>
+            <div *ngIf="item.buyerBillingEntity">
+              <span class="text-capitalize sub-text list-sub-text">{{item.buyerBillingEntity?.navCode}}</span>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="supplier">
+          <th mat-header-cell *matHeaderCellDef>Vendor Name<br><span class="list-sub-text">Nav
+              code</span></th>
+          <td mat-cell *matCellDef="let item" [class.deleted]="item.isDeleted" [class.processing]="item.isProcessing">
+            <div *ngIf="item.sellerOrganization">
+              <span class="text-capitalize mb-auto">{{item.sellerOrganization?.name}}</span>
+            </div>
+            <div *ngIf="item.sellerBillingEntity">
+              <span class="text-capitalize sub-text list-sub-text">{{item.sellerBillingEntity?.navCode}}</span>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- <ng-container matColumnDef="buyer">
+      <th mat-header-cell *matHeaderCellDef>Buyer Name</th>
+      <td mat-cell *matCellDef="let item" [class.deleted]="item.isDeleted" [class.processing]="item.isProcessing">
+        <div *ngIf="item.buyer" class="controls-row col-md-3">
+          <oa-avatar class="pointer spacing" [value]="item.buyer"></oa-avatar>
+          <span class="text-capitalize">{{item.buyer?.profile?.firstName}} {{item.buyer?.profile?.lastName}}</span>
+        </div>
+      </td>
+    </ng-container> -->
+
+        <ng-container matColumnDef="orderCustomer">
+          <th mat-header-cell *matHeaderCellDef>Customer Name</th>
+          <td mat-cell *matCellDef="let item" [class.deleted]="item.isDeleted" [class.processing]="item.isProcessing">
+            <div *ngIf="item?.order?.customer?.name" class="controls-row col-md-3">
+              <span class="text-capitalize code active pointer" (click)="openDialog(item.order.customer.code)">
+                {{item.order.customer.name}}</span>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="mode">
+          <th mat-header-cell *matHeaderCellDef>Mode</th>
+          <td mat-cell *matCellDef="let item" [class.deleted]="item.isDeleted" [class.processing]="item.isProcessing">
+            <div *ngIf="item.mode" class="controls-row col-md-3">
+              <span class="text-capitalize"> {{item?.mode}}</span>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="seller">
+          <th mat-header-cell *matHeaderCellDef>Seller Name</th>
+          <td mat-cell *matCellDef="let item" [class.deleted]="item.isDeleted" [class.processing]="item.isProcessing">
+            <div *ngIf="item.seller" class="controls-row">
+              <oa-avatar class="pointer spacing" [value]="item.seller"></oa-avatar>
+              <span class="text-capitalize">{{item.seller?.profile?.firstName}}
+                {{item.seller?.profile?.lastName}}</span>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="amountPaid">
+          <th mat-header-cell *matHeaderCellDef class="">Amount Paid</th>
+          <td mat-cell *matCellDef="let item" class="text-right" [class.deleted]="item.isDeleted" class=""
+            [class.processing]="item.isProcessing">
+            <ng-container>
+              <span class="text-capitalize">
+                <oa-value-editor [view]="'inline'" [readonly]='true' [decimal]="2" [type]="'currency'" [value]="{
+              value: item?.amount,
+              unit: {
+                code: item.currency.code
+              }
+            }"></oa-value-editor>
+                <!-- {{item?.amount|value:'roundOff'|value:'comma'}} {{item.currency.code||item.currency.code||'INR'}} -->
+              </span>
+            </ng-container>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef class="text-center"> Total Amount <br>(Amount + Tax)
+          </th>
+          <td mat-cell *matCellDef="let item" class="text-right justify-content-right align-items-right"
+            [class.deleted]="item.isDeleted" [class.processing]="item.isProcessing">
+            <ng-container>
+              <oa-value-editor [view]="'inline'" class="text-right justify-content-right align-items-right"
+                [readonly]='true' [decimal]="2" [type]="'currency'" [value]="{
+            value: item?.amount,
+            unit: {
+              code: item.currency.code
+            }
+          }"></oa-value-editor>
+              <span class="text-capitalize sub-text pr-3 list-sub-text">
+                {{(item?.amount - (item?.taxAmount || 0))|value:'roundOff'|value:'comma'}} + {{(item.taxAmount || 0)
+                |value:'roundOff'|value:'comma' }} </span>
+            </ng-container>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="dueAmount">
+          <th mat-header-cell *matHeaderCellDef class="text-center">Balance</th>
+          <td mat-cell *matCellDef="let item" class="text-right justify-content-right align-items-right"
+            [class.deleted]="item.isDeleted" [class.processing]="item.isProcessing">
+            <ng-container>
+              <oa-value-editor [view]="'inline'" class="text-right justify-content-right align-items-right"
+                [readonly]='true' [decimal]="2" [type]="'currency'" [value]="{
+                                  value: item.dueAmount,
+                                  unit: {
+                                    code: item.currency.code
+                                  }
+                                }"></oa-value-editor>
+            </ng-container>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="paidAmount">
+          <th mat-header-cell *matHeaderCellDef class="text-center">Paid</th>
+          <td mat-cell *matCellDef="let item" class="text-right justify-content-right align-items-right"
+            [class.deleted]="item.isDeleted" [class.processing]="item.isProcessing">
+            <ng-container>
+              <oa-value-editor [view]="'inline'" class="text-right justify-content-right align-items-right"
+                [readonly]='true' [decimal]="2" [type]="'currency'" [value]="{
+                  value: (item.amount - item.dueAmount),
+                  unit: {
+                    code: item.currency.code
+                  }
+                }"></oa-value-editor>
+            </ng-container>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef class="centered-text">Status</th>
+          <td mat-cell *matCellDef="let item" class="centered-text" [class.deleted]="item.isDeleted"
+            [class.processing]="item.isProcessing">
+            <ng-container *ngIf="item.status">
+              <span class="text-capitalize">{{item.status}}</span>
+            </ng-container>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="gstNumber">
+          <th mat-header-cell *matHeaderCellDef>GST Number</th>
+          <td mat-cell *matCellDef="let item" class="centered-text" [class.deleted]="item.isDeleted"
+            [class.processing]="item.isProcessing" class="pr-2">
+            <ng-container *ngIf="item.sellerBillingEntity?.gst">
+              <span class="text-capitalize">{{item.sellerBillingEntity.gst}}</span>
+            </ng-container>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="invoiceReceiveDate">
+          <th mat-header-cell *matHeaderCellDef>Document Receive Date</th>
+          <td mat-cell *matCellDef="let item" [class.deleted]="item.isDeleted" [class.processing]="item.isProcessing"
+            class="pr-3">
+            <ng-container *ngIf="item.receivedDate">
+              <span class="text-capitalize">{{ (item.receivedDate | date:'dd-MM-yyyy') }}</span>
+              <br>
+              <span class="text-capitalize">{{item.receivedDate | date:'hh:mm a'}}</span>
+            </ng-container>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef>Document Date</th>
+          <td mat-cell *matCellDef="let item" [class.deleted]="item.isDeleted" class="pr-3"
+            [class.processing]="item.isProcessing">
+            <ng-container *ngIf="item.date">
+              <span class="text-capitalize">{{ (item.date | date:'dd-MM-yyyy') }}</span>
+              <br>
+              <span class="text-capitalize">{{item.date | date:'hh:mm a'}}</span>
+            </ng-container>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="dueDate">
+          <th mat-header-cell *matHeaderCellDef class="px-2">Payment Due Date</th>
+          <td mat-cell *matCellDef="let item" [class.deleted]="item.isDeleted" [class.processing]="item.isProcessing"
+            class=" px-2 text-center">
+            <ng-container *ngIf="item.dueDate">
+              <span class="text-capitalize">{{item.dueDate | date:'dd-MM-yyyy'}}</span>
+            </ng-container>
+          </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="navigation">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let item;let i=dataIndex" [class.deleted]="item.isDeleted" class="text-right"
+            [class.processing]="item.isProcessing">
+            <div class="d-flex justify-content-end align-items-center">
+              <drive-file-detail #documents [code]="'invoice'" [entity]="{id:item.id, type:'invoice'}"
+                [view]="'only-download'" [options]="driveOptions">
+              </drive-file-detail>
+              <button mat-icon-button [disabled]="item.isProcessing"
+                matTooltip="{{item.isSelected?'Collapse':'Expand'}}" (click)="onExpand(item,i)">
+                <mat-icon>{{item.isSelected?'keyboard_arrow_up':'keyboard_arrow_down'}}</mat-icon>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="checked">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let item;let i=index" [class.deleted]="item.isDeleted"
+            [class.processing]="item.isProcessing">
+            <mat-icon *ngIf="selectedIndex === i" color="primary">check</mat-icon>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="expandedDetail">
+          <td mat-cell *matCellDef="let item; let i=dataIndex" [attr.colspan]="columns.length" class="p-0">
+            <ng-container *ngIf='item.isSelected'>
+              <div class="example-element-detail mb-3" [class.selected]="item.isSelected">
+                <div class="w-100">
+                  <bap-invoice-editor [invoice]="item" [vendors]="[item.sellerOrganization]"
+                    [config]="{hideSave: !auth.hasPermission(['system.manage', 'vendor-invoice.create', 'customer-invoice.create'])}"
+                    [readonly]="!(['draft','rework', 'received', 'approved', 'generated'].includes(item.status))"
+                    (save)="onSave($event)" (selected)="select($event)" (upload)="onUpload($event, i)">
+                  </bap-invoice-editor>
+                </div>
+              </div>
+            </ng-container>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <td mat-cell *matCellDef="let item;let i=dataIndex" [attr.colspan]="3">
+            <ng-container *ngIf='item.isSelected'>
+              <div class="example-element-detail ">
+                <bap-invoice-editor [invoice]="item" [vendors]="item.sellerOrganization" (save)="onSave($event)"
+                  (selected)="select($event)"></bap-invoice-editor>
+              </div>
+            </ng-container>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; let i = dataIndex; columns: columns;" class="example-element-row"
+          [class.selected]="selectedIndex === i"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']; let i=dataIndex;" class="example-detail-row">
+        </tr>
+
+      </table>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'srp-enquiry'">
+      <div *ngIf="items&&items.length">
+        <div class="table srp-enquiry">
+          <div class="header with-background">
+            <div class="no">INVOICE NUMBER</div>
+            <div class="date pr-2">INVOICE DATE</div>
+            <div class="date pr-2">DUE DATE</div>
+            <div class="status">STATUS</div>
+            <div class="amount">AMOUNT</div>
+            <div class="action"></div>
+          </div>
+
+          <ng-container *ngFor="let invoice of items;let i = index">
+            <ng-container *ngIf="invoice.status !== 'draft'">
+              <div class="data-row" [class.listActive]="invoice.isSelected">
+                <!-- * Invoice Number -->
+                <div class="no capitalise">
+                  {{invoice.code| uppercase}}
+                </div>
+                <!-- invoice date -->
+                <div class="date">
+                  {{invoice.date|date: 'dd MMM yyyy'}}
+                </div>
+                <!-- * Invoice Due Date -->
+                <div class="date">
+                  {{invoice.dueDate|date: 'dd MMM yyyy'}}
+                </div>
+
+                <!-- * Invoice Status -->
+                <div class="status capitalize">
+                  {{invoice.status}}
+                </div>
+
+                <!-- * Invoice Amount -->
+                <div class="amount">
+                  <ng-container>
+                    <oa-value-editor [view]="'inline'" class="justify-content-right align-items-right" [readonly]='true'
+                      [decimal]="2" [type]="'currency'" [value]="{
+                                                value: invoice?.amount || 0,
+                                                unit: {
+                                                  code: invoice.currency.name
+                                                }
+                                              }"></oa-value-editor>
+                  </ng-container>
+                </div>
+                <!-- * Invoice Action -->
+                <div class="action">
+                  <!-- <button mat-button mat-raised-button primary class="mx-1 mb-3 pointer" color="primary"
+                    [disabled]="invoice.processingDownload" (click)="onPreview(invoice)">
+                    <mat-spinner *ngIf="invoice.processingDownload" diameter="15" class="mr-2 d-inline-block">
+                    </mat-spinner>View
+                  </button> -->
+
+                </div>
+              </div>
+              <ng-container *ngIf="invoice.isSelected">
+                <!-- <div class="data-row py-1">
+                  <div class="my-1 rounded order-line-items">
+                    <ng-container *ngTemplateOutlet="summary; context: {invoice: invoice}"></ng-container>
+                  </div>
+                </div> -->
+              </ng-container>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'srp-invoices'">
+      <mat-card>
+        <div class="table">
+          <div class="header">
+            <div class="no">INVOICE NUMBER</div>
+            <div class="date pr-2">INVOICE DATE</div>
+            <div class="date pr-2">DUE DATE</div>
+            <div class="status">STATUS</div>
+            <div class="amount">AMOUNT</div>
+            <div class="action">ACTION</div>
+          </div>
+
+          <ng-container *ngFor="let invoice of items;let i = index">
+            <ng-container *ngIf="invoice.status !== 'draft'">
+              <div class="data-row" [class.listActive]="invoice.isSelected">
+                <!-- * Invoice Number -->
+                <div class="no capitalise">
+                  {{invoice.code| uppercase}}
+                </div>
+                <!-- invoice date -->
+                <div class="date">
+                  {{invoice.date|date: 'dd MMM yyyy'}}
+                </div>
+                <!-- * Invoice Due Date -->
+                <div class="date">
+                  {{invoice.dueDate|date: 'dd MMM yyyy'}}
+                </div>
+
+                <!-- * Invoice Status -->
+                <div class="status capitalize">
+                  {{invoice.status}}
+                </div>
+
+                <!-- * Invoice Amount -->
+                <div class="amount">
+                  <ng-container>
+                    <oa-value-editor [view]="'inline'" class="justify-content-right align-items-right" [readonly]='true'
+                      [decimal]="2" [type]="'currency'" [value]="{
+                                                value: invoice?.amount || 0,
+                                                unit: {
+                                                  code: invoice.currency.name
+                                                }
+                                              }"></oa-value-editor>
+                  </ng-container>
+                </div>
+                <!-- * Invoice Action
+                <div class="action d-flex ">
+                  <button mat-button mat-raised-button primary class="mx-1 mb-3 pointer primary"
+                    [disabled]="invoice.processingDownload" (click)="onPreview(invoice)">
+                    <mat-spinner *ngIf="invoice.processingDownload" diameter="15" class="mr-2 d-inline-block">
+                    </mat-spinner>View
+                  </button>
+                  <gateway-task-actions class="m-0" [view]="'action'" [options]="{ more:{hide:false}}"
+                    *ngIf="invoice.meta&& invoice.meta.taskCode" [code]="invoice.meta.taskCode">
+                  </gateway-task-actions>
+
+                </div>
+                 -->
+              </div>
+              <ng-container *ngIf="invoice.isSelected">
+                <!--
+                <div class="data-row py-1">
+                  <div class="my-1 rounded order-line-items">
+                    <ng-container *ngTemplateOutlet="summary; context: {invoice: invoice}"></ng-container>
+                  </div>
+                </div>
+                -->
+              </ng-container>
+            </ng-container>
+          </ng-container>
+        </div>
+      </mat-card>
+    </ng-container>
+
+  </ng-container>
+  <app-paginator *ngIf="view !== 'srp-enquiry'" [pager]="pager" [total]="pager.total"></app-paginator>
+</ng-template>
+
+<ng-template #noData>
+  <oa-no-data-found [message]="'No Invoice Found!'"></oa-no-data-found>
+</ng-template>

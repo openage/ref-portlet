@@ -1,0 +1,12 @@
+<div class="main" [class.hidden]="!isCurrent">
+  <div class="header">
+    <h5>{{page.title}}</h5>
+    <span class="spacer"></span>
+  </div>
+  <oa-tabs-search [options]="page?.meta?.search"></oa-tabs-search>
+  <!-- <oa-search class="spacer" (editing)="isSearching = $event" (changed)="onSearch($event)" [options]="page.meta.search">
+  </oa-search> -->
+  <insight-journal-list [view]="'table'" [user]="user" [entity]="entity" [fromDate]="fromDate" [toDate]="toDate"
+    [entityType]="entityType" [field]="field" [type]="type" (entityClick)="entityClick($event)"></insight-journal-list>
+</div>
+<router-outlet></router-outlet>

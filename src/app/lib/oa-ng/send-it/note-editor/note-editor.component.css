@@ -1,0 +1,34 @@
+.container {
+  /* margin-left: 2px; */
+  padding: 5px;
+  min-height: 50px;
+  margin: 2px;
+  border-radius: 5px;
+  border: 1px solid #f1f1f1;
+}
+
+div.input,
+div.input:focus {
+  font-size: 15px;
+  font-weight: 400;
+  border: none;
+  background: none;
+  outline: none;
+  resize: none;
+  width: 100%
+}
+
+h6 {
+  color: black;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.custom {
+  margin-left: 10px;
+  margin-bottom: 30px;
+}

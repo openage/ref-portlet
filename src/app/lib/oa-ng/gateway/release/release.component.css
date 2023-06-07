@@ -1,0 +1,11 @@
+.bordered {
+    border: 1px solid var(--defaultBackdrop);
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.iconDiv {
+    text-align: center;
+    padding-top: 50px;
+}

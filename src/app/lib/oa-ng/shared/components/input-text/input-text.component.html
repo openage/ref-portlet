@@ -1,0 +1,57 @@
+<div [class]="class" [style]="style">
+  <label *ngIf="label && showLabel" [attr.for]="id" [class.required]="required">{{label}}</label>
+  <div class="oa-input {{type}}" [class.multi-line]="options?.multiline" [class.selected]="isSelected"
+    [class.inline]="options?.inline">
+    <ng-container [ngSwitch]="control">
+      <ng-container *ngSwitchCase="'input'">
+        <ng-container *ngIf="preFix" [ngSwitch]="preFix.type">
+          <oa-icon-toggler *ngSwitchCase="'toggler'" [view]="preFix.view" [value]="preFix.value" [items]="preFix.items"
+            (changed)="preFix.event($event)">
+          </oa-icon-toggler>
+          <oa-action *ngSwitchDefault [disabled]="disabled" [item]="preFix" class="subtle"></oa-action>
+        </ng-container>
+
+        <input [type]="type" #inputContainer [disabled]="disabled" [readonly]="readonly" [value]="content"
+          [placeholder]="placeholder" (focus)="onFocus()" (change)="onChange($event)" (blur)="onBlur()"
+          (keyup)="onKeyUp($event)">
+        <oa-action *ngIf="postFix && !readonly" [disabled]="disabled" [item]="postFix"></oa-action>
+      </ng-container>
+      <ng-container *ngSwitchCase="'password'">
+        <input type="{{hidden ? 'password': 'text'}}" #inputContainer [disabled]="disabled" [readonly]="readonly"
+          [value]="content" (focus)="onFocus()" (change)="onChange($event)" (blur)="onBlur()" (keyup)="onKeyUp($event)">
+        <mat-icon class="subtle pointer" (click)="hidden = !hidden">{{hidden ? 'visibility': 'visibility_off'}}
+        </mat-icon>
+      </ng-container>
+      <div *ngSwitchCase="'otp'" class="otp">
+        <input autofocus type="text" #char1 (keyup)="focusToNext(char1, char2)" minlength="1" maxlength="1"
+          [(ngModel)]="otp.char_1" name="char_1" required>
+        <input type="text" #char2 (keyup)="focusToNext(char2, char3)" minlength="1" maxlength="1"
+          [(ngModel)]="otp.char_2" name="char_2" required>
+        <input type="text" #char3 (keyup)="focusToNext(char3, char4)" minlength="1" maxlength="1"
+          [(ngModel)]="otp.char_3" name="char_3" required>
+        <input type="text" #char4 (keyup)="focusToNext(char4, char5)" minlength="1" maxlength="1"
+          [(ngModel)]="otp.char_4" name="char_4" required>
+        <input type="text" #char5 (keyup)="focusToNext(char5, char6)" minlength="1" maxlength="1"
+          [(ngModel)]="otp.char_5" name="char_5" required>
+        <input type="text" #char6 (keyup)="focusToNext(char6)" minlength="1" maxlength="1" [(ngModel)]="otp.char_6"
+          name="char_6" required>
+      </div>
+
+      <oa-date-picker *ngSwitchCase="'date-picker'" [placeholder]="placeholder" [value]="content"
+        (change)="onValueChange($event)" [disabled]="disabled">
+      </oa-date-picker>
+      <!-- <div *ngIf="type === 'textarea'" #inputContainer class="input" [innerHTML]="content" (focus)="onFocus()"
+      contenteditable="true" (blur)="onChange($event)"></div> -->
+      <textarea *ngSwitchCase="'textarea'" [id]="label" [placeholder]="placeholder" rows="4" [value]="content"
+        [disabled]="disabled" (focus)="onFocus()" (change)="onChange($event)" (blur)="onBlur()"
+        (keyup)="onKeyUp($event)"></textarea>
+      <oa-content-editor *ngSwitchCase="'rich'" [value]="value" (changed)="changed.next($event)">
+      </oa-content-editor>
+
+      <json-editor *ngSwitchCase="'json'" [value]="value" (changed)="changed.next($event)"></json-editor>
+    </ng-container>
+  </div>
+  <oa-error *ngIf="validate || required" [dirty]="isDirty" [type]="type" [value]="content" [label]="options.label"
+    [validate]="validate" [required]="required" (errored)="onValidate($event)">
+  </oa-error>
+</div>

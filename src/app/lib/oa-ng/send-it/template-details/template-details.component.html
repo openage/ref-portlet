@@ -1,0 +1,25 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+<ng-container *ngIf="properties">
+
+  <div>
+    <label for="subject">Subject</label>
+    <div class="oa-input">
+      <input type="text" [(ngModel)]="properties.subject" [disabled]="readonly">
+    </div>
+  </div>
+
+  <div class="top-spacer">
+    <div><label for="body">Body</label></div>
+    <div class="body-container">
+      <div [innerHtml]="sanitizer.bypassSecurityTrustHtml(properties.body)"></div>
+    </div>
+  </div>
+
+  <div class="top-spacer" *ngIf="properties.id">
+    <div class="flex-row">
+      <div class="spacer"></div>
+      <button mat-raised-button class="primary" (click)="openDialog()">Upload and Send</button>
+    </div>
+  </div>
+
+</ng-container>

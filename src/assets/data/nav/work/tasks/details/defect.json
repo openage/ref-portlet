@@ -1,0 +1,211 @@
+{
+  "params": {
+    "view": "story",
+    "entity": {
+      "type": "story",
+      "code": ":code"
+    }
+  },
+  "context": [
+    {
+      "code": "share",
+      "type": "icon",
+      "title": "Share",
+      "options": [
+        "email",
+        "chat",
+        "copy"
+      ]
+    },
+    {
+      "code": "editor",
+      "icon": "edit",
+      "type": "icon",
+      "title": "Editor View",
+      "options": [
+        {
+          "code": "expanded",
+          "title": "Field"
+        },
+        {
+          "code": "markdown",
+          "title": "Markdown"
+        }
+      ]
+    },
+    {
+      "code": "close",
+      "type": "icon"
+    }
+  ],
+  "sections": {
+    "actionBar": {
+      "style": {
+        "container": {
+          "class": "action-bar"
+        }
+      },
+      "stages": {
+        "view": "stepper"
+      },
+      "actions": {
+        "view": "action"
+      }
+    },
+    "taskDetails": {
+      "style": {
+        "container": {
+          "class": "card"
+        }
+      },
+      "fields": [
+        {
+          "code": "subject",
+          "class": "header"
+        },
+        "description"
+      ]
+    },
+    "children": {
+      "title": "Sub Tasks",
+      "view": "list",
+      "new": {
+        "view": "list-item",
+        "placholder": "New Task"
+      },
+      "params": {
+        "discarded": false,
+        "draft": true,
+        "closed": true
+      },
+      "fields": [
+        "icon",
+        "code",
+        "subject",
+        "status",
+        "actions",
+        "assignee",
+        "effort",
+        "view"
+      ],
+      "paging": {
+        "limit": 50,
+        "sort": "priority"
+      }
+    },
+    "related": {
+      "title": "Related",
+      "view": "list",
+      "new": {
+        "view": "list-item",
+        "placholder": "New Task"
+      },
+      "params": {
+        "discarded": false,
+        "draft": true,
+        "closed": true
+      },
+      "fields": [
+        "icon",
+        "code",
+        "subject",
+        "status",
+        "actions",
+        "assignee",
+        "effort",
+        "view"
+      ],
+      "paging": {
+        "limit": 50,
+        "sort": "priority"
+      }
+    },
+    "documents": {
+      "title": "Documents",
+      "view": "grid"
+    },
+    "history": {
+      "title": "History",
+      "view": "list"
+    },
+    "comments": {
+      "title": "Comments",
+      "new": {
+        "modes": {
+          "chat": true
+        }
+      },
+      "view": "line",
+      "mode": "notes"
+    },
+    "properties": {
+      "title": "Properties",
+      "view": "attributes",
+      "style": {
+        "body": "highlighted"
+      },
+      "fields": [
+        "assignee",
+        "priority",
+        "dueDate",
+        "sprint",
+        "release",
+        "parent",
+        "tags",
+        {
+          "code": "owner",
+          "label": "Reported By"
+        }
+      ]
+    },
+    "newTimeLog": {
+      "title": "Add Effort to Defect",
+      "view": "form",
+      "style": {
+        "container": {
+          "class": "card"
+        }
+      },
+      "fields": [
+        "date",
+        "effort",
+        "activity",
+        "comment"
+      ]
+    },
+    "timeLogs": {
+      "title": "Time Logs",
+      "view": "standup",
+      "sort": "date",
+      "fields": [
+        "taskCode",
+        "details",
+        "effort",
+        "date"
+      ],
+      "paging": {
+        "sort": "date"
+      },
+      "empty": {
+        "code": "TIMELOGS_NDF"
+      }
+    }
+  },
+  "types": [
+    {
+      "code": "task",
+      "label": "Task",
+      "icon": "workflow-task"
+    },
+    {
+      "code": "defect",
+      "label": "Defect",
+      "icon": "workflow-defect"
+    },
+    {
+      "code": "test-case",
+      "label": "Test Case",
+      "icon": "workflow-test-case"
+    }
+  ]
+}

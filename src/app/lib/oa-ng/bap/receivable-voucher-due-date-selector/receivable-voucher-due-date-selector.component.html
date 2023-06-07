@@ -1,0 +1,8 @@
+<ng-container>
+  <oa-date-picker [label]="''"
+    [readonly]="!(voucher?.voucherCode && (voucher?.status?.toLowerCase() === 'new' || voucher?.status?.toLowerCase() === 'accepted') && auth.hasPermission(voucher?.dateChangePermissions || []))"
+    [value]="dueDate"
+    [options]="{style:{'border':(voucher?.voucherCode && (voucher?.status?.toLowerCase() === 'new' || voucher?.status?.toLowerCase() === 'accepted') && auth.hasPermission(voucher?.dateChangePermissions || []))?'1px solid var(--done)':''}}"
+    (change)="onSelect($event)">
+  </oa-date-picker>
+</ng-container>

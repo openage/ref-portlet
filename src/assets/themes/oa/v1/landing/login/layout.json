@@ -1,0 +1,17 @@
+{
+  "divs": [
+    {
+      "layout": {
+        "class": "flex-row centered",
+        "divs": [
+          {
+            "class": "middle",
+            "widget": {
+              "code": "landing-login"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+input.mat-input-element {
+    margin-top: auto;
+}
+
+.mat-datepicker-toggle {
+    position: absolute !important;
+    margin-top: 15px !important;
+    margin-left: -35px !important;
+}
+
+mat-form-field {
+    padding-left: 0px !important;
+}
+
+::ng-deep .flex-row > mat-form-field > .mat-form-field-wrapper {
+    margin-left: 0px;
+}

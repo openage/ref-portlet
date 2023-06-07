@@ -1,0 +1,97 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+<ng-container [ngSwitch]="view" *ngIf="properties">
+  <div *ngSwitchCase="'extendWithFiles'">
+    <div class="expansionCard">
+      <div *ngFor="let folder of properties.folders">
+
+        <div class="expansionCardHeader flex-9-1" *ngIf="auth.hasPermission(permissions.remove)">
+          <div (click)="folder.isSelected = !folder.isSelected">{{folder.name}}</div>
+          <div class="closeIconDiv">
+            <mat-icon (click)="onRemove(folder)" matTooltip="Remove">
+              remove_circle_outline</mat-icon>
+          </div>
+        </div>
+
+        <div *ngIf="!auth.hasPermission(permissions.remove)" (click)="folder.isSelected = !folder.isSelected"
+          class="expansionCardHeader">{{folder.name}}</div>
+
+        <div class="expansionCardFiles" *ngIf="folder.isSelected">
+          <drive-file-list [view]="'list'" [fileUploadInputView]="fileUploadInputView" [visibility]="visibility"
+            [entity]="properties.entity" [readonly]="readonly" [disabled]="disabled" [permissions]="permissions"
+            [folder]="folder" (selected)="onFileSelect($event)">
+          </drive-file-list>
+        </div>
+
+        <hr>
+      </div>
+      <div *ngIf="auth.hasPermission(permissions.create)" class="addMore cursorPointer" (click)="addFolder()">
+        + Add More</div>
+    </div>
+  </div>
+
+  <div *ngSwitchCase="'systemGrid'">
+    <div class="header contextBar">
+      <h5 class="cursorPointer" *ngIf="properties.parent && properties.parent.code"
+        (click)="onFolderSelect(properties.parent)">{{properties.parent.name}}</h5>
+      <h5>></h5>
+      <h5> {{(properties.code === 'root'? null: properties.name) || 'Documents'}} </h5>
+    </div>
+    <ng-container *ngTemplateOutlet="folderDetail; context:{view: 'grid',showFileHeader: true}"></ng-container>
+  </div>
+  <div *ngSwitchCase="'attachment'">
+    <ng-container *ngTemplateOutlet="folderDetail; context:{view: 'attachment',showFileHeader: false}"></ng-container>
+
+  </div>
+
+  <div *ngSwitchDefault>
+    <div class="header folder-sections">
+      <mat-icon
+        *ngIf="showBack && properties.parent && (properties.parent.code !== 'root' || (properties.parent.code === 'root' && showRoot))"
+        (click)="onFolderSelect(properties.parent)"> keyboard_backspace</mat-icon>
+      <ng-container *ngIf="showHeader">
+        <h4 *ngIf="!hideFolderName"> {{(properties.code === 'root'? null: properties.name) || 'Documents'}} </h4>
+        <div class="spacer"></div>
+        <insight-grid-widget *ngIf="showSummary" [style]="summary.style" [fields]="summary.fields"
+          [items]="[summary.data]" view="grid">
+        </insight-grid-widget>
+        <div class="spacer"></div>
+        <div class="controls-row folder-icons-section">
+          <mat-icon *ngFor="let item of views" class="pointer label" color="{{view === item.view?'primary':''}}"
+            (click)="onView(item.view)">{{item.icon}}
+          </mat-icon>
+          <!-- <mat-icon class="pointer label" color="{{view === 'table'?'primary':''}}" (click)="onView('table')">
+            format_list_bulleted</mat-icon>
+          <mat-icon class="pointer label" color="{{view === 'grouped-by-status'?'primary':''}}"
+            (click)="onView('grouped-by-status')">
+            account_tree
+          </mat-icon> -->
+        </div>
+      </ng-container>
+    </div>
+    <ng-container *ngTemplateOutlet="folderDetail; context:{ view: view}"></ng-container>
+  </div>
+</ng-container>
+
+<ng-template #folderDetail let-type="view" let-showFileHeader="showFileHeader">
+  <div *ngIf="properties.folders && properties.folders.length">
+    <h5>Folders</h5>
+    <div class="flex-row">
+      <ng-container *ngFor="let folder of properties.folders">
+        <div (click)="onFolderSelect(folder)" class="folder controls-row">
+          <div class="material-icons"> folder </div>
+          <div class="folderName">{{folder.name ? folder.name : folder.code}}</div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+
+  <div>
+    <h5 *ngIf="showFileHeader">Files</h5>
+    <drive-file-list *ngIf="properties.files" [view]="type" [fileUploadInputView]="fileUploadInputView"
+      [visibility]="visibility" [items]="properties.files" [entity]="properties.entity" [readonly]="readonly"
+      [disabled]="disabled" [permissions]="permissions" [label]="tag" [folder]="properties"
+      (selected)="onFileSelect($event)" (refresh)="onRefresh($event)">
+    </drive-file-list>
+  </div>
+
+</ng-template>

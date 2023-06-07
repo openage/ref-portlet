@@ -1,0 +1,62 @@
+{
+  "items": [
+    {
+      "code": "view",
+      "title": "Views",
+      "type": "toggle",
+      "config": {
+        "items": [
+          {
+            "code": "rows"
+          },
+          {
+            "code": "columns"
+          }
+        ]
+      }
+    },
+    {
+      "code": "email",
+      "title": "Email",
+      "icon": {
+        "oa": "email"
+      }
+    },
+    {
+      "code": "chat",
+      "title": "Slack",
+      "provider": "slack",
+      "icon": {
+        "oa": "slack"
+      },
+      "config": {
+        "url": "https://app.slack.com/client"
+      }
+    },
+    {
+      "code": "whatsapp",
+      "title": "WhatsApp",
+      "provider": "whatsapp",
+      "icon": {
+        "oa": "whatsapp"
+      },
+      "config": {
+        "url": "https://api.whatsapp.com/send"
+      }
+    },
+    {
+      "code": "copy",
+      "title": "Copy",
+      "icon": {
+        "oa": "copy"
+      }
+    },
+    {
+      "code": "remove",
+      "title": "Remove",
+      "icon": {
+        "mat": "delete_outline"
+      }
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+<!-- <app-quick-links [code]="'reports'"></app-quick-links> -->
+<div class="main" [class.hidden]="!isCurrent">
+    <insight-areas (selected)="onSelect($event)"></insight-areas>
+</div>
+<router-outlet></router-outlet>
+

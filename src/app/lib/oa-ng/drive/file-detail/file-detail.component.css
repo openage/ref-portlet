@@ -1,0 +1,166 @@
+/* .col-lg-4 {
+  text-align: right;
+}
+
+img {
+  cursor: pointer;
+  margin-right: 15px;
+  width: 20px;
+}
+
+hr {
+  margin-top: 0px;
+}
+
+label,
+p {
+  color: rgba(90, 90, 90, 1);
+}
+
+label {
+  font-weight: 600;
+}
+
+.upload-card {
+  border: 2px dotted rgba(197, 200, 208, 1);
+  text-align: center;
+  border-radius: 8px;
+  padding: 10px;
+  height: 145px;
+}
+
+.uploadText {
+  color: rgba(197, 200, 208, 1);
+  font-size: 14px;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+p {
+  font-weight: bolder;
+  color: black;
+}
+
+.row {
+  justify-content: flex-end;
+} */
+
+.file-card .header {
+  width: 100%;
+  padding: 5px;
+}
+
+.file-card>.content {
+  background-size: cover !important;
+}
+
+.file-detail-section {
+  display: grid;
+  grid-template-columns: 85% 15%;
+}
+
+.more-options-section {
+  justify-items: center;
+}
+
+.spacing {
+  margin-right: 5px;
+}
+
+.div .flex-row {
+  width: 100%;
+  margin: 0px !important;
+  padding: 0px !important;
+}
+
+.empty {
+  height: 20px;
+  width: 20px
+}
+
+.centered-text {
+  text-align: center
+}
+
+.index {
+  width: 12%;
+}
+
+.name {
+  width: 18%;
+}
+
+.uploader {
+  width: 15%
+}
+
+.comman-field {
+  width: 15%;
+  text-align: center;
+}
+
+.actions {
+  width: 10%
+}
+
+.title {
+  justify-content: center;
+}
+
+.sub-text-align {
+  margin-left: 25px;
+}
+
+.thumbnail {
+  height: 20px;
+  width: 20px;
+}
+
+.add-icon {
+  color: var(--primary)
+}
+
+.table-name,
+.table-description,
+.table-type {
+  width: 30%
+}
+
+.table-action {
+  width: 10%;
+}
+
+@media only screen and (max-width:568px) {
+  .table-name {
+    width: 22% !important;
+  }
+
+  .index {
+    width: 9%;
+  }
+
+  .table-action {
+    width: 18%;
+    padding-right: 0px;
+  }
+
+  .table-name,
+  .table-description,
+  .table-type {
+    word-break: break-all;
+  }
+}
+
+.close {
+  height: 5px;
+  margin: 0;
+  padding: 0;
+}
+
+.attachment-div {
+  background: #fff;
+  border: 2px solid grey;
+
+}

@@ -1,0 +1,43 @@
+<div class="calendar">
+  <div class="month" *ngIf="!options.hideMonth">
+    <i class="material-icons" (click)="previousMonth()" *ngIf="!options.hideNavigation">
+      keyboard_arrow_left
+    </i>
+    <span class="monthYear">{{month| date: 'MMMM, yyyy'}}</span>
+    <i class="material-icons" (click)="nextMonth()" *ngIf="!options.hideNavigation">
+      keyboard_arrow_right
+    </i>
+  </div>
+
+  <div class="weeks">
+    <div>SUN</div>
+    <div>MON</div>
+    <div>TUE</div>
+    <div>WED</div>
+    <div>THU</div>
+    <div>FRI</div>
+    <div>SAT</div>
+  </div>
+  <div class="days">
+    <div class="day {{day.status}}" *ngFor="let day of days" (click)="onSelect(day)"
+      [class.not-current]="!day.isCurrent" [class.today]="isToday(day.date)" [class.selected]="isSelected(day.date)">
+      <div class="date">
+        <div>{{day.date | date: 'dd'}}</div>
+      </div>
+      <div class="events" *ngIf="day.events && day.events.length">
+        <div class="event" *ngFor="let e of day.events">
+          <div class="{{e.start.status}}">{{e.start.title}}: {{e.start.time | date: 'h:mm a'}}</div>
+          <div class="{{e.end.status}}">{{e.end.title}}: {{e.end.time | date: 'h:mm a'}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="controls-row">
+    <div class="legend {{item.status}}" *ngFor="let item of legends">
+      <span class="box"></span> {{item.label}}
+    </div>
+    <span class="spacer"></span>
+  </div>
+
+</div>

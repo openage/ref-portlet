@@ -1,0 +1,49 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+<div class="row text-center noData" *ngIf="items?.length === 0">
+  <h5>
+    <b> No data to display !</b>
+  </h5>
+</div>
+<div class="table-responsive-sm" *ngIf="items?.length > 0">
+  <table class="table table-condensed table-hover">
+    <thead class="primary_thead">
+      <tr>
+        <th>Code</th>
+        <th class="tdWidth">Name</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of items;let i = index" class="capitalize">
+        <td>
+          <input [maxlength]="validationService.textLength" type="text" [name]="'code_'+i" readonly
+            class="number form-control input-xs" [(ngModel)]="item.code">
+        </td>
+        <td class="col-mat-6">
+          <input [maxlength]="validationService.textLength" type="text" [name]="'name_'+i" [readonly]="!item?.isEdit"
+            class="number form-control input-xs" [(ngModel)]="item.name">
+        </td>
+
+        <td class="btnClmWidth">
+          <button *ngIf="!item?.isEdit" mat-icon-button class="button_align cursor" matTooltip="Edit"
+            [matTooltipPosition]="'above'" (click)="edit(item, true)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button *ngIf="!item?.isEdit" mat-icon-button class="button_align cursor" matTooltip="Delete"
+            [matTooltipPosition]="'above'" (click)="openDialog(item)">
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button *ngIf="item?.isEdit" mat-icon-button class="button_align cursor " (click)="save(item)"
+            matTooltip="Save" [matTooltipPosition]="'above'">
+            <mat-icon>save</mat-icon>
+          </button>
+          <button *ngIf="item?.isEdit" mat-icon-button class="button_align cursor" (click)="edit(item, false)"
+            matTooltip="Cancel" [matTooltipPosition]="'above'">
+            <mat-icon>undo</mat-icon>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <app-paginator [pager]="pager" [total]="pager.total"></app-paginator>
+</div>

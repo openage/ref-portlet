@@ -1,0 +1,24 @@
+<ng-container [ngSwitch]="view">
+    <ng-container *ngSwitchCase="'raised'">
+        <button mat-raised-button color="primary" (click)="onClick()" [matTooltip]="message">{{title}}</button>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'stroked'">
+        <button mat-stroked-button color="primary" (click)="onClick()" [matTooltip]="message">{{title}}</button>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'flat'">
+        <button mat-flat-button (click)="onClick()" [matTooltip]="message">{{title}}</button>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'icon'">
+        <button mat-icon-button (click)="onClick()" [matTooltip]="message">
+            <mat-icon>cloud_upload</mat-icon>
+        </button>
+    </ng-container>
+
+    <ng-container *ngSwitchDefault>
+        <button mat-button (click)="onClick()" [matTooltip]="message">{{title}}</button>
+    </ng-container>
+
+</ng-container>

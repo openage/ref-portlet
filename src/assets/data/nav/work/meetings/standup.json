@@ -1,0 +1,176 @@
+{
+  "context": [
+    {
+      "code": "share"
+    },
+    {
+      "code": "rows"
+    },
+    {
+      "code": "columns"
+    },
+    {
+      "code": "filters"
+    },
+    {
+      "code": "refresh"
+    },
+    {
+      "code": "close",
+      "type": "icon"
+    }
+  ],
+  "new": {},
+  "timeLogs": {
+    "view": "standup",
+    "sort": "date",
+    "columns": [
+      "taskCode",
+      "details",
+      "user",
+      "effort",
+      "date"
+    ]
+  },
+  "params": {
+    "view": "columns",
+    "groupBy": "status",
+    "showFilters": false,
+    "showMembers": true,
+    "showTimeLogs": true,
+    "closed": false,
+    "draft": false,
+    "discarded": false
+  },
+  "paging": {
+    "limit": null
+  },
+  "search": {
+    "view": "full-text",
+    "sorts": [
+      {
+        "label": "Priority",
+        "code": "priority",
+        "value": "asc"
+      },
+      {
+        "label": "Owner",
+        "code": "owner.code",
+        "value": "dsc"
+      },
+      {
+        "label": "Due Date",
+        "code": "plan.finish",
+        "value": "dsc",
+        "isSelected": true
+      }
+    ],
+    "params": [
+      {
+        "label": "View",
+        "key": "view",
+        "control": "selector",
+        "value": "priority-view",
+        "options": [
+          {
+            "label": "Priority View",
+            "value": "priority-view"
+          },
+          {
+            "label": "Type View",
+            "value": "type-view"
+          },
+          {
+            "label": "Sprint View",
+            "value": "sprint-view"
+          },
+          {
+            "label": "Category View",
+            "value": "category-view"
+          },
+          {
+            "label": "Status View",
+            "value": "status-view"
+          }
+        ]
+      },
+      {
+        "label": "Subject",
+        "key": "subject",
+        "control": "input"
+      },
+      {
+        "label": "Code",
+        "key": "code",
+        "control": "input",
+        "config": {
+          "trigger": "#",
+          "op": "eq"
+        }
+      },
+      {
+        "label": "Tag",
+        "key": "tags",
+        "control": "input"
+      },
+      {
+        "label": "Category",
+        "key": "category-code",
+        "control": "autocomplete",
+        "config": {
+          "url": {
+            "code": "gateway",
+            "addOn": "categories"
+          },
+          "paramField": "text"
+        },
+        "valueKey": "id"
+      },
+      {
+        "label": "Status",
+        "key": "status-code",
+        "group": "advance",
+        "control": "input"
+      }
+    ]
+  },
+  "stats": {
+    "areaCode": "standup",
+    "params": [
+      {
+        "key": "period",
+        "value": 2
+      }
+    ]
+  },
+  "divs": [
+    {
+      "code": "primary-stats",
+      "hideFilters": true,
+      "style": {
+        "container": {
+          "style": {
+            "margin-bottom": "10px"
+          }
+        },
+        "widgets": {
+          "class": "two"
+        }
+      }
+    },
+    {
+      "code": "time-log-total",
+      "hideFilters": true,
+      "style": {
+        "container": {
+          "style": {
+            "margin-bottom": "10px"
+          }
+        },
+        "widgets": {
+          "class": "two"
+        }
+      }
+    }
+  ]
+}

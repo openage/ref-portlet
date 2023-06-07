@@ -1,0 +1,42 @@
+{
+  "code": "reports",
+  "title": "Reports",
+  "url": "/reports",
+  "icon": "fa-chart-bar",
+  "permissions": [
+    "user"
+  ],
+  "items": [
+    {
+      "code": "reports.area",
+      "title": "Reports",
+      "url": "/reports/:areaCode",
+      "icon": "fa-line-chart",
+      "items": [
+        {
+          "code": "reports.area.reportTypeCode",
+          "title": "Report List",
+          "url": "/reports/:areaCode/:reportTypeCode",
+          "icon": "fa-line-chart",
+          "meta": {
+            "context": [
+              {
+                "code": "filters"
+              },
+              {
+                "code": "edit",
+                "permissions": [
+                  "tenant.admin"
+                ]
+              },
+              {
+                "code": "close",
+                "type": "icon"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+<ng-container *ngIf="items && items.length">
+    <ng-container [ngSwitch]="view">
+        <ng-container *ngSwitchCase="'marquee'">
+            <marquee onmouseover="this.stop();" onmouseout="this.start();" scrollamount="5" width="100%">
+                <ng-container *ngFor="let item of items">
+                    <span class="rainbow rainbow_text_animated">{{item.description}}</span> &nbsp; &nbsp; &nbsp; &nbsp;
+                    &nbsp; &nbsp;
+                </ng-container>
+            </marquee>
+        </ng-container>
+        <ng-container *ngSwitchDefault>
+            TODO
+        </ng-container>
+    </ng-container>
+</ng-container>

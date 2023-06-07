@@ -1,0 +1,12 @@
+<div class="main" [class.hidden]="!isCurrent">
+    <div class="header">
+        <h5>{{page?.title}}</h5>
+        <span class="spacer"></span>
+        <button mat-raised-button class="primary" (click)="newRelease()">New</button>
+    </div>
+    <div *ngIf="projectCode">
+        <gateway-release-ongoing-list [project]="{id: this.projectCode}" (selected)="onSelect($event)">
+        </gateway-release-ongoing-list>
+    </div>
+</div>
+<router-outlet></router-outlet>

@@ -1,0 +1,46 @@
+<ng-container [ngSwitch]="view">
+  <ng-container *ngSwitchCase="'new'">
+    <oa-autocomplete [value]="value && value.code ? value : null " [options]="{
+      label: label,
+      preFetch: true,
+      required: required,
+      templates: {
+        value: valueTemplate,
+        placeholder: placeholderTemplate
+      },
+      search: {
+        params: params,
+        limit: 5
+      }
+    }" [api]="api" (changed)="onSelect($event)" [readonly]="readonly">
+    </oa-autocomplete>
+
+    <ng-template #valueTemplate let-item="value">
+      <div class="value" [class.readonly]="readonly">
+        {{item.name}}
+      </div>
+    </ng-template>
+
+    <ng-template #placeholderTemplate>
+      <label>Select/Search</label>
+    </ng-template>
+
+  </ng-container>
+  <ng-container *ngSwitchCase="'old'">
+    <div class="form-container flex-row">
+      <mat-form-field appearance="outline">
+        <label for="department">{{label}}</label>
+        <input #userInput id="department" [formControl]="control" [matAutocomplete]="departmentPicker" matInput
+          type="text" [placeholder]="placeholder" [(ngModel)]="value" [readonly]="readonly" [required]="required"
+          (blur)="noOption($event)">
+        <i matSuffix class="fa fa-caret-down"></i>
+        <mat-autocomplete autoActiveFirstOption #departmentPicker="matAutocomplete" [displayWith]="display"
+          (optionSelected)="onOptionSelected($event)">
+          <mat-option *ngFor="let item of items" [value]="item">
+            {{item.name}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+  </ng-container>
+</ng-container>

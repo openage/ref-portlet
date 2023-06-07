@@ -1,0 +1,213 @@
+.data-row>* {
+  margin-right: 0px !important;
+}
+
+.active {
+  color: var(--primary);
+  cursor: pointer;
+}
+
+.order-header {
+  /* border-top: 1px solid #ccc; */
+  border-bottom: 0 !important;
+  font-weight: 500 !important;
+}
+
+.no {
+  width: 8%;
+}
+
+.description {
+  width: 17%;
+}
+
+.gst {
+  width: 7%;
+}
+
+/* .roc {
+  width: 8%;
+} */
+
+/* .unit {
+  width: 4%;
+} */
+
+.per-unit {
+  width: 9%;
+}
+
+.amount {
+  width: 11%;
+}
+
+.gst-total {
+  width: 9%;
+}
+
+.total {
+  width: 10%;
+}
+
+.action {
+  width: 2%;
+}
+
+.margin {
+  width: 44%
+}
+
+.order-no {
+  width: 8%;
+}
+
+.order-description {
+  width: 15%;
+}
+
+
+.order-gst {
+  width: 8%;
+}
+.order-sac{
+  width:9%
+}
+.order-units {
+  width: 6%;
+}
+
+.order-per-unit {
+  width: 9%;
+}
+
+.order-amount {
+  width: 10%;
+}
+
+.order-gst-total {
+  width: 9%;
+}
+
+.order-total {
+  width: 11%;
+}
+
+.order-action {
+  width: 2%;
+}
+
+
+/*  */
+/* .order-no {
+  width: 9%;
+}
+
+.order-description {
+  width: 17%;
+}
+
+.order-gst {
+  width: 8%;
+}
+
+.order-unit {
+  width: 4%;
+}
+
+.order-per-unit {
+  width: 8%;
+}
+
+.order-amount {
+  width: 8%;
+}
+
+.order-gst-total {
+  width: 8%;
+}
+
+.order-total {
+  width: 9%;
+}
+
+.order-action {
+  width: 2%;
+}*/
+
+.order-conversion {
+  width: 7%;
+}
+
+.margin {
+  width: 44%
+}
+
+
+hr {
+  margin: 0;
+}
+
+.ratio-chip {
+  margin-left: 10px;
+}
+
+.ratio-key {
+  border: 1px solid var(--defaultBackdrop);
+  padding: 4px 8px;
+  border-right: none;
+  background: var(--defaultBackdrop);
+  border-radius: 20px 0px 0px 20px;
+  color: #fff;
+}
+
+.ratio-value {
+  border: 1px solid var(--defaultBackdrop);
+  padding: 4px 8px;
+  border-right: none;
+  border-radius: 0px 20px 20px 0px;
+}
+
+.customer-no {
+  width: 10%;
+}
+
+.customer-description {
+  width: 17%;
+}
+
+
+.customer-gst {
+  width: 9%;
+}
+
+/* .customer-unit {
+  width: 6%;
+} */
+
+.customer-per-unit {
+  width: 8%;
+}
+
+.customer-amount {
+  width: 9%;
+}
+
+.customer-gst-total {
+  width: 9%;
+}
+
+.customer-total {
+  width: 11%;
+}
+
+.customer-action {
+  width: 2%;
+}
+
+.customer-conversion {
+  width: 8%;
+}
+
+.action-items {
+  background-color: var(--defaultBackground)
+}

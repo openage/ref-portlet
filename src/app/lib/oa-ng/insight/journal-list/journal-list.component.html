@@ -1,0 +1,225 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+<div [ngSwitch]="view">
+
+  <div *ngSwitchCase="'list'">
+    <div *ngIf="journalList.length">
+      <div class="journalDiv" *ngFor="let item of journalList">
+        <div class="row">
+          <div class="col-3 aJournalDiv">
+            <div>{{item.date}}</div>
+            <div>{{item.day}}</div>
+          </div>
+          <div class="col-9"></div>
+
+          <ng-container *ngFor="let journal of item.journals">
+            <ng-container *ngIf="journal.changes && journal.changes.length; else withOutMessage">
+
+              <ng-container class="row" *ngFor="let change of journal.changes; let i= index">
+                <!-- <div
+                  class="col-3 {{change.field === 'assignee'||journal.type === 'updated'?'aIconsDiv'+' '+ journal.type+' '+change.field:''}}">
+                  <div class="controls-row">
+                    <div class="avtarDiv">
+                      <oa-avatar [style]="style" type="micro" [value]="journal.user.profile"></oa-avatar>
+                    </div>
+                    <div class="spacer"></div>
+                    <div *ngIf="i === 0">{{journal.timeStamp | time: 'hh:mm'}}</div>
+                  </div>
+                </div> -->
+                <div class="col-3 controls-row">
+                  <div class="spacer"></div>
+                  <div *ngIf="i === 0">{{journal.timeStamp | time: 'hh:mm'}}</div>
+                  <div class="controls-row" *ngIf="change.field === 'assignee'||journal.type === 'updated'">
+                    <div class="avtarDiv">
+                      <oa-avatar [style]="style" type="micro" [value]="journal.user.profile"></oa-avatar>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-9 controls-row">
+                  <ng-container *ngIf="change.value.startsWith('<'); else htmlDiv">
+                    <div class="spacing">
+                      <div [innerHTML]="change.value"></div>
+                      <div>{{change.text}}</div>
+                      <label class="fieldStyle">{{change.field}}
+                        {{change.field === 'assignee'&&journal.type === 'created'?'(Create)':''}}</label>
+                    </div>
+                    <div class="spacer"></div>
+                    <div>
+                      <mat-icon class="sm msg-icon pointer" *ngIf="journal.type === 'updated'"
+                        [matTooltip]="'Assignee'">
+                        person_outline</mat-icon>
+                    </div>
+                  </ng-container>
+                  <ng-template #htmlDiv>
+                    <div class="spacing">
+                      <div class="changeField">{{change.value}}</div>
+                      <div>{{change.text}}</div>
+                      <label class="fieldStyle">{{change.field}}
+                        {{change.field === 'assignee'&&journal.type === 'created'?'(Create)':''}}</label>
+                    </div>
+                    <div class="spacer"></div>
+                    <div [class.active]="icons">
+                      <i class="xx-sm spacing {{getIcon(journal?.entity?.type)||'task'}}"
+                        [matTooltip]="journal?.entity?.type === 'rfq'?'LEAD':journal?.entity?.type|uppercase"></i>
+                    </div>
+                  </ng-template>
+                  <!-- <div class="spacer"></div> -->
+                  <!-- <div class="avtarDiv">
+                    <oa-avatar [style]="style" type="micro" [value]="journal.user.profile"></oa-avatar>
+                  </div> -->
+                </div>
+              </ng-container>
+
+            </ng-container>
+            <ng-template #withOutMessage>
+              <div class="col-3 controls-row">
+                <div class="spacer"></div>
+                <div>{{journal.timeStamp | time: 'hh:mm'}}</div>
+                <div class="controls-row">
+                  <div class="avtarDiv">
+                    <oa-avatar [style]="style" [value]="journal.user.profile" type="micro"></oa-avatar>
+                  </div>
+                </div>
+              </div>
+              <div class="col-9 controls-row">
+                <ng-container *ngIf="journal.message && journal.message.startsWith('<'); else htmlDiv">
+                  <div class="controls-row">
+                    <div [innerHTML]="journal.message|name"></div>
+                  </div>
+                  <div class="spacer"></div>
+                  <div>
+                    <mat-icon class="sm msg-icon">chat_bubble_outline</mat-icon>
+                  </div>
+                </ng-container>
+                <ng-template #htmlDiv>
+                  <div class="controls-row spacing">
+                    <div class="changeField">{{journal.message|name}}</div>
+                  </div>
+                  <div class="spacer"></div>
+                  <div>
+                    <mat-icon class="sm msg-icon">chat_bubble_outline</mat-icon>
+                  </div>
+                </ng-template>
+              </div>
+            </ng-template>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngSwitchCase="'listView'">
+    <div class="message-card">
+      <ng-container *ngIf="items && items.length">
+        <div class="controls-row padding">
+          <h5 class="header">Recent Activities</h5>
+          <div class="spacer"></div>
+          <h5 class="header" [class.clickable]="true" (click)="viewAll()">View All</h5>
+        </div>
+        <div *ngFor="let item of items; let i=index">
+          <div *ngIf="i<3">
+            <div *ngIf="i>0 && i<3" class="line"></div>
+            <div mat-cell class="controls-row padding">
+              <div (click)="select(item)">
+                <div *ngIf="item.changes && item.changes.length" class="cursorPointer message">
+                  <ng-container class="row" *ngFor="let change of item.changes;">
+                    <div>{{change.text}}</div>
+                  </ng-container>
+                </div>
+                <div class="controls-row">
+                  <mat-icon class="watch_icon">query_builder</mat-icon>
+                  <div class="dateLabel">
+                    {{item.timeStamp ? (item.timeStamp|date: 'd MMM yyyy hh:mm a'):'Not set'}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      <oa-no-data-found *ngIf="!items.length" [message]="'No Recent Activities Found'"></oa-no-data-found>
+    </div>
+  </div>
+  <div *ngSwitchCase="'expansion'">
+    <mat-accordion>
+      <ng-container *ngFor="let item of items">
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{item.user.profile.firstName}}&nbsp;{{item.user.profile.lastName}}&nbsp;
+              <mat-panel-description>
+                {{item.type}}&nbsp;
+                <b>{{item.entity.type}}</b>&nbsp;-&nbsp;{{item.entity.name}}
+              </mat-panel-description>
+            </mat-panel-title>
+            {{item.timeStamp | time: 'merged'}}&nbsp;&nbsp;&nbsp;
+          </mat-expansion-panel-header>
+          <ng-container *ngFor="let change of item.changes">
+            <ng-container *ngIf="change.value.startsWith('<'); else htmlDiv">
+              <div class="controls-row">
+                <div>{{change.field|uppercase}} updated from&nbsp;</div>
+                <div [innerHTML]="change.oldValue"></div>
+                <div>&nbsp;to&nbsp;</div>
+                <div [innerHTML]="change.value"></div>
+                <div [innerHTML]="change.text"></div>
+              </div>
+            </ng-container>
+            <ng-template #htmlDiv>
+              <p>{{change.field|uppercase}} updated from '{{change.oldValue}}' to '{{change.value}}'</p>
+              <p>{{change.text}}</p>
+            </ng-template>
+          </ng-container>
+        </mat-expansion-panel>
+      </ng-container>
+    </mat-accordion>
+    <app-paginator [pager]="pager" [total]="pager.total"></app-paginator>
+    <oa-no-data-found *ngIf="!items.length" [message]="'No Data Found'"></oa-no-data-found>
+  </div>
+  <div *ngSwitchCase="'table'" class="w-100">
+    <div class="activities-list">
+      <table mat-table [dataSource]="items" class="mat-elevation-z8 demo-table w-100">
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef class="date-div">Date and Time</th>
+          <td mat-cell *matCellDef="let item" class="date-div">
+            <div class="sub-text">
+              {{item.timeStamp| date:'shortTime' }}
+            </div>
+            {{item.timeStamp| date: 'dd MMM yyyy'}}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="user">
+          <th mat-header-cell *matHeaderCellDef>User</th>
+          <td mat-cell *matCellDef="let item" class="user-div">
+            <div class="d-flex align-items-center ">
+              <oa-avatar [value]="item.user"></oa-avatar>
+              <div class="ml-1">{{item.user.profile.firstName}} {{item.user.profile.lastName}}</div>
+            </div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef class="action-div">Action</th>
+          <td mat-cell *matCellDef="let item" class="action-div">
+            <div *ngFor="let data of item.changes"> {{data.text}}</div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="entity">
+          <th mat-header-cell *matHeaderCellDef class="entity-div">Entity</th>
+          <td mat-cell *matCellDef="let item" class="entity-div clickable" (click)="select(item)">
+            <div class="sub-text">
+              {{item.type|uppercase}}
+            </div>
+            <div>
+              {{item.entity.type|titlecase}} - {{item.entity.id}}
+            </div>
+          </td>
+
+
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="columnData"></tr>
+        <tr mat-row *matRowDef="let myRowData; columns:columnData"></tr>
+      </table>
+    </div>
+    <app-paginator [pager]="pager" [total]="pager.total"></app-paginator>
+    <oa-no-data-found *ngIf="!items.length" [message]="'No Data Found'"></oa-no-data-found>
+
+    <!-- </ng-container> -->
+  </div>
+</div>

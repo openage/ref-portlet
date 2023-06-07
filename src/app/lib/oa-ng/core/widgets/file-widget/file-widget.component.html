@@ -1,0 +1,8 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+<div *ngIf="file">
+  <p class="div-title">{{file.name}}</p>
+  <div *ngIf="view === 'image'" class="flex-row img-Div">
+    <img [src]="file.url" width="700px">
+  </div>
+</div>
+

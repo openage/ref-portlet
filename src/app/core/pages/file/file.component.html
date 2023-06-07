@@ -1,0 +1,16 @@
+<div class="main">
+  <div class="header controls-row">
+    <h5>{{doc? doc.name: 'Document'}}</h5>
+    <span class="spacer"></span>
+    <mat-icon *ngIf="doc" class="subtle" [matMenuTriggerFor]="menu">more_vert</mat-icon>
+    <mat-menu #menu="matMenu">
+      <button (click)="docService.download(doc)" mat-menu-item>Download</button>
+    </mat-menu>
+  </div>
+
+  <div class="mat-elevation-z1">
+    <drive-file-viewer #fileViewer [readonly]="true" [code]="code" [permissions]="permissions"
+      (fetched)="setDoc($event)">
+    </drive-file-viewer>
+  </div>
+</div>

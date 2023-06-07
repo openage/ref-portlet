@@ -1,0 +1,10 @@
+<div *ngIf="modes && modes.length" class="content" (clickOutside)="showList=false">
+    <mat-icon class="icon pointer subtle" (click)="showList=!showList">share</mat-icon>
+    <div *ngIf="showList" class="modes">
+        <ng-container *ngFor="let mode of modes">
+            <i class="md {{mode.icon}} flex-row pointer m-r-10" (click)="onSelect(mode)" [matTooltip]="mode.name"></i>
+            <!-- <mat-icon class="flex-row pointer m-r-10" (click)="onSelect(mode)" [matTooltip]="mode.name">{{mode.icon}}
+            </mat-icon> -->
+        </ng-container>
+    </div>
+</div>

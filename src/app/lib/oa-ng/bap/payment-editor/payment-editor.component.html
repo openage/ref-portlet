@@ -1,0 +1,169 @@
+<div class="section w-100 p-2 payment-editor">
+  <div class="header">
+    <h5>Payment Editor</h5>
+    <span class="spacer"></span>
+    <gateway-task-states *ngIf="payment.meta && payment.meta.taskCode" [code]="payment.meta?.taskCode"
+      (fetched)="task=$event"></gateway-task-states>
+    <span class="spacer"></span>
+    <gateway-task-actions *ngIf="payment.meta && payment.meta.taskCode" [code]="payment.meta?.taskCode" [task]="task">
+    </gateway-task-actions>
+  </div>
+  <div>
+    <div class="d-flex flex-1-1-1 w-100 my-1">
+      <div class="d-flex w-100 mx-2">
+        <label for="utm" class="my-auto">UTR Number</label>
+        <input name="utm" class="oa-input w-50" [disabled]="readonly" [(ngModel)]="payment.transactionId">
+      </div>
+      <div class="d-flex flex-row-2 w-100 mx-2">
+        <label for="tds" class="my-auto">TDS</label>
+        <div class="oa-input w-50  text-right">
+          <input name="utm" class="oa-input text-right" [disabled]="readonly" [(ngModel)]="payment.tds">
+          <span>INR</span>
+        </div>
+      </div>
+      <div class="d-flex w-100 mx-2">
+        <label for="priority" class="my-auto">Priority</label>
+        <mat-select [id]="'priority'" class="w-50 oa-input" [disabled]="readonly" [(ngModel)]="payment.meta.priority">
+          <mat-option [value]="'low'">Low</mat-option>
+          <mat-option [value]="'medium'">Medium</mat-option>
+          <mat-option [value]="'high'">High</mat-option>
+        </mat-select>
+      </div>
+    </div>
+    <div class="d-flex flex-1-1-1 w-100 my-1">
+      <div class="d-flex w-100 mx-2">
+        <label for="utm" class="my-auto">Expected Date</label>
+        <oa-date-picker [value]="payment.dueDate" [disabled]="readonly" [readonly]="readonly"
+          (change)="onDueDateChanged($event)" class="w-50 my-auto">
+        </oa-date-picker>
+      </div>
+
+      <div class="d-flex  w-100 mx-2">
+        <label for="tds" class="my-auto">Actual Date</label>
+        <oa-date-picker [value]="payment.paidDate" [readonly]="readonly" (change)="onPaidDateChanged($event)"
+          class="w-50 my-auto">
+        </oa-date-picker>
+      </div>
+      <div class="d-flex w-100 mx-2">
+        <label for="bank" class="my-auto">Bank Details</label>
+        <ng-container *ngIf="!payment.bankDetail.account||!payment.bankDetail.ifscCode">
+          <button mat-button class="primary p-0 w-50 my-auto" (click)="bankDetails(payment)">
+            {{!payment.bankDetail.account||!payment.bankDetail.ifscCode?'Add Details' :
+            payment.bankDetail.account+'/'+payment.bankDetail.ifscCode}}
+          </button>
+        </ng-container>
+        <ng-container *ngIf="payment.bankDetail.account||payment.bankDetail.ifscCode">
+          <!-- <div (click)="bankDetails(payment)" class="my-auto pointer">
+                        <span>Account No.- <span class="link">{{payment.bankDetail.account}}</span></span>
+                        <br>
+                        <span>IFSC Code - <span class="link">{{payment.bankDetail.ifscCode}}</span></span>
+                    </div> -->
+          <div class="oa-input w-50 my-auto" (click)="bankDetails(payment)">
+            <input [disabled]="true" class="bank-input"
+              [(ngModel)]="payment.bankDetail.account+'/'+payment.bankDetail.ifscCode">
+            <mat-icon class="my-auto subtle bank-edit-icon">edit</mat-icon>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="header">
+    <h5>Settlements</h5>
+  </div>
+  <div class="table invoiceSettle" *ngIf="payment.invoices?.length">
+    <div class="header">
+      <div class="invoice-number text-left">Document Number</div>
+      <div class="invoice-amount text-center "> Amount</div>
+      <div class="invoice-amount text-center ">Tax Amount</div>
+      <div class="invoice-amount text-center">Due Amount</div>
+      <div class="invoice-amount text-center">Amount Applied</div>
+      <div class="invoice-remarks text-center">Remarks</div>
+      <div class="invoice-status ">Status</div>
+      <div class="invoice-action"></div>
+    </div>
+
+    <div class="data-row" *ngFor="let item of payment.invoices; let carrierIndex=index">
+      <div class="invoice-number text-left pr-1 m-auto">
+        <oa-autocomplete [placeholder]="'Invoice Number'" [value]="item.invoice" [options]="{
+                        templates: {
+                          value: valueTemplate
+                        },
+                        search: {
+                          field: 'code',
+                          params: searchParams,
+                          limit: 5
+                        }}" [api]="invoiceService" (changed)="onInvoiceSelect($event,item)">
+        </oa-autocomplete>
+      </div>
+      <div class="invoice-amount">
+        <div class="oa-input px-2">
+          <input type="text" class="text-right" numbersOnly [(ngModel)]="item.invoice.amount" [disabled]="true">
+          <oa-unit-picker class="pr-2" [type]="'currency'" [value]="'inr'" [readonly]="true">
+          </oa-unit-picker>
+        </div>
+      </div>
+      <div class="invoice-amount">
+        <div class="oa-input px-2">
+          <input type="text" class="text-right" numbersOnly [(ngModel)]="item.invoice.taxAmount" [disabled]="true">
+          <oa-unit-picker class="pr-2" [type]="'currency'" [value]="'inr'" [readonly]="true">
+          </oa-unit-picker>
+        </div>
+      </div>
+      <div class="invoice-amount">
+        <div class="oa-input px-2">
+          <input type="text" class=" text-right" numbersOnly [(ngModel)]="item.invoice.dueAmount" [disabled]="true">
+          <oa-unit-picker class="pr-2" [type]="'currency'" [value]="'inr'" [readonly]="true">
+          </oa-unit-picker>
+        </div>
+      </div>
+      <div class="invoice-amount">
+        <div class="oa-input px-2">
+          <input type="text" class=" text-right" numbersOnly [(ngModel)]="item.amount">
+          <oa-unit-picker class="pr-2" [type]="'currency'" [value]="'inr'" [readonly]="true">
+          </oa-unit-picker>
+        </div>
+      </div>
+      <div class="invoice-remarks">
+        <input class="oa-input" [(ngModel)]="item.remarks">
+      </div>
+      <div class="invoice-status my-auto">{{item.invoice.status |uppercase}}</div>
+      <div class="invoice-action d-flex">
+        <div class="mx-auto d-flex">
+          <!-- <button class="primary d-flex my-auto" color="primary" (click)="onPaymentSave(payment)">Save</button> -->
+          <drive-file-detail [code]="'invoice'" [entity]="{ id:item.invoice.id, type:'invoice' }" [view]="'icon'"
+            class='mx-auto' [options]="driveOptions"></drive-file-detail>
+          <mat-icon class="subtle my-auto" (click)="onRemoveInvoice(payment, carrierIndex)"
+            [matTooltip]="'This action will remove the Invoice'">remove_circle_outline</mat-icon>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-1">
+    <a class="add-row" href="javascript:void(0)" (click)="addInvoice(payment)">Add Invoice</a>
+  </div>
+
+  <div class="w-100 footer d-flex">
+    <div class="w-100">
+      <gateway-task-status-bar [task]="task"
+        [options]="{hide:{dueDate:false,identifier:true, statusAction: false,isActionArrowHidden:true} }"
+        [permissions]="{assign:['payment.reassign'],owner: ['payment.manage']}"
+        (onUpdate)="onTaskUpdate(payment,$event)">
+      </gateway-task-status-bar>
+    </div>
+    <div class="mt-auto header">
+      <button mat-raised-button color="primary" class="primary" *ngIf="!readonly "
+        (click)="onSave(payment)">Save</button>
+      <!-- <button mat-raised-button *ngIf="payment.id" class="primary" (click)="viewPayment(payment.id)"> View -->
+      <!-- </button> -->
+    </div>
+  </div>
+
+
+</div>
+<ng-template #valueTemplate let-item="value">
+  <div *ngIf="item.code">
+    {{item.code}}
+  </div>
+</ng-template>

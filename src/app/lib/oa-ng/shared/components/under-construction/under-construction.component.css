@@ -1,0 +1,14 @@
+:host {
+  display: block;
+}
+
+.container {
+  align-items: center;
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+}
+
+.serverDown {
+  margin-top: 10%;
+}

@@ -1,0 +1,7 @@
+<mat-select *ngIf="items && items.length">
+  <ng-container *ngFor="let item of items">
+    <mat-option *ngFor="let option of item.options" [value]="option" (click)="onSelect(option)">
+      {{item.name}}: {{option.name}}
+    </mat-option>
+  </ng-container>
+</mat-select>

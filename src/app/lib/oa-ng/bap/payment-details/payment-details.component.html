@@ -1,0 +1,164 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+<ng-container [ngSwitch]="view">
+  <ng-container *ngSwitchCase="'customer'">
+    <div class="flex-row four">
+      <div>
+        <div>
+          <label>Payment Date:</label> {{properties?.date | date: 'dd-MM-yyyy'}}
+        </div>
+        <div>
+          <label for="">UTR No.:</label> {{properties?.transactionId}}
+        </div>
+        <div>
+          <label>Paying Organization:</label>
+        </div>
+        <div>
+          <div class="billing-entity-search">
+            <!-- <oa-autocomplete [placeholder]="'Billing Entity'" [options]="{
+              templates: {
+                value: valueTemplate
+              },
+              search: {
+                field: 'code',
+                params: searchParams,
+                limit: 5
+              }}" [api]="billingEntityService" (selected)="onBillingEntity($event)">
+            </oa-autocomplete> -->
+            <!-- <bap-billing-entity-picker [autocompleteOptions]="{
+              templates: {
+                value: valueTemplate
+              },
+              search: {
+                field: 'code',
+                params: searchParams,
+                limit: 5
+              }}" [value]="properties?.payingBillingEntity" (changed)="onBillingEntityChange($event)">
+            </bap-billing-entity-picker> -->
+          </div>
+          <div>
+            GST :{{properties?.payingBillingEntity.gst}}
+          </div>
+        </div>
+      </div>
+      <div>
+        <div>
+          <label>Payment Mode:</label> {{properties?.mode|uppercase}}
+        </div>
+        <!-- <div>
+          <div><label>Bank Acc No. : </label>{{properties?.bankDetail.account}}</div>
+          <div><label>IFSC Code:</label>{{properties?.bankDetail.ifscCode}}</div>
+        </div>
+        <div>
+          <label>Receiving Organization:</label>
+        </div>
+        <div>
+          <div>
+            {{properties?.receivingOrganization.name}}
+          </div>
+          <div>
+            GST :{{properties?.receivingBillingEntity.gst}}
+          </div>
+        </div> -->
+      </div>
+      <div>
+        <div>
+          <label>Invoices:</label> {{properties?.invoices?.length||"0"}}
+        </div>
+        <div>
+          <label>Unsettled Amount:</label> {{properties?.amount||"0"}}
+        </div>
+      </div>
+      <div>
+        <div class="total-container {{properties?.status}}">
+          <div>TDS: <span>{{properties?.tds}}</span> <span class="spacer"></span></div>
+          <div>
+            <label class="amount">Total Amount</label>
+
+            <oa-value-editor [view]="'inline'" [readonly]='true' [decimal]="2" [type]="'currency'" [value]="{
+          value: properties?.amount,
+          unit: {
+            code: properties?.currency?.code
+          }
+      }"></oa-value-editor>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngSwitchDefault>
+    <ng-container *ngIf="properties">
+      <div class="flex-row four">
+        <div>
+          <div>
+            <label>Payment Date:</label> {{properties.date | date: 'dd-MM-yyyy'}}
+          </div>
+          <div>
+            <label for="vendor">Vendor:</label> <span name="vendor" class="code active pointer"
+              (click)="openVendorDialog(properties.receivingOrganization.code)">{{properties.receivingOrganization.name}}</span>
+          </div>
+          <div>
+            <label for="gst"> GST :</label>{{properties.receivingBillingEntity.gst}}
+          </div>
+
+
+          <!-- <div>
+            <label>Paying Organization:</label>
+          </div>
+          <div>
+            <div>
+              {{properties.payingOrganization.name}}
+            </div>
+            <div>
+              GST :{{properties.payingBillingEntity.gst}}
+            </div>
+          </div> -->
+        </div>
+        <div>
+          <div>
+            <label>Payment Mode:</label> {{properties.mode}}
+          </div>
+          <div>
+            <label for="">UTR No.:</label> {{properties.transactionId}}
+          </div>
+          <div>
+            <div><label>Bank Acc No. : </label>{{properties.bankDetail.account}}</div>
+            <div><label>IFSC Code:</label>{{properties.bankDetail.ifscCode}}</div>
+          </div>
+
+        </div>
+        <div>
+          <div>
+            <label for="customer">Customer:</label> <span class="code active pointer"
+              (click)="openCustomerDialog(properties.meta.order?.customer?.code)">{{properties.meta.order?.customer?.name}}</span>
+          </div>
+          <div class="d-flex">
+            <label>Invoices:</label>
+            <div *ngIf="properties.invoices.length">
+              <div *ngFor="let invoice of properties.invoices">
+                <span class="code pointer active" (click)="gotoInvoice(invoice.invoice)">
+                  {{invoice.invoice.code|uppercase}}
+                </span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div>
+          <div class="total-container {{properties.status}}">
+            <div class="text-left"><span><label>TDS:</label>{{properties?.tds}}</span><span class="spacer"></span></div>
+            <div>
+              <label class="amount">Total Amount</label>
+
+              <oa-value-editor [view]="'inline'" [readonly]='true' [decimal]="2" [type]="'currency'" [value]="{
+            value: properties.amount,
+            unit: {
+              code: properties?.currency?.code
+            }
+        }"></oa-value-editor>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+</ng-container>

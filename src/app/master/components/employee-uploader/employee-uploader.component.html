@@ -1,0 +1,12 @@
+<div class="image">
+  <img src="../../../../assets/icons/actions/upload.png">
+</div>
+<h5>Employee Uploader</h5>
+<div mat-dialog-content>
+  <shared-file-uploader [uploader]="uploader" [samples]="samples" #fileUploader></shared-file-uploader>
+</div>
+<div mat-dialog-actions class="buttons">
+  <span class="spacer"></span>
+  <button mat-button class="btnUpld" (click)="onCancel()">Cancel</button>
+  <button mat-raised-button class="btnUpld" color="primary" (click)="onUpload()">Upload</button>
+</div>

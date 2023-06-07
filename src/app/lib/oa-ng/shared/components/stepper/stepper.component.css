@@ -1,0 +1,149 @@
+:host {
+    display: block;
+    margin-top: auto;
+    margin-bottom: auto;
+    flex-grow: 1;
+  }
+  
+  .states>* {
+    min-width: 100px;
+    padding: 3px 10px;
+    text-align: center;
+    /* margin-top: 10px; */
+  }
+  
+  .states:first-child {
+    border-right: none;
+  }
+  
+  .step .index {
+    height: 29px;
+    width: 29px;
+    border-radius: 50%;
+    text-align: center;
+    margin-left: -12px;
+    margin-right: 5px;
+    padding-top: 3px;
+    
+  }
+  
+  .time-left {
+    position: absolute;
+    top: 40px;
+    color: var(--disabled);
+    font-size: smaller;
+    text-transform: lowercase;
+  }
+  
+  .state-details {
+    position: absolute;
+    min-height: 100px;
+    max-width: 400px;
+    border-radius: 5px;
+    top: 30px;
+    z-index: 999;
+    min-width: 200px;
+    padding: 10px;
+    background: white;
+    border-radius: 2px;
+    color: initial;
+  }
+  
+  .time-left.overdue,
+  .label.overdue {
+    color: red
+  }
+  
+  .origin {
+    background: var(--primaryBackground);
+    color: #8D8D8D;
+    border: 1px solid var(--primary);
+  }
+  
+  .destination {
+    background: var(--accentBackground);
+    color: #8D8D8D;
+    border: 1px solid var(--primary);
+  }
+  
+  .pending {
+    color: #8D8D8D !important;
+    background: #fff;
+    border: 1px solid var(--primary);
+  }
+  
+  .stepper {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .circle {
+    border-radius: 50%;
+    margin-left: 0;
+    height: 30px;
+    width: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .square {
+    text-transform: capitalize;
+    height: 30px;
+    border-radius: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .stepper .hr-line {
+    margin-top: auto;
+    margin-bottom: auto;
+    border-top: 1px dotted var(--defaultBackdrop);
+    margin-left: 0;
+  }
+  
+  .stepper .hr-line:first-child {
+    border: none;
+  }
+  
+  .stepper .hr-line:last-child {
+    border: none;
+  }
+  
+  .status {
+    color: #8D8D8D;
+    text-transform: capitalize;
+    margin-top: 6px;
+  }
+  
+  .step {
+    text-transform: capitalize;
+    height: 38px;
+    margin-left: 0;
+    border-radius: 20px;
+    padding: 16px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    /* box-shadow: 5px 3px 5px lightgray; */
+  }
+  
+  @media only screen and (max-width:568px) {
+    .time-left{
+      top:69px;
+    }
+  
+    .stepper{
+      padding:5x 0 10px 0;
+    }
+  }
+  

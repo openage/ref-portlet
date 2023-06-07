@@ -1,0 +1,13 @@
+.dialogHeader {
+    text-transform: capitalize;
+    color: #404040;
+    font-size: 16px;
+    margin-top: -6px;
+}
+
+.material-icons {
+    cursor: pointer;
+    font-size: 16px;
+    color: #c7c7c7;
+    margin-top: -4px;
+}

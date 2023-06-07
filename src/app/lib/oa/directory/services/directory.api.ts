@@ -1,0 +1,16 @@
+import { HttpClient } from '@angular/common/http';
+import { UxService } from 'src/app/core/services';
+import { GenericApi } from 'src/app/lib/oa/core/services';
+import { environment } from 'src/environments/environment';
+import { RoleService } from '../../core/services';
+
+export class DirectoryApi<TModel> extends GenericApi<TModel> {
+  constructor(
+    collection: string,
+    http: HttpClient,
+    auth: RoleService,
+    uxService: UxService
+  ) {
+    super(http, 'directory', { collection, auth, errorHandler: uxService });
+  }
+}

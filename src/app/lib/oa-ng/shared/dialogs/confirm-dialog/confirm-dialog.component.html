@@ -1,0 +1,33 @@
+<div mat-dialog-title class="controls-row">
+  <h4>{{title}}</h4>
+  <span class="spacer"></span>
+  <button *ngIf="!options.hide.cancel" mat-icon-button mat-dialog-close class="close-icon" (click)="onCancel()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<div mat-dialog-content>
+  <div class="{{msgClass}} maxidth" [innerHTML]="message"></div>
+  <div class="errors list" *ngIf="displayErrors && displayErrors.length">
+    <div class="list-item" *ngFor="let item of displayErrors">
+      <ng-container>{{item.code ? item.title || item.description :item}}</ng-container>
+    </div>
+  </div>
+  <!-- TODO
+     <core-page-divs *ngIf="options.stats" [divs]="options.stats.divs" [areaCode]="options.stats.areaCode" [entity]="options.stats.entity" (selected)="onStatSelect($event)">
+  </core-page-divs> -->
+</div>
+
+<div mat-dialog-actions class="footer">
+  <span class="spacer"></span>
+  <ng-container *ngIf="options.actions &&  options.actions.length">
+    <oa-action *ngFor="let item of options.actions" [item]="item" (selected)="dialogRef.close(true)"></oa-action>
+  </ng-container>
+  <button *ngIf="!options.hide.cancel" mat-stroked-button (click)="dialogRef.close(false)">{{cancelTitle}}</button>
+  <ng-container *ngIf="!options.hide.confirm">
+    <button *ngIf="confirmColor === 'primary'" mat-raised-button color="primary"
+      (click)="dialogRef.close(true)">{{confirmTitle}}</button>
+    <button *ngIf="confirmColor === 'warn'" mat-raised-button color="warn"
+      (click)="dialogRef.close(true)">{{confirmTitle}}</button>
+  </ng-container>
+</div>

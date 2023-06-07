@@ -1,0 +1,36 @@
+<div mat-dialog-title class="controls-row">
+  <h4><span *ngIf="!indexNumber">Add</span><span *ngIf="indexNumber">Edit</span> Bank Detail</h4>
+  <span class="spacer"></span>
+  <button mat-icon-button mat-dialog-close class="close-icon" (click)="dialogRef.close()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<div mat-dialog-content class="bankDetailList">
+  <ng-container [ngSwitch]="view">
+    <ng-container *ngSwitchCase="'list'">
+      <bap-bank-detail-list [items]="bankDetails" [selectedBankDetail]="selectedBankDetail"
+        (edit)="addNewBankDetail($event)" (select)="onSelect($event)" class="mr-2"></bap-bank-detail-list>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'edit'">
+      <bap-bank-details [newBank]="newBank" (changed)="newBank = $event" [view]="'edit'"></bap-bank-details>
+      <div class="ml-3">
+        <mat-checkbox [checked]="newBank.updateEntity" *ngIf="paymentView" [disabled]="readonly"
+          [(ngModel)]="newBank.updateEntity" color="primary"> Add To
+          Master
+        </mat-checkbox>
+      </div>
+    </ng-container>
+
+  </ng-container>
+</div>
+
+<div mat-dialog-actions class="buttons controls-row pt-3">
+  <button mat-raised-button color="primary" *ngIf="view === 'list'" [disabled]="readonly"
+    (click)="addNewBankDetail()">Add
+    Bank</button>
+  <span class="spacer"></span>
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-raised-button color="primary" [disabled]="readonly" (click)="saveNew()">{{successLabel}}</button>
+</div>

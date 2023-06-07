@@ -1,0 +1,148 @@
+.spacing {
+  margin-right: 5px;
+}
+
+td.mat-cell.centered-text,
+th.mat-header-cell.centered-text {
+  text-align: center !important;
+  min-width: 120px;
+}
+
+.action-button {
+  justify-content: flex-end !important;
+}
+
+
+
+table {
+  width: 100%;
+}
+
+tr.example-detail-row {
+  height: max-content;
+  overflow-x: auto;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: #efefef;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
+.example-element-detail {
+  min-height: 60px;
+  display: flex;
+}
+
+.example-element-detail>button {
+  line-height: initial;
+  margin-left: 5px;
+  margin-top: auto;
+  margin-bottom: auto;
+  /* height: inherit; */
+  border-radius: 5px;
+  height: 30px;
+}
+
+
+
+
+.example-element-diagram {
+  min-width: 80px;
+  border: 2px solid black;
+  padding: 8px;
+  font-weight: lighter;
+  margin: 8px 0;
+  height: 104px;
+}
+
+.example-element-symbol {
+  font-weight: bold;
+  font-size: 40px;
+  line-height: normal;
+}
+
+.example-element-description {
+  padding: 16px;
+}
+
+.list-sub-text {
+  font-size: 12px !important;
+}
+
+.header {
+  background-color: var(--defaultBackground)
+}
+
+.no {
+  width: 21%
+}
+
+.date {
+  width: 17%
+}
+
+.amount {
+  width: 20%
+}
+
+.action {
+  width: 12%
+}
+
+.status {
+  width: 10%
+}
+
+.selected {
+  background: #efefef;
+}
+
+td.mat-cell:first-of-type,
+td.mat-footer-cell:first-of-type {
+  padding-left: 0px;
+  padding-right: 10px;
+}
+
+th.mat-header-cell:first-of-type,
+td.mat-cell:first-of-type,
+td.mat-footer-cell:first-of-type {
+  padding-left: 0px;
+  padding-right: 10px;
+}
+
+.header {
+  background-color: #fff !important;
+}
+
+.titlediv {
+  background: var(--defaultBackground);
+  padding: 5px 5px;
+  border-bottom: 1px solid var(--defaultBackground);
+  padding-bottom: 3px;
+}
+
+.titleName {
+  font-weight: 600;
+  /* color: var(--disabled); */
+  /* margin-bottom: 10px; */
+}
+
+.titleName span {
+  display: block;
+  border-bottom: 1px solid #ebebeb;
+  font-weight: bold;
+  font-size: 13px;
+  color: #919191;
+  margin-top: 15px;
+}
+
+.srp-enquiry .header {
+  background-color: var(--defaultBackground) !important;
+}

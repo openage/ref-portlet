@@ -1,0 +1,216 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+
+<ng-container [ngSwitch]="view">
+  <ng-container *ngSwitchCase="'list-item'">
+    <ng-container *ngTemplateOutlet="listItem;"> </ng-container>
+  </ng-container>
+  <ng-container *ngSwitchCase="'row'">
+    <ng-container *ngTemplateOutlet="row;"> </ng-container>
+  </ng-container>
+  <ng-container *ngSwitchCase="'expanded'">
+    <ng-container *ngTemplateOutlet="expanded;"> </ng-container>
+  </ng-container>
+  <ng-container *ngSwitchCase="'markdown'">
+    <ng-container *ngTemplateOutlet="markdown;"> </ng-container>
+  </ng-container>
+  <ng-container *ngSwitchCase="'attributes'">
+    <ng-container *ngTemplateOutlet="attributes;"> </ng-container>
+  </ng-container>
+</ng-container>
+
+<ng-template #listItem>
+  <div class="list-item">
+    <oa-input #inputText [preFix]="typeToggler" [options]="{ placeholder: placeholder, trigger: 'finish', changed: 'reset'}" (changed)="onCreate($event)">
+    </oa-input>
+  </div>
+</ng-template>
+
+<ng-template #row>
+  <div class="flex-row">
+    <oa-input #inputText [options]="{ inline: true, placeholder: placeholder, trigger: 'finish', changed: 'reset'}" (changed)="onCreate($event)">
+    </oa-input>
+  </div>
+  <div class="footer">
+    <oa-icon-toggler view="icon" [value]="type" [items]="types" (changed)="onSelectType($event)">
+    </oa-icon-toggler>
+
+    <oa-autocomplete [value]="sprint" [options]="{
+      search: {
+        items: sprints
+      }
+    }" (changed)="onSelectSprint($event)">
+    </oa-autocomplete>
+
+    <span class="spacer"></span>
+    <directory-user-picker view="avatar" [value]="assignee" (changed)="onSelectAssignee($event)">
+    </directory-user-picker>
+
+    <oa-date-picker view="icon" [value]="dueDate" (changed)="onSelectDueDate($event)"></oa-date-picker>
+
+    <oa-icon-toggler view="icon" [value]="priority" (changed)="onSelectPriority($event)" type="priority">
+    </oa-icon-toggler>
+
+    <button mat-raised-button (click)="createClicked()">Add</button>
+  </div>
+</ng-template>
+
+<ng-template #expanded>
+  <div class="section">
+    <div class="header">
+      <oa-icon-toggler view="icon" [value]="task.type" [items]="types" (changed)="onSelectType($event); task.type=$event">
+      </oa-icon-toggler>
+      <oa-input [value]="task.subject" [placeholder]="placeholder" [options]="{ inline: true, trigger: 'finish'}" (changed)="task.subject = $event">
+      </oa-input>
+    </div>
+    <div *ngIf="templates?.editor?.meta?.fields.length">
+      <oa-object-editor [definition]="templates.editor.meta" [value]="properties" (changed)="onMetaUpdate($event)">
+      </oa-object-editor>
+    </div>
+
+    <oa-input type="html" [value]="task.description" (changed)="task.description = $event">
+    </oa-input>
+  </div>
+
+  <!-- <div class="flex-row two">
+    <div>
+      <label class="font">Title*</label>
+      <div class="oa-input">
+        <input [(ngModel)]="task.subject">
+      </div>
+    </div>
+
+    <div>
+      <gateway-workflow-list [label]="'Type'" [value]="{code: type}" (changed)="onSetWorkflow($event)">
+      </gateway-workflow-list>
+    </div>
+
+
+    <div>
+      <label>Start Date</label>
+      <oa-date-picker [value]="task.plan.start" [minDate]="today" (change)="onSetStartDate($event)">
+      </oa-date-picker>
+    </div>
+
+    <div>
+      <label>Due Date</label>
+      <oa-date-picker [disabled]="!task.plan.start" [minDate]="task.plan.start" [value]="task.plan.finish"
+        (change)="onSetFinishDate($event)">
+      </oa-date-picker>
+    </div>
+
+    <div>
+      <directory-employee-picker [label]="'Assign To*'" (changed)="onSetAssignee($event)">
+      </directory-employee-picker>
+    </div>
+  </div>
+
+  <div>
+    <label>Description</label>
+    <div class="oa-textarea">
+      <textarea [(ngModel)]="task.description"></textarea>
+    </div>
+  </div>
+
+  <div>
+    <label class="upload">Upload Documents</label>
+    <div class="fileSection">
+      <div class="removePad" *ngIf="fileList && fileList.length">
+        <div *ngFor="let file of fileList; let i = index">{{file.name}}
+          <div class="icon">
+            <span class="fa fa-times-circle" aria-hidden="true" (click)="removeFile(i)">
+            </span>
+          </div>
+          <hr>
+        </div>
+      </div>
+      <div class="filePad">
+        <oa-icon-file-picker [view]="'layout'" (change)="addFiles($event)">
+          <div class="controls-row">
+            <div>
+              <span class="material-icons addIcon">
+                add_circle
+              </span>
+            </div>
+            <div class="chooseText">Choose file</div>
+          </div>
+        </oa-icon-file-picker>
+      </div>
+    </div>
+  </div> -->
+</ng-template>
+
+<ng-template #attributes class="attributes">
+  <div>
+    <label>Assignee</label>
+    <directory-user-picker placeholder="" [value]="task.assignee" (changed)="onSelectAssignee($event)">
+    </directory-user-picker>
+  </div>
+  <div>
+    <label>Priority</label>
+    <oa-icon-toggler view="select" type="priority" [items]="priorities" [value]="task.priority" (changed)="task.priority = $event">
+    </oa-icon-toggler>
+  </div>
+
+  <div>
+    <label>Points</label>
+    <oa-icon-toggler view="select" type="points" [items]="points" [value]="task.points" (changed)="task.points=$event">
+    </oa-icon-toggler>
+  </div>
+
+  <div>
+    <div class="controls-row">
+      <label>Estimate</label>
+      <span class="spacer"></span>
+      <div *ngIf="task.burnt" class="sub-text">consumed: {{task.burnt*60 |time: 'clockWiseShort'}}</div>
+    </div>
+    <oa-value-editor [value]="{
+      value: task.size || 0,
+      unit: { code: 'min' }
+    }" type="span" (changed)="onSizeChanged($event)"></oa-value-editor>
+  </div>
+
+  <div class="oa-input-group">
+    <label>Due Date</label>
+    <oa-date-picker view="date" [value]="task?.plan?.finish" (change)="onDueDateChange($event)">
+    </oa-date-picker>
+  </div>
+
+  <div>
+    <label>Sprint</label>
+    <gateway-sprint-list [value]="task.sprint" [items]="sprints" (changed)="task.sprint=$event">
+    </gateway-sprint-list>
+  </div>
+
+  <div>
+    <gateway-task-picker [label]="'Parent'" [value]="task.parent" (changed)="task.parent=$event">
+    </gateway-task-picker>
+  </div>
+
+  <div>
+    <gateway-category-picker [label]="'Category'" [searchField]="'text'" [params]="{
+      'project-id': (task.project && task.project.id) ? task.project.id: null
+    }" [value]="task.category" (changed)="task.category=$event">
+    </gateway-category-picker>
+  </div>
+
+  <div>
+    <label>Tags</label>
+    <oa-tags [values]="task.tags" (changed)="task.tags = $event"></oa-tags>
+  </div>
+
+  <hr class="divider">
+  <div>
+    <label>Owner</label>
+    <directory-user-picker placeholder="" [value]="task.owner" (changed)="task.owner=$event">
+    </directory-user-picker>
+  </div>
+</ng-template>
+
+<ng-template #markdown>
+  <div>
+    <label for="remarks">Content</label>
+    <div class="oa-textarea">
+      <textarea [id]="'remarks'" rows="4" [(ngModel)]="task.description" (change)="convertToJson($event)"></textarea>
+    </div>
+  </div>
+</ng-template>

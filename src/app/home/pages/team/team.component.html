@@ -1,0 +1,5 @@
+<div class="main" [class.hidden]="!isCurrent">
+  <directory-role-list #list [columns]="['name','email','phone','roleType']" (selected)="onSelect($event)"
+    [supervisor]="'my'" [text]="selectedText" [view]="'table'">
+  </directory-role-list>
+</div>

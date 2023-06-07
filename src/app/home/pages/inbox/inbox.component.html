@@ -1,0 +1,7 @@
+<div class="main" [class.hidden]="!isCurrent">
+  <oa-tabs-search [options]="page?.meta?.search"></oa-tabs-search>
+  <send-it-inbox view="card" [fromDate]="fromDate" [toDate]="toDate" [selectedSubject]="selectedSubject"
+    [category]="selectedCategory" [isAutoRefresh]="unreadOnly" (selected)="onSelect($event)">
+  </send-it-inbox>
+</div>
+<router-outlet></router-outlet>

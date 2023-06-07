@@ -1,0 +1,390 @@
+:host {
+  display: block;
+}
+
+.active-link {
+  background: var(--accent);
+  color: white;
+}
+
+.fab-link {
+  background: white;
+  text-align: center;
+  height: 110px;
+  width: 110px;
+  margin: 0px auto 10px auto;
+  border-radius: 5px;
+  padding-top: 25px;
+  box-shadow: 0 0px 7px -6px rgba(0, 0, 0, .2),
+    0 1px 3px 0 rgba(0, 0, 0, .14),
+    0 1px 5px 0 rgba(0, 0, 0, .12);
+  cursor: pointer;
+}
+
+.fab-link>a {
+  text-decoration: none;
+}
+
+.fab-link h5 {
+  font-size: 11px;
+  padding-left: 8px;
+  padding-right: 8px;
+  color: var(--primary);
+}
+
+.fab-link i,
+.fab-link mat-icon,
+.fab-link img {
+  margin-left: auto;
+  display: table;
+  margin-right: auto;
+  color: var(--primary);
+}
+
+.fab-link:hover {
+  background: var(--primary);
+}
+
+.fab-link:hover i {
+  color: var(--disabled);
+}
+
+.fab-link:hover h5 {
+  color: white;
+}
+
+.fab-link .active,
+.fab-link:hover .hover {
+  display: table;
+}
+
+.fab-link .hover,
+.fab-link:hover .active {
+  display: none;
+}
+
+.fab-link-large {
+  background: white;
+  text-align: center;
+  height: 220px;
+  width: 220px;
+  margin: 0px auto 50px auto;
+  border-radius: 5px;
+  padding-top: 25px;
+  box-shadow: 0 0px 7px -6px rgba(0, 0, 0, .2),
+    0 1px 3px 0 rgba(0, 0, 0, .14),
+    0 1px 5px 0 rgba(0, 0, 0, .12);
+  cursor: pointer;
+}
+
+.fab-link-large>a {
+  text-decoration: none;
+}
+
+.fab-link-large h5 {
+  font-size: 14px;
+  padding-left: 8px;
+  padding-right: 8px;
+  color: var(--primary);
+}
+
+.fab-link-large i,
+.fab-link-large mat-icon,
+.fab-link-large img {
+  margin-left: auto;
+  display: table;
+  margin-right: auto;
+  color: var(--primary);
+}
+
+.fab-link-large:hover {
+  background: var(--primary);
+}
+
+.fab-link-large:hover i {
+  color: var(--disabled);
+}
+
+.fab-link-large:hover h5 {
+  color: white;
+}
+
+.fab-link-large .active,
+.fab-link-large:hover .hover {
+  display: table;
+}
+
+.fab-link-large .hover,
+.fab-link-large:hover .active {
+  display: none;
+}
+
+.fabIconRow-link {
+  border-radius: 5px;
+  margin-left: 10px;
+  z-index: 10;
+  box-shadow: 0 0px 0px -6px rgb(0 0 0 / 20%), 0 1px 3px 0 rgb(0 0 0 / 14%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+  background: white;
+  text-align: center;
+  height: 50px;
+  width: auto;
+  padding-top: 10px;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.fabIconRow-link>a {
+  text-decoration: none;
+}
+
+.fabIconRow-link i,
+.fabIconRow-link mat-icon,
+.fabIconRow-link img {
+  margin-left: auto;
+  /* display: table; */
+  margin-right: auto;
+  color: var(--primary);
+}
+
+.fabIconRow-link .hover,
+.fabIconRow-link .active {
+  display: table;
+}
+
+.fabIconLinkTitle {
+  cursor: pointer;
+  padding-top: 5px;
+  padding-left: 15px;
+}
+
+.fabRow {
+  background: white;
+  border-radius: 5px;
+  z-index: 10;
+  box-shadow: 0 0px 7px -6px rgba(0, 0, 0, .2),
+    0 1px 3px 0 rgba(0, 0, 0, .14),
+    0 1px 5px 0 rgba(0, 0, 0, .12);
+}
+
+.fabRowBox {
+  background: white;
+  border-radius: 2px;
+  z-index: 10;
+  box-shadow: 0 0px 7px -6px rgba(0, 0, 0, .2),
+    0 1px 3px 0 rgba(0, 0, 0, .14),
+    0 1px 5px 0 rgba(0, 0, 0, .12);
+}
+
+.fabRow div {
+  border-right: 1px solid var(--defaultBackground);
+  border-radius: 5px;
+}
+
+.fabRow div:last-child {
+  border-right: none;
+}
+
+.fabRow-link {
+  background: white;
+  text-align: center;
+  height: 110px;
+  width: 110px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 25px;
+  cursor: pointer;
+}
+
+.fabRow-link>a {
+  text-decoration: none;
+}
+
+.fabRow-link h5 {
+  font-size: 12px;
+  padding-left: 8px;
+  padding-right: 8px;
+  color: var(--primary);
+}
+
+.fabRow-link i,
+.fabRow-link mat-icon,
+.fabRow-link img {
+  margin-left: auto;
+  display: table;
+  margin-right: auto;
+  color: var(--primary);
+}
+
+.fabRow-link:hover {
+  background: var(--primary);
+}
+
+.fabRow-link:hover i {
+  color: var(--disabled);
+}
+
+.fabRow-link:hover h5 {
+  color: white;
+}
+
+.fabRow-link .active,
+.fabRow-link:hover .hover {
+  display: table;
+}
+
+.fabRow-link .hover,
+.fabRow-link:hover .active {
+  display: none;
+}
+
+
+.fabRow-box {
+  background: white;
+  text-align: center;
+  height: 100px;
+  width: 180px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 25px;
+  cursor: pointer;
+}
+
+.fabRow-box>a {
+  text-decoration: none;
+}
+
+.fabRow-box h5 {
+  font-size: 12px;
+  padding-left: 8px;
+  padding-right: 8px;
+  color: var(--primary);
+}
+
+.fabRow-box i,
+.fabRow-box mat-icon,
+.fabRow-box img {
+  margin-left: auto;
+  display: table;
+  margin-right: auto;
+  color: var(--primary);
+}
+
+.fabRow-box:hover {
+  background: var(--primary);
+}
+
+.fabRow-box:hover i {
+  color: var(--disabled);
+}
+
+.fabRow-box:hover h5 {
+  color: white;
+}
+
+.fabRow-box .active,
+.fabRow-box:hover .hover {
+  display: table;
+}
+
+.fabRow-box .hover,
+.fabRow-box:hover .active {
+  display: none;
+}
+
+.list-view {
+  margin-left: -15px !important;
+}
+
+.active {
+  color: var(--primary);
+}
+
+.default,
+.not-started,
+.completed {
+  color: var(--disabled)
+}
+
+.current {
+  color: var(--accent);
+}
+
+.overdue {
+  color: var(--primary);
+}
+
+@media only screen and (max-width:568px) {
+  .fabRow.controls-row {
+    flex-wrap: wrap;
+  }
+
+  .fabRow>div {
+    border-right: 0px;
+    width: 30.3%;
+    height: auto;
+    margin: 4px;
+  }
+
+  .fabRow>div div {
+    box-shadow: 0 0px 7px -6px rgb(0 0 0 / 20%), 0 1px 3px 0 rgb(0 0 0 / 14%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+    width: 100%;
+  }
+
+  .fabRow {
+    background-color: transparent;
+    box-shadow: none;
+  }
+
+  .fabIconLinkTitle {
+    display: none;
+  }
+
+  .fabIconRow-link {
+    margin-left: 4px;
+  }
+
+  .fabIconRow-link {
+    padding: 8px;
+    padding-top: 8px;
+    height: 46px;
+  }
+
+  .eight {
+    margin: 0 3px 0 -3px;
+  }
+
+  .eight>div {
+    width: 30.3%;
+    height: auto;
+    margin: 4px;
+  }
+
+  .eight .fab-link {
+    width: 100%;
+    height: 90px;
+    padding-top: 15px;
+  }
+
+  .fabRowBox {
+    width: 46%;
+    margin: 5px;
+  }
+
+  .fabRow-box {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width:320px) {
+  .fabIconRow-link {
+    padding: 4px !important;
+    padding-top: 4px !important;
+    height: 40px !important;
+  }
+}
+
+@media only screen and (min-width:768px) and (max-width:1023px) {
+  .fabRow-box {
+    width: 156px;
+  }
+}

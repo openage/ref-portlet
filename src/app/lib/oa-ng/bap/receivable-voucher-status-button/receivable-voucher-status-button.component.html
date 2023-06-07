@@ -1,0 +1,16 @@
+<ng-container *ngIf="(voucher?.voucherCode && voucher?.status)">
+  <ng-container *ngIf="auth.hasPermission(voucher?.permissions || ['system.manage']); else default">
+    <div class="d-flex justify-content-center">
+      <ng-container [ngSwitch]="voucher.status.toLowerCase()">
+        <button mat-raised-button *ngSwitchCase="'new'" class="voucherButton accept"
+          (click)="onClick('accepted')">Accept</button>
+        <button mat-raised-button *ngSwitchCase="'accepted'" class="voucherButton paid"
+          (click)="onClick('paid')">Paid</button>
+        <div *ngSwitchDefault>{{voucher.status}}</div>
+      </ng-container>
+    </div>
+  </ng-container>
+  <ng-template #default>
+    {{voucher.status}}
+  </ng-template>
+</ng-container>

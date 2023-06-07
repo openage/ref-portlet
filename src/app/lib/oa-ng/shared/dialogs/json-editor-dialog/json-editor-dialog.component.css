@@ -1,0 +1,12 @@
+.dialogContent {
+    max-height: 250px;
+    overflow: auto;
+}
+
+.buttons {
+    margin-top: 15px;
+}
+
+.marginRight {
+    margin-right: 15px !important;
+}

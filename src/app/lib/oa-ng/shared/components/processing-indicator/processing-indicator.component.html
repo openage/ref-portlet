@@ -1,0 +1,100 @@
+<ng-container [ngSwitch]="type">
+  <div *ngSwitchCase="'cover-bars'" class="cover">
+    <div class="outer">
+      <div class="middle">
+        <!-- <div class="inner"> -->
+        <div class="lds-facebook">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+      <!-- </div> -->
+    </div>
+  </div>
+
+  <div *ngSwitchCase="'inline-spinner'" class="inline">
+    <div class="outer">
+      <div class="middle">
+        <mat-spinner></mat-spinner>
+      </div>
+    </div>
+  </div>
+
+  <div *ngSwitchCase="'inline-spinball'" class="inline">
+    <div class="middleallign">
+      <!-- <div class="middleallign"> -->
+      <div class="lds-ellipsis">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <!-- </div> -->
+    </div>
+  </div>
+
+  <mat-spinner *ngSwitchCase="'cover-spinner'" [diameter]="diameter"></mat-spinner>
+
+
+  <div class="cover" *ngSwitchCase="'cover-progress-bar'">
+    <div class="outer">
+      <div class="middle">
+        <mat-progress-bar class="cover-progress-bar" *ngIf="!progressError" [color]="'primary'" [mode]="progressBarMode"
+          [value]="progressBarvalue" [bufferValue]="progressBarBufferValue">
+        </mat-progress-bar>
+        <div *ngIf="!progressError" class="controls-row">
+          <div class="spacer"></div>
+          <div>{{progressBarvalue}}%</div>
+          <div class="spacer"></div>
+        </div>
+        <div *ngIf="progressError" class="controls-row">
+          <div class="spacer"></div>
+          <div>System got stuck at {{progressBarvalue}}%. Please contact to the tech team </div>
+          <div class="spacer"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cover cover-stepper" *ngSwitchCase="'cover-stepper'">
+    <div class="controls-row stepper">
+      <ng-container *ngFor="let item of steps; let i=index;">
+        <div class="hr-line {{item.status}} spacer "></div>
+
+        <div class="circle styled {{item.style || 'default'}} {{item.status}}"
+          [class.done]="item.status === 'completed'" [class.not-started]="item.status !== 'completed'">
+          <span *ngIf="item.status !== 'completed'">{{i+1}}</span>
+          <mat-icon *ngIf="item.status === 'completed'" color="primary">check</mat-icon>
+          <div class="text {{item.status}}">{{item.label}}</div>
+        </div>
+
+        <div class="hr-line {{item.rightBar?item.status:'default'}} spacer"></div>
+      </ng-container>
+    </div>
+  </div>
+
+  <div *ngSwitchCase="'cover-spinner-withBackground'" class="spinner-background">
+    <mat-spinner class="background" mode="determinate" value="100" [diameter]="diameter" [color]="'grey'">
+    </mat-spinner>
+    <mat-spinner [value]="progressBarvalue" [diameter]="diameter" mode="determinate"></mat-spinner>
+  </div>
+
+  <div *ngSwitchCase="'inline-progress-bar'">
+    <div *ngIf="progressBarMode === 'determinate'" class="controls-row">
+      <div class="spacer"></div>
+      <div>{{(progressBarvalue || 0) | value: 'integer'}}%</div>
+    </div>
+    <mat-progress-bar class="inline-progress-bar" [value]="progressBarvalue" [color]="'primary'"
+      [mode]="progressBarMode">
+    </mat-progress-bar>
+  </div>
+
+
+  <div *ngSwitchCase="'inline-download-indicator'">
+    <div class="download">
+      <mat-icon class="md download-icon" color="primary">arrow_downward</mat-icon>
+    </div>
+  </div>
+
+</ng-container>

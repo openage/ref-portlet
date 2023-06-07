@@ -1,0 +1,66 @@
+h5 {
+  font-size: 16px;
+  color: #505050;
+}
+
+.matCenter {
+  text-align: -webkit-center;
+}
+
+.addIcon {
+  width: 24px;
+  height: 24px;
+}
+
+.mat-icon {
+  background-repeat: no-repeat;
+  display: inline-block;
+  fill: currentColor;
+  height: 25px;
+  width: 144%;
+  padding-top: 61px;
+  padding-left: -15px;
+  padding-right: 60px;
+  font-size: 20px;
+}
+
+mat-form-field {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+.btnDiv {
+  text-align: end;
+}
+
+
+.documentPadding {
+  margin-left: 15px;
+  padding-right: 5px;
+}
+
+
+
+.iconPlus>.material-icons {
+  color: var(--primary);
+  cursor: pointer;
+}
+
+hr {
+  border: 1px dashed #dddddd;
+  margin-bottom: 0px;
+}
+
+.administrativeSection div {
+  margin-bottom: 10px;
+  padding-right: 10px;
+}
+
+.border-0 {
+  border-radius: 0px !important;
+}
+
+.picture-upload {
+  margin-top: -18px;
+}
+

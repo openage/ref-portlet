@@ -1,0 +1,108 @@
+/* .form-field {
+    border-bottom: solid 0px var(--disabled);
+    margin: 0px 5px 10px 5px;
+} */
+
+.con {
+    text-align: center;
+    margin-top: 10px;
+}
+
+mat-form-field {
+    width: 90%;
+}
+
+form {
+    text-align: center;
+}
+
+.recaptcha-div {
+    margin-top: 10px;
+    text-align: -webkit-center;
+}
+
+.err {
+    font-size: 11px;
+}
+
+
+.con1 {
+    text-align: center;
+}
+
+.paddingAccount {
+    margin: 15px 0px;
+    text-align-last: center;
+}
+
+label {
+    font-size: 13px;
+    color: #6A6A6A;
+}
+
+mat-label.error,
+mat-hint.error {
+    color: var(--warn) !important;
+    /* margin-left: 50px; */
+}
+
+.pad {
+    margin-top: 6px;
+    margin-bottom: 0rem;
+    font-size: 11px;
+    color: #8e8a8a;
+}
+
+.padding {
+    margin-top: 6px;
+    margin-bottom: 17px;
+    font-size: 14px;
+    margin-left: 4px;
+    color: #8e8a8a;
+    text-align-last: center;
+}
+
+.txt {
+    color: #544e4e;
+    font-size: 17px;
+}
+
+.paddingAccount {
+    margin: 15px 0px;
+    text-align-last: center;
+}
+
+.paddingLogin {
+    text-align-last: center;
+    margin-top: 18px;
+    font-size: 13px;
+    font-weight: bolder;
+    color: rgba(0, 0, 0, .6);
+}
+
+.paddingLogin> span{
+    color: rgba(0, 0, 0, .6);
+}
+
+.btn-link {
+    color: var(--primary);
+    margin-left: -14px;
+    font-size: 14px;
+}
+
+.btn-link:visited {
+    background-color: transparent;
+    text-decoration: none;
+}
+
+.btn-link:focus {
+    text-decoration: none
+}
+
+.btn-link:hover {
+    text-decoration: underline;
+}
+
+a {
+  color: var(--primary) !important;
+}

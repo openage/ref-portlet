@@ -1,0 +1,48 @@
+<div class="subtle controls-row">
+  <div class="profile-row" [matMenuTriggerFor]="profileMenu">
+    <oa-avatar [value]="currentRole.profile" type="thumbnail"></oa-avatar>
+    <div class="content">
+      <h3>{{currentRole.profile | name}}</h3>
+      <span class="sub-text designation">
+        <span *ngIf="isImpersonateSession">Impersonating as </span>
+        <span>{{currentRole.employee?.designation?.name || currentRole.type.name}}</span>
+      </span>
+    </div>
+    <mat-icon [matMenuTriggerFor]="profileMenu">keyboard_arrow_down</mat-icon>
+
+  </div>
+</div>
+<mat-menu #profileMenu="matMenu" yPosition="below">
+  <div style="text-align: center;padding: 10px;">
+    <core-branding view="logo" [style]="'height:150px; width: 100%;'"></core-branding>
+    <h6 style="margin-bottom: 0;"><b>{{currentRole.profile | name}}</b></h6>
+    <span class="sub-text designation" *ngIf="currentRole.organization">{{currentRole.organization.name}}</span>
+    <span class="sub-text designation" *ngIf="!currentRole.organization">{{currentTenant.name}}</span>
+    <br>
+    <span class="sub-text designation">
+      <span *ngIf="isImpersonateSession">Impersonating as </span>
+      <span>{{currentRole.employee?.designation?.name || currentRole.type.name}}</span>
+    </span>
+    <hr>
+    <button *ngIf="!isImpersonateSession" class="profile-action btn" mat-raised-button (click)="endSession()" class=""
+      color="primary">{{isImpersonateSession?'END IMPERSONATION': 'LOG OUT'}}</button>
+  </div>
+</mat-menu>
+
+<ng-template #roles>
+  <!-- <div class="role-list" *ngIf="currentUser && currentUser.roles && currentUser.roles.length > 1 ">
+      <ng-container *ngFor="let role of currentUser.roles">
+        <div style="text-align: left; cursor: pointer;" class="profile-row" *ngIf="currentRole.id !== role.id"
+          (click)="selectRole(role)">
+          <hr>
+          <oa-avatar [value]="getUrl(role) || role"></oa-avatar>
+          <div class="content">
+            <h6 *ngIf="role.organization"><b>{{role.organization.name}}</b></h6>
+            <h6 *ngIf="!role.organization"><b>{{currentTenant.name}}</b></h6>
+            <span class="sub-text designation">
+              {{role.type.name || '--'}}</span>
+          </div>
+        </div>
+      </ng-container>
+    </div> -->
+</ng-template>

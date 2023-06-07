@@ -1,0 +1,26 @@
+<oa-autocomplete [value]="value.code? value : null" [options]="{
+  label: label,
+  search: {
+    items: items,
+    field: searchField,
+    params: params,
+    limit: 20
+  },
+  templates: {
+    value: valueTemplate
+  }
+}" [api]="api" (changed)="onSelect($event)" [readonly]="readonly">
+</oa-autocomplete>
+
+<ng-template #valueTemplate let-item="value">
+  <div [class.readonly]="readonly" class="value input flex-row">
+    <div *ngIf="item.icon" class="spacing">
+      <oa-icon [value]="item.icon" class="md"></oa-icon>
+    </div>
+    <div class="spacer">{{item.name}}</div>
+  </div>
+</ng-template>
+
+<ng-template #placeholderTemplate>
+  <div>Search</div>
+</ng-template>

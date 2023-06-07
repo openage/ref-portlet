@@ -1,0 +1,65 @@
+<div *ngIf="dataReceiving || !items.length" [ngStyle]="style?.container?.style" [ngClass]="style?.container?.class">
+  <processing-indicator *ngIf="dataReceiving" [inline]="true" [view]="'spinball'"></processing-indicator>
+  <oa-no-data-found *ngIf="!items.length && !dataReceiving" [message]="'No Data Found'"></oa-no-data-found>
+</div>
+<div class="controls-row" *ngIf="clipboard">
+  <div class="headerText" *ngIf="type.config.text"> {{type.config.text}}</div>
+  <div class="spacer"></div>
+  <oa-icon value="copy" (click)="copy()"></oa-icon>
+</div>
+<table *ngIf="!isProcessing && items.length" mat-table [dataSource]="items" [ngStyle]="style?.container?.style"
+  [ngClass]="style?.container?.class">
+  <ng-container *ngFor="let column of fields">
+    <ng-container matColumnDef="{{column.key}}">
+      <th [ngStyle]="column.style?.header?.style || style?.header?.style"
+        [ngClass]="column.style?.header?.class || style?.header?.class" mat-header-cell *matHeaderCellDef
+        matTooltip="{{column.description}}">
+        <div *ngIf="config?.rows &&!column.isHidden" (click)="hideDetails = !hideDetails" class="column-label"
+          [innerHTML]="column.label"></div>
+        <div *ngIf="!config?.rows && !column.isHidden" [innerHTML]="column.label"></div>
+        <div *ngIf="config?.summary && !column.isHidden && config?.summary?.position === 'header'"
+          [ngStyle]="column.style?.summary?.style || style?.summary?.style"
+          [ngClass]="column.style?.summary?.class || style?.summary?.class"> <span *ngIf="column.summary"
+            [class.clickable]="getClickable(column)" (click)="onSummarySelect(column)">{{getSummary(column) |
+            value:'short'}}</span></div>
+      </th>
+      <td [ngStyle]="getColumnStyle(column,item)" [ngClass]="getClass(column,item)" mat-cell *matCellDef="let item">
+        <div class="values" *ngIf="!column.isHidden && !column.template" [class.clickable]="getClickable(column)"
+          (click)="onValueSelect(column, item)" [innerHTML]="getValue(column, item)"></div>
+        <div *ngIf="!column.isHidden && column.template">
+          <ng-container *ngTemplateOutlet="columnTemplate; context: {template:column.template, data: item}">
+          </ng-container>
+        </div>
+      </td>
+      <th [ngStyle]="column.style?.footer?.style || style?.footer?.style"
+        [ngClass]="column.style?.footer?.class || style?.footer?.class" mat-footer-cell *matFooterCellDef>
+        <span *ngIf="column.summary" [class.clickable]="getClickable(column)"
+          (click)="onSummarySelect(column)">{{getSummary(column)}}</span>
+      </th>
+    </ng-container>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="headArray; sticky: true"></tr>
+  <tr [class.hidden]="hideDetails" mat-row *matRowDef="let row; columns: headArray;"></tr>
+  <ng-container *ngIf="config?.summary?.position === 'footer'">
+    <tr mat-footer-row *matFooterRowDef="headArray;"></tr>
+  </ng-container>
+</table>
+
+<hr *ngIf="config?.columns?.columns && config?.columns?.columns.length">
+<div class="flex-row" [ngStyle]="{justifyContent: config?.columns?.justifyFlags || 'space-between' }"
+  *ngIf="config?.columns?.columns && config?.columns?.columns.length">
+  <div *ngFor="let column of config?.columns?.columns">
+    <div *ngIf="column?.style">
+      <div>
+        <div [ngStyle]="{fontWeight:600}">{{column.label || ''}}</div>
+        <div class="flex-row forFlags">
+          <div class="flex-row" *ngFor="let flag of column.style">
+            <div class="condition-flag" [style.backgroundColor]="flag.color"></div>
+            <div>{{flag.value}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

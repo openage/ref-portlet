@@ -1,0 +1,21 @@
+.status {
+    text-align: right;
+}
+
+.top-spacer {
+    margin-top: 15px
+}
+
+.mode {
+    text-transform: capitalize;
+}
+
+.body-container {
+    max-height: 400px;
+    max-width: 600px;
+    border: 1px solid var(--disabledBackground);
+    overflow-y: scroll;
+    margin: 0 auto;
+    padding: 10px;
+    border-radius: 4px;
+}

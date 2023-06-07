@@ -1,0 +1,76 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+<!-- <ng-container *ngIf="properties"> -->
+<div class="flex-row four">
+  <div>
+    <div>
+      <label>Payment Date:</label> {{properties?.date | date: 'dd-MM-yyyy'}}
+    </div>
+    <div>
+      <label for="">Transaction No.:</label> {{properties?.transactionId}}
+    </div>
+    <div>
+      <label>Paying Organization:</label>
+    </div>
+    <div>
+      <div class="">
+        <oa-autocomplete [placeholder]="'Billing Entity'" [options]="{
+                templates: {
+                  value: valueTemplate
+                },
+                search: {
+                  field: 'code',
+                  params: searchParams,
+                  limit: 5
+                }}" [api]="billingService" (selected)="onEntitySelect($event)">
+        </oa-autocomplete>
+      </div>
+      <div>
+        GST :{{properties?.payingBillingEntity.gst}}
+      </div>
+    </div>
+  </div>
+  <div>
+    <div>
+      <label>Payment Mode:</label> {{properties?.mode}}
+    </div>
+    <div>
+      <div><label>Bank Acc No. : </label>{{properties?.bankDetail?.account}}</div>
+      <div><label>IFSC Code:</label>{{properties?.bankDetail?.ifscCode}}</div>
+    </div>
+    <div>
+      <label>Receiving Organization:</label>
+    </div>
+    <div>
+      <div>
+        {{properties?.receivingOrganization?.name}}
+      </div>
+      <div>
+        GST :{{properties?.receivingBillingEntity?.gst}}
+      </div>
+    </div>
+  </div>
+  <div>
+    <div>
+      <label>Invoices:</label> {{properties?.invoices?.length||"0"}}
+    </div>
+    
+  </div>
+  <div>
+    <div class="total-container {{properties?.status}}">
+      <div>
+        <label class="amount">Total Amount</label>
+
+        <oa-value-editor [view]="'inline'" [readonly]='true' [decimal]="2" [type]="'currency'" [value]="{
+            value: properties?.amount,
+            unit: {
+              code: properties?.currency?.code
+            }
+        }"></oa-value-editor>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #valueTemplate let-item="value">
+  <div>{{item?.title}}</div>
+</ng-template>
+<!-- </ng-container> -->

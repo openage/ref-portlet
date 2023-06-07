@@ -1,0 +1,9 @@
+<mat-card *ngIf="value && value.length" class="banner {{class}}">
+  <mat-icon (click)="onClose()" class="close pointer">close</mat-icon>
+  <div *ngFor="let item of value">
+    <div class="warning">
+      <mat-icon>warning</mat-icon>
+      <span>{{item}}</span>
+    </div>
+  </div>
+</mat-card>

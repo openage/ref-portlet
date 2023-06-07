@@ -1,0 +1,20 @@
+<div mat-dialog-header class="header">
+  <h4 mat-dialog-title>Close Sprint</h4>
+  <span class="spacer"></span>
+  <mat-icon class="subtle" (click)="dialog.close()">close</mat-icon>
+</div>
+
+<div mat-dialog-content>
+  <div>
+    <label>Move open items to</label>
+    <mat-select [(ngModel)]="selectedItem" (selectionChange)="onSelect($event)">
+      <mat-option *ngFor="let item of items" [value]="item">{{item.label}}</mat-option>
+    </mat-select>
+  </div>
+</div>
+
+<div mat-dialog-actions class="buttons controls-row">
+  <span class="spacer"></span>
+  <button mat-button (click)="dialog.close()">Cancel</button>
+  <button mat-raised-button (click)="onSubmit()" color="primary" [disabled]="!selectedItem||!selectedItem.label">Proceed</button>
+</div>

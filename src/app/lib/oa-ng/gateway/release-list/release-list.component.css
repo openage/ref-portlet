@@ -1,0 +1,8 @@
+.release-card {
+    width: 40%;
+    margin: 10px;
+}
+
+.h-slide {
+    overflow-x: scroll;
+}

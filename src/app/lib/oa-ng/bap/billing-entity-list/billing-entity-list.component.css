@@ -1,0 +1,111 @@
+.spacing {
+  margin-right: 5px;
+}
+
+td.mat-cell.centered-text,
+th.mat-header-cell.centered-text {
+  text-align: center !important;
+  min-width: 120px;
+}
+
+.action-button {
+  justify-content: flex-end !important;
+}
+
+
+
+table {
+  width: 100%;
+}
+
+tr.example-details-row {
+  height: max-content;
+  overflow-x: auto;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: #efefef;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
+.example-element-detail {
+
+  display: flex;
+}
+
+.example-detail-row td {}
+
+.example-element-diagram {
+  min-width: 80px;
+  border: 2px solid black;
+  padding: 8px;
+  font-weight: lighter;
+  margin: 8px 0;
+  height: 104px;
+}
+
+.example-element-symbol {
+  font-weight: bold;
+  font-size: 40px;
+  line-height: normal;
+}
+
+.example-element-description {
+  padding: 16px;
+}
+
+
+.list-sub-text {
+  font-size: 12px !important;
+}
+
+
+@media only screen and (max-width:568px) {
+
+  tr th,
+  tr td {
+    padding-left: 5px !important;
+    padding-right: 5px;
+  }
+
+}
+
+
+
+.subtext {
+  font-size: 13px;
+}
+.name{
+  width:20%
+}
+.navCode{
+  width:15%
+}
+.gst{
+  width:15%
+}
+.address{
+  width:20%
+}
+.state{
+  width:13%
+}
+.city{
+  width:12%
+}
+.action{
+  max-width:5%;
+}
+
+@media only screen and (min-width:768px) and (max-width:1023px) {
+  .address {
+    padding-left: 10px;
+  }
+}

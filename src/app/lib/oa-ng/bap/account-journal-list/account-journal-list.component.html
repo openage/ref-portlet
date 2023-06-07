@@ -1,0 +1,78 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+
+<ng-container *ngIf="items && items.length; then dataTable; else noData"></ng-container>
+
+<ng-template #dataTable>
+    <table mat-table [dataSource]="items" multiTemplateDataRows class="table-responsive-sm">
+
+        <ng-container matColumnDef="amount">
+            <th mat-header-cell *matHeaderCellDef class="amount">Amount</th>
+            <td mat-cell *matCellDef="let item" class="amount" [class.deleted]="item.isDeleted"
+                [class.processing]="item.isProcessing">
+                <ng-container *ngIf="item.amount">
+                    <span [ngClass]="item.type">{{item.type === 'debit' ? '- ' : '+ '}}{{item.amount | value:'comma'}}</span>
+                </ng-container>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef class="date">Date</th>
+            <td mat-cell *matCellDef="let item" [class.deleted]="item.isDeleted" class="date"
+                [class.processing]="item.isProcessing">
+                <ng-container *ngIf="item.date">
+                    <div>{{ (item.date | date:'dd-MM-yyyy') }}</div>
+                    <span class="sub-text list-sub-text">{{item.date | date:'hh:mm a'}}</span>
+                </ng-container>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef class="type">Type</th>
+            <td mat-cell *matCellDef="let item" class="type" [class.deleted]="item.isDeleted"
+                [class.processing]="item.isProcessing">
+                <ng-container *ngIf="item.type">
+                    <span class="text-capitalize">{{item.type}}</span>
+                </ng-container>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="before">
+            <th mat-header-cell *matHeaderCellDef class="before">Previous Balance</th>
+            <td mat-cell *matCellDef="let item" class="before" [class.deleted]="item.isDeleted"
+                [class.processing]="item.isProcessing">
+                <ng-container *ngIf="item.balance">
+                    <span class="text-capitalize">{{item.balance.before | value:'comma'}}</span>
+                </ng-container>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="after">
+            <th mat-header-cell *matHeaderCellDef class="after">Current Balance</th>
+            <td mat-cell *matCellDef="let item" class="after" [class.deleted]="item.isDeleted"
+                [class.processing]="item.isProcessing">
+                <ng-container *ngIf="item.balance">
+                    <span class="text-capitalize">{{item.balance.after | value:'comma'}}</span>
+                </ng-container>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="remarks">
+            <th mat-header-cell *matHeaderCellDef class="remarks">Description</th>
+            <td mat-cell *matCellDef="let item" class="remarks" [class.deleted]="item.isDeleted"
+                [class.processing]="item.isProcessing">
+                <ng-container *ngIf="item.remarks">
+                    <span class="">{{item.remarks}}</span>
+                </ng-container>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; let i = index; columns: columns;" class="example-element-row"></tr>
+    </table>
+
+    <app-paginator [pager]="pager" [total]="pager.total"></app-paginator>
+</ng-template>
+
+<ng-template #noData>
+    <oa-no-data-found [message]="'No Journal Found'"></oa-no-data-found>
+</ng-template>

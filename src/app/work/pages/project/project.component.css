@@ -1,0 +1,8 @@
+mat-card {
+    margin-bottom: 15px;
+}
+
+
+.flex-row>* {
+    margin-top: 0px !important;
+}

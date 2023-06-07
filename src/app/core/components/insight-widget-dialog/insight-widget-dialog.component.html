@@ -1,0 +1,14 @@
+<!-- <div class="controls-row">
+  <h4>{{title}}</h4>
+  <div class="spacer"></div>
+  <button mat-icon-button mat-dialog-close class="close-icon" (click)="dialogRef.close()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div> -->
+
+<core-insight-widget [config]="config" [params]="params" (selected)="onStatSelect($event)"></core-insight-widget>
+<!-- <div>
+  <processing-indicator *ngIf="isProcessing"></processing-indicator>
+  <core-page-divs [divs]="divs" [reportTypes]="reportTypes" [filters]="params" (selected)="onStatSelect($event)">
+  </core-page-divs>
+</div> -->

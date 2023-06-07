@@ -1,0 +1,17 @@
+<div class="container">
+
+  <div class="input" contenteditable="true" (blur)="onChanged($event)" [innerHTML]="message.subject || placeholder ">
+  </div>
+
+  <!--
+  <mat-form-field [floatLabel]="'never'">
+    <input matInput placeholder="Title" [(ngModel)]="message.subject">
+  </mat-form-field>
+  <oa-content-editor [value]="content" [toolbar]="toolbar" (changed)="setContent($event)"></oa-content-editor>
+  <div class="row">
+
+    <button class="wide custom" (click)="send()" [disabled]="!message.subject" mat-raised-button
+      color="primary">Add</button>
+  </div>
+-->
+</div>

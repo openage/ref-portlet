@@ -1,0 +1,68 @@
+<ng-template #content>
+  <oa-autocomplete (mouseMove)="mouseMove($event)" [value]="value && value.email? value : null " [options]="{
+  label: label,
+  placeholder: placeholder,
+  required:required,
+  preFetch: preFetch,
+  autoSelect: autoSelect,
+  view: {
+    inline: view !== 'picker'
+  },
+  search: {
+    field: 'text',
+    params: {
+      'type': type,
+      'organization-code': organization,
+      'roleTypeCode': roleTypeCode,
+      'isAgent': isAgent
+    },
+    limit: 5,
+    skipSubjectStore: this.skipSubjectStore
+  },
+  templates: { 
+    value: valueTemplate
+  }
+}" [api]="api" (changed)="onSelect($event)" [disabled]="disabled" [readonly]="readonly" [componentName]="componentName"
+    [storeKeys]="storeKeys">
+  </oa-autocomplete>
+  <!-- <div class="dialog-div mat-elevation-z2 {{position}}">
+    <oa-agent-dialog *ngIf="showAgentDialog && isAgent" (clickOutside)="showAgentDialog=false" [code]="value.code"
+      (close)="onClose()"></oa-agent-dialog>
+  </div> -->
+</ng-template>
+
+<ng-template #valueTemplate let-item="value">
+  <div [class.readonly]="readonly" class="value input flex-row">
+    <oa-avatar [value]="item" [size]="18"></oa-avatar>
+    <span>{{item.profile| name}}</span>
+  </div>
+  <ng-container>
+
+  </ng-container>
+</ng-template>
+
+<!-- <ng-template #itemTemplate let-item="value">
+  <div [class.readonly]="readonly" class="value">
+    <img class="avatar" *ngIf="item.logo && item.logo.url" [src]="item.logo.url">
+    <img class="avatar" *ngIf="!item.logo || !item.logo.url" src="/assets/images/customers/default.png">
+    <span>{{item.name}}</span>
+  </div>
+</ng-template> -->
+
+<ng-container [ngSwitch]="view">
+  <div class="inline" *ngSwitchCase="'avatar'">
+    <div (click)="onTogglePopup()" #avatar>
+      <oa-avatar [user]="value"></oa-avatar>
+    </div>
+
+    <div *ngIf="isSelected" class="popup mat-elevation-z2 {{position}}" #popup>
+      <mat-icon class="md pointer close" (click)="onTogglePopup()">close</mat-icon>
+      <ng-container *ngTemplateOutlet="content"></ng-container>
+    </div>
+  </div>
+
+  <ng-container *ngSwitchCase="'picker'">
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+  </ng-container>
+
+</ng-container>

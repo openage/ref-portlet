@@ -1,0 +1,43 @@
+<!-- <div class="flex-1-3"> -->
+<div class="row">
+  <div class="col-md-3 col-lg-3">
+    <mat-list>
+      <a mat-list-item [class.active]="item.code === current.code" class="list-group-item" *ngFor="let item of steps"
+        (click)="selectStep(item.code)">
+        <mat-icon mat-list-icon>{{item.icon || 'folder'}}</mat-icon>
+        <h4 mat-line>{{item.title}}</h4>
+      </a>
+    </mat-list>
+  </div>
+  <div class="col-md-9 col-lg-9">
+    <mat-card>
+      <mat-card-header>
+        <div mat-card-avatar class="empheader">
+          <mat-icon mat-list-icon>{{current.icon || 'folder'}}</mat-icon>
+        </div>
+        <mat-card-title class="title">{{current.title}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <!-- <div [class.hidden]="current.code !== 'personal'">
+          <directory-personal-editor [readonly]="readonly" [employee]="employee" #personal></directory-personal-editor>
+        </div> -->
+        <div [class.hidden]="current.code !== 'employment'">
+          <directory-employment-editor [readonly]="readonly" [employee]="employee" #employment>
+          </directory-employment-editor>
+        </div>
+        <!--
+        <div [class.hidden]="current.code !== 'docs'">
+          <drive-file-list-uploader #docs></drive-file-list-uploader>
+        </div>
+        <div [class.hidden]="current.code !== 'address'">
+          <oa-address-editor [readonly]="readonly" [employee]="employee" [address]="employee.address" #address>
+          </oa-address-editor>
+        </div>
+        <div [class.hidden]="current.code !== 'details'">
+          <directory-details-editor [readonly]="readonly" [employee]="employee" #details></directory-details-editor>
+        </div>
+        -->
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+.widgets {
+    margin-top: 20px;
+}
+
+.widgets>div {
+    width: 100%;
+    margin-bottom: 10px;
+}

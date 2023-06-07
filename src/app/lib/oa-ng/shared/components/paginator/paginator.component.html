@@ -1,0 +1,62 @@
+<ng-container [ngSwitch]="view" *ngIf="pager.total > 1">
+  <div *ngSwitchCase="'pager-bar'" class="pager-bar">
+    <div class="controls-row">
+      <div class="spacer"></div>
+      <div>
+        <mat-select [(ngModel)]="size" (ngModelChange)="setPageItems(size)">
+          <mat-option [value]="10">10</mat-option>
+          <mat-option [value]="20">20</mat-option>
+          <mat-option [value]="50">50</mat-option>
+          <mat-option [value]="100">100</mat-option>
+        </mat-select>
+      </div>
+      <div>
+        <h5 *ngIf="title">{{title}}</h5>
+        <div *ngIf="pager.total && pages.length" class="pagination">
+          <button [hidden]="!showFirstLast" mat-flat-button [disabled]="pager.currentPageNo === 1"
+            (click)="showPage(1)">First
+          </button>
+          <button mat-flat-button [disabled]="pager.currentPageNo === 1" (click)="showPage(pager.currentPageNo - 1)">
+            Previous
+          </button>
+          <button mat-flat-button *ngFor="let page of pages" class="numbers"
+            [class.active]="pager.currentPageNo === page" (click)="showPage(page)">
+            <span *ngIf="page < 0">...</span>
+            <span *ngIf="page > 0">{{page}}</span>
+          </button>
+          <button mat-flat-button [disabled]="pager.currentPageNo === pager.totalPages"
+            (click)="showPage(pager.currentPageNo + 1)">Next
+          </button>
+          <button [hidden]="!showFirstLast" mat-flat-button [disabled]="pager.currentPageNo === pager.totalPages"
+            (click)="showPage(pager.totalPages)">Last
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-container *ngSwitchCase="'up'">
+    <a *ngIf="pager.currentPageNo > 1" (click)="showPage(pager.currentPageNo - 1)">
+      <mat-icon> arrow_drop_up</mat-icon>
+    </a>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'previous'">
+    <a *ngIf="pager.currentPageNo > 1" (click)="showPage(pager.currentPageNo - 1)">
+      Show {{(pager.currentPageNo-2)*size + 1}} to {{(pager.currentPageNo-1)*size}}
+    </a>
+  </ng-container>
+  <ng-container *ngSwitchCase="'down'">
+    <a *ngIf="pager.currentPageNo < pager.totalPages" (click)="showPage(pager.currentPageNo + 1)">
+      <mat-icon> arrow_drop_down</mat-icon>
+    </a>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'next'">
+    <a *ngIf="pager.currentPageNo < pager.totalPages" (click)="showPage(pager.currentPageNo + 1)">
+      Show {{pager.currentPageNo*size + 1}} to <span
+        *ngIf="(pager.currentPageNo+1)*size < pager.total">{{(pager.currentPageNo+1)*size}} of
+        {{pager.total}}</span><span *ngIf="(pager.currentPageNo+1)*size >= pager.total">{{pager.total}}</span>
+    </a>
+  </ng-container>
+</ng-container>

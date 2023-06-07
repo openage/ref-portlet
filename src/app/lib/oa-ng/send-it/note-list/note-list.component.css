@@ -1,0 +1,31 @@
+.note-list {
+  position: relative;
+}
+
+.note {
+  /* margin: 5px; */
+  padding: 5px;
+  width: 100%;
+  /* border-radius: 5px; */
+  min-height: 40px;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.note .from {
+  position: relative;
+  font-size: small;
+  color: var(--accent);
+}
+
+.note .time {
+  position: relative;
+  float: right;
+  font-size: x-small;
+  color: var(--disabled);
+  padding-right: 15px;
+  top: -8px;
+}
+
+.note .subject {
+  min-height: 40px;
+}

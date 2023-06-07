@@ -1,0 +1,26 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+<div *ngIf="!isProcessing">
+  <header class="flex-row">
+    <oa-avatar [value]="properties.from" [size]="40" class="m-auto"></oa-avatar>
+    <div class="inbox-sender">
+      <label>
+        {{ properties.from.profile.firstName + ' ' + properties.from.profile.lastName}}
+      </label>
+      <div>{{ properties.subject }}</div>
+    </div>
+    <span class="spacer"></span>
+    <div class="flex-row inbox-type">
+      <span *ngIf="properties?.meta?.category || properties?.meta?.entity?.type" class="pill-box">{{
+        properties?.meta?.category || properties?.meta?.entity?.type }}</span>
+      <span class="spacer"></span>
+      <span> {{ properties.date | time: "merged" }} </span>
+      <span class="spacer"></span>
+      <mat-icon (click)="onClick()" matTooltip="Close" class="pointer">
+        close
+      </mat-icon>
+    </div>
+  </header>
+  <section class="inbox-body">
+    <div id='note-' class="note"> {{injectBody('note-', properties.body)}}></div>
+  </section>
+</div>

@@ -1,0 +1,20 @@
+.mat-header-cell {
+  /* font-weight: bolder;
+    color: black; */
+}
+
+td.mat-cell:first-of-type,
+td.mat-footer-cell:first-of-type,
+th.mat-header-cell:first-of-type {
+  padding-left: 24px;
+  width: 234px;
+}
+
+.mat-icon {
+  background-repeat: no-repeat;
+  display: inline-block;
+  fill: currentColor;
+  height: 24px;
+  width: 24px;
+  cursor: pointer;
+}

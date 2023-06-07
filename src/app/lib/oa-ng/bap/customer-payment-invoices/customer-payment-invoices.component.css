@@ -1,0 +1,18 @@
+.number{
+    width:15%
+  }
+  .amount{
+    width:15%
+  }
+  .date{
+    width:15%
+  }
+  .remarks{
+    width:20%;
+  }
+  .action{
+    width:5%
+  }
+  .add-new{
+    font-size:11px;
+  }

@@ -1,0 +1,15 @@
+<h4 mat-dialog-title>{{title}}</h4>
+<div mat-dialog-content>
+  <div *ngIf="type=== 'text'">
+    <mat-form-field>
+      <input matInput placeholder="Code" [(ngModel)]="code" required>
+    </mat-form-field>
+  </div>
+  <div class="otp" *ngIf="type=== 'otp'">
+    <oa-input type="otp" [(value)]="code" [required]="true"></oa-input>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="cancel()">Cancel</button>
+  <button mat-raised-button [disabled]="!code" (click)="proceed()" color="primary">Proceed</button>
+</div>

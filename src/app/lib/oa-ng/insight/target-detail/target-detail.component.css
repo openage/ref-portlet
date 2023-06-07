@@ -1,0 +1,36 @@
+.target p {
+    font-size: 24px;
+}
+
+.target label {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.target h4 {
+    margin-top: 0px !important;
+}
+
+.target img {
+   width: 40px;
+   height: 50px;
+   margin-right: 20px;
+}
+
+.primary-color {
+    color: var(--primary);
+}
+
+.close {
+    position: absolute;
+    right: -10px;
+    cursor: pointer;    
+}
+
+.close mat-icon {
+    font-size: 16px;
+}
+
+input.mat-input-element {
+    margin-top: auto;
+}

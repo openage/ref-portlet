@@ -1,0 +1,17 @@
+.main {
+    min-height: 70vh;
+    margin-top: 8px;
+    overflow-y: auto !important; 
+    margin-bottom: 25px;
+    border-radius: 5px;
+    background: #ffffff;
+    /* padding: 0px; */
+}
+
+.mat-icon {
+    vertical-align: middle !important;
+    }
+    
+.customPadding {
+    padding: 20px;
+}

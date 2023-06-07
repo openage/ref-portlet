@@ -1,0 +1,44 @@
+table {
+    width: 100%;
+    margin: 0 15px;
+}
+.mat-header-cell{
+    /* font-weight: bolder;
+    color: black; */
+}
+
+td{
+    padding-top: 8px;
+}
+
+td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:first-of-type {
+    padding-left: 24px;
+    width: 234px;
+}
+
+.mat-icon {
+    background-repeat: no-repeat;
+    display: inline-block;
+    fill: currentColor;
+    height: 24px;
+    width: 24px;
+    cursor: pointer;
+} 
+
+.add-account{
+    position: absolute;
+    top: 35px;
+    left: 135px;
+    width: auto;
+    background: var(--primary);
+    color: #fff;
+}
+
+
+span {
+    display: inline-block;
+    margin-bottom: 4px;
+    position: absolute;
+    margin-top: 10px;
+    margin-left: 10px;
+}

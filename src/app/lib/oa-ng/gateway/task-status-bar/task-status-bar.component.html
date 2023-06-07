@@ -1,0 +1,180 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+<div class="controls-row" *ngIf="task">
+
+  <div class="identifier-section" *ngIf="options && options.hide && !options.hide.identifier">
+    <label>Identifier: </label>
+    <div class="flex-row">
+      <oa-icon-toggler [readonly]="!isOwner" class="pointer spacing" type="priority" [items]="priorities"
+        [value]="task?.priority || 3" (changed)="onPriorityChange($event,task)">
+      </oa-icon-toggler>
+      <ng-container *ngIf="!hiddenFields.includes('identifier')">
+        <div>{{task?.project?.name|uppercase }}: </div>
+        <span *ngIf="code" class="code">{{ code|uppercase}}</span>
+        <span *ngIf="!code" class="code">{{ task?.code|uppercase}}</span>
+      </ng-container>
+      <ng-container *ngIf="hiddenFields.length && hiddenFields.includes('identifier')">
+        <div>Not Available</div>
+      </ng-container>
+      <div class="spacer"></div>
+      <div *ngFor="let item of tags" class="flex-row">
+        <oa-avatar class="spacing" [value]="item.pic" [default]="item.label"></oa-avatar>
+        <span>{{item.label}}</span>
+      </div>
+      <div class="spacer"></div>
+    </div>
+  </div>
+
+  <!-- <div class="spacer"></div> -->
+
+  <ng-container *ngIf="options && options.hide && !options.hide.owner">
+    <div class="spacer"></div>
+    <div class="oa-input-group">
+      <label>Owner: </label>
+      <directory-user-picker view="picker" [readonly]="!auth.hasPermission(permissions.owner) || readonly"
+        placeholder="Select Owner" [value]="task?.owner" [isAgent]="false" (changed)="onOwnerSet($event,task)">
+      </directory-user-picker>
+    </div>
+  </ng-container>
+  <!--
+      <ng-container *ngIf="options && options.hide && !options.hide.members">
+        <div>
+          <label>Members: </label>
+          <div class="controls-row members" *ngIf="task?.members && task.members.length">
+            <div *ngFor="let member of task.members;let i=index;">
+              <div class="pointer spacing" *ngIf="i<1">
+                <oa-avatar [value]="member?.user"></oa-avatar>
+              </div>
+            </div>
+            <div *ngIf="task.members.length>1" class="count-container pointer"
+              (click)="isSelected=!isSelected;from='members'" [matTooltip]="'More'">
+              <span>+{{task.members.length-1}}</span>
+            </div>
+          </div>
+          <div *ngIf="isSelected && from=='members'">
+            <ng-container *ngTemplateOutlet="layoutTemplate"> </ng-container>
+          </div>
+        </div>
+        <div class="spacer"></div>
+      </ng-container>
+      -->
+  <ng-container>
+    <div class="spacer"></div>
+    <div class="oa-input-group">
+      <label>Assignee: </label>
+      <directory-user-picker view="picker" [readonly]="!auth.hasPermission(permissions.assign) || readonly"
+        placeholder="Select Assignee" [value]="task?.assignee" (changed)="onAssigneeSet($event,task)" [isAgent]="false">
+      </directory-user-picker>
+    </div>
+  </ng-container>
+
+
+  <ng-container *ngIf="task && task.plan && options && options.hide && options.hide.dueDate">
+    <div class="spacer"></div>
+    <div>
+      <label>Due Date: </label>
+      <div class="oa-input">
+        <div class="input" *ngIf="!task.plan.finish">Not Set</div>
+        <div class="input" *ngIf="task.plan.finish">{{task.plan.finish|date:'dd/M/yyyy'}}</div>
+        <mat-icon *ngIf="isOwner && !readonly" class="md label pointer" (click)="onDateSelect()">calendar_today
+        </mat-icon>
+      </div>
+      <div *ngIf="isSelected && from === 'dueDate'">
+        <ng-container *ngTemplateOutlet="layoutTemplate"> </ng-container>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="options && options.hide && options.hide.status && task">
+    <div class="spacer"></div>
+    <div class="oa-input-group">
+      <label>Status: </label>
+      <div>{{task?.currentStatus?.name | titlecase}}</div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="options && options.hide && options.hide.statusAction">
+    <div class="spacer"></div>
+    <div class="mt-auto">
+      <div *ngIf="!arrow" class="spacer"></div>
+      <gateway-task-actions [task]="task" [skipAction]="skipAction" [before]="before" [view]="options.hide.actionView"
+        (updated)="afterTaskUpdate($event)">
+      </gateway-task-actions>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="options && options.hide && !options.hide.actionArrow">
+    <div class="spacer"></div>
+    <div class="arrow-dropdown">
+      <mat-icon *ngIf="!arrow" class="x-lg label pointer" [class.display]="options.hide.isActionArrowHidden"
+        (click)="onToggle()">
+        {{detailview?'keyboard_arrow_up':'keyboard_arrow_down'}}
+      </mat-icon>
+      <mat-icon *ngIf="arrow === 'forward'" class="x-lg label pointer" (click)="goto()">keyboard_arrow_right</mat-icon>
+      <button *ngIf="arrow === 'button'" mat-raised-button class="primary" (click)="goto()">View</button>
+    </div>
+  </ng-container>
+
+  <div *ngIf="options && options.more && options.more.length && !readonly">
+    <div class="mt-auto">
+      <mat-icon [matMenuTriggerFor]="menu" class="cursorPointer moreOptions">more_vert</mat-icon>
+      <mat-menu #menu="matMenu">
+        <ng-container *ngFor="let item of options.more">
+          <button mat-menu-item (click)="onOptionMore(item.code, task)">{{item.name}}</button>
+        </ng-container>
+      </mat-menu>
+    </div>
+  </div>
+</div>
+
+<ng-template #layoutTemplate>
+  <div class="status-details section mat-elevation-z2">
+    <mat-icon class="md pointer close" (click)="onClose()">close</mat-icon>
+    <oa-date-picker *ngIf="from === 'dueDate'" [placeholder]="'Due Date'" [minDate]="minDate"
+      [value]="task.plan.finish || currentDate" (change)="onChange($event,task,from)">
+    </oa-date-picker>
+    <directory-user-picker *ngIf="from === 'assignee'||from === 'owner'"
+      [placeholder]="from === 'assignee'?'Assignee':'Owner'" [value]="from === 'assignee'?task.assignee:task.owner"
+      (changed)="onChange($event,task,from)" [isAgent]="true">
+    </directory-user-picker>
+    <div *ngIf="from === 'members'">
+      <div *ngFor="let member of task.members;let i = index" class="pointer spacing">
+        <div class="flex-row" *ngIf="i>1">
+          <oa-avatar class="spacing" [value]="member?.user"></oa-avatar>
+          <div>{{member?.user?.profile| name}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<!-- <div class="controls-row task-status-bar subtle">
+  <span class="code">#{{task.code}}</span>
+  <button mat-raised-button [matMenuTriggerFor]="statusMenu">
+    {{task.currentStatus.name}}
+  </button>
+  <span class="spacer"></span>
+
+  <div *ngIf="task.size" class="size" [ngStyle]="getSizeStyle()">{{task.size}} {{effortUnits}}</div>
+
+  <oa-date-picker [range]="task.plan" [placeholder]="'Plan'" (change)="setPlan($event)">
+  </oa-date-picker>
+  <span class="spacer"></span>
+  <button mat-icon-button (click)="toggleShowSlides()">
+    <i [class.active]="view.slides" class="fa fa-tv"></i>
+  </button>
+
+  <button mat-icon-button (click)="toggleShowTasks()">
+    <i [class.active]="view.children" class="fa fa-tasks"></i>
+  </button>
+
+
+</div> -->
+<!-- <mat-menu #statusMenu="matMenu">
+  <button mat-menu-item *ngFor="let item of task.currentStatus.next" (click)="updateStatus(item)">
+    <i [class.fa-c
+    heck]="item.isFinal && !item.isCancelled"
+      [class.fa-forward]="!item.isFinal && !item.isFirst && !item.isPaused" [class.fa-fast-backward]="item.isFirst"
+      [class.fa-times]="item.isFinal && item.isCancelled" [class.fa-pause]="item.isPaused" class="fa"></i>
+    <span>{{item.action}}</span>
+  </button>
+</mat-menu> -->

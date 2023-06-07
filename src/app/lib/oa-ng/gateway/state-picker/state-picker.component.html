@@ -1,0 +1,21 @@
+<ng-container [ngSwitch]="view">
+  <div *ngSwitchCase="'toggler'" class="toggler">
+    <span *ngIf="all" [class.active]="!value" [matBadge]="statData['total']" (click)="onSelect(null)">All</span>
+    <span *ngFor="let item of items" [matBadge]="statData[item.code]" [class.active]="value === item"
+      (click)="onSelect(item)">{{item.name}}</span>
+  </div>
+
+  <mat-select class="picker" *ngSwitchCase="'picker'" [ngModel]="valueCode" [disabled]="readonly">
+    <mat-option (click)="onSelect(null)" [value]="''">All</mat-option>
+    <mat-option *ngFor="let item of items" [value]="item.code" (click)="onSelect(item)">
+      {{item.name}}
+    </mat-option>
+  </mat-select>
+
+  <mat-select class="picker" *ngSwitchCase="'back-stage-picker'" [ngModel]="valueCode" [disabled]="readonly">
+    <mat-option *ngFor="let item of items" [value]="item.code" (click)="onStateSelect(item)">
+      {{item.name}}
+    </mat-option>
+  </mat-select>
+
+</ng-container>

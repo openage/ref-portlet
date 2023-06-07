@@ -1,0 +1,17 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+<div class="section">
+  <div class="header">
+    <h5>Email Templates</h5>
+    <div class="spacer"></div>
+    <button mat-button class="primary" (click)="onSave()">Save</button>
+  </div>
+  <div>
+    <label>Marketing</label>
+    <div class="flex-row three">
+      <div *ngFor="let template of templates">
+        <mat-checkbox [checked]="template.isSelectedEmailTemplate"  (change)="setTemplateValue(template,$event)">{{template.name | uppercase}}</mat-checkbox>
+      </div>
+    </div>
+  </div>
+</div>
+

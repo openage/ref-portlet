@@ -1,0 +1,91 @@
+.sectionQuestion {
+    margin-bottom: 8px;
+    color: var(--primary);
+    margin-top: 20px;
+}
+
+.inputSection {
+    padding: 5px 10px;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 0px 0px 0px #00000033, 0 0px 0px 0 #00000024, 0 1px 4px 0 #0000001f;
+}
+
+.row {
+    margin: 0px;
+}
+
+.col-3 {
+    padding: 0px 10px 0px 0px;
+    text-align: right;
+    font-size: 15px;
+    font-weight: 500;
+    border-right: 2px dashed rgba(0, 0, 0, .1);
+    padding-bottom: 10px;
+    color: #272727;
+}
+
+.col-9 {
+    padding: 0px;
+    padding-left: 8px;
+    font-size: 15px;
+}
+
+.journalDiv {
+    border-bottom: 1px solid var(--defaultBackground);
+    margin-bottom: 4px;
+}
+
+.aJournalDiv::before {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    right: -6px;
+    background-color: var(--disabledBackground);
+    top: 0px;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+.active::before {
+    right: -8px !important;
+    width: 16px;
+    height: 16px;
+    background-color: green !important;
+}
+
+.journalDiv:last-child .row:last-child .aJournalDiv::before {
+    right: -4px;
+}
+
+.headingDiv .col-3, .headingDiv .col-9 {
+    padding-bottom: 0px !important;
+    padding-top: 15px;
+}
+
+.headingDiv .col-3 div label, .headingDiv .col-9 div label {
+    margin: 0px;
+}
+
+.first.headingDiv .col-3, .journalDiv:last-child .row:last-child .aJournalDiv, .journalDiv:last-child {
+    border: unset !important;
+}
+
+.journalDiv .row .col-9 {
+    padding-bottom: 15px;
+}
+
+.heading {
+    font-weight: bold;
+}
+
+.eventIcon {
+    margin-right: -18px;
+}
+
+.location {
+    width: 90%;
+    word-break: break-word;
+    padding-right: 8px;
+}

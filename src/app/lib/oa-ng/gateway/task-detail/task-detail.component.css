@@ -1,0 +1,96 @@
+/* h5{
+    color: var(--primary);
+} */
+.pic {
+  width: 40px;
+  height: 40px;
+  margin-right: 5px;
+  border-radius: 50%;
+}
+
+/* .material-icons {
+  font-size: 42px;
+  color: var(--default);
+} */
+
+p {
+  margin-bottom: 4px;
+}
+
+hr {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.workDetail {
+  background: #eef2fd;
+  padding: 15px;
+  padding-bottom: 5px;
+  margin-top: 5px;
+  border-bottom: 5px solid var(--primary);
+}
+
+.col-11 {
+  padding-left: 30px;
+}
+
+.col-11 p {
+  margin: 0px;
+  font-size: 11px;
+  padding-top: 3px;
+}
+
+.col-11:first-child {
+  margin-bottom: 5px;
+}
+
+.col-11 p:first-child {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.boldHead {
+  color: #2f3e67;
+}
+
+.mat-raised-button {
+  border-radius: 0px;
+}
+
+.startBtn {
+  margin-top: 10px;
+}
+
+.section>.description {
+  height: 100px !important;
+}
+
+/*
+.description {
+  padding-left: 10px;
+  padding-top: 5px;
+}
+
+.description>div {
+  border: 1px solid var(--disabled);
+  padding: 10px;
+  height: 100%;
+  overflow-x: scroll;
+  overflow-y: scroll;
+} */
+
+.mat-standard-chip {
+  margin-top: 10px !important;
+}
+
+.body{
+  margin-bottom: 10px;
+}
+
+.attributes *>label {
+  margin-bottom: 0px;
+}
+
+.attributes >div {
+  margin-bottom: 5px;
+}

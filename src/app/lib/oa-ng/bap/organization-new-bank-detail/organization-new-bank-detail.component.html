@@ -1,0 +1,51 @@
+<div mat-dialog-title class="controls-row">
+  <h4><span *ngIf="!indexNumber">Add</span><span *ngIf="indexNumber">Edit</span> Bank Detail</h4>
+  <span class="spacer"></span>
+  <button mat-icon-button mat-dialog-close class="close-icon" (click)="dialogRef.close()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<div mat-dialog-content>
+  <div class="form-container flex-row two">
+    <mat-form-field appearance="outline">
+      <label for="bankName">Bank Name</label>
+      <input matInput name="bankName" id="bankName" [disabled]="readonly" [(ngModel)]="bank.bankName" type="string">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <label for="accountNumber">Account Number</label>
+      <input matInput name="accountNumber" id="accountNumber" [disabled]="readonly" [(ngModel)]="bank.account"
+        type="number">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <label for="ifscCode">IFSC Code</label>
+      <input matInput name="ifscCode" id="ifscCode" [disabled]="readonly" [(ngModel)]="bank.ifscCode" type="string">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <label for="branch">Branch</label>
+      <input matInput name="branch" id="branch" [disabled]="readonly" [(ngModel)]="bank.branch" type="string">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <label for="benefName">Beneficiary Name</label>
+      <input matInput name="benefName" id="benefName" [disabled]="readonly" [(ngModel)]="bank.beneficiaryName"
+        type="string">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <label for="benefEmail">Beneficiary Email</label>
+      <input matInput name="benefEmail" id="benefEmail" [disabled]="readonly" [(ngModel)]="bank.beneficiaryEmail"
+        type="string">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <label for="benefPhone">Beneficiary Phone</label>
+      <input matInput name="benefPhone" id="benefPhone" [disabled]="readonly" [(ngModel)]="bank.beneficiaryPhone"
+        type="number">
+    </mat-form-field>
+  </div>
+</div>
+
+<div mat-dialog-actions class="buttons controls-row">
+  <span class="spacer"></span>
+  <button mat-button (click)="dialogRef.close()">Cancel</button>
+  <button *ngIf="!indexNumber" mat-raised-button color="primary" (click)="updateOrg()">Create</button>
+  <button *ngIf="indexNumber" mat-raised-button color="primary" (click)="updateOrg()">Update</button>
+</div>

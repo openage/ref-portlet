@@ -1,0 +1,253 @@
+{
+  "params": {
+    "view": "rows",
+    "type": "technical-story",
+    "endless": "false",
+    "showFilters": false,
+    "showMembers": true,
+    "showTimeLogs": false,
+    "selectedParent": "false"
+  },
+  "context": [
+    {
+      "code": "filters",
+      "type": "icon",
+      "style": "peacock"
+    },
+    {
+      "code": "team",
+      "type": "icon"
+    },
+    {
+      "code": "done",
+      "type": "icon",
+      "style": "tangerine"
+    },
+    {
+      "code": "draft",
+      "type": "icon",
+      "style": "tangerine"
+    },
+    {
+      "code": "refresh",
+      "type": "icon"
+    },
+    {
+      "code": "close",
+      "type": "icon"
+    }
+  ],
+  "search": {
+    "view": "filters",
+    "params": [
+      {
+        "label": "View",
+        "key": "view",
+        "control": "selector",
+        "value": "priority-view",
+        "options": [
+          {
+            "label": "Prioritized",
+            "value": "priority-view"
+          },
+          {
+            "label": "Sprints",
+            "value": "sprint-view"
+          },
+          {
+            "label": "Categorized",
+            "value": "category-view"
+          },
+          {
+            "label": "By Status",
+            "value": "status-view"
+          }
+        ]
+      },
+      {
+        "label": "Subject",
+        "key": "subject",
+        "control": "input"
+      },
+      {
+        "label": "Priority",
+        "key": "priority",
+        "control": "selector",
+        "value": "",
+        "options": [
+          {
+            "label": "Blocker",
+            "value": 1
+          },
+          {
+            "label": "Urgent",
+            "value": 2
+          },
+          {
+            "label": "Must have",
+            "value": 3
+          },
+          {
+            "label": "Good to have",
+            "value": 4
+          },
+          {
+            "label": "Someday",
+            "value": 5
+          }
+        ]
+      },
+      {
+        "label": "Status",
+        "key": "status",
+        "control": "selector",
+        "value": "",
+        "options": [
+          {
+            "label": "Draft",
+            "value": "draft"
+          },
+          {
+            "label": "New",
+            "value": "new"
+          },
+          {
+            "label": "In Progress",
+            "value": "in-progress"
+          },
+          {
+            "label": "For Deployment",
+            "value": "resolved"
+          },
+          {
+            "label": "For QA",
+            "value": "readyforqa"
+          },
+          {
+            "label": "For Demo",
+            "value": "reviewed"
+          },
+          {
+            "label": "For Release",
+            "value": "done"
+          },
+          {
+            "label": "Rework",
+            "value": "rework"
+          },
+          {
+            "label": "Blocked",
+            "value": "blocked"
+          },
+          {
+            "label": "Discarded",
+            "value": "discarded"
+          },
+          {
+            "label": "Paused",
+            "value": "paused"
+          }
+        ]
+      },
+      {
+        "label": "Sprint",
+        "key": "sprint",
+        "control": "selector",
+        "value": "",
+        "options": [
+          {
+            "label": "Current",
+            "value": "current"
+          },
+          {
+            "label": "Backlog",
+            "value": "backlog"
+          }
+        ]
+      },
+      {
+        "label": "Category",
+        "key": "category-code",
+        "control": "autocomplete",
+        "config": {
+          "url": {
+            "code": "gateway",
+            "addOn": "categories"
+          },
+          "paramField": "text"
+        },
+        "valueKey": "id"
+      },
+      {
+        "label": "Tags",
+        "key": "tags",
+        "control": "input"
+      },
+      {
+        "label": "Code",
+        "key": "code",
+        "control": "input",
+        "config": {
+          "trigger": "#",
+          "op": "eq"
+        }
+      }
+    ]
+  },
+  "stats": {
+    "areaCode": "technical-stories"
+  },
+  "divs": [
+    {
+      "code": "primary-stats",
+      "hideFilters": true,
+      "style": {
+        "container": {
+          "style": {
+            "margin-bottom": "10px"
+          }
+        },
+        "widgets": {
+          "class": "two"
+        }
+      }
+    },
+    {
+      "code": "time-log-total",
+      "hideFilters": true,
+      "style": {
+        "container": {
+          "style": {
+            "margin-bottom": "10px"
+          }
+        },
+        "widgets": {
+          "class": "two"
+        }
+      }
+    }
+  ],
+  "sections": {
+    "new": {},
+    "tasks": {
+      "view": "table",
+      "fields": [
+        "icon",
+        "code",
+        "subject",
+        "tags",
+        "category",
+        "effort",
+        "status",
+        "actions",
+        "progress",
+        "assignee",
+        "dueDate"
+      ],
+      "paging": {
+        "limit": 50,
+        "sort": "priority"
+      }
+    }
+  }
+}

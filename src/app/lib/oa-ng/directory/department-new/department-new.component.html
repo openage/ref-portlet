@@ -1,0 +1,23 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+<form type="submit">
+  <div class="row">
+    <mat-toolbar>
+      New Department
+    </mat-toolbar>
+    <!-- <div class="col-sm-5">
+  <mat-form-field>
+    <input matInput name="deviceCode" placeholder="Code" [(ngModel)]="department.code" type="string">
+  </mat-form-field>
+  </div> -->
+    <!-- <div class="col-sm-10"> -->
+    <mat-form-field>
+      <input matInput name="deviceName" placeholder="Name" [(ngModel)]="department.name" type="string">
+    </mat-form-field>
+  </div>
+  <!-- <div class="col-sm-2"> -->
+  <div class="row">
+    <button mat-raised-button color="primary" [disabled]="isProcessing" (click)="create(department)">
+      Create
+    </button>
+  </div>
+</form>

@@ -1,0 +1,298 @@
+{
+  "code": "work",
+  "icon": "fa-briefcase",
+  "title": "Work",
+  "url": "/work",
+  "meta": {
+    "ref": "/assets/data/nav/work/dashboard.json"
+  },
+  "items": [
+    {
+      "code": "work.projects",
+      "icon": "fa-project-diagram",
+      "title": "Projects",
+      "url": "/work/projects",
+      "meta": {
+        "ref": "/assets/data/nav/work/projects/index.json"
+      },
+      "items": [
+        {
+          "code": "work.projects.new",
+          "icon": "fa-project",
+          "title": "New Project",
+          "url": "/work/projects/new",
+          "meta": {
+            "ref": "/assets/data/nav/work/projects/new.json"
+          }
+        },
+        {
+          "code": "work.projects.details",
+          "icon": "fa-project",
+          "title": "Project",
+          "handles": [
+            "project"
+          ],
+          "url": "/work/projects/:code",
+          "meta": {
+            "ref": "/assets/data/nav/work/projects/details.json"
+          },
+          "items": [
+            {
+              "code": "work.projects.releases",
+              "icon": "mat-new_releases",
+              "title": "Tasks",
+              "url": "/work/projects/:code/releases",
+              "meta": {
+                "ref": "/assets/data/nav/work/releases/index.json"
+              },
+              "items": [
+                {
+                  "code": "work.projects.releases.new",
+                  "icon": "mat-new_releases",
+                  "title": "New Release",
+                  "url": "/work/projects/:code/releases/new",
+                  "meta": {
+                    "ref": "/assets/data/nav/work/releases/new.json"
+                  }
+                },
+                {
+                  "code": "work.projects.releases.details",
+                  "icon": "mat-new_releases",
+                  "title": "Details",
+                  "url": "/work/releases/:code",
+                  "meta": {
+                    "ref": "/assets/data/nav/work/releases/details.json"
+                  }
+                }
+              ]
+            },
+            {
+              "code": "work.projects.meetings",
+              "icon": "fa-task",
+              "title": "Meeting",
+              "url": "/work/projects/:code/meetings",
+              "meta": {
+                "ref": "/assets/data/nav/work/meetings/index.json"
+              }
+            },
+            {
+              "code": "work.projects.meetings.planning",
+              "icon": "fa-task",
+              "title": "Tasks",
+              "url": "/work/projects/:code/meetings?type=planning",
+              "meta": {
+                "ref": "/assets/data/nav/work/meetings/planning.json"
+              }
+            },
+            {
+              "code": "work.projects.meetings.review",
+              "icon": "fa-task",
+              "title": "Review",
+              "url": "/work/projects/:code/meetings?type=review",
+              "meta": {
+                "ref": "/assets/data/nav/work/meetings/review.json"
+              }
+            },
+            {
+              "code": "work.projects.meetings.standup",
+              "icon": "fa-task",
+              "title": "Standup",
+              "url": "/work/projects/:code/meetings?type=standup",
+              "meta": {
+                "ref": "/assets/data/nav/work/meetings/standup.json"
+              }
+            },
+            {
+              "code": "work.projects.tasks.epic",
+              "icon": "oa-workflow-epic",
+              "title": "Epics",
+              "url": "/work/projects/:code/tasks?type=epic",
+              "meta": {
+                "ref": "/assets/data/nav/work/tasks/epics.json"
+              }
+            },
+            {
+              "code": "work.projects.tasks.story",
+              "icon": "oa-workflow-story",
+              "title": "Stories",
+              "url": "/work/projects/:code/tasks?type=story",
+              "meta": {
+                "ref": "/assets/data/nav/work/tasks/stories.json"
+              }
+            },
+            {
+              "code": "work.projects.tasks.bau",
+              "icon": "oa-workflow-bau",
+              "title": "BAU",
+              "url": "/work/projects/:code/tasks?type=bau",
+              "meta": {
+                "ref": "/assets/data/nav/work/tasks/baus.json"
+              }
+            },
+            {
+              "code": "work.projects.tasks.defect",
+              "icon": "oa-workflow-defect",
+              "title": "Defects",
+              "url": "/work/projects/:code/tasks?type=defect",
+              "meta": {
+                "ref": "/assets/data/nav/work/tasks/defects.json"
+              }
+            },
+            {
+              "code": "work.projects.tasks.risk",
+              "icon": "oa-workflow-risk",
+              "title": "Risks",
+              "url": "/work/projects/:code/tasks?type=risk",
+              "meta": {
+                "ref": "/assets/data/nav/work/tasks/risks.json"
+              }
+            },
+            {
+              "code": "work.projects.tasks.technical-story",
+              "icon": "oa-workflow-technical-story",
+              "title": "Technical Stories",
+              "url": "/work/projects/:code/tasks?type=technical-story",
+              "meta": {
+                "ref": "/assets/data/nav/work/tasks/technical-stories.json"
+              }
+            },
+            {
+              "code": "work.projects.tasks.test-case",
+              "icon": "oa-workflow-test-case",
+              "title": "Test Cases",
+              "url": "/work/projects/:code/tasks?type=test-case",
+              "meta": {
+                "ref": "/assets/data/nav/work/tasks/test-cases.json"
+              }
+            },
+            {
+              "code": "work.projects.tasks.test-plan",
+              "icon": "oa-workflow-test-plan",
+              "title": "Test Plans",
+              "url": "/work/projects/:code/tasks?type=test-plan",
+              "meta": {
+                "ref": "/assets/data/nav/work/tasks/test-plans.json"
+              }
+            },
+            {
+              "code": "work.projects.tasks",
+              "icon": "fa-task",
+              "title": "Tasks",
+              "url": "/work/projects/:code/tasks",
+              "meta": {
+                "ref": "/assets/data/nav/work/tasks/index.json"
+              },
+              "items": [
+                {
+                  "code": "work.projects.tasks.new",
+                  "icon": "fa-task",
+                  "title": "New Task",
+                  "url": "/work/projects/:code/tasks/new",
+                  "meta": {
+                    "ref": "/assets/data/nav/work/tasks/details.json"
+                  }
+                },
+                {
+                  "code": "work.projects.tasks.details",
+                  "icon": "fa-task",
+                  "title": "Details",
+                  "url": "/work/projects/:code/tasks/:taskCode",
+                  "meta": {
+                    "ref": "/assets/data/nav/work/tasks/details.json"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "work.tasks.actions",
+      "icon": "fa-tasks",
+      "title": "Actions",
+      "url": "/work/tasks#actions",
+      "meta": {
+        "ref": "/assets/data/nav/work/tasks/actions.json"
+      }
+    },
+    {
+      "code": "work.tasks.requests",
+      "icon": "fa-tasks",
+      "title": "Requests",
+      "url": "/work/tasks#requests",
+      "meta": {
+        "ref": "/assets/data/nav/work/tasks/requests.json"
+      }
+    },
+    {
+      "code": "work.tasks",
+      "icon": "fa-tasks",
+      "title": "Tasks",
+      "url": "/work/tasks",
+      "meta": {
+        "ref": "/assets/data/nav/work/tasks/index.json"
+      },
+      "items": [
+        {
+          "code": "work.tasks.details.epic",
+          "icon": "fa-task",
+          "title": "Epic",
+          "url": "/work/tasks/:code#epic",
+          "handles": [
+            "epic"
+          ],
+          "meta": {
+            "ref": "/assets/data/nav/work/tasks/details/epic.json"
+          }
+        },
+        {
+          "code": "work.tasks.details.story",
+          "icon": "fa-task",
+          "title": "Story",
+          "url": "/work/tasks/:code#story",
+          "handles": [
+            "story"
+          ],
+          "meta": {
+            "ref": "/assets/data/nav/work/tasks/details/story.json"
+          }
+        },
+        {
+          "code": "work.tasks.details.defect",
+          "icon": "fa-task",
+          "title": "Story",
+          "url": "/work/tasks/:code#defect",
+          "handles": [
+            "defect"
+          ],
+          "meta": {
+            "ref": "/assets/data/nav/work/tasks/details/defect.json"
+          }
+        },
+        {
+          "code": "work.tasks.details.editor",
+          "icon": "fa-task",
+          "title": "Story",
+          "url": "/work/tasks/:code#editor",
+          "handles": [],
+          "meta": {
+            "ref": "/assets/data/nav/work/tasks/details/editor.json"
+          }
+        },
+        {
+          "code": "work.tasks.details.task",
+          "icon": "fa-task",
+          "title": "Details",
+          "url": "/work/tasks/:code#task",
+          "handles": [
+            "task"
+          ],
+          "meta": {
+            "ref": "/assets/data/nav/work/tasks/details/task.json"
+          }
+        }
+      ]
+    }
+  ]
+}

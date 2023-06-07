@@ -1,0 +1,68 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+<ng-container *ngIf="items.length; else noData">
+  <table mat-table [dataSource]="items" *ngIf="view === 'table'">
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td class="pointer" (click)="select(item)" mat-cell *matCellDef="let item" [class.deleted]="item.isDeleted"
+        [class.processing]="item.isProcessing">
+        <ng-container *ngIf="item.profile">{{item.profile.firstName | titlecase}} {{item.profile.lastName | titlecase}}
+        </ng-container>
+        <ng-container *ngIf="!item.profile || (!item.profile.firstName && !item.profile.lastName)">
+          {{item.code}}</ng-container>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="code">
+      <th mat-header-cell *matHeaderCellDef>Code</th>
+      <td class="pointer" (click)="select(item)" mat-cell *matCellDef="let item" [class.deleted]="item.isDeleted"
+        [class.processing]="item.isProcessing">
+        {{item.code || '--'}}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef> Email </th>
+      <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="phone">
+      <th mat-header-cell *matHeaderCellDef> Phone </th>
+      <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="roleType">
+      <th mat-header-cell *matHeaderCellDef> Role </th>
+      <td mat-cell *matCellDef="let element"> {{element?.type?.name || '--'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef>Action</th>
+      <td mat-cell *matCellDef="let item" [class.deleted]="item.isDeleted" [class.processing]="item.isProcessing">
+        <!-- <button mat-icon-button [disabled]="item.isProcessing" matTooltip="Edit" (click)="select(item)">
+          <mat-icon>edit</mat-icon>
+        </button> -->
+        <button mat-icon-button (click)="onRemove(item)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+  </table>
+
+  <!-- <mat-list *ngIf="view === 'list'">
+    <a mat-list-item [routerLink]="[item.code]" class="list-group-item" *ngFor="let item of items"
+      (click)="select(item)">
+      <h4 mat-line>{{item.profile.firstName }} {{item.profile.lastName}}</h4>
+      <p mat-line> {{item.code}} </p>
+    </a>
+  </mat-list> -->
+
+  <app-paginator [pager]="pager" [total]="pager.total"></app-paginator>
+</ng-container>
+
+<ng-template #noData>
+  <oa-no-data-found></oa-no-data-found>
+</ng-template>

@@ -1,0 +1,10 @@
+<ng-container>
+  <div class="detail" *ngIf="task && task.currentStatus && task.currentStatus.code !== 'active'">
+    <bap-subscription-list [organization]="organization" [columns]="columns" #list (fetched)="setSubscriptions()">
+    </bap-subscription-list>
+    <gateway-task-list #taskList [view]="'table'" [columns]="taskColumns" [parent]="task"
+      (taskUpdated)="afterTaskUpdate()"></gateway-task-list>
+  </div>
+</ng-container>
+
+<!-- <processing-indicator *ngIf="isProcessing"></processing-indicator> -->

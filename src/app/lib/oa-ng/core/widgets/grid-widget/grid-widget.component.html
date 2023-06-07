@@ -1,0 +1,51 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+<ng-container [ngSwitch]="view" *ngIf="!dataReceiving && items.length">
+
+  <ng-container *ngSwitchCase="'grid'">  
+    <div class="grid-container" [ngClass]="style?.container?.class" [ngStyle]="style?.container?.style">
+      <ng-container *ngFor="let column of fields; let i = index " class="spacer">
+        <div  *ngIf="!column.isHidden" [ngStyle]="column.style?.header?.style || style?.header?.style" [class.clickable]="column.click"
+          [ngClass]="column.style?.header?.class || style?.header?.class" (click)="onValueSelect(column, {})">
+          <div *ngIf="column.icon" [ngStyle]="column.style?.icon?.style || style?.icon?.style"
+            [ngClass]="column.style?.icon?.class || style?.icon?.class">
+            <img [src]="column.icon">
+          </div>
+          <div [ngStyle]="column.style?.value?.style || style?.value?.style"
+            [ngClass]="column.style?.value?.class || style?.value?.class">
+            <!-- <div class="flex-row">
+          <div class="target">{{getTarget(column, i) | value:'short'}}</div>
+          <div class="spacer"></div>
+          <div class="variance">{{getVariance(column, i)}}</div>
+        </div> -->
+            {{getValue(column, items.length ? items[items.length>1? i: 0]: {}) | value:'short'}}
+          </div>
+          <div class="stacked" [ngStyle]="column.style?.title?.style || style?.title?.style"
+            [ngClass]="column.style?.title?.class || style?.title?.class">
+            <div class="spacer"></div>
+            <div>{{column.label || items[i]?.label}}</div>
+            <div class="spacer"></div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'list'">
+    <div *ngFor="let column of fields; let i = index " class="controls-row">
+
+      <div  *ngIf="!column.isHidden" [ngStyle]="column.style?.title?.style || style?.title?.style"
+        [ngClass]="column.style?.title?.class || style?.title?.class">
+        <label>{{column.label || items[i]?.label}}</label>
+      </div>
+
+      <div  *ngIf="!column.isHidden" [ngStyle]="column.style?.value?.style || style?.value?.style"
+        [ngClass]="column.style?.value?.class || style?.value?.class">
+        {{getValue(column, items.length ? items[items.length>1? i: 0]: {}) | value:'short'}}
+      </div>
+
+    </div>
+  </ng-container>
+
+</ng-container>
+<processing-indicator *ngIf="dataReceiving" [inline]="true" [view]="'spinball'" ></processing-indicator>
+<oa-no-data-found *ngIf="!items.length && !dataReceiving" [message]="'No Data Found'"></oa-no-data-found>

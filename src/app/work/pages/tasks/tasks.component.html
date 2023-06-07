@@ -1,0 +1,109 @@
+<div class="main" [class.hidden]="!isCurrent">
+  <!-- <processing-indicator *ngIf="isProcessing"></processing-indicator> -->
+
+  <div *ngIf="isInitialized" class="sections">
+    <div *ngIf="sections.members && showMembers" class="section">
+      <gateway-member-list [view]="sections.members.view" [values]="selectedProject.members" [value]="selectedAssignee"
+        (selected)="onMemberSelect($event)" [options]="sections.members">
+      </gateway-member-list>
+    </div>
+
+    <div *ngIf="sections.timeLogs && showTimeLogs" class="section">
+      <div class="header {{sections.timeLogs.style?.header?.class}}">
+        <span>{{sections.timeLogs?.title || 'Time Logs'}}</span>
+        <span class="spacer"></span>
+        <oa-date-picker view="date" [value]="selectedDate" (change)="onDateSelect($event)"></oa-date-picker>
+      </div>
+      <div class="body {{sections.timeLogs.style?.body?.class}}">
+        <gateway-time-log-list #timeLogs [columns]="sections.timeLogs?.fields" [view]="sections.timeLogs.view"
+          [readonly]="true" [project]="{code: projectCode}" [date]="selectedDate" [user]="selectedAssignee"
+          [paging]="sections.timeLogs.paging" (taskSelected)="onSelect($event)" [empty]="sections.timeLogs.empty">
+        </gateway-time-log-list>
+      </div>
+    </div>
+
+    <ng-container *ngIf="sections.tasks" class="section">
+      <ng-container *ngIf="'due-date|status'.indexOf(selectedGroupBy)  !== -1; else tabbedView">
+        <ng-container *ngTemplateOutlet="taskList"></ng-container>
+      </ng-container>
+
+      <!--
+      <ng-container [ngSwitch]="selectedGroupBy">
+        <ng-container *ngSwitchCase="'due-date'">
+          <ng-container *ngTemplateOutlet="taskList"></ng-container>
+        </ng-container>
+        <ng-container *ngSwitchCase="'status'">
+          <ng-container *ngTemplateOutlet="taskList"></ng-container>
+        </ng-container>
+        <ng-container *ngSwitchDefault>
+          <ng-container *ngTemplateOutlet="tabbedView"></ng-container>
+        </ng-container>
+      </ng-container>
+      -->
+    </ng-container>
+
+    <ng-container *ngIf="sections.new">
+      <div class="bottom-sheet-spacer"></div>
+      <div class="popup bottom-sheet">
+        <gateway-task-new class="spacer" [type]="selectedType" [project]="selectedProject" [parent]="null"
+          [assignee]="selectedAssignee" (created)="onCreate($event)" [placeholder]="'New Task'">
+        </gateway-task-new>
+      </div>
+    </ng-container>
+  </div>
+</div>
+<router-outlet></router-outlet>
+
+<ng-template #groupedView>
+  <ng-container *ngIf="groups.length">
+    <div *ngFor="let group of groups">
+      <div class="flex-row" (click)="onGroupToggle(group)">
+        <mat-icon class="pointer">{{
+          group.isSelected ? 'expand_less' : 'expand_more'}}
+        </mat-icon>
+        <div>{{group.name}}</div>
+        <span class="stat primary">{{group.count}}</span>
+        <span class="spacer"></span>
+      </div>
+      <hr *ngIf="!group.isSelected">
+      <div *ngIf="group.isSelected">
+        <ng-container *ngTemplateOutlet="taskList"></ng-container>
+      </div>
+    </div>
+  </ng-container>
+</ng-template>
+
+<ng-template #tabbedView>
+  <div *ngIf="groups.length" class="tabs horizontal with-actions">
+    <div *ngFor="let group of groups" class="with-stat" [class.active]="group.isSelected"
+      (click)="onGroupToggle(group)">
+      <label>{{group.name}}</label>
+      <span class="stat primary">{{group.count}}</span>
+    </div>
+    <span class="spacer"></span>
+    <div *ngIf="groupActions.length" class="actions">
+      <oa-action *ngFor="let action of groupActions" [item]="action"></oa-action>
+    </div>
+  </div>
+  <ng-container *ngFor="let group of groups">
+    <div *ngIf="group.isSelected">
+      <ng-container *ngTemplateOutlet="taskList"></ng-container>
+    </div>
+  </ng-container>
+</ng-template>
+
+<ng-template #taskList>
+  <gateway-task-list #list [view]="selectedView"
+    [groupBy]="'status|due-date'.indexOf(selectedGroupBy) !== -1 ? selectedGroupBy: 'due-date'"
+    [paging]="sections.tasks?.paging" [columns]="sections.tasks?.fields" [orderBy]="sort" [type]="selectedType"
+    [endless]="endless" [project]="selectedProject" [parent]="selectedParent" [text]="selectedSubject"
+    [selectedStatus]="selectedStatus" [params]="query" [assignee]="selectedAssignee" [owner]="selectedOwner"
+    [includeDiscarded]="showDiscarded" [includeClosed]="showClosed" [includeDraft]="showDraft" [tags]="selectedTag"
+    (selected)="onSelect($event)" (onSelectedTag)="onTagSelect($event)" [footer]="'statusbar'"
+    [detailsTemplate]="detailsTemplate">
+  </gateway-task-list>
+</ng-template>
+
+<ng-template #detailsTemplate let-task="task">
+  <gateway-task-details view="row" [code]="task.code"></gateway-task-details>
+</ng-template>

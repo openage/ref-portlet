@@ -1,0 +1,20 @@
+.iconPlus>.material-icons {
+  color: var(--primary);
+  cursor: pointer;
+}
+
+label {
+  color: #6A6A6A;
+  font-size: 13px;
+  margin-top:15px;
+  margin-bottom:5px;
+}
+
+.err {
+  font-size: 12px;
+  padding-left: 14px;
+}
+
+.oa-input {
+  margin-bottom: 5px;
+}

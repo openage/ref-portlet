@@ -1,0 +1,13 @@
+<div class="error-container {{class}} {{view}}" [style]="style">
+  <ng-container [ngSwitch]="view" *ngIf="error">
+    <div *ngSwitchCase="'form-hint'" class="flex-row banner" [matTooltip]="error.name">
+      <i class="{{error.level}} sm xx"></i>
+      <span class="spacer">{{error.message}}</span>
+      <oa-action item="close" class="subtle" (click)="clearError()"></oa-action>
+    </div>
+    <div *ngSwitchCase="'input-hint'" [matTooltip]="error.message">
+      <i class="{{error.level}}"></i>
+      <mat-error>{{error.name}}</mat-error>
+    </div>
+  </ng-container>
+</div>

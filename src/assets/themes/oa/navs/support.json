@@ -1,0 +1,40 @@
+{
+  "code": "reports",
+  "title": "Reports",
+  "routerLink": [
+    "/reports"
+  ],
+  "icon": {
+    "fa": "line-chart"
+  },
+  "permissions": [ ],
+  "items": [
+    {
+      "code": "reports.area",
+      "title": "Reports",
+      "routerLink": [
+        "/reports",
+        ":areaCode"
+      ],
+      "icon": {
+        "fa": "line-chart"
+      },
+      "permissions": [],
+      "items": [
+        {
+          "code": "reports.area.reportTypeCode",
+          "title": "Report List",
+          "routerLink": [
+            "/reports",
+            ":areaCode",
+            ":reportTypeCode"
+          ],
+          "icon": {
+            "fa": "line-chart"
+          },
+          "permissions": []
+        }
+      ]
+    }
+  ]
+}

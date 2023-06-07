@@ -1,0 +1,22 @@
+<div class="main" [class.hidden]="!isCurrent">
+  <div class="header">
+    <h5>{{page?.title}}</h5>
+    <span class="spacer"></span>
+    <button mat-raised-button color="primary" *ngIf="employeeRoleDetails && employeeRoleDetails.role" (click)="onSave()">Save</button>
+  </div>
+  <ng-container [ngSwitch]="view">
+
+    <ng-container *ngSwitchCase="'employee-role-details'">
+      <master-employee-role-details *ngIf="!!code" [code]="code" [divs]="page?.meta?.divs" [readonly]="readonly" #employeeRoleDetails>
+      </master-employee-role-details>
+    </ng-container>
+
+    <ng-container *ngSwitchDefault>
+      <app-employee-details *ngIf="!!code" [code]="code" [readonly]="readonly" (fetched)="onFetch($event)" #details>
+      </app-employee-details>
+    </ng-container>
+
+  </ng-container>
+
+</div>
+<router-outlet></router-outlet>

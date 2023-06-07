@@ -1,0 +1,107 @@
+<ng-container [ngSwitch]="view">
+  <div class="section {{options?.style?.container?.class}}" *ngSwitchCase="'form'">
+    <div class="header {{options?.style?.header?.class}}">
+      {{options?.title || 'New Time Log'}}
+    </div>
+    <div class="body {{options?.style?.body?.class}}">
+      <ng-container *ngFor="let column of columns" [ngSwitch]="column.code">
+        <div *ngSwitchCase="'user'">
+          <label>{{column.label || 'User'}}</label>
+          <directory-user-picker placeholder="" [value]="timeLog.user" (changed)="onUserSelect($event)">
+          </directory-user-picker>
+        </div>
+
+        <div *ngSwitchCase="'date'">
+          <label>{{column.label || 'Date'}}</label>
+          <oa-date-picker (change)="onSelectDate($event)" [value]="timeLog.date">
+          </oa-date-picker>
+        </div>
+
+        <div *ngSwitchCase="'activity'">
+          <label>{{column.label || 'Activity'}}</label>
+          <select class="oa-input" [(ngModel)]="timeLog.activity">
+            <option *ngFor="let item of activities" [value]="item">{{item | titlecase}}</option>
+          </select>
+        </div>
+
+        <div *ngSwitchCase="'task'">
+          <gateway-task-picker [label]="column.label || 'Task'" [params]="column?.config?.params || {
+          'project-code': project.code,
+          'assignee': auth.currentUser().email
+      }" [value]="timeLog.task" (changed)="onSetTask($event)">
+          </gateway-task-picker>
+        </div>
+
+        <div *ngSwitchCase="'effort'">
+          <label>{{column.label || 'Effort'}}</label>
+          <oa-value-editor [value]="{value: timeLog.minutes, unit: { code: 'min' }}" type="span"
+            (changed)="onDurationChanged($event)"></oa-value-editor>
+        </div>
+
+        <div *ngSwitchCase="'comment'">
+          <label>{{column.label || 'Comments'}}</label>
+          <textarea class="oa-input" maxlength="100" [(ngModel)]="timeLog.comment"></textarea>
+        </div>
+
+
+      </ng-container>
+    </div>
+    <div class="footer {{options?.style?.footer?.class}}">
+      <span class="spacer"></span>
+      <button mat-button class="primary" (click)="onReset()"
+        *ngIf="timeLog.minutes || timeLog.activity || timeLog.date">
+        Reset
+      </button>
+      <button mat-raised-button class="primary" (click)="addNewTimeLog()"
+        [disabled]="!timeLog.minutes || !timeLog.activity || !timeLog.date">
+        <mat-icon>save</mat-icon> Add
+      </button>
+    </div>
+  </div>
+  <div *ngSwitchCase="'table'" class="table">
+    <div class="header flex-row" [class.readonly]="readonly">
+      <div class="date">Date</div>
+      <div class="activity">Activity</div>
+      <div class="task">Task</div>
+      <div class="effort">Effort</div>
+      <div class="comment">Comment</div>
+      <div class="action">Action</div>
+    </div>
+    <div class="data-row subtle">
+      <div class="date">
+        <oa-date-picker (change)="onSelectDate($event)" [value]="timeLog.date">
+        </oa-date-picker>
+      </div>
+
+      <div class="activity">
+        <mat-select [(ngModel)]="timeLog.activity">
+          <mat-option *ngFor="let item of activities" [value]="item">{{item | titlecase}}</mat-option>
+        </mat-select>
+      </div>
+
+      <div class="task">
+        <gateway-task-picker [params]="{
+                'project-code': project.code,
+                'assignee': auth.currentUser().email
+            }" (changed)="onSetTask($event)">
+        </gateway-task-picker>
+      </div>
+
+      <div class="effort">
+        <oa-value-editor [value]="{value: timeLog.minutes, unit: { code: 'min' }}" type="span"
+          (changed)="onDurationChanged($event)"></oa-value-editor>
+      </div>
+
+      <div class="comment">
+        <textarea class="oa-input" id="comment" name="comment" maxlength="100" [(ngModel)]="timeLog.comment"></textarea>
+      </div>
+
+      <div class="action">
+        <button mat-icon-button (click)="addNewTimeLog()"
+          [disabled]="!timeLog.minutes || !timeLog.activity || !timeLog.date">
+          <mat-icon>save</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-container>

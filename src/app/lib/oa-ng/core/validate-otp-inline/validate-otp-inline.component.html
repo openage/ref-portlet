@@ -1,0 +1,24 @@
+<ng-container [ngSwitch]="view">
+    <ng-container *ngSwitchCase="'onlyOtp'">
+        <label *ngIf="label">{{label}} <span class="inputMandatory">*</span></label>
+        <div class="oa-input">
+            <input autofocus type="text" numbersOnly minlength="6" maxlength="6" [(ngModel)]="otp" name="otp" required>
+            <span *ngIf="otp" class="cursorPointer center getOtp" (click)="confirm()">Verify</span>
+        </div>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'validate-with-button'">
+        <div class="otp">
+            <input autofocus placeholder="Enter Otp" type="text" numbersOnly minlength="6" maxlength="6"
+                [(ngModel)]="otp" name="otp" required>
+        </div>
+
+        <div class="controls-row confBtn">
+            <span class="spacer"></span>
+            <button mat-raised-button [disabled]="isProcessing" (click)="cancel()">Cancel</button>
+            <button mat-raised-button color="primary" [disabled]="!otp || isProcessing"
+                (click)="confirm()">Confirm</button>
+            <span class="spacer"></span>
+        </div>
+    </ng-container>
+</ng-container>

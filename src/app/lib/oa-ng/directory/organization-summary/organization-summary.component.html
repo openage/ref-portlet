@@ -1,0 +1,85 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+<mat-card *ngIf="!view">
+  <h5>{{title}}</h5>
+  <div class="form-container flex-row two">
+    <mat-form-field appearance="outline">
+      <label>Name*</label>
+      <input matInput name="name" (change)="onNameChange()" [(ngModel)]="properties.name" type="string">
+      <div matSuffix #itemsMenuTrigger="matMenuTrigger" [matMenuTriggerFor]="itemsMenu">
+        <i *ngIf="isProcessing" class="fa fa-spinner fa-spin"></i>
+        <i *ngIf="!isProcessing && items.length>1" class="fa fa-caret-down"></i>
+        <i *ngIf="!isProcessing && items.length === 0" class="fa fa-search"></i>
+      </div>
+      <mat-menu #itemsMenu="matMenu">
+        <button mat-menu-item *ngFor="let item of items" (click)="onSelect(item)">
+          {{item.name}}
+        </button>
+      </mat-menu>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <label>Email*</label>
+      <input matInput name="email" [(ngModel)]="properties.email" type="string">
+      <oa-error [type]="'email'" [value]="properties.email" [label]="'Email'" [required]="true"></oa-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <label>Phone*</label>
+      <input matInput name="phone" [(ngModel)]="properties.phone" type="string">
+      <oa-error [type]="'mobile'" [value]="properties.phone" [label]="'Phone'" [required]="true"></oa-error>
+
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <label>GST Number</label>
+      <input matInput name="gst" [(ngModel)]="properties.meta.gst" type="string">
+      <oa-error [type]="'gst'" [value]="properties.meta.gst" [label]="'GST'"></oa-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <label>PAN Number</label>
+      <input matInput name="pan" [(ngModel)]="properties.meta.pan" type="string">
+      <oa-error [type]="'pan'" [value]="properties.meta.pan" [label]="'PAN'"></oa-error>
+    </mat-form-field>
+  </div>
+</mat-card>
+
+<div class="summary" *ngIf="view === 'summary'" #organization>
+  <label>Customer Details</label>
+  <div class="flex-1-3" *ngIf="properties">
+    <div class="profile-image-editor">
+      <div *ngIf="properties.logo && properties.logo.url">
+        <img [src]="properties.logo.url">
+      </div>
+      <div *ngIf="!properties.logo || !properties.logo.url" class="default">
+        LOGO</div>
+      <!-- <div>
+        <oa-avatar *ngIf="properties?.logo?.url"  [url]="properties?.logo.url"></oa-avatar>
+      </div> -->
+    </div>
+    <div>
+      <div class="flex-row spacing">
+        <div>
+          <label>Company Name</label>
+          <div>{{properties?.name}}</div>
+        </div>
+      </div>
+      <div class="flex-row three spacing">
+        <div>
+          <label>Contact Person</label>
+          <div *ngIf="properties.meta">{{properties?.meta?.contactPerson}}</div>
+        </div>
+        <div>
+          <label>Email</label>
+          <div>
+            <div>{{properties?.email}}</div>
+          </div>
+        </div>
+        <div>
+          <label>Phone</label>
+          <div>
+            <div>{{properties?.phone}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

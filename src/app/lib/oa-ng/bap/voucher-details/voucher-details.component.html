@@ -1,0 +1,81 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+<ng-container *ngIf="properties">
+  <div class="list">
+    <div class="section">
+      <div class="header">
+        <div>
+          <label>Invoice No:</label><span>{{ properties.code?properties.code:'Not Available'}}</span>
+        </div>
+        <div class="spacer"></div>
+        <div>
+          <label>Start Date:</label><span>{{properties.date | date: 'dd MMM yyyy'}}</span>
+        </div>
+        <div class="spacer"></div>
+        <div>
+          <label>End Date:</label><span>{{properties.dueDate | date: 'dd MMM yyyy'}}</span>
+        </div>
+        <div class="spacer"></div>
+        <div>
+          <label>Reference No.:</label><span *ngIf="properties?.entity">{{properties?.entity?.id}}</span>
+        </div>
+      </div>
+      <div class="controls-row centered">
+        <div>
+          <label>Customer</label>
+          <div>
+            <span *ngIf="properties?.buyerOrganization" class="heading">{{properties?.buyerOrganization?.name}}</span>
+          </div>
+          <ng-container *ngIf="properties?.buyerBillingEntity">
+            <bap-billing-entity-details [code]="properties?.buyerBillingEntity?.code" [view]="'detail'">
+            </bap-billing-entity-details>
+          </ng-container>
+          <!-- <ng-container *ngIf="properties.buyer">
+            <directory-user-picker *ngIf="properties.buyerOrganization && properties.buyerOrganization.code === 'yatra'"
+              [placeholder]="'Contact person'" [value]="properties.buyer" (changed)="onChange($event,'customerUser')"
+              [isAgent]="true">
+            </directory-user-picker>
+            <directory-employee-picker
+              *ngIf="properties.buyerOrganization && properties.buyerOrganization.code !== 'yatra'"
+              [placeholder]="'Contact person'" [organization]="properties.buyerOrganization"
+              (changed)="onChange($event,'customerUser')" [value]="properties.buyer">
+            </directory-employee-picker>
+          </ng-container> -->
+        </div>
+        <div class="spacer"></div>
+        <!-- <div>
+          <label>Supplier</label>
+          <div>
+            <span *ngIf="properties?.sellerOrganization" class="heading">{{properties?.sellerOrganization?.name}}</span>
+          </div>
+          <ng-container *ngIf="properties?.sellerBillingEntity">
+            <bap-billing-entity-details [code]="properties?.sellerBillingEntity?.code" [view]="'detail'"
+              (changed)="onChange($event,'supplierEntity')">
+            </bap-billing-entity-details>
+          </ng-container>
+          <ng-container *ngIf="properties.seller">
+            <directory-user-picker *ngIf="properties.sellerOrganization && properties.sellerOrganization.code === 'yatra'"
+              [placeholder]="'Contact person'" [value]="properties.seller" (changed)="onChange($event,'supplierUser')"
+              [isAgent]="true">
+            </directory-user-picker>
+            <directory-employee-picker
+              *ngIf="properties.sellerOrganization && properties.sellerOrganization.code !== 'yatra'"
+              [placeholder]="'Contact person'" [organization]="properties.sellerOrganization"
+              (changed)="onChange($event,'supplierUser')" [value]="properties.seller">
+            </directory-employee-picker>
+          </ng-container>
+        </div> -->
+        <div class="spacer"></div>
+        <div>
+          <div class="total-container {{properties.status}}">
+            <div>
+              <label class="amount">Total Amount</label>
+              <h4>{{properties.amount | value:'comma'}}</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</ng-container>

@@ -1,0 +1,128 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+
+<div [ngSwitch]="view">
+  <ng-container *ngSwitchCase="'table'">
+    <div class="table">
+      <div class="header" [class.readonly]="readonly">
+        <div class="date">Date</div>
+        <div class="user">User</div>
+        <div class="activity">Activity</div>
+        <div class="effort">Effort</div>
+        <div class="comment">Comment</div>
+        <!-- <div class="status">Status</div> -->
+        <div class="action">Action</div>
+      </div>
+
+      <div class="data-row subtle" *ngIf="!readonly">
+        <div class="date">
+          <oa-date-picker (change)="onDateChange($event)" [value]="newItem.date"></oa-date-picker>
+        </div>
+        <div class="user">{{auth.currentUser() | name}}</div>
+        <div class="activity">
+          <select class="input" [(ngModel)]="newItem.activity">
+            <option *ngFor="let item of activities" [value]="item">{{item | titlecase}}</option>
+          </select>
+        </div>
+        <div class="effort">
+          <oa-value-editor [value]="{
+              value: newItem.minutes,
+              unit: { code: 'min' }
+            }" type="span" (changed)="onDurationChanged($event)"></oa-value-editor>
+        </div>
+        <!-- <div class="comment"> -->
+        <textarea class="comment oa-input" id="comment" name="comment" maxlength="100"
+          [(ngModel)]="newItem.comment"></textarea>
+        <!-- </div> -->
+        <!-- <div class="status">New </div> -->
+        <div class="action">
+          <button *ngIf="!newItem.isProcessing" mat-icon-button (click)="addNewItem()"
+            [disabled]="!(newItem.minutes && newItem.activity && newItem.date)">
+            <mat-icon>save</mat-icon>
+          </button>
+          <div class="spinner" *ngIf="newItem.isProcessing">
+            <mat-spinner [diameter]="'24'" [color]="'primary'"></mat-spinner>
+          </div>
+        </div>
+      </div>
+      <div *ngFor="let item of items" class="data-row subtle" [class.readonly]="readonly"
+        [class.closed]="item.status === 'rejected'">
+        <div class="date">{{item.date | date}}</div>
+        <div class="user">{{item.user.profile.firstName}} {{item.user.profile.lastName}}</div>
+        <div class="activity">{{item.activity | titlecase}}</div>
+        <div class="effort">{{item.minutes*60 | time: 'clockWiseShort'}}</div>
+        <div class="comment">{{item.comment}}</div>
+        <!-- <div class="status">{{item.status | titlecase}}</div> -->
+        <div class="action">
+          <button mat-icon-button *ngIf="item.status === 'new'" [disabled]="item.isProcessing"
+            (click)="removeTimeLog(item)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+      <app-paginator [pager]="pager" [total]="pager.total"></app-paginator>
+    </div>
+  </ng-container>
+
+  <ng-container *ngSwitchDefault>
+    <table *ngIf="items.length; else noData" mat-table [dataSource]="items">
+      <ng-container matColumnDef="index">
+        <th mat-header-cell *matHeaderCellDef>S.No</th>
+        <td mat-cell *matCellDef="let item;let i=index;" [class.processing]="item.isProcessing">
+          {{i+1}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="taskCode">
+        <th mat-header-cell *matHeaderCellDef>Task</th>
+        <td mat-cell *matCellDef="let item;let i=index;" (click)="taskSelected.emit(item.task)"
+          [class.processing]="item.isProcessing">
+
+          <oa-icon *ngIf="item?.task?.type" class="not-subtle md" [value]="'oa-workflow-'+item?.task?.type"
+            [title]="item?.task?.type"></oa-icon>
+          <a class="codeColor capitalize my-auto mx-2">{{item?.task?.code | uppercase}}</a>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef>Date</th>
+        <td mat-cell *matCellDef="let item" [class.processing]="item.isProcessing">
+          {{item.date | date}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="effort">
+        <th mat-header-cell *matHeaderCellDef>Effort</th>
+        <td mat-cell *matCellDef="let item" [class.processing]="item.isProcessing">
+          {{item.minutes*60 | time: 'clockWiseShort'}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="details">
+        <th mat-header-cell *matHeaderCellDef>Task</th>
+        <td mat-cell *matCellDef="let item" [class.processing]="item.isProcessing">
+          <div>{{item.comment}}</div>
+          <div [class.sub-text]="item.comment">{{item.activity | uppercase}}:{{item.task.subject}}</div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="user">
+        <th mat-header-cell *matHeaderCellDef>User</th>
+        <td mat-cell *matCellDef="let item" [class.processing]="item.isProcessing">
+          <div class="controls-row" *ngIf="item.user">
+            <oa-avatar class="pointer spacing" [user]="item.user" [size]="25"></oa-avatar>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="columns; sticky: true">
+      </tr>
+      <tr mat-row *matRowDef="let row; columns: columns;">
+      </tr>
+    </table>
+  </ng-container>
+
+  <ng-template #noData>
+    <oa-no-data-found [value]="empty"></oa-no-data-found>
+  </ng-template>
+
+</div>

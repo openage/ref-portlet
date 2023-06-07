@@ -1,0 +1,25 @@
+.error-container {
+  align-items: center;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+i {
+  height: 200px;
+  width: 300px;
+  background-size: cover;
+  display: inline-block;
+}
+
+i.not-found {
+  background-image: url("https://openage.github.io/themes/yatra/v1/icons/error/page-not-found.svg");
+}
+
+i.unknown {
+  background-image: url("https://openage.github.io/themes/yatra/v1/icons/error/something-went-wrong.svg");
+}
+
+i.access-denied {
+  background-image: url("https://openage.github.io/themes/yatra/v1/icons/error/access-denied.svg");
+}

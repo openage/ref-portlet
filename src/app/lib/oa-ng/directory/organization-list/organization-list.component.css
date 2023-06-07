@@ -1,0 +1,11 @@
+.mat-column-action {
+  text-align: end;
+}
+
+.org-name>img {
+  height: 30px;
+}
+
+.org-name>span {
+  padding-left: 15px;
+}

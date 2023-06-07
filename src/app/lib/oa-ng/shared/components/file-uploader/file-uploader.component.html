@@ -1,0 +1,27 @@
+<div>
+  <div class="file">
+    <!-- <label>File</label> -->
+    <input type="file" class="form-control" (change)="onSelect($event)">
+  </div>
+  <div *ngIf="mappers && mappers.length" class="mappers">
+    <label>Format/Mapper</label>
+    <div>
+      <select [(ngModel)]="selectedMapper" class="form-control">
+        <option *ngFor="let item of mappers" [value]="item.value">{{item.name}}</option>
+      </select>
+    </div>
+
+  </div>
+  <div *ngIf="samples && samples.length">
+    <!-- <label class="fileFormat">File Format Samples</label> -->
+    <div class="sample" *ngFor="let sample of samples">
+      <a [href]="sample.url" target="_blank ">{{sample.name}}</a>
+    </div>
+  </div>
+  <div *ngIf="errorMessage" class="error">
+    <label>Error</label>
+    <p>
+      {{errorMessage}}
+    </p>
+  </div>
+</div>

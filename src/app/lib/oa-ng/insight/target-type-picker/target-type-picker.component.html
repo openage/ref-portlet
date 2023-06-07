@@ -1,0 +1,32 @@
+<ng-template #content>
+  <oa-autocomplete [value]="value && value.code? value : null " [options]="{
+  label: placeholder,
+  search: {
+    field: 'text',
+    params: {
+    },
+    limit: 5
+  },
+  preFetch: true,
+  templates: {
+    value: valueTemplate,
+    placeholder: placeholderTemplate
+  }
+}" [api]="api" (changed)="onSelect($event)" [readonly]="readonly">
+  </oa-autocomplete>
+</ng-template>
+
+<ng-template #valueTemplate let-item="value">
+  <div [class.readonly]="readonly" class="value input">
+    <span>{{item.label}} ({{item.period}})</span>
+  </div>
+</ng-template>
+
+<ng-template #placeholderTemplate>
+  <div class="input">
+    <label>{{placeholder}}</label>
+    <div class="sub-text">Search</div>
+  </div>
+</ng-template>
+
+<ng-container #outlet></ng-container>

@@ -1,0 +1,227 @@
+<div [ngSwitch]="view">
+  <div *ngSwitchCase="'row'">
+    <div class="controls-row">
+      <div class="spacer"></div>
+      <div class="fabRow controls-row">
+        <ng-container *ngFor="let item of items">
+          <ng-container *ngIf="(item.view !== 'hidden')">
+            <div *ngIf="auth.hasPermission(item.permissions)">
+              <div class="fabRow-link" *ngIf="item.url">
+                <a [href]="item.url" target="_blank">
+                  <ng-container *ngTemplateOutlet="linkTemplate; context: { item: item }"> </ng-container>
+                </a>
+              </div>
+              <div class="fabRow-link" *ngIf="!item.url && item.routerLink && item.routerLink.length"
+                [routerLink]="item.routerLink" [queryParams]="item.params.query" tabindex="-1">
+                <a>
+                  <ng-container *ngTemplateOutlet="linkTemplate; context: { item: item }"> </ng-container>
+                </a>
+              </div>
+            </div>
+          </ng-container>
+        </ng-container>
+      </div>
+
+      <div class="spacer"></div>
+    </div>
+  </div>
+
+  <div *ngSwitchCase="'row-box'">
+    <div class="controls-row customer-dash-links">
+      <ng-container *ngFor="let item of items; let i = index">
+        <div *ngIf="i !== 0" class="spacer"></div>
+        <ng-container *ngIf="(item.view !== 'hidden')">
+          <div class="fabRowBox" *ngIf="auth.hasPermission(item.permissions)">
+            <div class="fabRow-box" *ngIf="item.url">
+              <a [href]="item.url" target="_blank">
+                <ng-container *ngTemplateOutlet="linkTemplate; context: { item: item }"> </ng-container>
+              </a>
+            </div>
+            <div class="fabRow-box" *ngIf="!item.url && item.routerLink && item.routerLink.length"
+              [routerLink]="item.routerLink" [queryParams]="item.params.query" tabindex="-1">
+              <a>
+                <ng-container *ngTemplateOutlet="linkTemplate; context: { item: item }"> </ng-container>
+              </a>
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+
+  <div *ngSwitchCase="'icon-link-row'">
+    <div class="controls-row">
+      <div class="spacer"></div>
+      <div class="fabIconRow controls-row">
+        <ng-container *ngFor="let item of items">
+          <ng-container *ngIf="(item.view !== 'hidden')">
+            <div *ngIf="auth.hasPermission(item.permissions)">
+              <div class="fabIconRow-link" *ngIf="item.url">
+                <a [href]="item.url" target="_blank">
+                  <ng-container *ngTemplateOutlet="iconLinkTemplate; context: { item: item }"> </ng-container>
+                </a>
+              </div>
+              <div class="fabIconRow-link controls-row" *ngIf="!item.url && item.routerLink && item.routerLink.length"
+                [routerLink]="item.routerLink" [routerLinkActive]="'active'" [queryParams]="item.params.query"
+                tabindex="-1">
+                <a>
+                  <ng-container *ngTemplateOutlet="iconLinkTemplate; context: { item: item }"> </ng-container>
+                </a>
+                <div class="fabIconLinkTitle" [routerLinkActive]="'active'">
+                  {{item.title}}</div>
+              </div>
+            </div>
+          </ng-container>
+        </ng-container>
+      </div>
+
+      <div class="spacer"></div>
+    </div>
+  </div>
+
+  <div *ngSwitchCase="'grid'">
+    <div class="flex-row eight">
+      <ng-container *ngFor="let item of items">
+        <ng-container *ngIf="(item.view !== 'hidden')">
+          <div *ngIf="auth.hasPermission(item.permissions)">
+            <div class="fab-link" *ngIf="item.url">
+              <a [href]="item.url">
+                <ng-container *ngTemplateOutlet="linkTemplate; context: { item: item }"> </ng-container>
+              </a>
+            </div>
+            <div class="fab-link" *ngIf="!item.url && item.routerLink && item.routerLink.length"
+              [routerLink]="item.routerLink" [queryParams]="item.params.query" tabindex="-1">
+              <a>
+                <ng-container *ngTemplateOutlet="linkTemplate; context: { item: item }"> </ng-container>
+              </a>
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+
+  <div *ngSwitchCase="'large-grid'">
+    <div class="flex-row four">
+      <ng-container *ngFor="let item of items">
+        <ng-container *ngIf="(item.view !== 'hidden')">
+          <div *ngIf="auth.hasPermission(item.permissions)">
+            <div class="fab-link-large" *ngIf="item.url">
+              <a [href]="item.url" target="_blank">
+                <ng-container *ngTemplateOutlet="largeLinkTemplate; context: { item: item }"> </ng-container>
+              </a>
+            </div>
+            <div class="fab-link-large" *ngIf="!item.url && item.routerLink && item.routerLink.length"
+              [routerLink]="item.routerLink" [queryParams]="item.params.query" tabindex="-1">
+              <a>
+                <ng-container *ngTemplateOutlet="largeLinkTemplate; context: { item: item }"> </ng-container>
+              </a>
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+  <div *ngSwitchCase="'list'" class="list-view">
+    <div class="flex-row three ">
+      <ng-container *ngFor="let item of items">
+        <div>
+          <div *ngIf="item.url">
+            <ng-container *ngTemplateOutlet="listLinkTemplate; context: { item: item }"> </ng-container>
+          </div>
+          <div *ngIf="!item.url && item.routerLink && item.routerLink.length" [routerLink]="item.routerLink"
+            [queryParams]="item.params.query" tabindex="-1">
+            <ng-container *ngTemplateOutlet="listLinkTemplate; context: { item: item }"> </ng-container>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+
+</div>
+
+<ng-template #largeLinkTemplate let-item="item">
+  <mat-icon *ngIf="item.icon.mat">{{item.icon.mat}}</mat-icon>
+  <i *ngIf="item.icon.fa" class="fa fa-2x fa-{{item.icon.fa}}"></i>
+  <ng-container *ngIf="item.icon.oa">
+    <i class="hover lg {{item.icon.oa}}"></i>
+    <i class="active lg {{item.icon.oa}}"></i>
+  </ng-container>
+  <ng-container *ngIf="item.icon.url">
+    <img class="icon hover" src="{{item.icon.url}}">
+    <img class="icon active" src="{{item.icon.url}}">
+  </ng-container>
+  <h5>{{item.title}}</h5>
+</ng-template>
+
+<ng-template #linkTemplate let-item="item">
+  <mat-icon *ngIf="item.icon.mat">{{item.icon.mat}}</mat-icon>
+  <i *ngIf="item.icon.fa" class="fa fa-2x fa-{{item.icon.fa}}"></i>
+  <ng-container *ngIf="item.icon.oa">
+    <i class="hover x-md {{item.icon.oa}}"></i>
+    <i class="active x-md {{item.icon.oa}}"></i>
+  </ng-container>
+  <ng-container *ngIf="item.icon.url">
+    <img class="icon hover" src="{{item.icon.url}}">
+    <img class="icon active" src="{{item.icon.url}}">
+  </ng-container>
+  <h5>{{item.title}}</h5>
+</ng-template>
+
+<ng-template #iconLinkTemplate let-item="item">
+  <mat-icon *ngIf="item.icon.mat" [routerLink]="item.routerLink" [routerLinkActive]="'active'">{{item.icon.mat}}
+  </mat-icon>
+  <i *ngIf="item.icon.fa" [routerLink]="item.routerLink" [routerLinkActive]="'active'"
+    class="fa fa-2x fa-{{item.icon.fa}}"></i>
+  <ng-container *ngIf="item.icon.oa">
+    <i [routerLinkActive]="'active'" class="x-md {{item.icon.oa}}"></i>
+  </ng-container>
+  <ng-container *ngIf="item.icon.url">
+    <img [routerLink]="item.routerLink" [routerLinkActive]="'active'" class="icon" src="{{item.icon.url}}">
+  </ng-container>
+</ng-template>
+
+<ng-template #listLinkTemplate let-item="item">
+  <div class="controls-row pointer" (click)="item.event(item)">
+    <mat-icon class="oa lg label" [class.current]="item.style && item.style === 'current'"
+      [class.overdue]="item.style&&item.style === 'overdue'" *ngIf="item.icon.mat">
+      {{item.icon.mat}}
+    </mat-icon>
+    <i *ngIf="item.icon.fa" class="fa fa-2x fa-{{item.icon.fa}}"></i>
+    <ng-container *ngIf="item.icon.oa">
+      <i class="hover x-md {{item.icon.oa}}"></i>
+      <i class="active x-md {{item.icon.oa}}"></i>
+    </ng-container>
+    <ng-container *ngIf="item.icon.url">
+      <img class="icon hover" src="{{item.icon.url}}">
+      <img class="icon active" src="{{item.icon.url}}">
+    </ng-container>
+    <label class="pointer" [class]="item.style?item.style:'default'">{{item.title}}</label>
+  </div>
+</ng-template>
+
+
+<!-- <ng-container *ngFor="let subLinks of items">
+  <ng-container *ngIf="auth.hasPermission(subLinks.permissions) && subLinks.items && subLinks.items.length">
+    <div class="sub-links">
+      <div class="title">
+        <i [class]="subLinks.icon || 'fa fa-link'"></i>
+        <h5>{{subLinks.title}}</h5>
+      </div>
+      <ng-container *ngFor="let item of subLinks.items">
+        <ng-container *ngIf="auth.hasPermission(item.permissions)">
+          <a class="link-item" *ngIf="item.routerLink" [routerLink]="item.routerLink" routerLinkActive="active-link"
+            #rla9="routerLinkActive">
+            <i [class]="item.icon || 'fa fa-link'"></i>
+            <h5>{{item.title}}</h5>
+          </a>
+
+          <a class="link-item" *ngIf="item.url" [href]="item.url" [target]="item.target || '_blank'">
+            <i [class]="item.icon || 'fa fa-link'"></i>
+            <h5>{{item.title}}</h5>
+          </a>
+        </ng-container>
+      </ng-container>
+    </div>
+  </ng-container>
+</ng-container> -->

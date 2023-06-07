@@ -1,0 +1,30 @@
+<ng-container [ngSwitch]="view">
+
+  <ng-container *ngSwitchCase="'circle'">
+    <div class="circle" [attr.data-progress]="progressContent" style="--progress: {{progress}}%;--size:{{size}}px;">
+    </div>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'bar'">
+    <mat-progress-bar class="example-margin" color="primary" mode="determinate" [value]="progress">
+    </mat-progress-bar>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'pill'">
+    <div *ngIf="value || total" class="pill-box" [class.with-value]="total" [class.warn]="value > total">
+      <ng-container [ngSwitch]="type">
+        <ng-container *ngSwitchCase="'effort'">
+          <ng-container *ngIf="value">
+            <span>{{value*60 |time: 'clockWiseShort'}}</span>
+            <span *ngIf="total" class="value">{{total*60 |time: 'clockWiseShort'}}</span>
+          </ng-container>
+          <ng-container *ngIf="!value">
+            <span>0</span>
+            <span *ngIf="total" class="value">{{total*60 |time: 'clockWiseShort'}}</span>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+    </div>
+  </ng-container>
+
+</ng-container>

@@ -1,0 +1,116 @@
+<ng-container [ngSwitch]="view">
+  <ng-container *ngSwitchCase="'table'">
+    <ng-container *ngIf="items&&items.length">
+      <div class="table">
+        <div class="header px-0 text-center">
+          <div class="beneficiary">Beneficiary</div>
+          <div class="contact">Contact Details</div>
+          <div class="account">Account</div>
+          <!-- <div class="order-conversion">Conversion Ratio</div> -->
+          <div class="branch">Branch</div>
+          <div *ngIf="!readonly" class="action"></div>
+        </div>
+        <div *ngFor="let bank of items" class="data-row text-center">
+          <div class="beneficiary">
+            {{bank.beneficiaryName}}
+          </div>
+          <div class="contact">
+            {{bank.beneficiaryPhone}}<br>
+            <span class="subtext">
+              {{bank.beneficiaryEmail}}
+            </span>
+          </div>
+          <div class="account">
+            {{bank.account}}<br>
+            <span class="subtext">
+              {{bank.bankName}}</span>
+          </div>
+          <div class="branch">
+            {{bank.ifscCode}}<br>
+            <span class="subtext">
+              {{bank.branch}}</span>
+          </div>
+          <div class="action">
+            <button mat-icon-button matTooltip="Edit Bank Details" (click)="select.emit(bank)">
+              <mat-icon>create</mat-icon>
+            </button>
+          </div>
+
+        </div>
+        <div class="mt-2"><span (click)="addNewBank()" class="link pointer mt-2">Add New Bank</span></div>
+      </div>
+    </ng-container>
+    <oa-no-data-found *ngIf="!items || !items.length">
+      <div class="mt-2"><span (click)="addNewBank()" class="link pointer mt-2">Add New Bank</span></div>
+    </oa-no-data-found>
+
+  </ng-container>
+  <ng-container *ngSwitchDefault>
+  <ng-container *ngIf="items && items.length">
+    <ng-container *ngFor="let bank of items">
+      <bap-bank-details [properties]="bank" (click)="select.emit(bank)" (edit)="edit.emit($event)" class="pointer"
+        [selectedBankDetail]="selectedBankDetail"></bap-bank-details>
+    </ng-container>
+  </ng-container>
+    <oa-no-data-found *ngIf="!items.length"></oa-no-data-found>
+  </ng-container>
+</ng-container>
+
+
+<!-- <processing-indicator *ngIf="isProcessing"></processing-indicator>
+
+<ng-container *ngIf="bankDetails && bankDetails.length">
+  <table #dataTable mat-table [dataSource]="bankDetails">
+    <ng-container matColumnDef="bankName">
+      <th mat-header-cell *matHeaderCellDef>Bank Name</th>
+      <td mat-cell *matCellDef="let item" [class.deleted]="item.isDeleted" [class.processing]="item.isProcessing">
+        <ng-container *ngIf="item.name">
+          <span class="textCaptilize">{{item.name}}</span>
+        </ng-container>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="AccountNumber">
+      <th mat-header-cell *matHeaderCellDef>Account Number</th>
+      <td mat-cell *matCellDef="let item" [class.deleted]="item.isDeleted" [class.processing]="item.isProcessing">
+        <ng-container *ngIf="item.account">
+          <span class="textCaptilize">{{item.account}}</span>
+        </ng-container>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="ifsc">
+      <th mat-header-cell *matHeaderCellDef>IFSC Code</th>
+      <td mat-cell *matCellDef="let item" [class.deleted]="item.isDeleted" [class.processing]="item.isProcessing">
+        <ng-container *ngIf="item.ifscCode">
+          <span class="textCaptilize">{{item.ifscCode}}</span>
+        </ng-container>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="branch">
+      <th mat-header-cell *matHeaderCellDef>Branch Name</th>
+      <td mat-cell *matCellDef="let item" [class.deleted]="item.isDeleted" [class.processing]="item.isProcessing">
+        <ng-container *ngIf="item.branch">
+          <span class="textCaptilize">{{item.branch}}</span>
+        </ng-container>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let item; let i = index;" [class.deleted]="item.isDeleted"
+        [class.processing]="item.isProcessing">
+        <ng-container>
+          <ng-container>
+            <button mat-icon-button [disabled]="item.isProcessing" matTooltip="Edit" (click)="editBank(item,i)">
+              <mat-icon>create</mat-icon>
+            </button>
+            <button mat-icon-button [disabled]="item.isProcessing" matTooltip="Delete" (click)="removeBank(i)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </ng-container>
+        </ng-container>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="bankColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; let i = index; columns: bankColumns;"></tr>
+  </table>
+</ng-container>-->

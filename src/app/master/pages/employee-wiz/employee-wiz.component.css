@@ -1,0 +1,38 @@
+.list-group-item.active {
+    z-index: 2;
+    color: #fff !important;
+    background-color: #3f4766;
+    border-color: #3f4766;
+}
+
+.mat-list {
+    cursor: pointer;
+    padding: 0px;
+}
+
+.mat-card {
+    box-shadow: none !important;
+    border-color: #3f4766;
+    border: 1px solid rgba(0,0,0,.125);
+}
+
+.col-md-3 {
+    padding-right: 0px;
+}
+
+.empheader {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    object-fit: cover;
+    margin-left: 12px !important;
+    padding-right: -30px;
+    margin-right: -21px;
+}
+.empheader .title
+{
+    margin-top: 0px !important;
+
+
+}

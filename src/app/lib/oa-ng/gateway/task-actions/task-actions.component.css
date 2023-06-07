@@ -1,0 +1,11 @@
+:host {
+  display: block;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+@media only screen and (max-width:568px) {
+  .actions {
+    padding-top:10px;
+  }
+}

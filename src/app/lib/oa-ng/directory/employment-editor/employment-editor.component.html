@@ -1,0 +1,175 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-3">
+      <div style="text-align: center;">
+        <ng-container *ngIf="employee.profile.pic && (employee.profile.pic.thumbnail || employee.profile.pic.url)">
+          <div id="container">
+            <button id="x" mat-icon-button color="primary" (click)="removePic()">
+              <mat-icon>clear</mat-icon>
+            </button>
+            <img class="image" [src]="(employee.profile.pic.url || employee.profile.pic.thumbnail)">
+          </div>
+        </ng-container>
+        <ng-container
+          *ngIf="!employee.profile || !employee.profile.pic || (!employee.profile.pic.url && !employee.profile.pic.thumbnail)">
+          <input type="file" style="display: none" #fileInput accept="image/*" (change)="onChangeFileInput()" />
+          <button mat-raised-button color="primary" class="file-select-button" (click)="onClickFileInputButton()">
+            <mat-icon>attach_file</mat-icon>
+            Select Image
+          </button>
+          <!-- <input class="pic" placeholder="Choose Image" type="file" (change)="onPicSelect($event)" />
+          <span style="color:red;" *ngIf="message">{{message}}</span> -->
+        </ng-container>
+        <span class="spacer"></span>
+      </div>
+    </div>
+    <div class="col-sm-9">
+      <div class="form-container flex-row two">
+        <mat-form-field appearance="outline">
+          <label for="code">Employee Code</label>
+          <input matInput id="code" name="code" placeholder="" [(ngModel)]="employee.code" readonly>
+          <mat-hint *ngIf="!employee.code">Employee Code will be auto-generated</mat-hint>
+        </mat-form-field>
+        <directory-designation-picker [label]="'Designation'" [placeholder]="''" [readonly]="readonly"
+          [value]="employee.designation" (changed)="designationSelected($event)" [usercode]="employee.code">
+        </directory-designation-picker>
+      </div>
+      <div class="form-container flex-row two">
+        <mat-form-field appearance="outline">
+          <label for="type">Type</label>
+          <mat-select id="type" name="type" [(value)]="employee.config.employmentType" placeholder=""
+            [disabled]="readonly" [required]="true">
+            <mat-option disabled="" value=" ">Select an option</mat-option>
+            <mat-option value="permanent">Permanent</mat-option>
+            <mat-option value="contract">Contract</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <directory-user-picker [placeholder]="'Supervisor'" [readonly]="readonly" [value]="employee.supervisor"
+          (changed)="supervisorSelected($event)">
+        </directory-user-picker>
+
+      </div>
+      <div class="form-container flex-row two">
+        <directory-department-picker [label]="'Department'" [readonly]="readonly" [placeholder]="''"
+          [usercode]="employee.code" [value]="employee.department" (changed)="departmentSelected($event)">
+        </directory-department-picker>
+
+        <directory-division-picker [label]="'Division'" [readonly]="readonly" [placeholder]="''"
+          [value]="employee.division" (changed)="divisionSelected($event)" [usercode]="employee.code">
+        </directory-division-picker>
+      </div>
+      <div class="form-container flex-row two">
+        <mat-form-field appearance="outline">
+          <label for="firstName"> First Name</label>
+          <input matInput id="firstName" name="firstName" placeholder="" [(ngModel)]="employee.profile.firstName"
+            [readonly]="readonly" [required]="!readonly" type="text" maxlength="100">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <label for="lastName"> Last Name</label>
+          <input matInput id="lastName" name="lastName" placeholder="" [(ngModel)]="employee.profile.lastName"
+            maxlength="100" type="string" [readonly]="readonly" [required]="!readonly">
+        </mat-form-field>
+      </div>
+      <div class="form-container flex-row two">
+        <mat-form-field appearance="outline">
+          <label for="fatherName">Father/Husband</label>
+          <input matInput id="fatherName" name="fatherName" placeholder="" [(ngModel)]="employee.profile.fatherName"
+            maxlength="100" type="string" [readonly]="readonly" [required]="!readonly">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <label for="dob">DOB</label>
+          <input matInput id="dob" placeholder="" class="arrtime" [matDatepicker]="dob"
+            [(ngModel)]="employee.profile.dob" numbersOnly [readonly]="readonly" [max]="maxDate" [required]="!readonly">
+          <mat-datepicker-toggle [disabled]="readonly" matSuffix [for]="dob"></mat-datepicker-toggle>
+          <mat-datepicker #dob [disabled]="readonly"></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="form-container flex-row two">
+        <mat-form-field appearance="outline">
+          <label for="bgroup">Blood Group</label>
+          <mat-select id="bgroup" name="bgroup" placeholder="" [(value)]="employee.profile.bloodGroup"
+            [disabled]="readonly" [required]="!readonly">
+            <mat-option value="0: null">Select an option</mat-option>
+            <mat-option value="A+">A+</mat-option>
+            <mat-option value="B+">B+</mat-option>
+            <mat-option value="O+">O+</mat-option>
+            <mat-option value="AB+">AB+</mat-option>
+            <mat-option value="A-">A-</mat-option>
+            <mat-option value="B-">B-</mat-option>
+            <mat-option value="O-">O-</mat-option>
+            <mat-option value="AB-">AB-</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <label for="gender">Gender</label>
+          <mat-select id="gender" placeholder="" [(value)]="employee.profile.gender" [disabled]="readonly"
+            [required]="!readonly">
+            <mat-option value="">Select an option</mat-option>
+            <mat-option value="male">Male</mat-option>
+            <mat-option value="female">Female</mat-option>
+            <mat-option value="others">Others</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="form-container flex-row two">
+
+        <mat-form-field appearance="outline">
+          <label for="email">Email</label>
+          <input matInput name="email" placeholder="" id="email" (change)="validateEmail()" [(ngModel)]="employee.email"
+            maxlength="100" type="string" maxlength="100" [readonly]="readonly" [required]="!readonly">
+          <mat-icon *ngIf="employee.email && emailError === ''" matSuffix color="primary">check</mat-icon>
+          <mat-hint class="error" *ngIf="emailError">{{emailError}}</mat-hint>
+        </mat-form-field>
+
+
+        <mat-form-field appearance="outline">
+          <label for="phone">Phone</label>
+          <input matInput numbersOnly id="phone" name="phone" numbersOnly placeholder="" [(ngModel)]="employee.phone"
+            type="text" minlength="10" maxlength="10" [readonly]="readonly" [required]="!readonly">
+        </mat-form-field>
+
+      </div>
+      <div class="form-container flex-row two">
+
+        <mat-form-field appearance="outline">
+          <label for="doj">Date Of Joining</label>
+          <input matInput name="arrtime" id="doj" [matDatepicker]="joining" [(ngModel)]="employee.doj" placeholder=""
+            numbersOnly [readonly]="readonly" [required]="true">
+          <mat-datepicker-toggle [disabled]="readonly" matSuffix [for]="joining"></mat-datepicker-toggle>
+          <mat-datepicker [disabled]="readonly" #joining></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <label for="aadhaar"> Aadhaar No</label>
+          <input matInput name="aadhaar" id="aadhaar" numbersOnly placeholder="" [(ngModel)]="employee.config.aadhaar"
+            maxlength="12" [readonly]="readonly" [required]="!readonly">
+        </mat-form-field>
+
+      </div>
+      <div class="form-container flex-row two">
+        <!-- <div *ngIf="!readonly && !employee.id" class="col-sm-6 ">
+          <directory-reset-password-editor [change]="readonly" [employeeCode]="employee.code" #password>
+          </directory-reset-password-editor>
+        </div> -->
+
+        <mat-form-field appearance="outline">
+          <label for="userType">User Type</label>
+          <mat-select id="userType" name="type" [(value)]="employee.type" placeholder="" [disabled]="readonly"
+            [required]="required">
+            <mat-option disabled="" value=" ">Select an option</mat-option>
+            <!-- <mat-option value="supervisor">Supervisor</mat-option> -->
+            <mat-option value="superadmin">Superadmin</mat-option>
+            <mat-option value="normal">Normal</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </div>
+    </div>
+  </div>
+  <!-- <div class="row">
+
+  </div> -->
+</div>

@@ -1,0 +1,26 @@
+<div class="release-container">
+  <mat-card (click)="show()">
+    <div class="release-content">
+      <div class="release-header">
+        <div class="row">
+          <div class="version {{release.type}}">
+            <span>{{release.code}}</span>
+          </div>
+        </div>
+        <div class="sub-text">{{release.type}}</div>
+      </div>
+      <!-- <countdown-clock [from]="release.actual.start" [due]="release.plan.finish" (started)="start($event)"
+        (finished)="finish($event)">
+      </countdown-clock> -->
+      <div class="final notes" *ngIf="!isWip && release.description">
+        {{release.description}}
+      </div>
+      <div class="project" [style.color]="release.project.color">
+        {{release.project.name}}
+      </div>
+    </div>
+  </mat-card>
+  <div class="wip notes" *ngIf="isWip && release.description">
+    {{release.description}}
+  </div>
+</div>

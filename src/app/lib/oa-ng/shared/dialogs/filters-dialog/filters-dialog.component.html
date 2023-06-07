@@ -1,0 +1,36 @@
+<div mat-dialog-title class="controls-row">
+  <h4>Add Filters</h4>
+  <div class="spacer"></div>
+  <mat-icon (click)="dialogRef.close()" class="pointer">close</mat-icon>
+</div>
+
+<div mat-dialog-content>
+  <div>
+    <h5 class="selected-title">Selected Filters</h5>
+    <div class="selected-filters-section">
+      <div class="selected-filters" *ngFor="let filter of selectedFilters">
+        <label>{{filter.label | titlecase }}</label>
+        <mat-icon matTooltip="Remove filter" class="pointer subtle" (click)="removeFilter(filter)">delete</mat-icon>
+      </div>
+    </div>
+  </div>
+  <div class="available-filters-section">
+    <div class="section-title">
+      <h5>Available Filters</h5>
+    </div>
+    <div class="filters-section">
+      <ng-container *ngFor="let filter of availableFilters">
+        <div class="checkbox">
+          <mat-checkbox (change)="onSelect($event, filter)">{{filter.label | titlecase }}
+          </mat-checkbox>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<div mat-dialog-actions class="buttons controls-row">
+  <span class="spacer"></span>
+  <button class="spacing grey-border" mat-button (click)="dialogRef.close()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="onSubmit()">Submit</button>
+</div>

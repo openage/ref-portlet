@@ -1,0 +1,155 @@
+.target-label {
+  font-size: 16px;
+  margin-bottom: 0px !important;
+}
+
+.target-period {
+  font-size: 10px;
+}
+
+.target-achieved {
+  font-size: 12px;
+}
+
+.bottom-bar {
+  margin-bottom: -20px !important;
+  margin-top: 4px;
+}
+
+
+.target-stat {
+  width: 25%;
+  border-left: 1px dashed var(--disabledBackground);
+}
+
+.target-stat p {
+  font-size: 10px;
+  margin-bottom: 0px !important;
+  margin-top: 4px !important;
+  text-align: right;
+}
+
+.target-stat span {
+  font-size: 24px;
+  color: var(--primary);
+  float: right;
+}
+
+
+table {
+  width: 100%;
+}
+
+tr.example-detail-row {
+  height: 0;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: #efefef;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
+.example-element-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+.example-element-diagram {
+  min-width: 80px;
+  border: 2px solid black;
+  padding: 8px;
+  font-weight: lighter;
+  margin: 8px 0;
+  height: 104px;
+}
+
+.example-element-symbol {
+  font-weight: bold;
+  font-size: 40px;
+  line-height: normal;
+}
+
+.example-element-description {
+  padding: 16px;
+  width: 100%;
+}
+
+.period {
+    width: 10%;
+}
+
+.cluster {
+  width: 10%;
+}
+
+.user {
+    width: 20%;
+    padding-right: 98px;
+}
+
+.achieved {
+    width: 25%;
+    text-align: center;
+    padding: 0 80px;
+}
+
+.target {
+    width: 25%;
+    text-align: center;
+    padding: 0 80px;
+}
+
+.action {
+    width: 10%;
+    text-align: right;
+}
+
+.remove-member {
+  color: var(--disabledBackground);
+}
+
+.team-section {
+  width: 80%;
+}
+
+.primary-color {
+  color:var(--primary)
+}
+
+input.mat-input-element {
+  margin-top: auto;
+  text-align: center;
+}
+
+.border-none {
+  border: none !important;
+}
+
+.total-border {
+  border-bottom: 2px solid var(--defaultBackground) !important;
+}
+
+div.table > .data-row {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+@media only screen and (max-width:568px){
+  .table>div {
+    display: table-header-group;
+    vertical-align: middle;
+    border-color: inherit;
+  }
+
+  .table>div div{
+    display: table-cell;
+    padding-right:10px;
+  }
+}

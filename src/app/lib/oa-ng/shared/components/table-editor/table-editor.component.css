@@ -1,0 +1,25 @@
+.tableDiv {
+    overflow-x: scroll;
+}
+
+.table td,
+.table th {
+    padding: 4px;
+    border: 1px solid #d9d9d9;
+    position: relative;
+}
+
+.table th {
+    text-align: center;
+    background: var(--defaultBackground);
+    
+}
+.flex_data{
+ 
+    display: flex;
+    /* margin-left: 20px; */
+
+}
+div{
+    color:rgb(149, 146, 146)
+}

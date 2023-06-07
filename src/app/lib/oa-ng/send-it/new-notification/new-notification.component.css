@@ -1,0 +1,271 @@
+:host {
+  display: block;
+  margin: auto;
+}
+
+a {
+  cursor: pointer;
+  padding-right: 40px;
+  padding-left: 40px;
+  float: left;
+  position: relative;
+  /* margin-top:15px; */
+}
+
+.material-icons {
+  font-size: 28px;
+}
+
+.si-md {
+  margin-top: 14px;
+  height: 25px;
+  width: 21px;
+}
+
+.si-md.si-newNotifications {
+  margin-top: 14px;
+  height: 25px;
+  width: 23px;
+}
+
+.notificationFrom {
+  color: var(--primary);
+}
+
+.count-badge {
+  position: absolute;
+  font-size: 10px;
+  color: white;
+  margin-left: 15px;
+  background-color: var(--primary);
+  border-radius: 50%;
+  min-width: 24px;
+  min-height: 22px;
+  line-height: 1;
+  padding: 7px 3px 6px 3px;
+  text-align: center;
+  margin-top: -7px;
+}
+
+.dateText {
+  text-align: end;
+  font-size: 8px;
+  color: #8895A9;
+  margin: 0px;
+  float: right;
+}
+
+.mat-card {
+  position: absolute;
+  z-index: 10000;
+  right: 25px;
+  top: 45px;
+  width: 300px;
+  border-radius: 4px;
+  padding: 0px;
+  padding-bottom: 15px;
+  padding-top: 5px;
+}
+
+.row {
+  margin: 0px;
+  padding-top: 10px;
+}
+
+.header {
+  margin-bottom: 10px;
+  padding-left: 10px;
+  border-bottom: 1px solid var(--defaultBackground);
+  padding-bottom: 5px;
+  padding-top: 5px;
+}
+
+.logo {
+  height: 35px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  width: 35px;
+  border-radius: 50%;
+}
+
+.list-item .title {
+  font-size: small;
+  overflow: hidden;
+}
+
+.list-item .sub-text {
+  font-size: smaller;
+}
+
+.read .title {
+  color: var(--disabled);
+  cursor: pointer;
+}
+
+.detail {
+  color: #8895A9;
+  font-size: 9px;
+  height: 14px;
+  overflow: hidden;
+  margin-bottom: 5px;
+}
+
+.col-lg-10 {
+  white-space: normal;
+  line-height: normal;
+}
+
+.footerDiv {
+  height: 20px;
+  padding-top: 8px;
+  line-height: normal;
+}
+
+.footerContent {
+  font-size: 13px;
+  font-weight: bold;
+  color: var(--primary);
+  margin-bottom: 0px;
+  cursor: pointer;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.footerContent:hover {
+  text-decoration: underline;
+}
+
+.notifications {
+  /* overflow: hidden; */
+  height: 275px;
+  overflow-y: scroll;
+}
+
+.notifications.list>.list-item {
+  padding-left: 0;
+  cursor: pointer;
+}
+
+.showMax {
+  height: auto !important;
+  min-height: 275px;
+  max-height: 500px;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+hr {
+  margin: 0px;
+}
+
+/* width */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 15px;
+}
+
+/* Handle */
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 15px;
+}
+
+
+
+.imgDiv {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.imgDiv>img {
+  margin-top: 15px;
+  width: 85%;
+}
+
+@media screen and (max-width: 500px) {
+  a {
+    /* padding-right: 20px; */
+    padding-left: 20px;
+  }
+
+  .si-md {
+    margin-top: 11px;
+  }
+
+  .mat-card {
+    position: absolute;
+    z-index: 2;
+    right: 20px;
+    top: 60px;
+    width: 300px;
+    border-radius: 10px;
+    padding-top: 0px;
+  }
+}
+
+@media screen and (min-width: 501px) and (max-width: 1080px) {
+  .mat-card {
+    right: 40px;
+  }
+}
+
+@media screen and (min-width: 1920px) {
+  .si-bell {
+    height: 24.7px 29px;
+    width: 24.09px 1562.91px;
+  }
+
+  .si-md {
+    margin-top: 14px;
+  }
+}
+
+@media screen and (-ms-high-contrast: active),
+screen and (-ms-high-contrast: none) {
+
+  /* your CSS here for IE 11 */
+  .footerContent {
+    text-align: center;
+  }
+}
+
+@media only screen and (max-width:568px) {
+  .notify-section {
+    padding-right: 20px;
+  }
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.notification-toggle-section {
+  background-color: #fffab9;
+}
+
+.align {
+  height: 35px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.goto-inbox {
+  color: var(--primary);
+  display: flex;
+  justify-content: center;
+}
+
+.goto-icon {
+  font-size: 18px;
+}

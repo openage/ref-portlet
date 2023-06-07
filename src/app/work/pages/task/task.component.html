@@ -1,0 +1,146 @@
+<div class="main" [class.hidden]="!isCurrent">
+  <processing-indicator *ngIf="!task||task.isProcessing"></processing-indicator>
+  <ng-container *ngIf="task">
+    <div class="w-p scrollable">
+      <div class="sections">
+        <div *ngIf="sections.actionBar" class="section {{sections.actionBar.style?.container?.class}}">
+          <span class="sub-text pointer" *ngIf="task.parent?.code" (click)="gotoByCode(task.parent.code)">
+            {{task.parent.code | uppercase}}</span>
+          <span class="spacer"></span>
+          <gateway-task-states [task]="task" [view]="sections.actionBar.stages?.view"></gateway-task-states>
+          <span class="spacer"></span>
+          <gateway-task-actions [task]="task" [view]="sections.actionBar.actions?.view" [options]="parentOptions"
+            (updated)="onStatusUpdate($event)" #workflow>
+          </gateway-task-actions>
+        </div>
+        <div *ngIf="sections.taskDetails" class="section {{sections.taskDetails.style?.container?.class}}">
+          <gateway-task-details #detail [properties]="task" [columns]="sections.taskDetails.fields">
+          </gateway-task-details>
+        </div>
+
+        <div *ngIf="sections.children && task?.workflow?.children?.length"
+          class="section {{sections.children?.style?.container?.class}}">
+          <div class="header {{sections.children?.style?.header?.class}}">
+            {{sections.children?.title || 'Sub-Tasks'}}
+            <span class="spacer"></span>
+            <ng-container
+              *ngTemplateOutlet="bulkActionsTemplate;context: { listType:'children', count:task.children.length}">
+            </ng-container>
+
+          </div>
+          <div class="body {{sections.children?.style?.body?.class}}">
+            <gateway-task-new *ngIf="sections.children.new" [project]="task.project" [parent]="task"
+              [assignee]="task.assignee" [view]="sections.children.new.view" (created)="onSubtaskCreate($event)"
+              [placeholder]="sections.children.new.placeholder">
+            </gateway-task-new>
+            <div class="list-inline">
+              <gateway-task-list [view]="sections.children.view" [parent]="task"
+                [includeDiscarded]="sections.children.params.discarded"
+                [includeClosed]="sections.children.params.closed" [includeDraft]="sections.children.params.draft"
+                [columns]="sections.children.fields" [paging]="sections.children.paging"
+                [detailsTemplate]="detailsTemplate" (selected)="onSelect($event)">
+              </gateway-task-list>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="sections.related" class="section {{sections.related.style?.container?.class}}">
+          <div class="header {{sections.related?.style?.header?.class}}">
+            {{sections.related?.title || 'Related'}}
+            <span class="spacer"></span>
+            <ng-container
+              *ngTemplateOutlet="bulkActionsTemplate;context:{listType:'dependsOn', count:task.dependsOn.length}">
+            </ng-container>
+          </div>
+          <div class="m-b-10">
+            <gateway-task-picker [params]="{'project-id': task?.project?.id}" [options]="options"
+              (changed)="onUpdate($event,false)"></gateway-task-picker>
+          </div>
+          <div class="list-inline">
+            <gateway-task-list [view]="sections.related.view" [dependsOn]="task"
+              [includeDiscarded]="sections.related.params.discarded" [includeClosed]="sections.related.params.closed"
+              [includeDraft]="sections.related.params.draft" [columns]="sections.related.fields"
+              [paging]="sections.related.paging" [detailsTemplate]="detailsTemplate" (selected)="onSelect($event)"
+              #dependsOnList>
+            </gateway-task-list>
+          </div>
+        </div>
+
+        <div *ngIf="folder?.code && sections.documents" class="section {{sections.documents?.style?.container?.class}}">
+          <div class="header {{sections.documents?.style?.header?.class}}">{{sections.documents?.title || 'Documents'}}
+          </div>
+          <div class="body {{sections.documents?.style?.body?.class}}">
+            <drive-file-list #files [view]="sections.documents?.view" [entity]="entity" [visibility]="1"
+              [folder]="folder">
+            </drive-file-list>
+          </div>
+        </div>
+
+        <div *ngIf="sections.comments" class="section {{sections.comments.style?.container?.class}}">
+          <div class="header {{sections.comments?.style?.header?.class}}">
+            {{sections.comments?.title || 'Comments'}}
+          </div>
+          <div class="body {{sections.comments?.style?.body?.class}}">
+            <send-it-new-message *ngIf="sections.comments?.new" [modes]="sections.comments?.new?.modes"
+              [conversation]="conversation"></send-it-new-message>
+            <send-it-conversation-detail [view]="sections.comments?.view" [mode]="sections.comments?.mode"
+              [conversation]="conversation">
+            </send-it-conversation-detail>
+          </div>
+        </div>
+
+        <div *ngIf="sections.history" class="section {{sections.history.style?.container?.class}}">
+          <div class="header {{sections.history?.style?.header?.class}}">
+            {{sections.history?.title || 'History'}}
+          </div>
+          <div class="body {{sections.history?.style?.body?.class}}">
+            <insight-journal-list [entity]="entity"> </insight-journal-list>
+          </div>
+        </div>
+
+        <div *ngIf="sections.timeLogs" class="section {{sections.timeLogs.style?.container?.class}}">
+          <div class="header {{sections.timeLogs?.style?.header?.class}}">
+            {{sections.timeLogs?.title || 'Time Logs'}}
+          </div>
+          <div class="body {{sections.timeLogs?.style?.body?.class}}">
+            <gateway-time-log-list [task]="task"></gateway-time-log-list>
+          </div>
+        </div>
+      </div>
+      <div class="sections">
+
+        <div *ngIf="sections.properties" class="section {{sections.properties.style?.container?.class}}">
+          <div class="header {{sections.properties?.style?.header?.class}}">
+            {{sections.properties?.title || 'Properties'}}
+          </div>
+          <div class="body {{sections.properties?.style?.body?.class}}">
+            <gateway-task-details [view]="sections.properties.view" [properties]="task"
+              [columns]="sections.properties.fields"></gateway-task-details>
+          </div>
+        </div>
+
+        <gateway-time-log-new *ngIf="sections.newTimeLog" [options]="sections.newTimeLog"
+          [view]="sections.newTimeLog.view" [columns]="sections.newTimeLog.fields" [task]="task"></gateway-time-log-new>
+
+        <!-- <div class="body highlighted">
+          <gateway-task-details view="attributes" [properties]="task"></gateway-task-details>
+        </div> -->
+      </div>
+    </div>
+  </ng-container>
+
+</div>
+
+<ng-template #detailsTemplate let-task="task">
+  <gateway-task-details view="row" [more]="more" [code]="task.code"></gateway-task-details>
+</ng-template>
+
+<ng-template #bulkActionsTemplate let-listType="listType" let-count="count">
+  <mat-menu #menu="matMenu">
+    <button *ngFor="let action
+of bulkActions" (click)="onBulkUpdate(action.code,listType)" mat-menu-item>{{action.label}}</button>
+  </mat-menu>
+  <mat-icon *ngIf="count > 0" class="subtle" [matMenuTriggerFor]="menu">more_vert</mat-icon>
+</ng-template>
+
+<router-outlet></router-outlet>

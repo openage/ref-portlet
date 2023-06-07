@@ -1,0 +1,26 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+<form type="submit">
+  <div class="row">
+    <mat-toolbar> New Division</mat-toolbar>
+    <!-- <div > -->
+    <!-- <div class="col-sm-5">
+    <mat-form-field>
+      <input matInput name="deviceCode" placeholder="Code" [(ngModel)]="division.code" type="string">
+    </mat-form-field>
+  </div>
+  <div class="col-sm-5"> -->
+    <mat-form-field>
+      <input matInput name="deviceName" placeholder="Name" [(ngModel)]="division.name" type="string">
+    </mat-form-field>
+    <!-- </div> -->
+    <!-- </div> -->
+    <!-- <div class="controls-row">
+    <span class="spacer"></span> -->
+    <div class="row">
+      <button mat-raised-button color="primary" [disabled]="isProcessing" (click)="create(division)">
+        Create
+      </button>
+    </div>
+    <!-- </div> -->
+  </div>
+</form>

@@ -1,0 +1,247 @@
+{
+  "area": {
+    "code": "dashboard"
+  },
+  "divs": [
+    {
+      "view": "tab",
+      "divs": [
+        {
+          "title": "User",
+          "code": "user",
+          "permissions": [],
+          "divs": [
+            {
+              "code": "primary-stats",
+              "style": {
+                "container": {
+                  "style": {
+                    "margin-bottom": "10px"
+                  }
+                },
+                "widgets": {
+                  "class": "one"
+                }
+              }
+            },
+            {
+              "code": "primary-1-1-1",
+              "style": {
+                "container": {
+                  "style": {
+                    "margin-bottom": "10px"
+                  }
+                },
+                "widgets": {
+                  "class": "three"
+                }
+              }
+            },
+            {
+              "code": "quick-links",
+              "style": {
+                "container": {
+                  "style": {
+                    "margin-bottom": "10px"
+                  }
+                },
+                "widgets": {
+                  "class": "one"
+                }
+              },
+              "widgets": [
+                {
+                  "widget": {
+                    "code": "quick-links",
+                    "config": {
+                      "view": "row"
+                    }
+                  },
+                  "items": [
+                    {
+                      "code": "home.inbox"
+                    },
+                    {
+                      "code": "master.projects"
+                    },
+                    {
+                      "code": "master.employees"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "code": "secondary-1-1-1",
+              "style": {
+                "container": {
+                  "style": {
+                    "margin-bottom": "10px"
+                  }
+                },
+                "widgets": {
+                  "class": "three"
+                }
+              }
+            },
+            {
+              "code": "secondary-1-1",
+              "style": {
+                "container": {
+                  "style": {
+                    "margin-bottom": "10px"
+                  }
+                },
+                "widgets": {
+                  "class": "two"
+                }
+              }
+            },
+            {
+              "code": "r-1",
+              "permissions": [],
+              "style": {
+                "container": {
+                  "style": {
+                    "margin-top": "20px"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "title": "Projects",
+          "code": "project",
+          "permissions": [],
+          "divs": [
+            {
+              "code": "p-s",
+              "title": "p-s"
+            },
+            {
+              "code": "p-s-1",
+              "title": "p-s-1",
+              "style": {
+                "container": {
+                  "style": {
+                    "margin-top": "20px"
+                  }
+                },
+                "divs": {
+                  "class": "flex-row two"
+                }
+              },
+              "divs": [
+                {
+                  "code": "p-s-1-l",
+                  "title": "p-s-1-l"
+                },
+                {
+                  "code": "p-s-1-r",
+                  "title": "p-s-1-r"
+                }
+              ]
+            },
+            {
+              "code": "p-s-2",
+              "title": "p-s-2",
+              "style": {
+                "container": {
+                  "style": {
+                    "margin-top": "20px"
+                  }
+                },
+                "divs": {
+                  "class": "flex-row two"
+                }
+              },
+              "divs": [
+                {
+                  "code": "p-s-2-l",
+                  "title": "p-s-2-l"
+                },
+                {
+                  "code": "p-s-2-r",
+                  "title": "p-s-2-r"
+                }
+              ]
+            },
+            {
+              "code": "p-s-3",
+              "title": "p-s-3",
+              "style": {
+                "container": {
+                  "style": {
+                    "margin-top": "20px"
+                  }
+                },
+                "divs": {
+                  "class": "flex-row two"
+                }
+              },
+              "divs": [
+                {
+                  "code": "p-s-3-l",
+                  "title": "p-s-3-l"
+                },
+                {
+                  "code": "p-s-3-r",
+                  "title": "p-s-3-r"
+                }
+              ]
+            },
+            {
+              "code": "p-s-4",
+              "title": "p-s-4",
+              "style": {
+                "container": {
+                  "style": {
+                    "margin-top": "20px"
+                  }
+                },
+                "divs": {
+                  "class": "flex-row two"
+                }
+              },
+              "divs": [
+                {
+                  "code": "p-s-4-l",
+                  "title": "p-s-4-l"
+                },
+                {
+                  "code": "p-s-4-r",
+                  "title": "p-s-4-r"
+                }
+              ]
+            },
+            {
+              "code": "p-s-5",
+              "title": "p-s-5",
+              "style": {
+                "container": {
+                  "style": {
+                    "margin-top": "20px"
+                  }
+                },
+                "divs": {
+                  "class": "flex-row two"
+                }
+              },
+              "divs": [
+                {
+                  "code": "p-s-5-l",
+                  "title": "p-s-5-l"
+                },
+                {
+                  "code": "p-s-5-r",
+                  "title": "p-s-5-r"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

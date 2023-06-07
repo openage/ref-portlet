@@ -1,0 +1,5 @@
+<div>
+    <processing-indicator *ngIf="isProcessing"></processing-indicator>
+    <core-page-divs *ngIf="!isProcessing" [divs]="divs" [reportTypes]="reportTypes" [filters]="filters" (selected)="selected.emit($event)">
+    </core-page-divs>
+</div>

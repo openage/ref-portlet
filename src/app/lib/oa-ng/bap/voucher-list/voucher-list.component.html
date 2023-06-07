@@ -1,0 +1,267 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+
+<ng-container *ngIf="items && items.length; then dataTable; else noData"></ng-container>
+
+<ng-template #dataTable>
+  <table mat-table multiTemplateDataRows [dataSource]="items">
+
+    <ng-container matColumnDef="no">
+      <th mat-header-cell *matHeaderCellDef>S.No.</th>
+      <td mat-cell *matCellDef="let item;let i=index;" [class.deleted]="item.isDeleted"
+        [class.processing]="item.isProcessing">
+        <ng-container>
+          <span class="text-capitalize">{{i+1}}</span>
+        </ng-container>
+      </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="paymentDate">
+      <th mat-header-cell *matHeaderCellDef class="text-center">Actual Payment Date</th>
+      <td mat-cell *matCellDef="let item" [class.deleted]="item.isDeleted" [class.processing]="item.isProcessing"
+        class="text-center">
+        <!-- <oa-date-picker [options]="{inline:true}" [value]="item.dueDate" (change)="onDateChange($event,item,'dueDate')">
+        </oa-date-picker> -->
+        <ng-container *ngIf="item.dueDate">
+          <span class="text-capitalize">{{item.dueDate | date:'dd-MM-yyyy'}}</span>
+        </ng-container>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="jobNumber">
+      <th mat-header-cell *matHeaderCellDef>Job Number</th>
+      <td mat-cell *matCellDef="let item" [class.deleted]="item.isDeleted" [class.processing]="item.isProcessing">
+        <ng-container *ngIf="item.entity.id">
+          <span class="text-capitalize pointer code"
+            (click)="gotoOrder(item.entity.id)">{{item.entity.id|uppercase}}</span>
+        </ng-container>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="gstNumber">
+      <th mat-header-cell *matHeaderCellDef>GST Number</th>
+      <td mat-cell *matCellDef="let item" class="centered-text" [class.deleted]="item.isDeleted"
+        [class.processing]="item.isProcessing" class="pr-2">
+        <ng-container *ngIf="item.sellerBillingEntity.gst">
+          <span class="text-capitalize">{{item.sellerBillingEntity.gst}}</span>
+        </ng-container>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="invoice">
+      <th mat-header-cell *matHeaderCellDef>Invoice Number</th>
+      <td mat-cell *matCellDef="let item" [class.deleted]="item.isDeleted" [class.processing]="item.isProcessing"
+        class="invoice-input">
+        <span class="text-capitalize">{{item.invoice?.code}}</span>
+      </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="vendor">
+      <th mat-header-cell *matHeaderCellDef>Vendor</th>
+      <td mat-cell *matCellDef="let item" [class.deleted]="item.isDeleted" [class.processing]="item.isProcessing">
+        <div *ngIf="item.sellerOrganization" class="">
+          <!-- <oa-avatar class="pointer spacing" [value]="item.buyer"></oa-avatar> -->
+          <span class="text-capitalize">{{item.sellerOrganization?.name}} </span>
+        </div>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="customer">
+      <th mat-header-cell *matHeaderCellDef class="text-center">Customer</th>
+      <td mat-cell *matCellDef="let item" [class.deleted]="item.isDeleted" [class.processing]="item.isProcessing">
+        <div *ngIf="item?.meta?.order?.customer?.name" class="controls-row col-md-3">
+          <!-- <oa-avatar class="pointer spacing" [value]="item.buyer"></oa-avatar> -->
+          <span class="text-capitalize pointer code"
+            (click)="openDialog(item.meta.order.customer.code)">{{item.meta.order.customer.name}}
+          </span>
+        </div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="requestedDate">
+      <th mat-header-cell *matHeaderCellDef> Payment Request Date</th>
+      <td mat-cell *matCellDef="let item" [class.deleted]="item.isDeleted" [class.processing]="item.isProcessing">
+        <ng-container *ngIf="item.date">
+          <span class="text-capitalize">{{item.date | date:'dd-MM-yyyy hh:mm a'}}</span>
+        </ng-container>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="expectedDate">
+      <th mat-header-cell *matHeaderCellDef class="text-center"> Expected Date</th>
+      <td mat-cell class="text-center" *matCellDef="let item" [class.deleted]="item.isDeleted"
+        [class.processing]="item.isProcessing">
+        <ng-container *ngIf="item.expectedDate">
+          <span class="text-capitalize">{{item.expectedDate | date:'dd-MM-yyyy'}}</span>
+        </ng-container>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="totalAmount">
+      <th mat-header-cell *matHeaderCellDef class="text-right pr-2">Total Amount</th>
+      <td mat-cell *matCellDef="let item" class="text-right pr-2" [class.deleted]="item.isDeleted"
+        [class.processing]="item.isProcessing">
+        <ng-container>
+          <oa-value-editor [view]="'inline'" [readonly]='true' [decimal]="2" [type]="'currency'" [value]="{
+                value: item?.amount,
+                unit: {
+                  code: item.currency?.code
+                }
+              }"></oa-value-editor>
+
+        </ng-container>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="requestedAmount">
+      <th mat-header-cell *matHeaderCellDef class="text-right pr-2">Amount Requested</th>
+      <td mat-cell *matCellDef="let item" class="text-right pr-2" [class.deleted]="item.isDeleted"
+        [class.processing]="item.isProcessing">
+        <ng-container>
+          <oa-value-editor [view]="'inline'" [readonly]='true' [decimal]="2" [type]="'currency'" [value]="{
+                value: item?.amount,
+                unit: {
+                  code: item.currency?.code
+                }
+              }"></oa-value-editor>
+
+        </ng-container>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef class="centered-text">Status</th>
+      <td mat-cell *matCellDef="let item" class="centered-text" [class.deleted]="item.isDeleted"
+        [class.processing]="item.isProcessing">
+        <ng-container *ngIf="item.status">
+          <span class="text-capitalize">{{item.status}}</span>
+        </ng-container>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="priority">
+      <th mat-header-cell *matHeaderCellDef class="centered-text">Priority</th>
+      <td mat-cell *matCellDef="let item" class="centered-text" [class.deleted]="item.isDeleted"
+        [class.processing]="item.isProcessing">
+        <ng-container *ngIf="item?.priority">
+          <span class="text-capitalize">{{item?.priority}}</span>
+        </ng-container>
+      </td>
+    </ng-container>
+    <!--
+        <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let item;let i=index" [class.deleted]="item.isDeleted"
+                [class.processing]="item.isProcessing">
+                <div class="action-button controls-row" *ngIf="item?.meta.taskCode">
+                    <gateway-task-actions [code]="item.meta.taskCode" [view]="'action'"
+                        (updated)="updatedTask($event,item)" [options]="{ more: { extras: [] }}">
+                    </gateway-task-actions>
+                </div>
+            </td>
+        </ng-container> -->
+
+    <ng-container matColumnDef="navigation">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let item;let i=dataIndex" [class.deleted]="item.isDeleted" class="text-right"
+        [class.processing]="item.isProcessing">
+        <div class="d-flex justify-content-end align-items-center">
+          <button mat-icon-button [disabled]="item.isProcessing" matTooltip="{{item.isSelected?'Collapse':'Expand'}}"
+            (click)="onExpand(item,i)">
+            <mat-icon>{{item.isSelected?'keyboard_arrow_up':'keyboard_arrow_down'}}</mat-icon>
+          </button>
+        </div>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="expandedDetail">
+      <td mat-cell *matCellDef="let item" [attr.colspan]="columns.length" class="border-top-0  p-0">
+        <ng-container *ngIf='item.isSelected'>
+          <div class="example-element-detail section p-2 d-flex flex-column" [class.selected]="item.isSelected">
+            <div class="d-flex header px-2">
+              <div class="spacer"></div>
+              <gateway-task-states [entity]="{id: item.code, type: 'voucher'}" [workflow]="'billing|voucher'"
+                (fetched)="task = $event">
+              </gateway-task-states>
+              <div class="spacer"></div>
+              <gateway-task-actions [task]="task" [entity]="{id:item.code,type:'voucher'}"></gateway-task-actions>
+            </div>
+            <div class="d-flex ">
+              <gateway-task-status-bar class="w-100" [task]="task"
+                [permissions]="{assign:['voucher.reassign'],owner: ['voucher.manage']}"
+                [options]="{hide:{dueDate:false,actionArrow:false,isActionArrowHidden:true,identifier:true} }">
+              </gateway-task-status-bar>
+            </div>
+          </div>
+        </ng-container>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="assignee">
+      <td mat-cell *matCellDef="let item">
+        <ng-container *ngIf='item.isSelected'>
+          <div class="example-element-detail mb-3 ">
+            <div>
+              <directory-user-picker [label]="'Assignee :'" [value]="task?.assignee"></directory-user-picker>
+            </div>
+          </div>
+        </ng-container>
+      </td>
+    </ng-container>
+    <!-- <ng-container matColumnDef="taskStatus">
+      <td mat-cell *matCellDef="let item" [attr.colspan]="">
+        <ng-container *ngIf='item.isSelected'>
+          <div class="example-element-detail w-100 mb-3 ">
+            <div class="w-100">
+
+
+              <label>Status:</label>
+              <div class='d-flex w-100'>
+                <gateway-task-states [entity]="{id: item.code, type: 'voucher'}" [workflow]="'billing|voucher'"
+                  (fetched)="task = $event">
+                </gateway-task-states>
+              </div>
+            </div>
+          </div>
+
+
+        </ng-container>
+      </td>
+    </ng-container> -->
+    <ng-container matColumnDef="action">
+      <td mat-cell *matCellDef="let item" [attr.colspan]="2" class="border-top-0">
+        <ng-container *ngIf='item.isSelected'>
+          <div class="example-element-detail justify-content-end align-items-right">
+
+            <gateway-task-actions *ngIf="task" [view]="'action'" [options]="{ more: { extras: more }}" [task]="task"
+              [before]="before" #workflow>
+            </gateway-task-actions>
+          </div>
+        </ng-container>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="saveButton">
+      <td mat-cell *matCellDef="let item" [attr.colspan]="columns.length" class="border-0">
+        <ng-container *ngIf='item.isSelected && item.status!=="approved"'>
+          <div class="example-element-detail  pr-4">
+            <button mat-raised-button class="primary ml-auto" (click)="onSave(item)">Save</button>
+          </div>
+        </ng-container>
+      </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="columns; sticky: true"></tr>
+    <!-- <tr mat-row *matRowDef="let row; let i = index; columns: columns;"></tr> -->
+    <tr mat-row *matRowDef="let element; columns: columns; let i =dataIndex" class="example-element-row"
+      [class.selected]="selectedIndex === i">
+    </tr>
+    <!-- <tr mat-row *matRowDef="let row; columns: ['saveButton']" class="example-detail-row  mt-5"></tr> -->
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row mt-5">
+    </tr>
+
+  </table>
+
+  <app-paginator [pager]="pager" [total]="pager.total"></app-paginator>
+</ng-template>
+
+<ng-template #noData>
+  <oa-no-data-found [message]="'No Vouchers Found'"></oa-no-data-found>
+  <!-- <button *ngIf="invoice?.status === 'approved'" class="primary" (click)="addNewVoucher()">ADD
+    VOUCHER</button> -->
+</ng-template>

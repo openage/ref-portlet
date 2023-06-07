@@ -1,0 +1,89 @@
+<div class="card-wrap container-cards">
+  <div class="row">
+    <div class="col-sm-6 ">
+      <mat-form-field>
+        <input matInput name="arrtime" [matDatepicker]="joining" [(ngModel)]="employee.doj"
+          placeholder="Date Of Joining" numbersOnly [readonly]="usercode === 'my'" [required]="usercode !== 'my'">
+        <mat-datepicker-toggle [disabled]="usercode === 'my'" matSuffix [for]="joining"></mat-datepicker-toggle>
+        <mat-datepicker [disabled]="usercode === 'my'" #joining></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <!-- <div class="col-sm-6 ">
+            <mat-form-field>
+                <mat-select name="type" [(value)]="employee.config.employmentType" placeholder="Type"
+                [disabled]="usercode === 'my'" [required]="usercode!='my'">
+                <mat-option disabled="" value=" ">Select an option</mat-option>
+                <mat-option value="permanent">Permanent</mat-option>
+                <mat-option value="contract">Contract</mat-option>
+            </mat-select>
+            </mat-form-field> -->
+
+
+    <!-- <ng-container *ngIf="employee && employee.id">
+
+                <mat-form-field>
+                    <input #userInput matInput type="text" [(ngModel)]="employees.config.employmentType"
+                        [readonly]="usercode === 'my'" [required]="usercode!='my'">
+                </mat-form-field>
+            </ng-container> -->
+
+    <!-- </div> -->
+  </div>
+  <div class="row">
+    <div class="col-sm-6 ">
+      <!-- <directory-division-picker [placeholder]="'Division'" [value]="employee.division"
+                (changed)="divisionSelected($event)" [usercode]="usercode">
+            </directory-division-picker> -->
+      <ng-container *ngIf="employees && employees.id && usercode === 'my'">
+
+        <mat-form-field>
+          <input #userInput matInput type="text" [(ngModel)]="employees.supervisor.division.name"
+            [readonly]="usercode === 'my'" [required]="usercode !== 'my'">
+        </mat-form-field>
+      </ng-container>
+    </div>
+    <div class="col-sm-6">
+      <!-- <directory-employee-picker [placeholder]="'Supervisor'" [employee]="employee.supervisor"
+                (changed)="supervisorSelected($event)" [usercode]="usercode">
+            </directory-employee-picker> -->
+
+
+      <ng-container *ngIf="employees && employees.id && usercode === 'my'">
+        <!-- <span >{{designation.name}}</span> -->
+        <mat-form-field>
+          <input #userInput matInput type="text" [(ngModel)]="employees.supervisor.profile.firstName"
+            [readonly]="usercode === 'my'" [required]="usercode !== 'my'">
+        </mat-form-field>
+      </ng-container>
+
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 ">
+      <!-- <directory-designation-picker [placeholder]="'Designation'" [designation]="employee.designation"
+                (changed)="designationSelected($event)" [usercode]="usercode">
+            </directory-designation-picker> -->
+      <ng-container *ngIf="designation && designation.name">
+        <!-- <span >{{designation.name}}</span> -->
+        <mat-form-field>
+          <input #userInput matInput type="text" [(ngModel)]="designation.name" [readonly]="usercode === 'my'"
+            [required]="usercode !== 'my'">
+        </mat-form-field>
+      </ng-container>
+
+
+    </div>
+    <div class="col-sm-6 ">
+      <!-- <directory-department-picker [placeholder]="'Department'" [usercode]="usercode"
+                [department]="employee.department" (changed)="departmentSelected($event)">
+            </directory-department-picker> -->
+      <ng-container *ngIf="department && department.name">
+        <!-- <span >{{designation.name}}</span> -->
+        <mat-form-field>
+          <input #userInput matInput type="text" [(ngModel)]="department.name" [readonly]="usercode === 'my'"
+            [required]="usercode !== 'my'">
+        </mat-form-field>
+      </ng-container>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,80 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+<div *ngIf="properties">
+  <!-- <div *ngIf="!readonly" class="controls-row">
+    <ng-container [ngSwitch]="type">
+      <div *ngSwitchCase="'link'" contenteditable="true" spellcheck="false" [textContent]="properties.url"
+        (blur)="properties.url=$event.target.textContent; setLink()"></div>
+
+      <oa-icon-file-picker *ngSwitchDefault #fileProvider [value]="properties" (change)="setDoc($event)">
+      </oa-icon-file-picker>
+    </ng-container>
+    <span class="spacer"></span>
+    <button mat-raised-button color="primary" *ngIf="permissions && auth.hasPermission(permissions.update)"
+      (click)="updateContent()">Update</button>
+  </div> -->
+
+  <div class="{{class}}" *ngIf="properties" [ngSwitch]="type">
+    <json-editor *ngSwitchCase="'json'" [value]="content.body" (blur)="setContent($event)"></json-editor>
+    <div *ngSwitchCase="'html'">
+      <ng-container *ngIf="checkPermissions('update'); else showTenant">
+        <oa-content-editor [value]="checkContent().body" (blur)="setContent($event)"></oa-content-editor>
+      </ng-container>
+      <ng-template #showTenant>
+        <div [innerHTML]="properties.content"></div>
+      </ng-template>
+      <div *ngIf=""></div>
+    </div>
+    <pdf-viewer *ngSwitchCase="'pdf'" [src]="properties.url" [render-text]="true" style="display: block;">
+    </pdf-viewer>
+    <img *ngSwitchCase="'img'" [src]="properties.url">
+    <div *ngSwitchDefault>
+      <div class="cardSection" (click)="openInTab()">
+        <i *ngIf="!properties.thumbnail" class="lg active {{icon}}"></i>
+        <img *ngIf="properties.thumbnail" [src]="properties.thumbnail">
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- <processing-indicator *ngIf="isProcessing"></processing-indicator>
+<div *ngIf="properties">
+
+  <ng-container [ngSwitch]="readonly">
+    <ng-container *ngSwitchCase="false">
+      <div class="{{class}}" [ngSwitch]="type">
+        <div *ngSwitchCase="'html'">
+          <ng-container *ngIf="checkPermissions('update'); else showTenant">
+            <oa-content-editor [value]="checkContent().body" (changed)="setContent($event)"></oa-content-editor>
+          </ng-container>
+          <ng-template #showTenant>
+            <div [innerHTML]="properties.content"></div>
+          </ng-template>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngSwitchDefault>
+      <div class="{{class}}" [ngSwitch]="type">
+        <json-editor *ngSwitchCase="'json'" [value]="content.body" (blur)="setContent($event)"></json-editor>
+        <div *ngSwitchCase="'html'">
+          <ng-container *ngIf="checkPermissions('update'); else showTenant">
+            <oa-content-editor [value]="checkContent().body" (changed)="setContent($event)"></oa-content-editor>
+          </ng-container>
+          <ng-template #showTenant>
+            <div [innerHTML]="properties.content"></div>
+          </ng-template>
+        </div>
+        <pdf-viewer *ngSwitchCase="'pdf'" [src]="properties.url" [render-text]="true" style="display: block;">
+        </pdf-viewer>
+        <img *ngSwitchCase="'img'" [src]="properties.url">
+        <div *ngSwitchDefault>
+          <div class="cardSection" (click)="openInTab()">
+            <i *ngIf="!properties.thumbnail" class="lg active {{icon}}"></i>
+            <img *ngIf="properties.thumbnail" [src]="properties.thumbnail">
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+</div> -->

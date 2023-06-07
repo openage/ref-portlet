@@ -1,0 +1,40 @@
+{
+  "context": [
+    {
+      "code": "add"
+    },
+    {
+      "code": "refresh"
+    },
+    {
+      "code": "close",
+      "type": "icon"
+    }
+  ],
+  "search": {
+    "view": "filters",
+    "params": [
+      {
+        "label": "Name",
+        "key": "name",
+        "control": "input"
+      },
+      {
+        "label": "Status",
+        "key": "status",
+        "control": "selector",
+        "value": "active",
+        "options": [
+          {
+            "label": "Active",
+            "value": "active"
+          },
+          {
+            "label": "In Active",
+            "value": "inactive"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,51 @@
+<ul class="breadcrumb" *ngIf="!view">
+    <ng-container *ngFor="let state of task.workflow.states | slice:3:6">
+        <ng-container *ngIf="state.isComplete">
+            <li class="states" [style.background]="'#D8CBF8'">
+                <a id="finish" style="color:#3F139E !important; background: #D8CBF8">
+                    <b>{{state.name}}</b>
+                </a>
+            </li>
+        </ng-container>
+        <ng-container *ngIf="state.isSelected">
+            <li class="states" [style.background]="'#D8CBF8'">
+                <a id="progress" style="color:#3F139E !important; background: #D8CBF8">
+                    <b>{{state.name}}</b>
+                </a>
+            </li>
+        </ng-container>
+        <ng-container *ngIf="!state.isSelected && !state.isComplete">
+            <li class="states" [style.background]="'#e6e6e6'">
+                <a id="notStarted" style="color:#8D8D8D !important; background: #e6e6e6">
+                    <b>{{state.name}}</b>
+                </a>
+            </li>
+        </ng-container>
+    </ng-container>
+</ul>
+
+<ul class="breadcrumbStepper" *ngIf="view">
+    <ng-container *ngFor="let state of task.workflow.states | slice:3:6">
+        <ng-container *ngIf="state.isComplete">
+            <li class="states" [style.background]="'#D8CBF8'" (click)="onSelectStepper(state.code)">
+                <a id="stepperFinish" style="color:#3F139E !important; background: #D8CBF8">
+                    <b>{{state.name}}</b>
+                </a>
+            </li>
+        </ng-container>
+        <ng-container *ngIf="state.isSelected">
+            <li class="states" [style.background]="'#D8CBF8'" (click)="onSelectStepper(state.code)">
+                <a id="stepperProgress" style="color:#3F139E !important; background: #D8CBF8">
+                    <b>{{state.name}}</b>
+                </a>
+            </li>
+        </ng-container>
+        <ng-container *ngIf="!state.isSelected && !state.isComplete">
+            <li class="states" [style.background]="'#e6e6e6'" (click)="onSelectStepper(state.code)">
+                <a id="stepperNotStarted" style="color:#8D8D8D !important; background: #e6e6e6">
+                    <b>{{state.name}}</b>
+                </a>
+            </li>
+        </ng-container>
+    </ng-container>
+</ul>

@@ -1,0 +1,127 @@
+<div mat-dialog-title class="controls-row">
+  <h4 class="header">Line Item Editor</h4>
+  <span class="spacer"></span>
+  <button mat-icon-button mat-dialog-close class="close-icon" (click)="dialogRef.close()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<div mat-dialog-content class="row">
+  <div class="col-12">
+    <div class="form-container flex-row three">
+      <!-- <div>
+                <label for="'code'">Code </label>
+                <div class="oa-input">
+                    <input [id]="'code'" [(ngModel)]="item.code">
+                </div>
+            </div> -->
+      <div>
+        <label for="name">Name</label>
+        <div class="oa-input">
+          <input [id]="'name'" [(ngModel)]="item.name" disabled>
+        </div>
+      </div>
+
+      <div>
+        <label for="exempted">Exempted</label>
+        <mat-select name="exempted" [id]="'exempted'" [(ngModel)]="item.isExempted">
+          <mat-option [value]="true">Yes</mat-option>
+          <mat-option [value]="false">No</mat-option>
+        </mat-select>
+      </div>
+      <!-- <div>
+                <label for="chargeCode">Charge Code</label>
+                <div class="oa-input">
+                    <input [(ngModel)]="item.condition.chargeCode">
+                </div>
+            </div> -->
+      <div>
+        <label for="impex">Impex</label>
+        <mat-select name="impex" [id]="'impex'" [(ngModel)]="item.condition.impex">
+          <mat-option [value]="'export'">Export</mat-option>
+          <mat-option [value]="'import'">Import</mat-option>
+          <mat-option [value]="'domestic'">Domestic</mat-option>
+          <mat-option [value]="'foreign'">Foreign</mat-option>
+        </mat-select>
+      </div>
+      <div>
+        <label for="customer_origin">Customer Origin</label>
+        <mat-select name="customer_origin" [id]="'customer_origin'" [(ngModel)]="item.condition.customerOrigin">
+          <mat-option [value]="'indian'">Indian</mat-option>
+          <mat-option [value]="'overseas'">Overseas</mat-option>
+        </mat-select>
+      </div>
+      <div>
+        <label for="product">Product</label>
+        <mat-select name="product" [id]="'product'" [(ngModel)]="item.condition.product">
+          <mat-option [value]="'air'">AIR</mat-option>
+          <mat-option [value]="'sea'">SEA</mat-option>
+          <mat-option [value]="'surface'">Surface</mat-option>
+        </mat-select>
+      </div>
+      <div>
+        <label for="cgst">CGST</label>
+        <div class="oa-input">
+          <input [value]="item.cgst || ''" type="text" numbersOnly id="cgst" (input)="onTaxValueChange($event, 'cgst')">
+        </div>
+      </div>
+      <div>
+        <label for="sgst">SGST</label>
+        <div class="oa-input">
+          <input [value]="item.sgst || ''" type="text" numbersOnly id="sgst" (input)="onTaxValueChange($event, 'sgst')">
+        </div>
+      </div>
+      <div>
+        <label for="igst">IGST</label>
+        <div class="oa-input">
+          <input [value]="item.igst || ''" type="text" numbersOnly id="igst" (input)="onTaxValueChange($event, 'igst')">
+        </div>
+      </div>
+      <div>
+        <label for="ugst">UGST</label>
+        <div class="oa-input">
+          <input [value]="item.ugst || ''" type="text" numbersOnly id="ugst" (input)="onTaxValueChange($event, 'ugst')">
+        </div>
+      </div>
+      <div>
+        <label for="sac">SAC Code</label>
+        <div class="oa-input">
+          <input [id]="'sac'" [(ngModel)]="item.meta.sac">
+        </div>
+      </div>
+      <div>
+        <label for="status">Status</label>
+        <mat-select name="status" [id]="'status'" [(ngModel)]="item.status">
+          <mat-option [value]="'active'">Active</mat-option>
+          <mat-option [value]="'inactive'">Inactive</mat-option>
+        </mat-select>
+      </div>
+      <div>
+        <label for="document">Document Type</label>
+        <div class="oa-input">
+          <input [(ngModel)]="item.documentType" id="document">
+        </div>
+      </div>
+    </div>
+    <div class="form-container flex-row">
+      <div>
+        <label for="description">Description</label>
+        <div class="oa-textarea">
+          <textarea [id]="'description'" rows="4" [(ngModel)]="item.description"></textarea>
+        </div>
+      </div>
+      <div>
+        <label for="remarks">Remarks</label>
+        <div class="oa-textarea">
+          <textarea [id]="'remarks'" rows="4" [(ngModel)]="item.remarks"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div mat-dialog-actions class="buttons controls-row">
+  <span class="spacer"></span>
+  <button mat-button (click)="dialogRef.close()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="onSubmit()">Save</button>
+</div>

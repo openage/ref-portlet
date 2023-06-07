@@ -1,0 +1,8 @@
+<ng-container *ngIf="icon">
+  <mat-icon *ngIf="icon.mat" class="oa {{class}}" matTooltip="{{title || icon.mat | titlecase}}">{{icon.mat}}</mat-icon>
+  <i *ngIf="icon.oa" class="oa {{class}} {{icon.oa}}" matTooltip="{{title}}"></i>
+  <i *ngIf="icon.fa" class="oa {{class}} fa fa-{{icon.fa}}" matTooltip="{{title}}"></i>
+  <div *ngIf="icon.url" class="oa oa-icon  {{class}}" style="background-size: cover; background: url({{icon.url}})"
+    matTooltip="{{title}}">
+  </div>
+</ng-container>

@@ -1,0 +1,127 @@
+.error {
+  background-color: red;
+}
+
+.mat-toolbar {
+  background: #ffffff;
+  box-shadow: 0 0 5px 0px black;
+}
+
+
+
+
+
+/* h2 {
+  color: #444D6E;
+} */
+
+mat-toolbar {
+  margin-bottom: 5px;
+}
+
+
+
+/* .org-name {
+  font-size: x-large;
+  color: #444D6E;
+  text-align: center;
+} */
+
+.mat-icon {
+  cursor: pointer;
+  margin: auto;
+}
+
+/* .main-row {
+  margin-bottom: 8px
+} */
+
+::ng-deep .mat-menu-panel {
+  margin-top: 12px;
+}
+
+.logo {
+  height: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: 20px;
+  margin-top: -33px;
+  width: auto;
+  float: right;
+}
+
+/* .main-row {
+  margin-bottom: 8px
+} */
+
+
+
+
+.notifactionMargin {
+  margin-right: 20px;
+  margin-top: 25px;
+  position: relative;
+}
+
+.notifactionMargin>.material-icons {
+  cursor: pointer;
+}
+
+::ng-deep .mat-menu-content {
+  min-width: 280px;
+}
+
+.logo-mob {
+  display: none;
+}
+
+@media only screen and (max-width:414px) {
+  div .marquee {
+    width: 33% !important;
+  }
+}
+
+@media only screen and (max-width:568px) {
+  .logo-mob {
+    height: 100%;
+    margin-top: 10px;
+    float: none;
+    margin-right: 0;
+    display: block;
+    width: 60px;
+  }
+
+  .header-top {
+    padding-left: 8px;
+  }
+
+  div .marquee {
+    width: 43%;
+    margin-left: 25px;
+    padding-top: 22px;
+  }
+}
+
+@media only screen and (min-width:768px) and (max-width:1023px) {
+  .header-top .mat-icon-button {
+    display: none;
+  }
+
+  .mat-icon {
+    margin-right: 10px;
+  }
+
+  div .marquee {
+    width: 40%;
+  }
+}
+
+.marquee {
+  line-height: 1;
+  font-size: 12px;
+  padding-top: 27px;
+  color: var(--primary);
+  text-transform: capitalize;
+  font-family: system-ui;
+  width: 50%;
+}

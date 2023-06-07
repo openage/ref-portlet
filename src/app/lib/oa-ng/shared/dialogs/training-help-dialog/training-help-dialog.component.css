@@ -1,0 +1,18 @@
+.linkCard {
+    height: 180px;
+    width: 200px;
+    box-shadow: 0 0 0 0 rgb(0 0 0 / 20%), 0 0 0 0 rgb(0 0 0 / 14%), 0 0 0 0 rgb(0 0 0 / 12%);
+    margin: 15px;
+    border: 1px solid var(--defaultBackground);
+    padding: 15px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.btnDiv {
+    margin-top: 15px;
+}
+
+.btnDiv> button {
+    margin-right: 15px;
+}

@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="col-12">
+
+    <div class="form-container flex-row two text-left">
+      <bap-plan-picker [value]="subscription.plan" (changed)="onPlanChange($event)" [required]="true"></bap-plan-picker>
+
+      <div>
+        <label for="category">Duration Category<span class="mandatory">*</span></label>
+        <mat-select [id]="'category'" [(ngModel)]="subscription.duration">
+          <mat-option [value]="30">A (30 days)</mat-option>
+          <mat-option [value]="45">B (45 days)</mat-option>
+        </mat-select>
+      </div>
+    </div>
+
+    <div mat-dialog-actions class="text-right mt-2">
+      <button mat-raised-button color="primary" (click)="onSubmit()">Save</button>
+    </div>
+  </div>
+</div>
+
+<processing-indicator *ngIf="isProcessing"></processing-indicator>

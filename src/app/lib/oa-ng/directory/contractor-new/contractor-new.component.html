@@ -1,0 +1,23 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+<div class="row">
+  <mat-toolbar>
+    New Contractor
+  </mat-toolbar>
+  <!-- <div class="col-sm-5">
+  <mat-form-field>
+    <input matInput name="deviceCode" placeholder="Code" [(ngModel)]="Contractor.code" type="string">
+  </mat-form-field>
+  </div>
+  <div class="col-sm-5"> -->
+  <mat-form-field>
+    <input matInput name="deviceName" placeholder="Name" [(ngModel)]="Contractor.name" type="string">
+  </mat-form-field>
+  <!-- </div> -->
+  <!-- <div class="col-sm-2"> -->
+ <div class="row"> 
+    <!-- <span class="spacer"></span> -->
+    <button mat-raised-button color="primary" [disabled]="isProcessing" (click)="create(Contractor)">
+      Create
+    </button>
+  </div>
+</div>

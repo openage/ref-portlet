@@ -1,0 +1,34 @@
+{
+    "code": "support",
+    "title": "Support",
+    "routerLink": [
+        "/support",
+        "dashboard"
+    ],
+    "icon": {
+        "fa": "support"
+    },
+    "permissions": [],
+    "items": [
+        {
+            "code": "support.tickets",
+            "title": "Tickets",
+            "routerLink": [
+                "/support/tickets"
+            ],
+            "icon": {
+                "fa": "ticket"
+            },
+            "items": [
+                {
+                    "code": "support.tickets.details",
+                    "title": "Details",
+                    "routerLink": [
+                        "/support/tickets/:code"
+                    ],
+                    "permissions": []
+                }
+            ]
+        }
+    ]
+}

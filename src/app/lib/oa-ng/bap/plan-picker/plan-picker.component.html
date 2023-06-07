@@ -1,0 +1,29 @@
+<ng-container [ngSwitch]="view">
+  <label for="plan">{{label}}<span *ngIf="required" class="mandatory">*</span></label>
+  <mat-select *ngSwitchCase="'selector'" [ngModel]="value ? value.code: null" [disabled]="readonly">
+    <mat-option *ngFor="let item of items" [value]="item.code" (click)="onSelect(item)">
+      {{item.name}}
+    </mat-option>
+  </mat-select>
+
+  <ng-container *ngSwitchCase="'picker'">
+    <oa-autocomplete [value]="value.code? value : null " [options]="{
+      templates: {
+        value: valueTemplate,
+        placeholder: placeholderTemplate
+      }
+    }" [api]="api" (changed)="onSelect($event)" [readonly]="readonly">
+    </oa-autocomplete>
+
+    <ng-template #valueTemplate let-item="value">
+      <div class="value" [class.readonly]="readonly">
+        {{item.name}}
+      </div>
+    </ng-template>
+
+    <ng-template #placeholderTemplate>
+      <div>Search</div>
+    </ng-template>
+
+  </ng-container>
+</ng-container>

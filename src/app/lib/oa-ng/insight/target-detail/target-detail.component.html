@@ -1,0 +1,87 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+
+<mat-card *ngIf="!!properties">
+  <div class="flex-row two target">
+    <div class="controls-row">
+      <oa-icon value="oa-target"></oa-icon>
+      <div>
+        <label>Target Name</label>
+        <h4>{{properties.type.label}}</h4>
+      </div>
+    </div>
+    <div class="flex-row five">
+      <div class="text-center">
+        <label>Date</label>
+        <h4 class="text-capitalize">{{properties.date | date: 'MMM/yy'}}</h4>
+      </div>
+
+      <div class="text-center">
+        <label>Period</label>
+        <h4 class="text-capitalize">{{properties.type.period}}</h4>
+      </div>
+      <div class="text-center">
+        <label>Team</label>
+        <h4>{{properties.team?.length || 0}}</h4>
+      </div>
+      <div class="text-center">
+        <label>Achieved</label>
+        <!-- <h4>{{properties.achieved.team || properties.achieved.my || 0}}</h4> -->
+      </div>
+      <div class="text-center">
+        <label>Total Target</label>
+        <h4 class="primary-color">{{properties.value}}</h4>
+      </div>
+    </div>
+  </div>
+</mat-card>
+
+<mat-card *ngIf="!!properties" class="mt-3">
+  <div>
+    <div>
+      <h4 class="mb-4">TEAM</h4>
+    </div>
+    <div class="row">
+      <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12">
+        <div class="row pb-2 pr-2 border-right">
+          <div class="col-6">
+            <div class="oa-input">
+              <input matInput type="text" name="you" id="you" [value]="'You'" [disabled]="true">
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="oa-input">
+              <input matInput [value]="getMyTarget(properties)" type="text" numbersOnly>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12"
+        *ngFor="let member of properties.team; let i = index">
+        <div class="row pb-2 pr-2" [class.border-right]="(i !== 0 && i % 2 !== 0)">
+          <div class="col-6">
+            <div class="oa-input" *ngIf="member.status !== 'new'">
+              <input type="text" name="{{'name'+i}}" [id]="'name' + i" [disabled]="true"
+                value="{{member.user?.profile?.firstName}} {{member.user?.profile?.lastName}}">
+            </div>
+            <directory-user-picker *ngIf="member.status === 'new'" [placeholder]="''"
+              [roleTypeCode]="['operator-head', 'operator', 'sales-head', 'sales-agent', 'business-head', 'pricing-agent']"
+              (changed)="member.user = $event">
+            </directory-user-picker>
+          </div>
+          <div class="col-6 controls-row">
+            <div class="oa-input">
+              <input matInput [(ngModel)]="member.value" type="text" [min]="0" numbersOnly>
+            </div>
+            <div class="close" *ngIf="member.status === 'new'" (click)="removeMember(i)">
+              <mat-icon>close</mat-icon>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <button class="mt-3" mat-stroked-button color="primary" (click)="addMember()">Add Member</button>
+</mat-card>

@@ -1,0 +1,98 @@
+.leftBtn {
+    position: absolute !important;
+    left: 0px;
+    top: 51%;
+}
+
+.dots {
+    width: 100%;
+    text-align: end;
+    position: absolute;
+    top: 2%;
+    right: 1%;
+}
+
+.banner {
+    position: relative;
+    /* padding: 0px 0px 0px 10px; */
+}
+
+.bannerBackground {
+    height: calc(100vh - 120px);
+    width: 100%;
+    /* margin-top: -8px; */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.banner-content {
+    padding: 40px;
+}
+
+.bannerTitle {
+    font-size: 55px;
+    font-weight: bold;
+    color: #ed9a00;
+    text-align: left;
+    padding-bottom: 0px;
+    padding-top: 49px;
+    margin-bottom: -40px;
+}
+
+.bannerDesc {
+    margin: 57px 0px;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    width: 55%;
+    text-align: left;
+}
+
+.rightBtn {
+    position: absolute !important;
+    right: 0px;
+    top: 51%;
+}
+
+@media screen and (min-width: 300px) and (max-width: 825px) {
+    .banner-content {
+        padding: 100px 36px !important;
+        height: 462px;
+    }
+
+    .bannerBackground {
+        height: 462px;
+        width: 100%;
+        margin-top: -8px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    
+    .bannerTitle {
+        font-size: 28px;
+        font-weight: bold;
+        color: #ed9a00;
+        text-align: left;
+        padding-bottom: 0px;
+        padding-top: 49px;
+        margin-bottom: -40px;
+    }
+
+    .bannerDesc {
+        margin: 57px 0px;
+        color: white;
+        font-size: 13px;
+        font-weight: bold;
+        width: 100%;
+        text-align: left;
+    }
+}
+
+@media only screen and (max-width:568px) {
+    .banner-content, .bannerBackground{
+        height:100vh;
+        display:none;
+    }
+}

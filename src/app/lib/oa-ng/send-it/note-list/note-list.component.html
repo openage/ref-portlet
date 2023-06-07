@@ -1,0 +1,11 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+<div class="note-list">
+  <div *ngFor="let item of items" class="note">
+    <div class="from">{{item.from.profile.firstName}} {{item.from.profile.lastName || ''}}</div>
+    <div class="subject">
+      {{item.subject}}
+    </div>
+    <!-- <div class="body" [innerHtml]="item.body"></div> -->
+    <div class="time">{{item.date | time: 'ago'}}</div>
+  </div>
+</div>

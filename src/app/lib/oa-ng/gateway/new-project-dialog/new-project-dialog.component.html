@@ -1,0 +1,40 @@
+<h4 mat-dialog-title>New Project</h4>
+<button (click)="cancel()" type="button" class="close" aria-label="Close">
+  <span aria-hidden="true">×</span>
+</button>
+<label for="name">Project Name</label>
+<div class="oa-input">
+
+  <input name="project-name" [(ngModel)]="project.name" (change)="onNameChange()" cdkFocusInitial required>
+</div>
+<label for="code">Project Code</label>
+<div class="oa-input">
+  <input name="project-code" [(ngModel)]="project.code" required>
+</div>
+<div>
+  <oa-autocomplete [value]="project.type && project.type.code? project.type : null " [options]="{
+      label: 'Type',
+      search: {
+        field: 'name',
+        limit: 10
+      },
+      preFetch: true
+    }" [api]="typeApi" (changed)="onSelectType($event)">
+  </oa-autocomplete>
+</div>
+<!-- <label>Description</label>
+<oa-content-editor [toolbar]="null" [value]="project.description" (changed)="project.description = $event">
+</oa-content-editor> -->
+
+<!-- <div>
+  <label for="code">Logo</label>
+  <div class="row image-box">
+    <button class="form-control" mat-raised-button>
+      +
+    </button>
+  </div>
+</div> -->
+<div mat-dialog-actions>
+  <!-- <button mat-button (click)="cancel()">Cancel</button> -->
+  <button mat-raised-button (click)="proceed()" class="proceed" color="primary">Proceed</button>
+</div>

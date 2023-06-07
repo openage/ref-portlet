@@ -1,0 +1,45 @@
+<div mat-dialog-title class="controls-row">
+  <h4>Credit Policy Change</h4>
+  <span class="spacer"></span>
+  <button mat-icon-button mat-dialog-close class="close-icon" (click)="dialogRef.close()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<div mat-dialog-content>
+
+  <div class="form-container">
+    <bap-plan-picker [value]="subscription.plan" [view]="'selector'" (changed)="onPlanChange($event)" [required]="true"
+      #selector></bap-plan-picker>
+  </div>
+
+  <div class="form-container">
+    <label for="amount">Amount<span class="mandatory">*</span></label>
+    <div class="oa-input">
+      <input [id]="'amount'" numbersOnly type="text" maxlength="11" [ngModel]="subscription.amount | value: 'comma'"
+        (blur)="onAmountChange($event)">
+      <span>INR</span>
+    </div>
+    <mat-hint>{{subscription.amount | value:'words'}}</mat-hint>
+  </div>
+  <div class="form-container">
+    <label for="category">Duration<span class="mandatory">*</span></label>
+    <div class="oa-input">
+      <input [id]="'category'" numbersOnly type="text" [(ngModel)]="subscription.duration"
+        (change)="setChange(subscription.duration, activeSubscription?.duration, 'duration', 'Duration')"
+        [maxLength]="3">
+      <span>Days</span>
+    </div>
+    <!-- <mat-select [id]="'category'" [(ngModel)]="subscription.duration">
+          <mat-option [value]="30">A (30 days)</mat-option>
+          <mat-option [value]="45">B (45 days)</mat-option>
+        </mat-select> -->
+  </div>
+
+</div>
+
+<div mat-dialog-actions class="buttons controls-row">
+  <span class="spacer"></span>
+  <button mat-button (click)="dialogRef.close()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="onSubmit()">Submit</button>
+</div>

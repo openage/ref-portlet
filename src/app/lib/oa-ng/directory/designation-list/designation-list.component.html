@@ -1,0 +1,37 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+
+<div class="table table-responsive-sm" *ngIf="items.length; else noData">
+  <div class="header">
+    <div class="col-code">Code</div>
+    <div class="name">Name</div>
+    <div class="actions"></div>
+  </div>
+  <ng-container *ngFor="let item of items" [class.disabled]="item.isProcessing">
+    <ng-container *ngTemplateOutlet="item.isSelected ? editRow : detailRow; context: { item: item }"></ng-container>
+  </ng-container>
+</div>
+<app-paginator [pager]="pager" [total]="pager.total"></app-paginator>
+
+<ng-template #detailRow let-item="item">
+  <div class="data-row">
+    <div class="col-code">{{item.code | uppercase}}</div>
+    <div class="name">{{item.name}}</div>
+    <div class="actions">
+      <oa-action item="edit" (click)="onSelect(item)"></oa-action>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #editRow let-item="item">
+  <div class="data-row">
+    <div class="col-code">{{item.code | uppercase}}</div>
+    <div class="name">{{item.name}}</div>
+    <div class="actions">
+      <oa-action item="done" (click)="save(item)"></oa-action>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #noData>
+  <oa-no-data-found message="No Designations Found"></oa-no-data-found>
+</ng-template>

@@ -1,0 +1,87 @@
+<!-- <div *ngIf="isEditable">
+    <div>Status:
+        <span>
+            <mat-select [(ngModel)]="file.status" (selectionChange)="save()">
+                <mat-option value="draft">Draft</mat-option>
+                <mat-option value="inactive">Inactive</mat-option>
+                <mat-option value="active">Active</mat-option>
+            </mat-select>
+        </span>
+    </div>
+
+    <div class="headingText">Description</div>
+    <div class="descriptionText" contenteditable="true" spellcheck="false" [textContent]="file.description"
+        (blur)="file.description=$event.target.textContent; save()"></div>
+
+    <mat-slide-toggle [labelPosition]="'before'" (change)="onPublicChange($event)" [checked]="file.visibility">
+        Public
+    </mat-slide-toggle>
+</div> -->
+
+<div>
+  <div *ngIf="!readonly">
+    <h3>{{file?.meta?.description || file.name}}</h3>
+    <div *ngIf="file.meta && file.meta.dNumber">Document No.: {{file.meta.dNumber}}</div>
+    <div *ngIf="file.thumbnail" class="imgDiv">
+      <img [src]="file.thumbnail" height="130px">
+    </div>
+    <div *ngIf="!file.thumbnail" class="imgDiv">
+      <i class="{{icon}}"></i>
+    </div>
+    <div *ngIf="file.meta && file.meta.eDate">Expiry Date: {{file.meta.eDate | date: 'dd/MM/y'}}
+    </div>
+  </div>
+
+  <div *ngIf="readonly">
+    <h4 contenteditable="true" spellcheck="false" [textContent]="file.name" (blur)="onNameChange($event)"></h4>
+    <div *ngIf="file.thumbnail" class="imgDiv">
+      <img [src]="file.thumbnail" height="130px" (click)="openThumbnailSelector()">
+    </div>
+    <div *ngIf="!file.thumbnail" class="imgDiv">
+      <i (click)="openThumbnailSelector()" class="{{icon}}"></i>
+    </div>
+  </div>
+
+  <div>
+    <div class="flex-1-3">
+      <div>Type:</div>
+      <div>{{file.mimeType}}</div>
+    </div>
+    <div class="flex-1-3" *ngIf="file.entity && file.entity.type">
+      <div>Entity:</div>
+      <div>{{file.entity?.type}}</div>
+    </div>
+    <div class="flex-1-3">
+      <div>Version:</div>
+      <div>{{file.version}}</div>
+    </div>
+    <div *ngIf="file.size" class="flex-1-3">
+      <div>Size:</div>
+      <div>{{getFileSize(file)}}</div>
+    </div>
+    <div class="flex-1-3">
+      <div>Created on:</div>
+      <div>{{file.timeStamp | date: 'MM/dd/y'}}</div>
+    </div>
+    <div class="flex-1-3">
+      <div>Created by:</div>
+      <div>{{file.creator?.profile?.firstName}} {{file.creator?.profile?.lastName}}</div>
+    </div>
+    <div class="flex-1-3">
+      <div>Owner:</div>
+      <div>{{file.owner?.profile?.firstName}} {{file.owner?.profile?.lastName}}</div>
+    </div>
+    <div class="flex-1-3">
+      <div>Status:</div>
+      <div>{{file.status}}</div>
+    </div>
+    <div class="flex-1-3">
+      <div>Public:</div>
+      <div>{{file.visibility}}</div>
+    </div>
+    <div *ngIf="file.url" class="btnDiv">
+      <a class="button" target="_blank" [href]="file.url">Download</a>
+    </div>
+  </div>
+
+</div>

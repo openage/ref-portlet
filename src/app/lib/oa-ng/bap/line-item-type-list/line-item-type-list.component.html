@@ -1,0 +1,109 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+
+<ng-container *ngIf="lineItems && lineItems.length">
+  <ng-container *ngIf="view === 'table'">
+    <div class="table editor table-responsive-sm">
+      <div class="header">
+        <div class="name">Product</div>
+        <div class="name">Service Type</div>
+        <div class="name">Exim</div>
+        <div class="name">Customer Type</div>
+        <div class="name">Customer GST</div>
+        <div class="name">Customer GST State</div>
+        <div class="name">Exempted</div>
+        <div class="tax">CGST%</div>
+        <div class="tax">SGST%</div>
+        <div class="tax">IGST%</div>
+        <div class="tax">UGST%</div>
+        <div class="name">Document Type</div>
+        <div class="tax">HSN Code</div>
+        <div class="name">Status</div>
+        <div class="name">Action</div>
+      </div>
+      <div *ngFor="let item of lineItems" class="data-row">
+        <div class="name">{{item.condition?.productType}}</div>
+        <div class="name">{{item.condition?.serviceType}}</div>
+        <div class="name">{{item.condition?.exim}}</div>
+        <div class="name">{{item.condition?.customerType}}</div>
+        <div class="name">{{item.condition?.customerGst === true ? 'yes' : 'no'}}</div>
+        <div class="name">
+          <span *ngIf="item.condition.customerGstState === '=='">Yes</span>
+          <span *ngIf="item.condition.customerGstState === '!='">No</span>
+          <span *ngIf="item.condition.customerGstState === '<>'">Any</span>
+        </div>
+        <div class="name">{{item.exempted}}</div>
+        <div class="tax">{{item.cgst}}</div>
+        <div class="tax">{{item.sgst}}</div>
+        <div class="tax">{{item.igst}}</div>
+        <div class="tax">{{item.ugst}}</div>
+        <div class="name">{{item.documentType}}</div>
+        <div class="tax">{{item.meta?.hsn}}</div>
+        <div class="name">{{item.status}}</div>
+        <div class="name">
+          <span class="">
+            <!-- <mat-icon (click)="openEditor(item)">edit</mat-icon> -->
+          </span>
+        </div>
+      </div>
+    </div>
+    <app-paginator [pager]="pager" [total]="pager.total"></app-paginator>
+  </ng-container>
+
+  <ng-container *ngIf="view === 'tableEditor'">
+    <div class="table editor table-responsive-sm">
+      <div class="header">
+        <div class="edit_sno">S.NO</div>
+        <div class="edit_customer_origin">Customer's Origin</div>
+        <div class="edit_product">Product</div>
+        <div class="edit_impex">Impex</div>
+        <div class="edit_exempted">Exempted</div>
+        <div class="edit_cgst">CGST</div>
+        <div class="edit_sgst">SGST</div>
+        <div class="edit_igst">IGST</div>
+        <div class="edit_ugst">UGST</div>
+        <div class="edit_action">Action</div>
+      </div>
+
+      <div *ngFor="let item of lineItems; let i = index" class="data-row">
+        <div class="edit_sno">{{i + 1}}</div>
+        <div class="edit_customer_origin">{{item.condition.customerOrigin}}</div>
+        <div class="edit_product">{{item.condition.product}}</div>
+        <div class="edit_impex">{{item.condition.impex}}</div>
+        <div class="edit_exempted">
+          <mat-select name="exempted" [id]="'exempted'" [(ngModel)]="item.isExempted">
+            <mat-option [value]="true">Yes</mat-option>
+            <mat-option [value]="false">No</mat-option>
+          </mat-select>
+        </div>
+        <div class="edit_cgst">
+          <div class="oa-input">
+            <input [value]="item.cgst || ''" numbersOnly id="cgst" (input)="onTaxValueChange($event, 'cgst', item)">
+          </div>
+        </div>
+        <div class="edit_sgst">
+          <div class="oa-input">
+            <input [value]="item.sgst || ''" numbersOnly id="sgst" (input)="onTaxValueChange($event, 'sgst', item)">
+          </div>
+        </div>
+        <div class="edit_igst">
+          <div class="oa-input">
+            <input [value]="item.igst || ''" numbersOnly id="igst" (input)="onTaxValueChange($event, 'igst', item)">
+          </div>
+        </div>
+        <div class="edit_ugst">
+          <div class="oa-input">
+            <input [value]="item.ugst || ''" numbersOnly id="ugst" (input)="onTaxValueChange($event, 'ugst', item)">
+          </div>
+        </div>
+        <div class="edit_action">
+          <span class="">
+            <mat-icon (click)="save(item)">save</mat-icon>
+          </span>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>
+<ng-container *ngIf="!lineItems.length">
+  <oa-no-data-found [message]="'No Line Item Found'"></oa-no-data-found>
+</ng-container>

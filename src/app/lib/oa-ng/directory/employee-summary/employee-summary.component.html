@@ -1,0 +1,8 @@
+<div class="custom" *ngIf="properties">
+  <div class="color">
+    <img *ngIf="properties.profile.pic.url" src="{{properties.profile.pic.url}}" width="30%">
+    <img *ngIf="!properties.profile.pic.url" src="assets/images/users/default.png" width="30%">
+  </div>
+  <p>{{properties.profile.firstName}} {{properties.profile.lastName}}</p>
+  <h5>{{properties.code}}</h5>
+</div>

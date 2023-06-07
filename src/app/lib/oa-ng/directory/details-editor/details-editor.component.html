@@ -1,0 +1,66 @@
+<div class="card-wrap container-cards">
+  <mat-tab-group [selectedIndex]="0">
+    <mat-tab label="Bank Details">
+      <div class="custom-padding">
+        <div class="row">
+          <div class="col-sm-6">
+            <mat-form-field>
+              <input matInput [readonly]="readonly" placeholder="A/C No" name="accountNo"
+                [(ngModel)]="employee.config.accountNo" type="text" maxlength="18">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6">
+            <mat-form-field>
+              <input matInput placeholder="Bank" [readonly]="readonly" name="bank" [(ngModel)]="employee.config.bank"
+                type="text" maxlength="100">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <mat-form-field>
+              <input matInput [readonly]="readonly" placeholder="A/C Holder Name" name="accountHolder"
+                [(ngModel)]="employee.config.accountHolder" type="text" maxlength="100">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6">
+            <mat-form-field>
+
+              <input matInput placeholder="ESI" [readonly]="readonly" name="esi" [(ngModel)]="employee.config.esi"
+                type="text" maxlength="100">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <mat-form-field>
+              <input matInput placeholder="IFSC Code" [readonly]="readonly" name="ifsc"
+                [(ngModel)]="employee.config.ifsc" type="text" maxlength="100">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6">
+            <mat-form-field>
+              <input matInput placeholder="Branch" [readonly]="readonly" name="branch"
+                [(ngModel)]="employee.config.branch" type="text" maxlength="100">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <mat-form-field>
+              <input matInput name="uan" [readonly]="readonly" placeholder="UAN" [(ngModel)]="employee.config.uan"
+                type="text" maxlength="100">
+            </mat-form-field>
+          </div>
+
+          <div class="col-sm-6">
+            <mat-form-field>
+              <input matInput placeholder="PF" [readonly]="readonly" name="pf" [(ngModel)]="employee.config.pf"
+                type="text" maxlength="100">
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

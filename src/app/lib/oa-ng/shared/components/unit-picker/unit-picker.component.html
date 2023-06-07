@@ -1,0 +1,14 @@
+<div class="unit clickable" *ngIf="!readonly" [class.not-default]="value.isDefault"
+  (clickOutside)="onShowOptions(false)" #valueContainer>
+  <span [class.not-default]="!value.isDefault" (click)="onClick()">{{value.name}}</span>
+
+  <div class="dropdown {{ddlPosition}}" [class.show]="showOptions" tabindex="0" [id]="id">
+    <ng-container *ngFor="let item of items">
+      <button mat-menu-item (click)="onSelect(item)"> {{item.name}}</button>
+    </ng-container>
+  </div>
+</div>
+
+<span class="unit" *ngIf="readonly" [class.not-default]="value.isDefault" #valueContainer>
+  <span [class.not-default]="!value.isDefault">{{value.name}}</span>
+</span>

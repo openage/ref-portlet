@@ -1,0 +1,77 @@
+<ng-container *ngIf="!sessionId">
+
+  <div class="form-container">
+    <mat-form-field *ngIf="!orgExists" appearance="outline">
+      <label [class.error]="orgCodeError">Organization Code</label>
+      <input matInput minlength="3" [(ngModel)]="organization.code" type="text" required
+        (change)="validateOrganization(organization.code)">
+      <!-- <mat-icon *ngIf="orgExists || createNewOrg"  color="primary">check</mat-icon> -->
+      <mat-hint *ngIf="!organization.id && !orgCodeError">organization's unique identifier</mat-hint>
+      <mat-hint *ngIf="orgExists === false && !createNewOrg">Want to create new? <a (click)="createNewOrg=true">Yes</a>
+      </mat-hint>
+      <mat-hint class="error" *ngIf="orgCodeError">{{orgCodeError}}</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="orgExists" appearance="outline">
+      <label [class.error]="orgCodeError">Organization Code</label>
+      <input matInput [(ngModel)]="organization.name" [disabled]="!createNewOrg" type="text">
+      <mat-hint>switch to {{organization.code}}? <a (click)="orgExists=undefined; organization.code = ''">Yes</a>
+      </mat-hint>
+    </mat-form-field>
+
+    <ng-container *ngIf="createNewOrg">
+      <mat-form-field appearance="outline">
+        <label>Organization Name</label>
+        <input matInput [(ngModel)]="organization.name" [disabled]="!createNewOrg" type="text">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <label>Type</label>
+        <input matInput [(ngModel)]="organization.type" [disabled]="!createNewOrg" type="text">
+        <mat-hint>used to create profile</mat-hint>
+      </mat-form-field>
+      <span class="spacer"></span>
+
+    </ng-container>
+
+    <mat-form-field appearance="outline">
+      <label>First Name</label>
+      <input matInput [(ngModel)]="profile.firstName" required type="text">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <label>Last Name</label>
+      <input matInput [(ngModel)]="profile.lastName" required type="text">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <label [class.error]="emailError">Email</label>
+      <input matInput [(ngModel)]="email" type="email" name="email" required (change)="validateEmail()">
+      <mat-hint class="error" *ngIf="emailError">{{emailError}}</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <label> Password</label>
+      <input matInput [(ngModel)]="password" required [type]="hide ? 'password' : 'text'">
+      <!-- <button mat-icon-button (click)="hide = !hide" matSuffix [attr.aria-label]="'Hide password'"
+        [attr.aria-pressed]="hide">
+        <mat-icon>{{hide? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button> -->
+    </mat-form-field>
+  </div>
+  <div class="controls-row">
+    <span class="spacer"></span>
+    <button class="mat-raised-button" color="primary" [disabled]="isProcessing" (click)="next()">Next</button>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="sessionId">
+  <oa-input label="OTP Confirmation" type="otp" [(value)]="otp" [required]="true"></oa-input>
+
+  <div class="controls-row">
+    <span class="spacer"></span>
+    <button mat-button (click)="cancel()">Cancel</button>
+    <button mat-raised-button color="primary" [disabled]="isProcessing" (click)="confirm()">Confirm</button>
+    <span class="spacer"></span>
+  </div>
+</ng-container>

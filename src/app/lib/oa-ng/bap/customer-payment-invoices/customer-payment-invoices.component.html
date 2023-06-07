@@ -1,0 +1,71 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+<!-- <ng-container *ngIf="items && items.length; then dataTable; else noData"></ng-container> -->
+<ng-container #dataTable>
+  <div class="table">
+    <div class="header">
+      <div class="number text-left">Invoice Number</div>
+      <div class="amount text-center ">Invoice Amount</div>
+      <div class="amount text-center">Amount Applied</div>
+      <div class="amount text-center">Invoice Due Amount</div>
+      <div class="date text-center">Date</div>
+      <div class="remarks text-center">Remarks</div>
+      <div class="action"></div>
+    </div>
+
+    <div class="data-row" *ngFor="let item of items; let carrierIndex=index">
+      <div class="number text-left pr-1 m-auto">
+        <oa-autocomplete [placeholder]="'Invoice Number'" [options]="{
+                    templates: {
+                      value: valueTemplate
+                    },
+                    search: {
+                      field: 'code',
+                      params: searchParams,
+                      limit: 5
+                    }}" [api]="api">
+        </oa-autocomplete>
+      </div>
+      <div class="amount">
+        <div class="oa-input px-2">
+          <input type="text" class=" text-right" numbersOnly [(ngModel)]="item.amount" [disabled]="true">
+          <oa-unit-picker class="pr-2" [type]="'currency'" [value]="'inr'" [readonly]="true"></oa-unit-picker>
+        </div>
+      </div>
+      <div class="amount">
+        <div class="oa-input px-2">
+          <input type="text" class=" text-right" numbersOnly [(ngModel)]="item.appliedAmount">
+          <oa-unit-picker class="pr-2" [type]="'currency'" [value]="'inr'" [readonly]="true"></oa-unit-picker>
+        </div>
+      </div>
+      <div class="amount">
+        <div class="oa-input px-2">
+          <input type="text" class=" text-right" numbersOnly [(ngModel)]="item.dueAmount" [disabled]="true">
+          <oa-unit-picker class="pr-2" [type]="'currency'" [value]="'inr'" [readonly]="true"></oa-unit-picker>
+        </div>
+      </div>
+      <div class="date">
+        <oa-date-picker [value]="item.date"></oa-date-picker>
+      </div>
+      <div class="remarks">
+        <input class="oa-input" [(ngModel)]="item.remarks">
+      </div>
+      <div class="action">
+        <div class="mt-auto mx-auto d-flex">
+          <button class="primary mx-auto mt-auto" color="primary">Add</button>
+          <mat-icon (click)="onRemoveInvoice(item,carrierIndex)" *ngIf="items.length>1" class="pointer">delete
+          </mat-icon>
+        </div>
+      </div>
+    </div>
+    <span class="pointer accent add-new pl-2" (click)="addNewInvoice()">Add New Invoice</span>
+  </div>
+</ng-container>
+
+<!-- <ng-template #noData>
+    <oa-no-data-found [message]="'No Invoice Found'"></oa-no-data-found>
+</ng-template> -->
+<ng-template #valueTemplate let-item="value">
+  <div>
+    {{item.code}}
+  </div>
+</ng-template>

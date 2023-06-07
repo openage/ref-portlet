@@ -1,0 +1,43 @@
+<div mat-dialog-title class="controls-row">
+  <h4>{{config.title}}</h4>
+  <span class="spacer"></span>
+  <button mat-icon-button mat-dialog-close class="close-icon" (click)="dialogRef.close()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<div mat-dialog-content>
+  <div *ngIf="config.text">
+    <label [ngClass]="{'required':config.text.required}">{{config.text.title}}</label>
+    <div class="oa-input">
+      <input [(ngModel)]="text">
+    </div>
+  </div>
+  <div *ngIf="config.option">
+    <label [ngClass]="{'required':config.option.required}">{{config.option.title}}</label>
+    <mat-select [multiple]="config.option.multiselect" [(ngModel)]="option">
+      <mat-option *ngFor="let item of config.option.items" [value]="item.key">{{item.label}}</mat-option>
+    </mat-select>
+  </div>
+
+  <div *ngIf="config.message">
+    <label [ngClass]="{'required':config.message.required}">{{config.message.title}}</label>
+    <div class="oa-input message">
+      <div class="input" contenteditable="true" (blur)="messageUpdated($event)">
+        {{message}}
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="config.date">
+    <label [ngClass]="{'required':config.date.required}">{{config.date.title}}</label>
+    <oa-date-picker [label]="''" [value]="config.date.value" (change)="config.date.value=$event;">
+    </oa-date-picker>
+  </div>
+</div>
+
+<div mat-dialog-actions class="buttons controls-row">
+  <span class="spacer"></span>
+  <button *ngIf="!config.hide.cancel" mat-button (click)="dialogRef.close()">{{config.cancel.title}}</button>
+  <button mat-raised-button [color]="config.save.color || 'primary'" [disabled]="!isValid()"
+    (click)="onSave()">{{config.save.title}}</button>
+</div>

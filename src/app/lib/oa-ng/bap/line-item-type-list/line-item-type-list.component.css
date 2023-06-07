@@ -1,0 +1,11 @@
+.name {
+    width: 7%;
+    padding: 0px 2px 0px 2px;
+    text-transform: capitalize;
+}
+
+.tax{
+    padding: 0px 2px 0px 2px;
+    text-transform: capitalize;
+    width: 6%;
+}

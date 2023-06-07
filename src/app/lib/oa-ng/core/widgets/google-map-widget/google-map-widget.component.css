@@ -1,0 +1,60 @@
+.widgets{
+    margin-top: 10px
+}
+.head {
+    color: black;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.maps {
+    width: 96%;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid black;
+}
+
+.cont{
+    width: 46%;
+    margin: 2%;
+}
+.wide{
+    width: 96%;
+    margin: 2%;
+}
+
+.boxDiv{
+    text-align: center;
+    background: white;
+    padding: 12px;
+    border-radius: 8px;
+    height: 90px;
+    width: 90%;
+    margin-right: auto;
+    margin-left: 12px;
+    box-shadow: 0 0px 25px -3px rgba(0, 0, 0, .2), 0 1px 3px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
+    padding: 0px;
+}
+
+.boxDiv p{
+    color: black;
+    font-weight: bold;
+    font-size: 14px;
+    border-bottom: 1px solid #CFD5DA;
+    text-align: center;
+    padding-bottom: 10px;
+    background: #dcdcdc8f;
+    /* margin-top: -12px; */
+    padding-top: 14px;
+    margin: 0px;
+}
+
+.detailValue{
+    margin-top: 5px;
+    color: #63c9ff;
+}
+
+.wizTitle{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}

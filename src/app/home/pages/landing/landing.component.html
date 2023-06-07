@@ -1,0 +1,45 @@
+<h2> Welcome to Open Age</h2>
+<section class="flex-row centered">
+  <div class="center">
+    <mat-card *ngIf="tenant && tenant.code">
+      <h3>{{tenant.name}}</h3>
+      <div class="controls-row">
+        <span class="spacer"></span>
+        <div class="logo lg" *ngIf="tenant.logo && tenant.logo.url"
+          [style.background-image]="'url(' + tenant.logo.url +')'"></div>
+        <div class="logo lg" *ngIf="!tenant.logo || !tenant.logo.url"
+          [style.background-image]="'url(assets/images/logo.png)'"></div>
+        <span class="spacer"></span>
+      </div>
+
+      <div class="controls-row" *ngIf="!role">
+        <span class="spacer"></span>
+        <button mat-raised-button [routerLink]="['/landing/login']">Login</button>
+        <button mat-raised-button [routerLink]="['/home/signup']">Signup</button>
+        <span class="spacer"></span>
+      </div>
+
+      <div class="controls-row" *ngIf="role">
+        <span class="spacer"></span>
+        <button mat-raised-button color="primary" [routerLink]="['/home/dashboard']">Dashboard</button>
+        <span class="spacer"></span>
+        <button mat-raised-button color="primary" [routerLink]="['/home/activities']">Activities</button>
+        <span class="spacer"></span>
+      </div>
+    </mat-card>
+
+    <div class="controls-row" *ngIf="role">
+      <span class="spacer"></span>
+      <button mat-button (click)="logout()">Logout</button>
+      <span class="spacer"></span>
+    </div>
+    <div class="controls-row" *ngIf="!role">
+      <span class="spacer"></span>
+      <button mat-button (click)="changeTenant()">Switch Tenant</button>
+      <button mat-button *ngIf="tenant && tenant.code" [routerLink]="['/home/register']">Register</button>
+      <button mat-raised-button *ngIf="!tenant || !tenant.code" color="primary"
+        [routerLink]="['/home/register']">Register</button>
+      <span class="spacer"></span>
+    </div>
+  </div>
+</section>

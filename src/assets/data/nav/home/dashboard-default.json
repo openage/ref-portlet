@@ -1,0 +1,90 @@
+{
+  "divs": [
+    {
+      "code": "primary-stats",
+      "style": {
+        "container": {
+          "style": {
+            "margin-bottom": "10px"
+          }
+        },
+        "widgets": {
+          "class": "one"
+        }
+      }
+    },
+    {
+      "code": "primary-1-1-1",
+      "style": {
+        "container": {
+          "style": {
+            "margin-bottom": "10px"
+          }
+        },
+        "widgets": {
+          "class": "three"
+        }
+      }
+    },
+    {
+      "code": "quick-links",
+      "style": {
+        "container": {
+          "style": {
+            "margin-bottom": "10px"
+          }
+        },
+        "widgets": {
+          "class": "one"
+        }
+      },
+      "widgets": [
+        {
+          "widget": {
+            "code": "quick-links",
+            "config": {
+              "view": "row"
+            }
+          },
+          "items": [
+            {
+              "code": "action.tasks"
+            },
+            {
+              "code": "master.projects"
+            },
+            {
+              "code": "master.team"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "secondary-1-1-1",
+      "style": {
+        "container": {
+          "style": {
+            "margin-bottom": "10px"
+          }
+        },
+        "widgets": {
+          "class": "three"
+        }
+      }
+    },
+    {
+      "code": "secondary-1-1",
+      "style": {
+        "container": {
+          "style": {
+            "margin-bottom": "10px"
+          }
+        },
+        "widgets": {
+          "class": "two"
+        }
+      }
+    }
+  ]
+}

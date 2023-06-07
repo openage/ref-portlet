@@ -1,0 +1,38 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+<table *ngIf="headWidth && headArray.length">
+  <tr>
+    <th style="width: 20px;"><span class="center" [ngStyle]="{'width': headWidth}"></span></th>
+    <ng-container *ngFor="let head of headArray">
+      <th>
+        <div [ngStyle]="{'width': headWidth,'display': 'flex','justify-content': head.align,'margin-bottom':0}">
+          <p class="month" [ngStyle]="{'width': '10px'}">
+            {{head.value}}
+          </p>
+        </div>
+      </th>
+    </ng-container>
+  </tr>
+  <td>
+    <ng-container *ngFor="let day of days">
+      <tr><span class="box">{{day.labe}}</span></tr>
+    </ng-container>
+  </td>
+  <ng-container *ngFor="let week of weeks">
+    <td>
+      <ng-container *ngFor="let day of days">
+        <tr>
+          <span title="{{week[day.value+'value']}}% Attandance for {{week[day.value+'date']}}" class="box"
+            [ngStyle]="{'background-color': week[day.value]? week[day.value] : '#e3e3e3'}"></span></tr>
+      </ng-container>
+    </td>
+  </ng-container>
+</table>
+
+<div class="row">
+  <div class="col-6"></div>
+  <div class="col-6 footerBox">
+    1% - 24%<span class="zeroBox"></span> 25% - 49%<span class="toMuchLow"></span> 50% - 74%<span
+      class="halfBox"></span>
+    75% - 99%<span class="littelHalfBox"></span> 100%<span class="fullBox"></span>
+  </div>
+</div>

@@ -1,0 +1,94 @@
+{
+  "params": {
+    "view": "grid",
+    "showFilters": false,
+    "selectedParent": "false"
+  },
+  "context": [
+    {
+      "code": "add"
+    },
+    {
+      "code": "refresh"
+    },
+    {
+      "code": "download",
+      "title": "Export"
+    }
+  ],
+  "search": {
+    "view": "filters",
+    "params": [
+      {
+        "label": "Name",
+        "key": "name",
+        "control": "input"
+      },
+      {
+        "label": "Status",
+        "key": "status",
+        "control": "selector",
+        "value": "active",
+        "options": [
+          {
+            "label": "Active",
+            "value": "active"
+          },
+          {
+            "label": "In Active",
+            "value": "inactive"
+          }
+        ]
+      }
+    ]
+  },
+  "sections": {
+    "new": {
+      "view": "card"
+    },
+    "projects": {
+      "view": "table",
+      "style": {
+        "container": {
+          "class": "",
+          "style": {}
+        },
+        "header": {
+          "class": "",
+          "style": {}
+        },
+        "fields": {
+          "class": "",
+          "style": {}
+        }
+      },
+      "fields": [
+        {
+          "label": "Sr.No",
+          "key": "index"
+        },
+        {
+          "label": "Name",
+          "key": "name",
+          "config": {
+            "click": {
+              "toggle": "details"
+            }
+          }
+        },
+        {
+          "label": "Status",
+          "key": "status"
+        },
+        {
+          "label": "Action",
+          "key": "action"
+        }
+      ],
+      "paging": {
+        "limit": 50,
+        "sort": "planneddate"
+      }
+    }
+  }
+}

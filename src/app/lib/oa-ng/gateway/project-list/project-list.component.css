@@ -1,0 +1,145 @@
+.name {
+  width: 50%;
+}
+
+.team {
+  width: 50%;
+}
+
+
+.widgets {
+  margin-top: 10px
+}
+
+.cont {
+  width: 46%;
+  margin: 2%;
+}
+
+.wide {
+  width: 96%;
+  margin: 2%;
+}
+
+.boxDiv {
+  text-align: center;
+  background: white;
+  padding: 12px;
+  border-radius: 8px;
+  height: 90px;
+  width: 90%;
+  margin-right: auto;
+  margin-left: 12px;
+  box-shadow: 0 0px 25px -3px rgba(0, 0, 0, .2), 0 1px 3px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
+  padding: 0px;
+}
+
+.boxDiv p {
+  color: black;
+  font-weight: bold;
+  font-size: 14px;
+  border-bottom: 1px solid #CFD5DA;
+  text-align: center;
+  padding-bottom: 10px;
+  background: #dcdcdc8f;
+  /* margin-top: -12px; */
+  padding-top: 14px;
+  margin: 0px;
+}
+
+.detailValue {
+  margin-top: 5px;
+  color: #63c9ff;
+}
+
+.wizTitle {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.search input {
+  width: 333px !important;
+  height: 0px;
+  border-radius: 17px !important;
+  padding: 19px;
+  color: #beb7b7;
+  border: none;
+  box-shadow: 0px 4px 8px 0px #88888852;
+  font-size: 13px;
+  font-family: sans-serif;
+}
+
+::placeholder {
+  color: gray;
+  opacity: 1;
+}
+
+.search button {
+  margin-left: -43px;
+  color: #8080806b;
+}
+
+.badge-info {
+  color: #fff;
+  background-color: #13589E;
+  width: 31px;
+  font-size: 12px;
+  border-radius: 31px;
+  margin-left: 3px;
+}
+
+.project-box {
+  padding: 142px;
+  margin-top: -102px;
+}
+
+.project-box .projects {
+  width: 244px;
+  margin-left: 28px;
+  height: 256px;
+}
+
+.project-box .box {
+  margin-bottom: 68px
+}
+
+.project-box p {
+
+  color: #000000b8;
+  padding-top: 3px;
+  font-size: 17px;
+  text-transform: capitalize;
+  font-weight: 600;
+  font-family: sans-serif, poppin;
+}
+
+.view button {
+  width: 67px;
+  height: 25px;
+  line-height: 1;
+  border-radius: 30px;
+  background: #fff;
+  border: 2px solid #13589E;
+  color: #13589E;
+  font-size: 12px;
+}
+
+.avatar {
+  height: 75px;
+  width: 77px;
+  border-radius: 50%;
+  background-size: cover;
+  border: 1px solid var(--disabled);
+  margin-top: 2px;
+  box-shadow: 0px 4px 8px 0px #88888852;
+}
+
+
+
+.new {
+  background-color: #13589E;
+  color: #fff;
+  border-radius: 20px;
+  border: none;
+  padding: 6px 13px;
+}

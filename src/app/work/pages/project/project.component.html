@@ -1,0 +1,47 @@
+<div class="main" [class.hidden]="!isCurrent" *ngIf="code">
+
+  <processing-indicator *ngIf="isProcessing"></processing-indicator>
+  <div *ngIf="isInitialized">
+    <gateway-project-summary #detail *ngIf="sections.details" [view]="sections.details.view" [readonly]="readonly"
+      [code]="code" (fetched)="onFetch($event)">
+    </gateway-project-summary>
+
+    <div class="w-p">
+      <div class="sections">
+        <div *ngIf="sections.sprints" class="section {{sections.sprints?.style?.container?.class}}">
+          <div class="header {{sections.sprints?.style?.header?.class}}">{{sections.sprints?.title || 'Sprints'}}</div>
+          <div class="body {{sections.sprints?.style?.body?.class}}">
+            <gateway-sprints #sprintList [project]="code" [view]="sections.sprints?.view"></gateway-sprints>
+          </div>
+        </div>
+        <div>
+          <h5>Tasks</h5>
+          <gateway-task-list #list view="list" placeholder="Add a task" [project]="{code: code}" [sprint]="'current'"
+            [type]="'story,defect'" [parent]="null" (selected)="onTaskSelect($event)">
+          </gateway-task-list>
+        </div>
+      </div>
+      <div class="sections">
+        <div *ngIf="folder && folder.code && auth.currentOrganization() && sections.documents"
+          class="section {{sections.documents?.style?.container?.class}}">
+          <div class="header {{sections.documents?.style?.header?.class}}">{{sections.documents?.title || 'Documents'}}
+          </div>
+          <div class="body {{sections.documents?.style?.body?.class}}">
+            <drive-file-list #files [view]="sections.members?.view" [entity]="entity" [visibility]="1"
+              [folder]="folder">
+            </drive-file-list>
+          </div>
+        </div>
+        <div *ngIf="sections.members" class="section {{sections.members?.style?.container?.class}}">
+          <div class="header {{sections.members?.style?.header?.class}}">{{sections.members?.title || 'Members'}}</div>
+          <div class="body {{sections.members?.style?.body?.class}}">
+            <gateway-member-list *ngFor="let role of roles" [role]="role.type" [type]="'project'"
+              [view]="sections.members?.view" [isAgent]="false" [values]="role.members"
+              (changed)="onSaveMembers($event)"></gateway-member-list>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<router-outlet></router-outlet>

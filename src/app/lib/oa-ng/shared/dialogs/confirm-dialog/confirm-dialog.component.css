@@ -1,0 +1,24 @@
+.errors {
+  margin-top: 10px;
+  padding-top: 10px;
+  border: 1px solid var(--defaultBackground);
+  color: var(--warn);
+}
+
+.footer {
+  margin-top: 10px;
+}
+
+.maxidth {
+  max-height: 400px;
+  overflow: auto;
+}
+
+.errors.list {
+  height: 300px;
+  overflow: auto;
+}
+
+h4 {
+  font-weight: 600;
+}

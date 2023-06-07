@@ -1,0 +1,89 @@
+.btnDiv {
+    text-align: end;
+  }
+  
+  h5 {
+    font-size: 16px;
+    padding-left: 20px;
+    color: #444444;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding-left: 0px;
+  }
+  
+  .row {
+    margin: 0px;
+  }
+  
+  .oa {
+    margin-right: 10px;
+  }
+  
+  
+  .matCenter {
+    text-align: -webkit-center;
+  }
+  
+  .addIcon {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .mat-icon {
+    background-repeat: no-repeat;
+    display: inline-block;
+    fill: currentColor;
+    height: 25px;
+    width: 144%;
+    padding-top: 61px;
+    padding-left: -15px;
+    padding-right: 60px;
+    font-size: 20px;
+  }
+  
+  mat-form-field {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+  
+  .btnDiv {
+    text-align: end;
+    margin-top: 30px;
+    margin-right: 30px;
+  }
+  
+  .documentPadding {
+    margin-left: 15px;
+    padding-right: 5px;
+  }
+  
+  .mat-raised-button {
+    width: 100px;
+  }
+  
+  .paddingNone {
+    padding: 0px;
+  }
+  
+  .tabSelector {
+    background: #fff;
+    color: #212121;
+    height: 47px;
+    padding: 14px;
+    padding-left: 15px;
+    box-shadow: 0px 3px 6px #0000000f;
+    margin-bottom: 2px;
+    cursor: pointer;
+  }
+  
+  .active {
+    border: 2px solid var(--primary);
+    color: var(--primary);
+  }
+  
+  .error {
+    padding: 10px;
+    color: var(--warn);
+    font-size: smaller;
+  }
+  

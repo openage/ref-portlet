@@ -1,0 +1,51 @@
+<table mat-table [dataSource]="items" class="table-responsive-sm">
+  <ng-container matColumnDef="organization">
+    <th mat-header-cell *matHeaderCellDef [style.width]="'30%'">Customer</th>
+    <td mat-cell *matCellDef="let item" [class.deleted]="item.isDeleted" [class.processing]="item.isProcessing">
+      <div *ngIf="item.organization && item.organization.logo && item.organization.logo.url"
+        class="avatar d-inline-block" [style.background-image]="'url(' + item.organization.logo.url + ')'">
+      </div>
+      <div *ngIf="!item.organization.logo.url" class="avatar customer d-inline-block"></div>
+      <span>{{item?.organization?.name}}</span>
+    </td>
+    <td mat-footer-cell *matFooterCellDef>
+      <directory-organization-picker [type]="'customer'" [value]="selectedOrganization"
+        (changed)="selectedOrganization = $event" [placeholder]="''">
+      </directory-organization-picker>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="role">
+    <th mat-header-cell *matHeaderCellDef>Role</th>
+    <td class="pointer" mat-cell *matCellDef="let item" [class.deleted]="item.isDeleted"
+      [class.processing]="item.isProcessing">
+      {{item?.type?.name || '--' | titlecase}}
+    </td>
+
+    <td mat-footer-cell *matFooterCellDef>
+      {{role?.type?.name || '--' | titlecase}}
+    </td>
+  </ng-container>
+
+  <ng-container *ngIf="!readonly" matColumnDef="action">
+    <th mat-header-cell *matHeaderCellDef>Action</th>
+    <td mat-cell *matCellDef="let item" [class.deleted]="item.isDeleted" [class.processing]="item.isProcessing">
+      <button mat-icon-button *ngIf="item.status !== 'deactivate'" [disabled]="item.isProcessing" matTooltip="Terminate"
+        (click)="onRemove(item)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </td>
+    <td mat-footer-cell *matFooterCellDef>
+      <button mat-raised-button color="primary" [disabled]="!selectedOrganization" (click)="add()">
+        Add
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="listColumns;"></tr>
+  <tr mat-footer-row *matFooterRowDef=" listColumns;"></tr>
+  <tr mat-row *matRowDef="let row; columns: listColumns;"></tr>
+
+</table>
+
+<processing-indicator *ngIf="isProcessing"></processing-indicator>

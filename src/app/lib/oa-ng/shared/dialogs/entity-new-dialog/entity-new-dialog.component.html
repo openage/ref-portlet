@@ -1,0 +1,14 @@
+<label mat-dialog-title>{{title}}</label>
+<div mat-dialog-content class="flex-row one">
+  <mat-form-field>
+    <input matInput [(ngModel)]="entity.name" placeholder="Name" type="text">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput [(ngModel)]="entity.code" placeholder="Code" type="text">
+  </mat-form-field>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="onContinue()" cdkFocusInitial>Create</button>
+  <button mat-raised-button (click)="onCancel()">Cancel</button>
+</div>

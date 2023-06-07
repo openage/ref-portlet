@@ -1,0 +1,128 @@
+<div [ngStyle]="reportType?.widget?.style?.container?.style"
+  [ngClass]="reportType?.widget?.style?.container?.class || 'tableContainer'">
+  <table mat-table *ngIf="!isProcessing;else pseudoTable" [dataSource]="items" multiTemplateDataRows #matTable>
+    <ng-container *ngFor="let column of reportType.fields">
+      <ng-container matColumnDef="{{column.key}}" [sticky]="column.isSticky || false">
+        <th [ngStyle]="column?.style?.columnHeader?.style" *matHeaderCellDef>
+          <ng-container *ngTemplateOutlet="columnHeaderDefinition;context:{column: column}"></ng-container>
+        </th>
+        <td [ngClass]="getClass(column,item)"
+          [ngStyle]="(column.style && column.style.value  && column.style.value.style)? column.style.value.style : {}"
+          mat-cell *matCellDef="let item">
+          <ng-container *ngIf="!column.isHidden">
+            <div *ngIf="!column.template" [class.clickable]="column.click" class="values"
+              [ngClass]="column?.style?.values?.class" [ngStyle]="column?.style?.values?.style"
+              (click)="onClick(column, item)" [innerHTML]="item[column.key]"></div>
+            <ng-container *ngIf="column.template">
+              <ng-container
+                *ngTemplateOutlet="cellTemplate; context: {call:onClick(column, item), template:item.templateDetails}">
+              </ng-container>
+            </ng-container>
+          </ng-container>
+        </td>
+        <td [ngStyle]="(column.style && column.style.footer.style)? column.style.footer.style : {} " mat-footer-cell
+          *matFooterCellDef>
+          <div *ngIf="!column.isHidden">{{summary[column.key] || ''}}</div>
+        </td>
+      </ng-container>
+    </ng-container>
+    <ng-container matColumnDef="handler">
+      <th mat-header-cell style="display: none; width:30px" *matHeaderCellDef></th>
+      <td [attr.colspan]="30" mat-cell *matCellDef="let item;let i=index" [class.deleted]="false" class="text-right"
+        [class.processing]="true">
+        <button mat-icon-button [disabled]="false" matTooltip="{{item.isSelected?'Collapse':'Expand'}}"
+          (click)="onExpand(item)">
+          <mat-icon>{{item.isSelected?'keyboard_arrow_up':'keyboard_arrow_down'}}</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="expandedDetail">
+      <td [attr.colspan]="headArray.length" mat-cell *matCellDef="let item" [class.hidden]="!item.isSelected">
+
+        <div class="section bordered" *ngIf="item.details">
+
+          <div class="header">
+            <oa-icon value="mat-close" (click)="item.isSelected = false"></oa-icon>
+          </div>
+
+          <div class="body">
+            <ng-container *ngIf="item.details.template">
+              <ng-container
+                *ngTemplateOutlet="detailsTemplate; context: {data: item, details: item.details,template:item.details.template}">
+              </ng-container>
+            </ng-container>
+            <ng-container *ngIf="item.details.templates">
+              <ng-container *ngFor="let template of item.details.templates">
+                <ng-container
+                  *ngTemplateOutlet="detailsTemplate; context: {data: item, details:item.details, template: template}">
+                </ng-container>
+              </ng-container>
+            </ng-container>
+            <ng-container *ngIf="!item.details.template && !item.details.templates">
+              show detailed report
+            </ng-container>
+          </div>
+        </div>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="headArray; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: headArray;"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detailed"></tr>
+    <ng-container *ngIf="reportType.config?.summary?.position === 'footer'">
+      <tr mat-footer-row *matFooterRowDef="headArray;"></tr>
+    </ng-container>
+  </table>
+  <ng-template #columnHeaderDefinition let-column="column">
+    <ng-container *ngIf="!column.isHidden">
+      <div
+        [ngStyle]="(column?.style && column?.style?.header  && column?.style?.header?.style)? column.style.header.style : { display:'flex',justifyContent:'center' } ">
+        <div [innerHTML]="column.label"></div>
+        <ng-container *ngIf="column.filters && column.filters.length">
+          <ng-container *ngIf="column.showFilters">
+            <ng-container *ngTemplateOutlet="columnFilterTemplate;context:{ column: column}"></ng-container>
+          </ng-container>
+          <oa-icon class="subtle filter" value="filter" title="Apply Filters" (click)="openColumnFilters(column)">
+          </oa-icon>
+          <ng-template #columnFilterTemplate let-column="column">
+            <div class="columnFilters mat-elevation-z2">
+              <div class="controls-row">
+                <p>Filters</p>
+                <span class="spacer"></span>
+                <mat-icon class="subtle" (click)="column.showFilters=false">close</mat-icon>
+              </div>
+              <oa-search *ngIf="column.filters && column.filters.length" view="column"
+                [options]="{ params: column.filters}">
+              </oa-search>
+            </div>
+          </ng-template>
+        </ng-container>
+      </div>
+    </ng-container>
+  </ng-template>
+
+  <ng-template #pseudoTable>
+    <table mat-table multiTemplateDataRows>
+      <ng-container *ngFor="let column of reportType.fields">
+        <ng-container matColumnDef="{{column.key}}">
+          <th *matHeaderCellDef>
+            <ng-container *ngTemplateOutlet="columnHeaderDefinition;context:{column: column}"></ng-container>
+          </th>
+        </ng-container>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="headArray"></tr>
+      <tr mat-row *matRowDef="let row; columns: headArray"></tr>
+    </table>
+  </ng-template>
+
+  <div *ngIf="isProcessing" style="background: white">
+    <ngx-skeleton-loader count="10" [theme]="{
+        'height': '40px',
+        'background-color': 'white',
+        'border-bottom': '1px solid #e8e8e8',
+        'border-radius':'none'
+      }" appearance="line">
+    </ngx-skeleton-loader>
+  </div>
+  <!-- <processing-indicator *ngIf="isProcessing" [inline]="true" [view]="'spinball'"></processing-indicator> -->
+</div>
+<app-paginator [hidden]="hidePaginator" [pager]="pager" [fetchByLimit]="true" [total]="pager.total"></app-paginator>

@@ -1,0 +1,8 @@
+<div *ngIf="(doc?.mimeType === 'image/png' || 'image/jpeg' || 'image/jpg') && (doc.mimeType !== 'video/mp4')">
+  <img [src]="doc?.url">
+</div>
+<div class="background" *ngIf="doc.mimeType === 'video/mp4'">
+  <video controls class="background-video">
+    <source class="video" type="video/mp4" [src]="doc?.url">
+  </video>
+</div>

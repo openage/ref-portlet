@@ -1,0 +1,65 @@
+<ng-container *ngIf="doc">
+
+  <div class="header-bar">
+    <mat-icon class="icon pointer" (click)="close()">arrow_back</mat-icon>
+    {{ doc.name ||doc?.content?.name || 'Document'}}
+
+    <div class="spacer"></div>
+
+    <div class="selector" *ngIf="templates.length">
+      <mat-select [(ngModel)]="selectedTemplate" (selectionChange)="onTemplateChange($event)">
+        <mat-option *ngFor="let template of templates" [value]="template">{{template.name}}</mat-option>
+      </mat-select>
+    </div>
+
+    <div class="spacer"></div>
+
+    <ng-container *ngIf="generateByUrls && generateByUrls.length">
+      <mat-icon class="icon pointer" [matMenuTriggerFor]="menu2">save_as</mat-icon>
+      <mat-menu #menu2="matMenu">
+        <button *ngFor="let file of generateByUrls" (click)="generateFile(file)" mat-menu-item>{{file}}</button>
+      </mat-menu>
+    </ng-container>
+
+    <ng-container [ngSwitch]="!!fileTypes.length">
+      <mat-icon *ngSwitchCase="false" class="icon pointer" (click)="download(doc)">file_download</mat-icon>
+      <mat-icon *ngSwitchCase="true" class="icon pointer" [matMenuTriggerFor]="menu">file_download</mat-icon>
+      <mat-menu #menu="matMenu">
+        <button *ngFor="let type of fileTypes" (click)="onChangeFileType(type)"
+          mat-menu-item>{{type|uppercase}}</button>
+      </mat-menu>
+    </ng-container>
+    <gateway-task-actions *ngIf="options && options.task && options.task.code" [code]="options.task.code">
+    </gateway-task-actions>
+    <mat-icon *ngIf="!auth.hasPermission('customer.normal')" class="icon pointer">more_vert</mat-icon>
+  </div>
+
+
+  <div class="overlay-content d-flex flex-row" [ngSwitch]="type">
+    <mat-icon *ngIf="files && files.length && selectedIndex>0" (click)="onFileSelect(selectedIndex-1)"
+      class="pointer left-icon">keyboard_arrow_left</mat-icon>
+    <span class="spacer"></span>
+    <img *ngSwitchCase="'img'" class="overlay-inner-content" [src]="doc.content.url || doc.url" />
+    <img *ngSwitchCase="'image/png'" class="overlay-inner-content" [src]="doc.content.url || doc.url" />
+
+    <pdf-viewer *ngSwitchCase="'pdf'" [src]="doc.content.url || doc.url" [render-text]="true" class="pdf-container">
+    </pdf-viewer>
+
+    <div *ngSwitchCase="'html'" [innerHTML]="doc.content"></div>
+    <span class="spacer"></span>
+
+    <mat-icon *ngIf="files && files.length && selectedIndex<files.length-1" (click)="onFileSelect(selectedIndex+1)"
+      class="pointer right-icon">keyboard_arrow_right</mat-icon>
+
+  </div>
+
+</ng-container>
+<div class="d-flex w-100">
+  <div class="thumbnail-container" *ngIf="files&& files.length; ">
+    <ng-container *ngFor="let doc of files;let i=index">
+      <div (click)="onFileSelect(i)">
+        <img class="thumbnail" [class.active]="selectedIndex === i" [src]="doc.content.thumbnail || doc.thumbnail" />
+      </div>
+    </ng-container>
+  </div>
+</div>

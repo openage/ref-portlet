@@ -1,0 +1,118 @@
+{
+  "context": [
+    {
+      "code": "rows"
+    },
+    {
+      "code": "columns"
+    },
+    {
+      "code": "done"
+    },
+    {
+      "code": "draft",
+      "title": "Show Drafts",
+      "icon": "mat-pending"
+    },
+    {
+      "code": "discarded",
+      "title": "Show Discarded",
+      "icon": "block"
+    },
+    {
+      "code": "filters"
+    },
+    {
+      "code": "refresh"
+    },
+    {
+      "code": "close",
+      "type": "icon"
+    }
+  ],
+  "new": {},
+  "params": {
+    "view": "rows",
+    "showFilters": false,
+    "showClosed": false,
+    "showDiscarded": false,
+    "showDraft": true,
+    "closed": false,
+    "draft": true,
+    "discarded": false,
+    "owner": "my"
+  },
+  "columns": [
+    "icon",
+    "code",
+    "priority",
+    "subject",
+    "status",
+    "actions",
+    "priorityToggler",
+    "effort",
+    "points",
+    "assignee",
+    "planFinish",
+    "sprint",
+    "edit",
+    "view"
+  ],
+  "paging": {
+    "limit": 10
+  },
+  "search": {
+    "view": "full-text",
+    "sorts": [
+      {
+        "label": "Priority",
+        "code": "priority",
+        "value": "dsc",
+        "isSelected": true
+      },
+      {
+        "label": "Assignee",
+        "code": "assignee.code",
+        "value": "dsc"
+      },
+      {
+        "label": "Due Date",
+        "code": "plan.finish",
+        "value": "dsc"
+      }
+    ],
+    "params": [
+      {
+        "label": "Subject",
+        "key": "subject",
+        "control": "input"
+      },
+      {
+        "label": "Category",
+        "key": "category-code",
+        "control": "autocomplete",
+        "config": {
+          "url": {
+            "code": "gateway",
+            "addOn": "categories"
+          },
+          "paramField": "text"
+        }
+      },
+      {
+        "label": "Tags",
+        "key": "tags",
+        "control": "input"
+      },
+      {
+        "label": "Code",
+        "key": "code",
+        "control": "input",
+        "config": {
+          "trigger": "#",
+          "op": "eq"
+        }
+      }
+    ]
+  }
+}

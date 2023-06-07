@@ -1,0 +1,112 @@
+.card-wrap {
+  font-weight: bold;
+}
+
+.mat-form-field {
+  width: 30%;
+  padding: 0 15px;
+  color: black;
+}
+
+.role mat-select {
+  /* display: inline-block; */
+  /* width: 24%; */
+  font-size: 13px;
+  padding: 6px;
+  height: 30px;
+  /* border: 1px solid gray; */
+  /* margin-left: 20px; */
+  outline: 0;
+  background-color: var(--defaultBackground);
+}
+
+.custom-padding {
+  height: 100%;
+  overflow: hidden;
+  padding-top: 10px;
+}
+
+table {
+  width: 100%;
+}
+
+/* .mat-header-cell {
+  font-weight: bolder;
+  color: black;
+}
+
+td.mat-cell:first-of-type,
+td.mat-footer-cell:first-of-type,
+th.mat-header-cell:first-of-type {
+  padding-left: 24px;
+  width: 234px;
+} */
+
+/* td.mat-cell {
+  border-bottom-style: none;
+}
+
+th.mat-header-cell {
+  border-bottom-style: none;
+} */
+
+.role {
+  padding-left: 18px;
+}
+
+/* .mat-table {
+  background-color: transparent !important;
+} */
+
+/* table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 0em;
+  box-shadow: none;
+} */
+
+/* table tr:last-child td */
+
+/*To remove the last border*/
+
+/* {
+  border-bottom: 0 solid
+} */
+
+/* td.mat-cell,
+td.mat-footer-cell,
+th.mat-header-cell {
+  padding-left: 24px !important;
+} */
+
+.main, .child {
+  min-height: max-content !important;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  padding: 10px 15px;
+  margin-top: -28px;
+}
+
+/* tr.mat-row {
+  height: 48px;
+  border: 1px solid #80808036 !important;
+} */
+
+.buttonIcon {
+  color: #f6faff !important;
+  top: -33px;
+  float: right;
+  font-size: 12px;
+  margin-bottom: -16px;
+  line-height: 1;
+  height: 29px;
+}
+
+.role-type {
+  display: inline-block;
+  width: 30%;
+}
+
+.permission-container {
+  margin-top: 30px;
+}

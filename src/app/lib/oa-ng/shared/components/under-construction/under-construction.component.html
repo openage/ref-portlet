@@ -1,0 +1,22 @@
+<ng-container [ngSwitch]="view">
+  <ng-container *ngSwitchCase="'wip'">
+    <div class="container">
+      <i class="lg error-wip"></i>
+      <div>{{title}}</div>
+    </div>
+  </ng-container>
+  <ng-container *ngSwitchCase="'commingSoon'">
+    <div class="container">
+      <i class="xxx-lg error-coming-soon"></i>
+    </div>
+  </ng-container>
+  <ng-container *ngSwitchCase="'serverDown'">
+    <div class="serverDown">
+      <div class="container">
+        <i class="lg error-wip"></i>
+        <div>{{title}}</div>
+      </div>
+    </div>
+  </ng-container>
+
+</ng-container>

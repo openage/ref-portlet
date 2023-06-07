@@ -1,0 +1,26 @@
+.imgDiv {
+  text-align: center;
+  border: 2px dotted #989898;
+  padding: 3px;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+
+.divColor {
+  text-align: center;
+  cursor: pointer;
+  margin: 15px;
+  background: #f9f9f9;
+  border: 4px;
+  padding: 15px;
+}
+
+
+p {
+  font-size: 13px;
+}
+
+.mat-dialog-content {
+  max-height:75vh;
+}

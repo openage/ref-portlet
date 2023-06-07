@@ -1,0 +1,17 @@
+<div class="main" [class.hidden]="!isCurrent">
+  <processing-indicator *ngIf="isProcessing"></processing-indicator>
+
+  <core-page-divs [divs]="page?.meta?.divs" [filters]="page?.meta?.stats?.params"
+    [areaCode]="page?.meta?.stats?.areaCode || page?.code">
+  </core-page-divs>
+  <div *ngIf="isInitialized" class="sections">
+
+    <directory-employee-list #list (selected)="onSelect($event)" [supervisor]="selectedSupervisor"
+      [employeeTypes]="selectedEmployeeTypes" [userTypes]="selectedUserType" [designation]="selectedDesignation"
+      [contractor]="selectedContractor" [division]="selectedDivision" [department]="selectedDepartment"
+      [name]="selectedName" [code]="selectedCode" [view]="isCurrent? 'table': 'list'" [columns]="page.meta.columns"
+      [addOptions]="page.meta.add">
+    </directory-employee-list>
+  </div>
+</div>
+<router-outlet></router-outlet>

@@ -1,0 +1,9 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+<div *ngIf="properties">
+  <p class="div-title">{{properties.name}}</p>
+  <div *ngIf="view === 'image'" class="flex-row img-Div">
+    <div *ngFor="let files of properties.files">
+      <img [src]="files.url" width="700px">
+    </div>
+  </div>
+</div>

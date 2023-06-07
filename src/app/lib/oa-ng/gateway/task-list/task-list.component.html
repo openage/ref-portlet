@@ -1,0 +1,488 @@
+<ng-container [ngSwitch]="!!groupBy">
+  <ng-container *ngSwitchCase="true">
+    <processing-indicator *ngIf="isProcessing"></processing-indicator>
+    <ng-container *ngTemplateOutlet="groupedView"></ng-container>
+  </ng-container>
+
+  <ng-container *ngSwitchDefault>
+    <ng-container *ngTemplateOutlet="itemsView; context: {data: items}"></ng-container>
+  </ng-container>
+
+  <app-paginator [pager]="pager" [total]="pager.total"></app-paginator>
+</ng-container>
+
+<ng-template #groupedView>
+  <ng-container [ngSwitch]="view">
+
+    <ng-container *ngSwitchCase="'columns'">
+      <div class="flex-row three scrollable">
+        <div class="section" *ngFor="let group of groups">
+          <div class="header">
+            <label> {{group.label}} <span class="stat disabled filled">{{group.items.length}}</span></label>
+            <div class="spacer"></div>
+            <div *ngIf="group.items && group.items.length">
+              <mat-icon class="subtle md cursorPointer" [matTooltip]="'Copy'" (click)="copyText(group)">content_copy
+              </mat-icon>
+            </div>
+          </div>
+          <div class="body highlighted">
+            <div>
+              <ng-container *ngTemplateOutlet="itemsView; context: {data: group.items}"></ng-container>
+              <oa-no-data-found *ngIf="!group.items.length && group.nodata" [value]="group.nodata">
+              </oa-no-data-found>
+            </div>
+
+            <div class="stacked drop-zone" [class.overlay]="selectedItem">
+              <div class="spacer ready-for-drop" [class.hidden]="!selectedItem" (dragover)="onDragOver($event, group)"
+                (drop)="onItemDrop($event, group)">
+                {{group.label}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngSwitchDefault>
+      <div class="sections">
+        <ng-container *ngFor="let group of groups">
+          <div class="divider">
+            <label> {{group.label}} <span class="stat disabled filled">{{group.items.length}}</span></label>
+            <div *ngIf="group.items && group.items.length">
+              <mat-icon class="subtle md cursorPointer" [matTooltip]="'Copy'" (click)="copyText(group)">content_copy
+              </mat-icon>
+            </div>
+          </div>
+          <div class="section">
+            <ng-container *ngTemplateOutlet="itemsView; context: {data: group.items}"></ng-container>
+            <oa-no-data-found *ngIf="!group.items.length && group.nodata" [value]="group.nodata">
+            </oa-no-data-found>
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
+  </ng-container>
+</ng-template>
+
+<ng-template #itemsView let-data="data">
+  <ng-container [ngSwitch]="view">
+
+    <div *ngSwitchCase="'shortList'" class="list">
+      <processing-indicator *ngIf="isProcessing"></processing-indicator>
+      <ng-container *ngIf="data && data.length">
+        <div class="controls-row">
+          <span class="spacer"></span>
+          <app-paginator [pager]="pager" [total]="pager.total" [size]="pageSize" [view]="'previous'"></app-paginator>
+          <span class="spacer"></span>
+        </div>
+        <div *ngFor="let item of items" class="controls-row list-item">
+          <oa-avatar [user]="item.owner"></oa-avatar>
+          <div class="spacer">
+            <div class="controls-row">
+              <div class="spacer">{{item.subject}}</div>
+              <oa-goto-entity-button [view]="'icon'" [entity]="getEntity(item)"></oa-goto-entity-button>
+            </div>
+            <div class="controls-row">
+              <div class="sub-text">{{item.owner | name}}</div>
+              <span class="spacer"></span>
+              <div class="sub-text">{{item.createdOn | time:'ago'}}</div>
+            </div>
+          </div>
+          <hr>
+        </div>
+        <div class="controls-row">
+          <span class="spacer"></span>
+          <app-paginator [pager]="pager" [total]="pager.total" [size]="pageSize" [view]="'next'"></app-paginator>
+          <span class="spacer"></span>
+        </div>
+      </ng-container>
+      <oa-no-data-found *ngIf="!data || !data.length"></oa-no-data-found>
+    </div>
+
+    <div *ngSwitchCase="'sideBar'" class="sideBarList">
+      <processing-indicator *ngIf="isProcessing"></processing-indicator>
+      <ng-container *ngIf="data && data.length">
+        <div class="controls-row">
+          <span class="spacer"></span>
+          <app-paginator [pager]="pager" [total]="pager.total" [size]="pageSize" [view]="'previous'"></app-paginator>
+          <span class="spacer"></span>
+        </div>
+        <ng-container *ngFor="let item of items;let i=index;">
+          <div class="controls-row" [class.closed]="item.isClosed">
+            <oa-icon class="not-subtle md" [value]="item.workflow?.icon" [title]="item?.workflow?.name"></oa-icon>
+            <div class="spacer">
+              <div class="subject-text" [class.strike]="item.isClosed"
+                [class.overdue]="!item.isClosed && isOverdue(item)">
+                {{item.subject}}
+              </div>
+              <div class="controls-row">
+                <div class="sub-text pointer status" matTooltip="{{item.timeStamp|time:'ago'}}">
+                  {{item?.currentStatus?.name|name}}
+                </div>
+                <span class="spacer"></span>
+                <ng-container *ngIf="!item.isClosed" class="controls-row list-icons">
+                  <oa-icon-toggler [value]="item.priority" type="priority" (changed)="updatePriority(item, $event)">
+                  </oa-icon-toggler>
+
+                  <mat-icon class="md label pointer" [class.active]="item?.plan.reminder"
+                    (click)="item.isSelected=!item.isSelected;from='reminder';selectedIndex=i"
+                    matTooltip="{{item.plan.reminder|date:'dd/M/yyyy'}}">alarm</mat-icon>
+
+                  <mat-icon class="md label pointer" [class.active]="item?.plan.start||item?.plan.finish"
+                    (click)="item.isSelected=!item.isSelected;from='dueDate';selectedIndex=i"
+                    matTooltip="Start date: {{item.plan.start|date:'dd/M/yyyy'}} End date: {{item.plan.finish|date:'dd/M/yyyy'}}">
+                    calendar_today</mat-icon>
+
+                  <div (click)="item.isSelected=!item.isSelected;from='assignee';selectedIndex=i">
+                    <oa-avatar class="pointer" [user]="item.assignee" [size]="15">
+                    </oa-avatar>
+                  </div>
+
+                  <div *ngIf="item.isSelected&&selectedIndex === i" class="date-picker section mat-elevation-z2">
+                    <mat-icon class="md label pointer close" (click)="onClose(item)">close</mat-icon>
+                    <oa-date-picker *ngIf="from === 'dueDate'" [placeholder]="'Start Date'" [value]="item.plan.start"
+                      (change)="onChange($event,item,'startDate')">
+                    </oa-date-picker>
+                    <oa-date-picker *ngIf="from === 'reminder'||from === 'dueDate'"
+                      [maxDate]="from === 'reminder'?item.plan.finish:null"
+                      [placeholder]="from === 'reminder'?'Reminder':'Due Date'"
+                      [value]="from === 'reminder'?item.plan.reminder:item.plan.finish"
+                      (change)="onChange($event,item,from)">
+                    </oa-date-picker>
+                    <directory-user-picker *ngIf="from === 'assignee'" [placeholder]="'Assignee'"
+                      [value]="item.assignee" (changed)="onChange($event,item,from)" [isAgent]="true">
+                    </directory-user-picker>
+                  </div>
+                </ng-container>
+
+              </div>
+            </div>
+          </div>
+          <hr>
+        </ng-container>
+        <div class="controls-row">
+          <span class="spacer"></span>
+          <app-paginator [pager]="pager" [total]="pager.total" [size]="pageSize" [view]="'next'"></app-paginator>
+          <span class="spacer"></span>
+        </div>
+      </ng-container>
+      <oa-no-data-found *ngIf="!items || !items.length"></oa-no-data-found>
+    </div>
+
+    <div *ngSwitchCase="'columns'" class="cards">
+      <processing-indicator *ngIf="isProcessing"></processing-indicator>
+      <ng-container *ngFor="let item of data | sort: orderBy">
+        <ng-container *ngTemplateOutlet="columnCard; context: { item: item }"> </ng-container>
+      </ng-container>
+    </div>
+
+    <div *ngSwitchCase="'release'" class="cards">
+      <processing-indicator *ngIf="isProcessing" [inline]="true" [view]="'spinball'"></processing-indicator>
+      <div class="controls-row" *ngIf="data && data.length">
+        <button *ngIf="bulkAttachBtn" mat-raised-button class="primary" (click)="bulkAttach(data)">Select All</button>
+        <button *ngIf="bulkDetachBtn" mat-raised-button class="primary" (click)="bulkDetach(data)">Unselect
+          All</button>
+      </div>
+      <ng-container *ngFor="let item of data | sort: orderBy">
+        <ng-container *ngTemplateOutlet="releaseCard; context: { item: item }"> </ng-container>
+      </ng-container>
+    </div>
+
+    <div *ngSwitchDefault class="cards">
+      <processing-indicator *ngIf="isProcessing"></processing-indicator>
+      <ng-container *ngFor="let item of data | sort: orderBy">
+        <ng-container *ngTemplateOutlet="rowCard; context: { item: item }"> </ng-container>
+      </ng-container>
+    </div>
+  </ng-container>
+</ng-template>
+
+<ng-template #noData>
+  <oa-no-data-found value="TASKS_DONE"></oa-no-data-found>
+</ng-template>
+
+<!-- <ng-template #sprintView let-items="items">
+  <div *ngFor="let sprint of sprints | sort: 'plan.end'" class="section drop-zone" [class.closed]="sprint.isClosed"
+    [class.overdue]="!sprint.isClosed && isOverdue(sprint)" [class.ready-for-drop]="selectedItem && sprint.isEditing"
+    (dragover)="onDragOver($event, sprint.id, 'sprint')" (drop)="onItemDrop($event, sprint.id, 'sprint')">
+    <div class="header">
+      <mat-icon class="x-lg label pointer" (click)="toggleSprint(sprint)">
+        {{sprint.isSelected ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}}
+      </mat-icon>
+      <span (click)="toggleSprint(sprint)">{{sprint.name}}:</span>
+      <span class="spacer"></span>
+      <ng-container *ngIf="sprint.code !== 'backlog'">
+        <span *ngIf="sprint.plan && sprint.plan.finish" class="sub-text">{{sprint.plan.finish | time: 'ago'}}</span>
+        <mat-icon class="subtle" (click)="onEditSprint(sprint)">more_vert</mat-icon>
+      </ng-container>
+      <a *ngIf="sprint.code === 'backlog'" mat-button color="accent" (click)="onNewSprint()">New Sprint</a>
+    </div>
+
+    <div class="table" *ngIf="sprint.isSelected">
+      <processing-indicator *ngIf="sprint.isProcessing"></processing-indicator>
+      <ng-container *ngFor="let item of sprint.tasks | search: params | sort: orderBy">
+        <ng-container *ngTemplateOutlet="rowItem; context: { item: item }"> </ng-container>
+      </ng-container>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #kanbanView let-items="items">
+  <div class="flex-1-1-1">
+    <div class="section scrollable">
+      <div class="header">
+        <label>Not started</label>
+      </div>
+      <div class="body highlighted">
+        <div>
+          <ng-container *ngFor="let item of reworkItems| search: params | sort: orderBy">
+            <ng-container *ngTemplateOutlet="columnCard; context: { item: item }"> </ng-container>
+          </ng-container>
+          <ng-container *ngFor="let item of notStartedItems| search: params | sort: orderBy">
+            <ng-container *ngTemplateOutlet="columnCard; context: { item: item }"> </ng-container>
+          </ng-container>
+        </div>
+
+        <div class="stacked drop-zone" [class.overlay]="selectedItem">
+          <div class="spacer" [class.ready-for-drop]="reworkZone" [class.hidden]="!selectedItem || !reworkZone"
+            (dragover)="onDragOver($event, 'rework', 'kanban')" (drop)="onItemDrop($event, 'rework', 'kanban')">Rework
+          </div>
+          <div class="spacer" [class.ready-for-drop]="notStartedZone" [class.hidden]="!selectedItem || !notStartedZone"
+            (dragover)="onDragOver($event, 'not-started', 'kanban')"
+            (drop)="onItemDrop($event, 'not-started', 'kanban')">New</div>
+        </div>
+
+      </div>
+    </div>
+    <div class="section scrollable">
+      <div class="header">
+        <label>In Progress</label>
+      </div>
+      <div class="body highlighted">
+        <div>
+          <ng-container *ngFor="let item of wipItems| search: params | sort: orderBy">
+            <ng-container *ngTemplateOutlet="columnCard; context: { item: item }"> </ng-container>
+          </ng-container>
+        </div>
+
+        <div class="stacked drop-zone" [class.overlay]="selectedItem">
+          <div class="spacer" [class.ready-for-drop]="wipZone" [class.hidden]="!wipZone"
+            (dragover)="onDragOver($event, 'wip', 'kanban')" (drop)="onItemDrop($event, 'wip', 'kanban')">In Progress
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section scrollable">
+      <div class="header">
+        <label>Done</label>
+      </div>
+      <div class="body highlighted">
+        <div>
+          <ng-container *ngFor="let item of resolvedItems| search: params | sort: orderBy">
+            <ng-container *ngTemplateOutlet="columnCard; context: { item: item }"> </ng-container>
+          </ng-container>
+          <ng-container *ngFor="let item of completedItems| search: params | sort: orderBy">
+            <ng-container *ngTemplateOutlet="columnCard; context: { item: item }"> </ng-container>
+          </ng-container>
+          <ng-container *ngFor="let item of rejectedItems| search: params | sort: orderBy">
+            <ng-container *ngTemplateOutlet="columnCard; context: { item: item }"> </ng-container>
+          </ng-container>
+        </div>
+        <div class="stacked drop-zone" [class.overlay]="selectedItem">
+          <div class="spacer" [class.ready-for-drop]="resolvedZone" [class.hidden]="!resolvedZone"
+            (dragover)="onDragOver($event, 'resolved', 'kanban')" (drop)="onItemDrop($event, 'resolved', 'kanban')">
+            Resolve</div>
+          <div class="spacer" [class.ready-for-drop]="completedZone" [class.hidden]="!completedZone"
+            (dragover)="onDragOver($event, 'completed', 'kanban')" (drop)="onItemDrop($event, 'completed', 'kanban')">
+            Complete</div>
+          <div class="spacer" [class.ready-for-drop]="rejectedZone" [class.hidden]="!rejectedZone"
+            (dragover)="onDragOver($event, 'rejected', 'kanban')" (drop)="onItemDrop($event, 'rejected', 'kanban')">
+            Reject</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template> -->
+
+<ng-template #columnCard let-item="item">
+  <div draggable="true" class="section card draggable priority priority-{{item.priority || 3}}"
+    [class.selected]="selectedItem && selectedItem.id === item.id"
+    [class.hidden]="selectedItem && selectedItem.id !== item.id" (dragstart)="onItemDragStart($event, item)"
+    (dragend)="onItemDragEnd($event, item)">
+    <div class="header">
+      <oa-icon *ngIf="fields.icon" class="not-subtle md top" [value]="item.workflow?.icon"
+        [title]="item?.workflow?.name"></oa-icon>
+      <span>
+        <span class="code clickable" (click)="select(item); item.isSelected=false">{{item.code }}</span>
+        {{item.subject}}
+      </span>
+    </div>
+    <div *ngIf="item.parent" class="sub-text">
+      <a (click)="select(item.parent)">{{item.parent.subject}}</a>
+    </div>
+
+    <div class="body highlighted handle scrollable description">
+      <div [innerHTML]="item.description"></div>
+      <ng-container *ngTemplateOutlet="info; context: {item: item}"></ng-container>
+    </div>
+    <div class="footer subtle">
+      <span class="spacer"></span>
+      <ng-container *ngTemplateOutlet="actionables; context: {item: item}"></ng-container>
+    </div>
+  </div>
+
+</ng-template>
+
+<ng-template #rowCard let-item="item">
+  <div draggable="true" class="section card draggable vertical priority priority-{{item.priority || 3}}">
+    <div class="subtle" [class.flex-row]="!item.isSelected" [class.header]="item.isSelected">
+
+      <oa-icon *ngIf="fields.icon" class="not-subtle md" [value]="item.workflow?.icon"
+        [title]="item?.workflow?.name"></oa-icon>
+
+      <div *ngIf="fields.code" class="primary">
+        <a (click)="select(item); item.isSelected=false">{{item.code | uppercase }}</a>
+        <div *ngIf="item.parent && !parent" class="sub-text clickable code"
+          (click)="select(item.parent); item.isSelected=false">
+          {{item.parent.code}}
+        </div>
+      </div>
+
+      <ng-container *ngIf="!item.isSelected">
+        <ng-container *ngIf="fields.subject">
+          <div class="spacer" *ngIf="!item.isEditing" (click)="item.isEditing = true">
+            <div [innerHTML]="item.subject"></div>
+            <div *ngIf="item.parent && !parent" class="sub-text">
+              {{item.parent.subject}}
+            </div>
+          </div>
+          <div class="input subject spacer" *ngIf="item.isEditing" [class.selected]="item.isEditing"
+            (focus)="item.isEditing = true" contenteditable="true" (blur)="updateSubject(item, $event)">
+            {{item.subject}}
+          </div>
+        </ng-container>
+        <ng-container *ngTemplateOutlet="info; context: {item: item}"></ng-container>
+        <ng-container *ngTemplateOutlet="actionables; context: {item: item}"></ng-container>
+      </ng-container>
+
+      <ng-container *ngIf="item.isSelected">
+        <div class="input subject spacer" [class.selected]="item.isEditing" (focus)="item.isEditing = true"
+          contenteditable="true" (blur)="updateSubject(item, $event)">
+          {{item.subject}}
+        </div>
+      </ng-container>
+      <oa-icon-toggler type="expand" [value]="item.isSelected" (changed)="item.isSelected = $event"></oa-icon-toggler>
+    </div>
+    <ng-container *ngIf="item.isSelected">
+      <div class="body">
+        <ng-container *ngIf="detailsTemplate">
+          <ng-container *ngTemplateOutlet="detailsTemplate; context: { task: item }"></ng-container>
+        </ng-container>
+        <gateway-task-details *ngIf="!detailsTemplate" view="row" [properties]="item"></gateway-task-details>
+      </div>
+      <div class="footer" *ngIf="footer === 'statusbar'">
+        <gateway-task-status-bar class="spacer" [skipAction]="false" [task]="item" [code]="item?.code"
+          (onSelect)="select($event)" [arrow]="'forward'" [options]="getOptions(item)">
+        </gateway-task-status-bar>
+      </div>
+    </ng-container>
+  </div>
+</ng-template>
+
+<ng-template #info let-item="item">
+  <ng-container *ngFor="let column of columns" [ngSwitch]="column.code">
+    <div *ngSwitchCase="'effort'" [class]="column.class || 'hide-on-hover'">
+      <oa-progress view="pill" [value]="item.burnt" [total]="item.size" [type]="'effort'"></oa-progress>
+    </div>
+
+    <div *ngSwitchCase="'tags'" [class]="column.class || 'hide-on-hover'">
+      <oa-tags [values]="item.tags" [readonly]="true"></oa-tags>
+    </div>
+
+    <div *ngSwitchCase="'progress'" [class]="column.class || 'hide-on-hover'">
+      <oa-progress view="circle" [content]="'total'" [value]="item?.meta.closedPoints" [total]="item.points"
+        [size]="30"></oa-progress>
+    </div>
+
+    <span *ngSwitchCase="'sprint'" class="code" [class]="column.class || 'hide-on-hover'">{{item?.sprint?.name}}</span>
+
+    <gateway-category-picker *ngSwitchCase="'category'" view="picker" [searchField]="'text'" [params]="{
+      'project-id': (item.project && item.project.id) ? item.project.id: null
+    }" [value]="item.category" (changed)="updateCategory(item, $event)">
+    </gateway-category-picker>
+  </ng-container>
+</ng-template>
+<ng-template #actionables let-item="item">
+
+  <ng-container *ngFor="let column of columns" [ngSwitch]="column.code">
+
+    <div *ngSwitchCase="'status'" [class]="column.class || 'hide-on-hover'">
+      <gateway-task-states [task]="item" view="pill"></gateway-task-states>
+    </div>
+    <div *ngSwitchCase="'actions'" [class]="column.class || 'show-on-hover inline'">
+      <gateway-task-actions view="action" [task]="item" [options]="{ more: { hide: true } }">
+      </gateway-task-actions>
+    </div>
+
+    <directory-user-picker *ngSwitchCase="'assignee'" view="avatar" [value]="item.assignee"
+      (changed)="updateAssignee(item, $event)">
+    </directory-user-picker>
+    <ng-container *ngSwitchCase="'owner'">
+      <oa-avatar [value]="item.owner"></oa-avatar>
+    </ng-container>
+
+    <oa-date-picker *ngSwitchCase="'dueDate'" view="icon" [value]="item?.plan?.finish"
+      (change)="updateDueDate(item, $event)">
+    </oa-date-picker>
+
+  </ng-container>
+
+</ng-template>
+
+<ng-template #rowContent let-item="item">
+
+
+</ng-template>
+
+<ng-template #releaseCard let-item="item">
+  <div draggable="true" class="section card draggable vertical priority priority-{{item.priority || 3}}">
+    <div class="subtle" [class.flex-row]="!item.isSelected" [class.header]="item.isSelected">
+      <mat-checkbox *ngIf="showCheckBox" [checked]="item.release && item.release.code"
+        (change)="setRelease($event,item)"></mat-checkbox>
+      <oa-icon class="not-subtle md" [value]="item.workflow?.icon" [title]="item?.workflow?.name"></oa-icon>
+      <div class="primary">
+        <a (click)="select(item)">{{item.code | uppercase }}</a>
+        <div *ngIf="item.parent && !parent" class="sub-text" (click)="select(item.parent)" class="clickable">
+          {{item.parent.code | uppercase}}
+        </div>
+      </div>
+      <div class="spacer">
+        <div [innerHTML]="item.subject"></div>
+        <div *ngIf="item.parent && !parent" class="sub-text">
+          {{item.parent.subject}}
+        </div>
+      </div>
+      <div class="hide-on-hover">
+        <oa-tags [values]="item.tags" [readonly]="true"></oa-tags>
+      </div>
+      <directory-user-picker view="avatar" [readonly]="true" [value]="item.assignee"
+        (changed)="updateAssignee(item, $event)">
+      </directory-user-picker>
+      <oa-icon-toggler type="expand" [value]="item.isSelected" (changed)="item.isSelected = $event"></oa-icon-toggler>
+    </div>
+    <ng-container *ngIf="item.isSelected">
+      <div class="body">
+        <ng-container *ngIf="detailsTemplate">
+          <ng-container *ngTemplateOutlet="detailsTemplate; context: { task: item }"></ng-container>
+        </ng-container>
+        <gateway-task-details *ngIf="!detailsTemplate" view="row" [properties]="item"></gateway-task-details>
+      </div>
+      <div class="footer" *ngIf="footer === 'statusbar'">
+        <gateway-task-status-bar class="spacer" [skipAction]="false" [task]="item" [code]="item?.code"
+          (onSelect)="select($event)" [arrow]="'forward'" [options]="getOptions(item)">
+        </gateway-task-status-bar>
+      </div>
+    </ng-container>
+  </div>
+</ng-template>

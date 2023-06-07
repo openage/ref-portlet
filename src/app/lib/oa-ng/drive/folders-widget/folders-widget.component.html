@@ -1,0 +1,13 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+<div>
+  <p class="div-title" *ngIf="parent">{{parent.description}}</p>
+  <div *ngIf="view === 'grid'" class="flex-row {{widget.class}} folders-list">
+    <div *ngFor="let item of items" class="mainDiv" (click)="onClick(item)">
+      <div class="iconDiv">
+        <i><img [src]="item.thumbnail"></i>
+      </div>
+      <div class="titleDiv"> {{item.name}}</div>
+      <div class="discDiv"> {{item.description}}</div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,100 @@
+table {
+  width: 100%;
+}
+
+tr.example-detail-row {
+  height: max-content;
+  overflow-x: auto;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: #efefef;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
+.example-element-detail {
+
+  display: flex;
+}
+
+.example-detail-row {
+  background: #efefef
+}
+
+.selected {
+  background: #efefef
+}
+
+.example-element-diagram {
+  min-width: 80px;
+  border: 2px solid black;
+  padding: 8px;
+  font-weight: lighter;
+  margin: 8px 0;
+  height: 104px;
+}
+
+.example-element-symbol {
+  font-weight: bold;
+  font-size: 40px;
+  line-height: normal;
+}
+
+.example-element-description {
+  padding: 16px;
+}
+
+.list-sub-text {
+  font-size: 12px !important;
+}
+
+.link {
+  color: var(--primary)
+}
+
+.link-detail {
+  color: var(--accent)
+}
+
+.tds-input {
+  max-width: 60px;
+}
+
+.number {
+  width: 22%
+}
+
+.amount {
+  width: 18%
+}
+
+.date {
+  width: 15%
+}
+
+.remarks {
+  width: 25%;
+}
+
+.action {
+  width: 5%
+}
+
+.sub-text {
+  font-size: 9px;
+}
+
+.date-picker {
+  max-width: 30px;
+}
+
+.status {
+  max-width: 90px !important;
+}

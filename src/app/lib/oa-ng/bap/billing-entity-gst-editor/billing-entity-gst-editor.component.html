@@ -1,0 +1,31 @@
+<ng-container [ngSwitch]="view">
+  <oa-input *ngSwitchCase="'new'" id="gst" label="GST Number" type="text" [value]="value"
+    (changed)="onGSTChange($event)" [validate]="checkGst" (errored)="error($event)" [required]="required"
+    [options]="{ format:{ casing: 'uppercase'}}">
+  </oa-input>
+  <oa-input *ngSwitchCase="'old'" id="gst" label="GST Number" type="text" [(value)]="value" [readonly]="readonly"
+    [validate]="checkGst" (errored)="error($event)" [required]="required" [options]="{ format:{ casing: 'uppercase'}}">
+  </oa-input>
+  <!--
+  <ng-container *ngSwitchCase="'new'">
+    <div>
+      <label for="gst">GST Number <span *ngIf="required" class="mandatory">*</span></label>
+      <div class="oa-input">
+        <input name="gst" id="gst" [(ngModel)]="gst" (ngModelChange)="gstChange.emit(gst)" type="text" uppercase>
+      </div>
+      <oa-error [type]="'gst'" [value]="gst" [label]="'GST'" [validate]="checkGst" (errored)="error($event)"
+        [required]="required">
+      </oa-error>
+    </div>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'old'">
+    <mat-form-field appearance="outline">
+      <label for="gst">GST Number <span *ngIf="required" class="mandatory">*</span></label>
+      <input matInput name="gst" id="gst" [(ngModel)]="gst" (ngModelChange)="gstChange.emit(gst)" type="text" uppercase>
+      <oa-error [type]="'gst'" [value]="gst" [label]="'GST'" [validate]="checkGst" (errored)="error($event)"
+        [required]="required">
+      </oa-error>
+    </mat-form-field>
+  </ng-container> -->
+</ng-container>

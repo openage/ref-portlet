@@ -1,0 +1,12 @@
+<div class="main" [class.hidden]="!isCurrent">
+  <div class="header">
+    <h5>{{page.title}}</h5>
+    <span class="spacer"></span>
+  </div>
+  <mat-card>
+    <drive-folder-detail #details [code]="code" [visibility]="1" [permissions]="permissions" [entity]="entity"
+      (selectedDoc)="onSelect($event)" [view]="view">
+    </drive-folder-detail>
+  </mat-card>
+</div>
+<router-outlet></router-outlet>

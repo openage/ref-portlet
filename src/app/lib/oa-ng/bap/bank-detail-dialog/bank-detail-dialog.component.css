@@ -1,0 +1,22 @@
+.bankDetailList{
+    overflow: auto;
+    max-height: 450px;
+}
+.selectionCheck{
+    position: relative;
+}
+.selectionCheck >span{
+    position: absolute;
+    right: 0;
+    top:0;
+}
+.selectedBank{
+    background-color:var(--defaultBackground);
+    border-radius: 5px;
+    border: 1px solid var(--disabledBackground)
+
+}
+.bankList{
+    border-radius: 5px;
+    border: 1px solid var(--disabledBackground)
+}

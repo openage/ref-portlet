@@ -1,0 +1,100 @@
+table {
+  width: 100%;
+}
+
+label {
+  padding-right: 10%;
+  float: left;
+  width: 60%;
+}
+
+span {
+  float: right;
+  width: 30%;
+}
+
+.card {
+  background-color: var(--primary);
+  height: 90%;
+  width: 90%;
+}
+
+tr.mat-footer-row {
+  font-weight: bold;
+}
+
+tr.mat-row{
+  border-bottom: 1px solid #e8e8e8
+}
+td.mat-cell,
+td.mat-footer-cell,
+th.mat-header-cell {
+  padding: 0px 5px;
+}
+
+th {
+  font-weight: bold;
+  font-size: 13px;
+  padding: 5px;
+  text-align: center;
+
+}
+
+td {
+  font: size 13px;
+  text-align: center;
+}
+
+
+tr.detailed {
+  height: fit-content;
+}
+
+.tableContainer{
+  min-height: 550px
+}
+
+/* .table-header{
+  display: flex;
+  min-height:25px
+} */
+
+.filter{
+  padding:0px 5px 0px 5px;
+}
+
+.columnFilters{
+  position: absolute;
+  padding: 10px;
+  background: white;
+  border-radius: 2px;
+  min-width:220px;
+  margin-top:50px;
+}
+
+::ng-deep.skeleton-loader.progress::before{
+  background-image: linear-gradient(90deg,rgba(255,255,255,0),var(--defaultBackground),rgba(255,255,255,0)) !important;
+}
+
+::ng-deep.skeleton-loader{
+  margin:3px 0px !important;
+  display: list-item !important;
+  border-radius: 0px !important;
+}
+::ng-deep.progress{
+  border-radius: 0px !important;
+}
+
+
+
+/* th.mat-column-position, td.mat-column-position {
+  padding-left: 8px;
+}
+
+.mat-table-sticky-border-elem-right {
+  border-left: 1px solid red;
+}
+
+.mat-table-sticky-border-elem-left {
+  border-right: 1px solid red;
+} */

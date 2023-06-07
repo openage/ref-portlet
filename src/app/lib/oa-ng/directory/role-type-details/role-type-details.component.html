@@ -1,0 +1,45 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+<div *ngIf="properties" class="row">
+    <div class="col-sm-5">
+        <mat-card>
+            <h5 class="primary"><b>ROLE DETAILS</b></h5>
+            <br>
+            <mat-form-field>
+                <input matInput name="name" placeholder="Name" [(ngModel)]="properties.name" [readonly]="readonly"
+                    type="text">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput name="code" placeholder="Code" [(ngModel)]="properties.code" [readonly]="readonly">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput name="description" placeholder="Description" [(ngModel)]="properties.description"
+                    [readonly]="readonly" type="text">
+            </mat-form-field>
+        </mat-card>
+    </div>
+    <div class="col-sm-7">
+        <h5 class="primary"><b>PERMISSIONS</b></h5>
+        <ng-container *ngFor="let group of groups">
+            <mat-accordion class="headers-align" multi>
+                <mat-expansion-panel style="margin: 5px;">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{group.name}}
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <ng-container *ngFor="let item of group.permissions">
+                        <div>
+                            {{item.name}}
+                            <div class="colorItem">{{item.description}}</div>
+                            <div class="pad">
+                                <mat-slide-toggle class="checkbox-margin"
+                                    (change)="togglePermissions($event, item.code)" [(ngModel)]="item.isEdit">
+                                </mat-slide-toggle>
+                            </div>
+                        </div>
+                    </ng-container>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </ng-container>
+    </div>
+</div>

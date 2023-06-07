@@ -1,0 +1,29 @@
+<div class="progress-items" *ngIf="items && items.length">
+
+  <div class="header flex-row">
+    <div class="subtle">Done: {{completeCount}}, InProgress: {{inProgressCount}}, Failed: {{erroredCount}}</div>
+    <div class="spacer"></div>
+    <mat-icon class="lg x subtle m-r-10" (click)="isHidden = !isHidden">{{isHidden ? 'expand_less' : 'expand_more'}}</mat-icon>
+    <mat-icon class="lg x subtle" (click)="clear()">close</mat-icon>
+  </div>
+
+  <div *ngIf="!isHidden" class="list-container">
+    <div *ngFor="let item of items" class="listitem flex-row" (click)="onSelect(item)">
+      <i class="md {{item.icon ? item.icon : 'file-img'}} m-r-10"></i>
+      <div class="name">{{item.name}}</div>
+      <div class="spacer"></div>
+
+      <ng-container [ngSwitch]="item.status">
+        <mat-icon *ngSwitchCase="'complete'" class="lg x success">check_circle</mat-icon>
+        <mat-icon *ngSwitchCase="'ready'" class="lg x success">check_circle</mat-icon>
+        <mat-icon *ngSwitchCase="'errored'" class="lg x error">error</mat-icon>
+
+        <ng-container *ngSwitchDefault>
+          <processing-indicator *ngIf="item.type === 'upload'" class="spinner" [view]="'spinner-withBackground'" [progressBarvalue]="item.progress" [diameter]="30"></processing-indicator>
+          <processing-indicator *ngIf="item.type === 'download'" [view]="'download-indicator'" [inline]="true"></processing-indicator>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+
+</div>

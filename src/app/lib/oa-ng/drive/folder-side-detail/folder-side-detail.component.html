@@ -1,0 +1,12 @@
+<h4>{{folder.name}}</h4>
+<h5>{{folder.code}}</h5>
+<div> Type: Folder</div>
+<div class="imgDiv" *ngIf="folder.thumbnail">
+  <img [src]="folder.thumbnail" height="200px">
+</div>
+<div>Entity: {{folder.entity?.type}}</div>
+<div>Owner: {{folder.owner?.profile?.firstName}} {{folder.owner?.profile?.lastName}}</div>
+<div *ngIf="folder.status">Status: {{folder.status}}</div>
+<div *ngIf="folder.description" class="headingText">Description</div>
+<div *ngIf="folder.description">{{folder.description}}</div>
+<div class="public">Public: {{folder.visibility}}</div>

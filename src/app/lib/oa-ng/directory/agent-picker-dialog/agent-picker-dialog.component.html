@@ -1,0 +1,34 @@
+<div mat-dialog-title class="controls-row">
+  <h4>{{title}}</h4>
+  <span class="spacer"></span>
+  <button mat-icon-button mat-dialog-close class="close-icon" (click)="dialogRef.close()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+
+<div mat-dialog-content class="form-container flex-row">
+  <mat-form-field appearance="outline">
+    <label for="role">{{label}}</label>
+    <input id="role" #userInput [formControl]="control" [matAutocomplete]="rolePicker" matInput type="text"
+      [placeholder]="placeholder" [(ngModel)]="role" [readonly]="readonly" [required]="required">
+    <div class="caret-down">
+      <i matSuffix class="fa fa-caret-down"></i>
+    </div>
+
+    <mat-autocomplete panelWidth="auto" autoActiveFirstOption #rolePicker="matAutocomplete" [displayWith]="displayRole"
+      (optionSelected)="onOptionSelected($event)">
+
+      <mat-option *ngFor="let item of items" [value]="item">
+        {{item.profile.firstName}} {{item.profile.lastName}}
+      </mat-option>
+
+    </mat-autocomplete>
+  </mat-form-field>
+</div>
+
+<div mat-dialog-actions class="buttons controls-row">
+  <span class="spacer"></span>
+  <button mat-button (click)="dialogRef.close()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="onSubmit()">Submit</button>
+</div>

@@ -1,0 +1,39 @@
+<div mat-dialog-title class="controls-row">
+  <h4>{{title}}</h4>
+  <span class="spacer"></span>
+  <button mat-icon-button mat-dialog-close class="close-icon" (click)="dialogRef.close()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+
+<div mat-dialog-content class="flex-row mt-3">
+
+  <div class="w-100">
+    <insight-target-type-picker [placeholder]="'Target Type'" (changed)="target.type = $event">
+    </insight-target-type-picker>
+  </div>
+
+  <div class="mt-3 w-100">
+    <label for="target">Target<span class="mandatory">*</span></label>
+    <div class="oa-input ">
+      <input id="target" matInput [(ngModel)]="target.value" numbersOnly>
+    </div>
+  </div>
+
+  <div class="form-container flex-row w-100">
+    <mat-form-field appearance="outline">
+      <label>Date<span class="mandatory">*</span></label>
+      <input matInput [matDatepicker]="picker" [(ngModel)]="target.date">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </div>
+
+</div>
+
+<div mat-dialog-actions class="buttons controls-row mt-3">
+  <span class="spacer"></span>
+  <button mat-button (click)="dialogRef.close()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="onSubmit()">Submit</button>
+</div>

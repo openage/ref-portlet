@@ -1,0 +1,115 @@
+.project img {
+  border-radius: 50%;
+  height: 50px;
+}
+
+.project h3 {
+  padding: 10px;
+}
+
+h4 {
+  color: var(--primary);
+  text-transform: capitalize;
+  font-size: 20px;
+}
+
+.avatar {
+  height: 50px !important;
+  width: 50px;
+  border-radius: 50%;
+  background-size: cover;
+  border: 1px solid var(--disabled);
+  margin-top: 2px;
+  margin-left: -17px;
+  box-shadow: 0px 4px 8px 0px #88888852;
+}
+
+.project-name {
+  text-transform: capitalize;
+  padding-left: 10px;
+  font-family: sans-serif;
+  font-weight: 600;
+}
+
+.team {
+  height: 29px !important;
+  width: 29px;
+  border-radius: 50%;
+  background-size: cover;
+  border: 1px solid var(--disabled);
+  box-shadow: 0px 4px 8px 0px #88888852;
+  margin-left: 7px;
+  margin-top: 16px;
+}
+
+.list-view {
+  background: #ffffff;
+  border: none;
+  color: #154a8d;
+  width: 104px;
+  height: 0px;
+  font-size: 11px;
+  padding: 19px 13px;
+  line-height: 0;
+  font-weight: 600;
+  margin-right: 10pxz;
+  margin-right: 11px;
+  border-radius: 50px;
+  box-shadow: 0px 4px 8px 0px #88888852;
+}
+
+.btn-box {
+  float: right;
+  padding-right: 22px;
+  margin-top: 14px;
+  margin-bottom: -29px;
+  margin-right: 133px;
+
+}
+
+.vl {
+  border-left: 2px solid #bcbcbc94;
+  height: 30px;
+  position: absolute;
+  left: 81%;
+  margin-left: 34px;
+  margin-top: 4px;
+}
+
+.project {
+  padding-left: 13px;
+}
+
+.budget {
+  background: #13589E;
+  border: none;
+  color: #fcffff;
+  width: 97px;
+  height: 0px;
+  font-size: 11px;
+  padding: 20px 13px;
+  line-height: 0;
+  margin-right: -48px;
+  border-radius: 52px;
+  box-shadow: 0px 4px 8px 0px #88888852;
+}
+
+.view-gantt {
+  background: #adb5bd00;
+  border: none;
+  color: #2a2c2c;
+  width: 106px;
+  height: 0px;
+  font-size: 11px;
+  padding: 20px 13px;
+  line-height: 0;
+  margin-right: 10pxz;
+  margin-right: 26px;
+  border-radius: 50px;
+  box-shadow: 0px 4px 8px 0px #88888852;
+}
+
+.btn-box {
+  margin-right: 24px;
+  margin-top: 14px;
+}

@@ -1,0 +1,32 @@
+<oa-autocomplete [value]="value && value.code? value : null " [options]="{
+  label: label,
+  preFetch: true,
+  search: {
+    items: items,
+    field: searchField,
+    params: params,
+    limit: 20
+  },
+  templates: {
+    value: valueTemplate
+  }
+}" [api]="releaseService" (changed)="onSelect($event)" [readonly]="readonly">
+</oa-autocomplete>
+
+<ng-template #valueTemplate let-item="value">
+  {{item.name}}
+</ng-template>
+
+
+
+<!-- <div class="h-slide">
+  <div class="container">
+    <div class="container-fluid">
+      <div class="d-flex flex-row flex-nowrap">
+        <div *ngFor="let item of items" class="release-card">
+          <gateway-release-summary [release]="item"></gateway-release-summary>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->

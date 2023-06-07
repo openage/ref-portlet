@@ -1,0 +1,32 @@
+<div mat-dialog-title class="controls-row">
+  <h4>New Folder</h4>
+  <span class="spacer"></span>
+  <button mat-icon-button mat-dialog-close class="close-icon" (click)="dialogRef.close()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<div>
+  <label>Name</label>
+  <div class="oa-input">
+    <input (input)="tripSpace()" autocomplete="off" type="text" autofocus [(ngModel)]="newFolder.name">
+  </div>
+
+  <!-- <h5>Thumbnail</h5>
+  <mat-form-field [floatLabel]="'never'">
+    <mat-label>Thumbnail</mat-label>
+    <input matInput autocomplete="off" (blur)="setUrl($event)" type="text">
+  </mat-form-field>
+
+  <h5>Description</h5>
+  <mat-form-field [floatLabel]="'never'">
+    <mat-label>Description</mat-label>
+    <input matInput autocomplete="off" type="text" [(ngModel)]="newFolder.description">
+  </mat-form-field> -->
+
+</div>
+<div mat-dialog-actions class="buttons controls-row">
+  <span class="spacer"></span>
+  <button mat-button (click)="closeBox(null)">Cancel</button>
+  <button mat-raised-button color="primary" [disabled]="!newFolder.name || isProcessing"
+    (click)="create(newFolder)">Create</button>
+</div>

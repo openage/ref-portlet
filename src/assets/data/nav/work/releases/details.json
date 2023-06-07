@@ -1,0 +1,11 @@
+{
+  "context": [
+    {
+      "code": "share"
+    },
+    {
+      "code": "close",
+      "type": "icon"
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+<div [style.height]="canvasHeight" [style.width]="canvasWidth">
+  <processing-indicator *ngIf="dataReceiving" [inline]="true" [view]="'spinball'"></processing-indicator>
+  <oa-no-data-found *ngIf="!items.length && !dataReceiving" [message]="'No Data Found'"></oa-no-data-found>
+  <canvas  id="{{canvasId}}" [height]="canvasHeight" [width]="canvasWidth"></canvas>
+</div>

@@ -1,0 +1,29 @@
+table {
+    width: 100%;
+}
+
+label {
+    padding-right: 10%;
+    float: left;
+    width: 60%;
+}
+
+span {
+    float: right;
+    width: 30%;
+}
+
+.card {
+    background-color: var(--primary);
+    height: 90%;
+    width: 90%;
+}
+.head{
+    text-align: left;
+    color: black;
+    font-weight: bold;
+}
+
+/* .tile{
+margin-bottom: 20px;
+} */

@@ -1,0 +1,54 @@
+<ng-container [ngSwitch]="internalView">
+    <ng-container *ngSwitchCase="'button'">
+        <ng-container *ngTemplateOutlet="button"></ng-container>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'minimize'">
+        <ng-container *ngTemplateOutlet="minimize"></ng-container>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'full'">
+        <ng-container *ngTemplateOutlet="full"></ng-container>
+    </ng-container>
+</ng-container>
+
+<ng-template #button>
+    <div class="chat-box button cursorPointers" (click)="setView('full')">
+        <mat-icon>forum</mat-icon>
+        <div *ngIf="unread" class="chat-box-unread-count">{{unread}}</div>
+    </div>
+</ng-template>
+
+<ng-template #minimize>
+    <div class="chat-box minimize">
+        <div class="flex-row chat-header">
+            <div>Message</div>
+            <div class="spacer"></div>
+            <mat-icon (click)="setView('full')">maximize</mat-icon>
+            <mat-icon (click)="setView('button')">closed</mat-icon>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #full>
+    <div class="chat-box">
+        <div class="flex-row chat-header">
+            <div>Message</div>
+            <div class="spacer"></div>
+            <mat-icon (click)="setView('minimize')">minimize</mat-icon>
+            <mat-icon (click)="setView('button')">closed</mat-icon>
+        </div>
+        <div class="chat-list">
+            <send-it-conversation-detail *ngIf="conversation" [paging]="paging" [view]="'chat-box'"
+                [conversation]="conversation" (fetched)="afterFetched($event)">
+            </send-it-conversation-detail>
+        </div>
+        <div class="chat-footer">
+            <div class="oa-input">
+                <input placeholder="New Message" name="subject" type="text" (keydown.enter)="send()"
+                    [(ngModel)]="message.subject">
+                <span class="material-icons pointer" (click)="send()" *ngIf="message.subject">send</span>
+            </div>
+        </div>
+    </div>
+</ng-template>

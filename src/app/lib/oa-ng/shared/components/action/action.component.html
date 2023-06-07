@@ -1,0 +1,123 @@
+<ng-container *ngIf="items?.length then multipleActionsView else singleActionView"></ng-container>
+
+<ng-template #multipleActionsView>
+  <ng-container [ngSwitch]="type">
+    <div *ngSwitchCase="'icon'" [matMenuTriggerFor]=" moreMenu">
+      <oa-icon [value]="icon" [title]="item.title"></oa-icon>
+    </div>
+    <mat-button-toggle-group *ngSwitchCase="'toggle'" class="inline">
+      <mat-button-toggle *ngFor="let i of items" (click)="onSelect(i)" [value]="i.code" aria-label="{{i.title}}">
+        <oa-icon [value]="i.icon"></oa-icon>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+    <ng-container *ngSwitchCase="'button'">
+      <ng-container [ngSwitch]="view">
+        <button mat-raised-button *ngSwitchCase="'raised'" [class]="class" [style]="style" [disabled]="disabled"
+          [matMenuTriggerFor]=" moreMenu">
+          <oa-icon [value]="icon"></oa-icon>
+          {{item.title}}
+        </button>
+        <button mat-stroked-button *ngSwitchCase="'stroked'" [class]="class" [style]="style" [disabled]="disabled"
+          [matMenuTriggerFor]=" moreMenu">
+          <oa-icon [value]="icon"></oa-icon>
+          {{item.title}}
+        </button>
+        <button mat-flat-button *ngSwitchCase="'flat'" [class]="class" [style]="style" [disabled]="disabled"
+          [matMenuTriggerFor]=" moreMenu" (click)="onClick()">
+          <oa-icon [value]="icon"></oa-icon>
+          {{item.title}}
+        </button>
+        <button mat-fab *ngSwitchCase="'fab'" [class]="class" [style]="style" [disabled]="disabled"
+          [matMenuTriggerFor]=" moreMenu">
+          <oa-icon [value]="icon"></oa-icon>
+        </button>
+        <button mat-mini-fab *ngSwitchCase="'mini-fab'" [class]="class" [style]="style" [disabled]="disabled"
+          [matMenuTriggerFor]=" moreMenu">
+          <oa-icon [value]="icon"></oa-icon>
+        </button>
+        <button mat-icon-button *ngSwitchCase="'icon'" [class]="class" [style]="style" [disabled]="disabled"
+          [matMenuTriggerFor]=" moreMenu">
+          <oa-icon [value]="icon"></oa-icon>
+        </button>
+        <button mat-button *ngSwitchDefault [class]="class" [style]="style" [disabled]="disabled"
+          [matMenuTriggerFor]=" moreMenu">
+          <oa-icon [value]="icon"></oa-icon>
+          {{item.title}}
+        </button>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+
+  <mat-menu #moreMenu="matMenu">
+    <button *ngFor="let i of items" mat-menu-item (click)="i.event()">{{i.title}}</button>
+  </mat-menu>
+</ng-template>
+
+<ng-template #singleActionView>
+  <ng-container [ngSwitch]="type">
+    <a mat-button *ngSwitchCase="'link'" [href]="item.value">{{item.title}}</a>
+
+
+    <!-- <ng-container *ngSwitchCase="'share'">
+      <oa-share [modes]="item.options" [members]="item?.config?.members" [entity]="item?.config?.entity"
+        [options]="item?.config?.options"></oa-share>
+    </ng-container> -->
+
+    <ng-container *ngSwitchCase="'toggle'">
+      <mat-slide-toggle [(ngModel)]="item.value" (change)="onToggle()">{{item.title}}</mat-slide-toggle>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'icon'">
+      <oa-icon [value]="icon" (click)="onClick()" [title]="item.title" [class]="class" [style]="style"></oa-icon>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'button'">
+      <ng-container [ngSwitch]="view">
+        <button mat-raised-button *ngSwitchCase="'raised'" [class]="class" [style]="style" (click)="onClick()"
+          [disabled]="disabled">
+          <oa-icon [value]="icon"></oa-icon>
+          {{item.title}}
+        </button>
+        <button mat-stroked-button *ngSwitchCase="'stroked'" [class]="class" [style]="style" (click)="onClick()"
+          [disabled]="disabled">
+          <oa-icon [value]="icon"></oa-icon>
+          {{item.title}}
+        </button>
+        <button mat-flat-button *ngSwitchCase="'flat'" [class]="class" [style]="style" (click)="onClick()"
+          [disabled]="disabled">
+          <oa-icon [value]="icon"></oa-icon>
+          {{item.title}}
+        </button>
+        <button mat-fab *ngSwitchCase="'fab'" [class]="class" [style]="style" (click)="onClick()" [disabled]="disabled">
+          <oa-icon [value]="icon"></oa-icon>
+        </button>
+        <button mat-mini-fab *ngSwitchCase="'mini-fab'" [class]="class" [style]="style" (click)="onClick()"
+          [disabled]="disabled">
+          <oa-icon [value]="icon"></oa-icon>
+        </button>
+        <button mat-icon-button *ngSwitchCase="'icon'" [class]="class" [style]="style" (click)="onClick()"
+          [disabled]="disabled">
+          <oa-icon [value]="icon"></oa-icon>
+        </button>
+        <button mat-button *ngSwitchDefault [class]="class" [style]="style" [style]="style" (click)="onClick()"
+          [disabled]="disabled">
+          <oa-icon [value]="icon"></oa-icon>
+          {{item.title}}
+        </button>
+      </ng-container>
+    </ng-container>
+
+    <button mat-button *ngSwitchCase="'icon-button'" (click)="onClick()" [disabled]="disabled"
+      matTooltip="{{item.title}}">
+      <oa-icon [value]="icon" [title]="item.title"></oa-icon>
+    </button>
+
+    <!-- <div *ngSwitchCase="'more-icons'" class="content" (clickOutside)="showList=false">
+      <oa-icon [value]="icon" [title]="item.title" (click)="showList=!showList"></oa-icon>
+      <div *ngIf="showList && items" class="modes">
+        <oa-icon class="m-10" *ngFor="let a of menu" (click)="a.event()" [value]="a.icon" [title]="a.title"
+          [class]="a?.style"></oa-icon>
+      </div>
+    </div> -->
+  </ng-container>
+</ng-template>

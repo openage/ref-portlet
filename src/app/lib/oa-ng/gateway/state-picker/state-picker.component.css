@@ -1,0 +1,27 @@
+:host {
+  display: block;
+  margin-bottom: auto;
+  margin-top: auto;
+}
+
+.toggler>* {
+  min-width: 75px;
+}
+
+.picker {
+  min-width: 200px;
+}
+
+:host::ng-deep .mat-badge-medium.mat-badge-overlap.mat-badge-after .mat-badge-content {
+  right: -4px;
+}
+
+:host::ng-deep .mat-badge-medium.mat-badge-above .mat-badge-content {
+  top: -9px;
+}
+
+@media only screen and (max-width:568px) {
+  .picker {
+    min-width: 160px;
+  }
+}

@@ -1,0 +1,156 @@
+{
+  "params": {
+    "view": "rows",
+    "type": "epic",
+    "endless": "false",
+    "showFilters": false,
+    "showMembers": false,
+    "showTimeLogs": false,
+    "selectedParent": "false",
+    "parent": "none"
+  },
+  "context": [
+    {
+      "code": "filters",
+      "type": "icon",
+      "style": "peacock"
+    },
+    {
+      "code": "done",
+      "type": "icon",
+      "style": "tangerine"
+    },
+    {
+      "code": "draft",
+      "type": "icon",
+      "style": "tangerine"
+    },
+    {
+      "code": "refresh",
+      "type": "icon"
+    },
+    {
+      "code": "close",
+      "type": "icon"
+    }
+  ],
+  "search": {
+    "view": "filters",
+    "params": [
+      {
+        "label": "Subject",
+        "key": "subject",
+        "control": "input"
+      },
+      {
+        "label": "Priority",
+        "key": "priority",
+        "control": "selector",
+        "value": "",
+        "options": [
+          {
+            "label": "Blocker",
+            "value": 1
+          },
+          {
+            "label": "Urgent",
+            "value": 2
+          },
+          {
+            "label": "Must have",
+            "value": 3
+          },
+          {
+            "label": "Good to have",
+            "value": 4
+          },
+          {
+            "label": "Someday",
+            "value": 5
+          }
+        ]
+      },
+      {
+        "label": "Category",
+        "key": "category-code",
+        "control": "autocomplete",
+        "config": {
+          "url": {
+            "code": "gateway",
+            "addOn": "categories"
+          },
+          "paramField": "text"
+        },
+        "valueKey": "id"
+      },
+      {
+        "label": "Tags",
+        "key": "tags",
+        "control": "input"
+      },
+      {
+        "label": "Code",
+        "key": "code",
+        "control": "input",
+        "config": {
+          "trigger": "#",
+          "op": "eq"
+        }
+      }
+    ]
+  },
+  "stats": {
+    "areaCode": "epics"
+  },
+  "divs": [
+    {
+      "code": "primary-stats",
+      "hideFilters": true,
+      "style": {
+        "container": {
+          "style": {
+            "margin-bottom": "10px"
+          }
+        },
+        "widgets": {
+          "class": "two"
+        }
+      }
+    },
+    {
+      "code": "time-log-total",
+      "hideFilters": true,
+      "style": {
+        "container": {
+          "style": {
+            "margin-bottom": "10px"
+          }
+        },
+        "widgets": {
+          "class": "two"
+        }
+      }
+    }
+  ],
+  "sections": {
+    "new": {},
+    "tasks": {
+      "view": "table",
+      "fields": [
+        "icon",
+        "code",
+        "subject",
+        "tags",
+        "category",
+        "effort",
+        "progress",
+        "owner",
+        "dueDate"
+      ],
+      "paging": {
+        "limit": 200,
+        "sort": "planneddate"
+      }
+    }
+  }
+}

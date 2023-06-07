@@ -1,0 +1,19 @@
+<oa-autocomplete [value]="value && value.code? value : null " [options]="{
+    label: label,
+    search: {
+      field: searchField,
+      params: params,
+      limit: 5
+    },
+    templates: {
+      value: valueTemplate
+    }
+  }" [api]="taskService" (changed)="onSelect($event)" [readonly]="readonly">
+</oa-autocomplete>
+
+<ng-template #valueTemplate let-item="value">
+  <div class="controls-row">
+    <oa-icon [value]="'oa-workflow-'+item.type" class="md"></oa-icon>
+    <div>{{item.code | uppercase}}: {{item.subject}}</div>
+  </div>
+</ng-template>

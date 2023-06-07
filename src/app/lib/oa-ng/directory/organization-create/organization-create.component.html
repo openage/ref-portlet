@@ -1,0 +1,55 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+<div *ngIf="organization">
+  <!-- <h4>Company Details</h4> -->
+
+  <div>
+    <label>Company Name<span class="mandatory">*</span></label>
+    <div class="oa-input">
+      <input name="name" (input)="tripSpace()" [(ngModel)]="organization.name" type="string">
+    </div>
+  </div>
+
+  <oa-address-editor [view]="'org'" [value]="organization.address" (changed)="organization.address = $event">
+  </oa-address-editor>
+
+  <div class="flex-2-1">
+    <div>
+      <label>GST Number<span class="mandatory">*</span></label>
+      <div class="oa-input">
+        <input name="gst" [(ngModel)]="organization.meta.gst" type="string">
+      </div>
+      <oa-error [type]="'gst'" [value]="organization.meta.gst" (errored)="setGstError($event)" [label]="'GST'">
+      </oa-error>
+    </div>
+
+    <div>
+      <label>Referral Code (Optional)</label>
+      <div class="oa-input">
+        <input name="gst" [(ngModel)]="organization.meta.referralCode" type="string">
+      </div>
+    </div>
+  </div>
+
+  <div class="controls-row" *ngIf="showBtn">
+    <span class="spacer"></span>
+    <button mat-raised-button color="primary" [disabled]="!organization.name" (click)="checkRequired()">Create</button>
+    <span class="spacer"></span>
+  </div>
+</div>
+
+<!-- <h5>Organization Basic Details</h5> -->
+<!-- <div class="profile-image-editor">
+  <div>
+    <img *ngIf="organization.logo && organization.logo.url" [src]="organization.logo.url"
+      (click)="openThumbnailSelector()">
+  </div>
+  <div *ngIf="!organization.logo || !organization.logo.url" (click)="openThumbnailSelector()" class="default">LOGO
+  </div>
+  <i (click)="openThumbnailSelector()" class="md picture-upload"></i>
+</div> -->
+
+<!-- <div>
+  <label>PAN Number</label>
+  <input matInput name="name" [(ngModel)]="organization.meta.pan" type="string">
+  <oa-error [type]="'pan'" [value]="organization.meta.pan" [label]="'PAN'"></oa-error>
+</div> -->

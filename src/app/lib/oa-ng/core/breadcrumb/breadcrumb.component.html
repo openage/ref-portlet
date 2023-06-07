@@ -1,0 +1,13 @@
+<div class="breadcrumb">
+  <!--<a [routerLink]="['/home/dashboard']"><i class="fa fa-home"></i></a>
+  <span>&raquo;</span>  <a [routerLink]="['/']">HOME</a> -->
+  <ng-container *ngIf="breadcrumb.length">
+    <ng-container *ngFor="let item of breadcrumb">
+      <ng-container *ngIf="!item.isActive">
+        <a [routerLink]="item.routerLink" [class.active]="item.isActive" [queryParams]="item.params.query"
+          [fragment]="item.params.fragment">{{item.title}}</a>
+        <span>&raquo;</span>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</div>

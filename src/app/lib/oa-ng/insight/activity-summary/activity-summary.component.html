@@ -1,0 +1,6 @@
+<mat-card>
+  <div *ngFor="let item of items">
+    <h6>{{item?.message}}</h6>
+    <span class="sub-text">{{item.timeStamp | time: 'MMM DD, YYYY'}}| {{item.timeStamp | time: 'hh:mm:ss'}}</span>
+  </div>
+</mat-card>

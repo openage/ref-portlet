@@ -1,0 +1,70 @@
+:host {
+  display: block;
+}
+
+table {
+    width: 100%;
+    text-align: center;
+}
+
+label {
+    padding-right: 10%;
+    float: left;
+    width: 60%;
+}
+.condition-flag{
+  height:12px;
+  width:12px;
+  border-radius: 2px;
+  margin: 5px 5px 0px 0px;
+}
+.forFlags{
+  justify-content: right;
+}
+.card {
+    background-color: var(--primary);
+    height: 90%;
+    width: 90%;
+}
+.head{
+    text-align: left;
+    color: black;
+    font-weight: 500;
+}
+
+.mat-header-cell{
+    font-weight: bold;
+    text-align: center;
+    padding-left: 0;
+}
+
+
+@media only screen and (max-width:568px) {
+   table  .mat-header-cell{
+       padding-left:10px;
+   }
+
+   .column-label{
+    min-height:34px;
+   }
+}
+
+.mat-row,.mat-cell {
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
+  cursor: pointer;
+  height:30px;
+}
+
+
+.center {
+  padding-top: 30px;
+}
+
+.headerText {
+  color: rgba(90, 90, 90, 1);
+  font-size: 16px;
+  font-weight: 600;
+  font-weight: bold;
+}
+

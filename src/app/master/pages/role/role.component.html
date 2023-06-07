@@ -1,0 +1,9 @@
+<div class="main" [class.hidden]="!isCurrent">
+  <div class="header">
+    <h5>{{page?.title}}</h5>
+    <span class="spacer"></span>
+  </div>
+  <directory-role-type-details #details [code]="code">
+  </directory-role-type-details>
+</div>
+<router-outlet></router-outlet>

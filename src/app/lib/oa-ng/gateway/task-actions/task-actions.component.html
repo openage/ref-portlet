@@ -1,0 +1,32 @@
+<div class="controls-row actions" *ngIf="!view">
+  <ng-container *ngFor="let item of actions">
+    <ng-container *ngIf="!(skipAction && item.isSkipActionOnList)">
+      <button mat-raised-button [color]="item.isCancelled ? 'default' : 'primary'"
+        [disabled]="item.isDisabled || task.isProcessing" [style]="item.style" class="styled"
+        (click)="item.event(task)">{{item.title}}</button>
+    </ng-container>
+  </ng-container>
+</div>
+
+<div *ngIf="view === 'action'" class="controls-row actions styled {{primaryAction?.style||'default'}}">
+
+  <ng-container *ngIf="!(skipAction && primaryAction?.isSkipActionOnList)">
+    <button mat-raised-button disableRipple=true *ngIf="primaryAction && !primaryAction.isDisabled"
+      [disabled]="primaryAction.isDisabled || task.isProcessing" class="{{primaryActionClass}}"
+      (click)="primaryAction.event(task)">{{primaryAction.title}}</button>
+  </ng-container>
+
+  <ng-container *ngIf="checkSkipAction()">
+
+    <mat-icon *ngIf="!options.more.hide && menu && menu.length" class="subtle spacing" [matMenuTriggerFor]="moreMenu">
+      more_vert</mat-icon>
+    <mat-menu #moreMenu="matMenu">
+      <ng-container *ngFor="let item of menu">
+        <ng-container *ngIf="!(skipAction && item.isSkipActionOnList)">
+          <button mat-menu-item (click)="item.event(task)">{{item.title}}</button>
+        </ng-container>
+      </ng-container>
+    </mat-menu>
+
+  </ng-container>
+</div>

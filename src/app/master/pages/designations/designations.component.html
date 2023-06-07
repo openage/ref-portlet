@@ -1,0 +1,9 @@
+<div class="main" [class.hidden]="!isCurrent">
+  <processing-indicator *ngIf="isProcessing"></processing-indicator>
+  <div *ngIf="isInitialized" class="sections">
+    <directory-designation-list #list (selected)="onSelect($event)" [code]="selectedCode" [status]="selectedStatus"
+      [name]="selectedName" [view]="isCurrent? 'table': 'list'">
+    </directory-designation-list>
+  </div>
+</div>
+<router-outlet></router-outlet>

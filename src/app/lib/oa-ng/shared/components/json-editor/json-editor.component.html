@@ -1,0 +1,7 @@
+<div>
+  <label *ngIf="placeholder">{{placeholder}}</label>
+  <div class="oa-input">
+    <pre class="input json" contenteditable="true" (focus)="onSelect()" (blur)="onTextChange($event)"
+      [innerHTML]="text"></pre>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+<ng-container [ngSwitch]="view">
+  <ng-container *ngSwitchCase="'withBtn'">
+    <div class="container" *ngIf="view">
+      <mat-form-field [floatLabel]="'never'" class="changeWidth">
+        <input matInput placeholder="Add New Notes" [(ngModel)]="message.subject">
+      </mat-form-field>
+      <button (click)="send()" [disabled]="!message.subject" mat-raised-button color="primary">Add</button>
+    </div>
+  </ng-container>
+
+  <ng-container *ngSwitchDefault>
+    <div class="newMessageSection">
+      <div class="oa-input">
+        <input placeholder="New Message" name="subject" type="text" (keydown.enter)="send()"
+          [(ngModel)]="message.subject">
+        <span class="material-icons pointer" (click)="send()" *ngIf="message.subject">send</span>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>

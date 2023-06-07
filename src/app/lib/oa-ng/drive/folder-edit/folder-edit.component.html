@@ -1,0 +1,22 @@
+<div class="sideSection">
+  <h4 contenteditable="true" spellcheck="false" [textContent]="folder.name" (blur)="onNameChange($event)"></h4>
+  <h5>{{folder.code}}</h5>
+
+  <div *ngIf="folder.thumbnail" class="imgDiv">
+    <img [src]="folder.thumbnail" height="130px" (click)="openThumbnailSelector()">
+  </div>
+  <div *ngIf="!folder.thumbnail" class="imgDiv">
+    <span class="material-icons" (click)="openThumbnailSelector()"> folder </span>
+  </div>
+
+  <div *ngIf="folder.entity && folder.entity.type">Entity: {{folder.entity?.type}}</div>
+  <div>Owner: {{folder.owner?.profile?.firstName}} {{folder.owner?.profile?.lastName}}</div>
+
+  <div class="headingText">Description</div>
+  <div class="customMargin DescriptionText" contenteditable="true" spellcheck="false" [textContent]="folder.description"
+    (blur)="onDescriptionChange($event)"></div>
+
+  <mat-slide-toggle [labelPosition]="'before'" (change)="onCustomChange($event)" [checked]="folder.visibility === 2">
+    Public
+  </mat-slide-toggle>
+</div>

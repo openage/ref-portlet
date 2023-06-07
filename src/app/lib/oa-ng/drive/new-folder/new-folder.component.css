@@ -1,0 +1,20 @@
+mat-form-field{
+    width: 100%;
+}
+
+h2{
+    text-align: center;
+    font-weight: 600;
+}
+
+.mat-raised-button {
+    margin-right: 15px;
+}
+
+.mat-slide-toggle {
+    margin-bottom: 50px;
+}
+
+::ng-deep .mat-slide-toggle-content {
+    font-weight: 600 !important;
+}

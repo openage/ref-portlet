@@ -1,0 +1,30 @@
+<ng-container [ngSwitch]="view">
+
+  <ng-container *ngSwitchCase="'in-progress'">
+    <button class="spinner-button primary" mat-raised-button color="primary" disabled>
+      <mat-spinner diameter="20" class="mr-2"></mat-spinner>
+      <span>Processing</span>
+    </button>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'ready'">
+    <button class="spinner-button primary" mat-raised-button color="primary" (click)="download()">
+      <mat-icon>download</mat-icon>
+      <span>{{label}}</span>
+    </button>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'error'">
+    <button class="spinner-button primary" mat-raised-button color="primary" (click)="reset(0)">
+      <mat-icon class="mr-2">error</mat-icon>
+      <span>Error</span>
+    </button>
+  </ng-container>
+
+  <ng-container *ngSwitchDefault>
+    <button class="spinner-button primary" mat-raised-button color="primary" (click)="generate()">
+      {{label}}
+    </button>
+  </ng-container>
+
+</ng-container>

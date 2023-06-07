@@ -1,0 +1,17 @@
+<oa-autocomplete [value]="value && value.code? value : null " [options]="{
+  label: label,
+  preFetch: true,
+  search: {
+    field: searchField,
+    params: params,
+    limit: 20
+  },
+  templates: {
+    value: valueTemplate
+  }
+}" [api]="projectApi" (changed)="onSelect($event)" [readonly]="readonly">
+</oa-autocomplete>
+
+<ng-template #valueTemplate let-item="value">
+  {{item.name}}
+</ng-template>

@@ -1,0 +1,10 @@
+
+.cont-div {
+    display: flex;
+    height: 100%;
+    align-items: center;
+}
+
+.buttonCont {
+    vertical-align: middle;
+}

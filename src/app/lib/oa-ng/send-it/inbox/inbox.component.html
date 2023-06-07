@@ -1,0 +1,102 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+<ng-template [ngIf]="items.length" [ngIfElse]="noData">
+  <ng-container [ngSwitch]="view">
+    <ng-container *ngSwitchCase="'table'">
+      <div class="table" *ngFor="let item of items">
+        <div class="data-row" (click)="select(item)">
+          <div class="mt-auto td">
+            <oa-avatar [value]="item.from" [size]="35" class="m-auto"></oa-avatar>
+          </div>
+          <div>
+            <div class="td cursorPointer">
+              <label class="cursorPointer">
+                {{ item?.from?.profile.firstName }}
+              </label>
+            </div>
+            <div class="td">
+              <div class="td cursorPointer">{{ item.subject }}</div>
+            </div>
+          </div>
+          <div class="ml-auto flex-end">
+            <span class="d-flex">
+              <label class="dateText">
+                {{ item.date | time: "merged" }}
+              </label>
+            </span>
+            <span class="pill-box">{{
+              item.meta?.category || item.meta?.entity?.type
+              }}</span>
+          </div>
+        </div>
+      </div>
+      <app-paginator [pager]="pager" [total]="pager.total"></app-paginator>
+    </ng-container>
+    <ng-container *ngSwitchCase="'list'">
+      <div class="message-card">
+        <div class="controls-row padding">
+          <h5 class="header">Messages</h5>
+          <div class="spacer"></div>
+          <h5 class="header" [class.clickable]="true" (click)="viewAll()">View All</h5>
+        </div>
+        <div *ngFor="let item of items; let i=index" class="pointer" (click)="open(item)">
+          <div *ngIf="i<3">
+            <div *ngIf="i>0 && i<3" class="line"></div>
+            <div mat-cell class="controls-row padding">
+              <div class="avatar-icon">
+                <oa-avatar [value]="item.from" [size]="20" class="m-auto"></oa-avatar>
+              </div>
+              <div (click)="select(item)">
+                <div class="cursorPointer message">{{ item.subject }}</div>
+                <div class="controls-row">
+                  <div>
+                    <mat-icon class="watch_icon">query_builder</mat-icon>
+                  </div>
+                  <div class="dateLabel">
+                    {{ item.date | date: 'd MMM yyyy hh:mm a' }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngSwitchCase="'card'">
+      <div class="cards" *ngFor="let item of items">
+        <mat-card class="pointer mat-card" [ngClass]="{'unread-message-card': item.status !== 'viewed'}"
+          (click)="select(item); onView(item);">
+          <div class="flex-row">
+            <div class="mt-auto avatar-area td">
+              <oa-avatar [value]="item.from" [size]="35" class="m-auto"></oa-avatar>
+            </div>
+            <div class="inbox-content-area">
+              <div class="td">
+                <label *ngIf="item?.from?.profile?.firstName">
+                  {{ item?.from?.profile | name }}
+                </label>
+              </div>
+              <div class="td">
+                <div class="td">{{ item.subject }}</div>
+              </div>
+            </div>
+            <div class="ml-auto flex-end date-type-area">
+              <span class="d-flex">
+                <label class="dateText">
+                  {{ item.date | time: "merged" }}
+                </label>
+              </span>
+              <span *ngIf="item.meta?.category || item.meta?.entity?.type" class="pill-box">
+                {{item.meta?.category || item.meta?.entity?.type}}</span>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+      <app-paginator [pager]="pager" [total]="pager.total"></app-paginator>
+    </ng-container>
+  </ng-container>
+</ng-template>
+<ng-template #noData>
+  <div class="message-card">
+    <oa-no-data-found  [message]="'No Messages Found'"></oa-no-data-found>
+  </div>
+</ng-template>

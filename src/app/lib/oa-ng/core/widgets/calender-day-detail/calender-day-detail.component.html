@@ -1,0 +1,7 @@
+<!-- <label class="selectedDate">{{events[0].date | date: 'dd MMMM yyyy' }} Events</label> -->
+<div *ngFor="let item of events">
+  <ng-container *ngIf="item.areaCode || areaCode">
+    <core-page-divs [areaCode]="item.areaCode || areaCode" [text]="(events[0].date | date: 'dd MMMM yyyy')+' Events'" [divs]="divs"
+      [filters]="filters" (selected)="onStatSelect($event)"></core-page-divs>
+  </ng-container>
+</div>

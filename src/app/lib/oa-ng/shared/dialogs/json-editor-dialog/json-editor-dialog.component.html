@@ -1,0 +1,17 @@
+<div mat-dialog-title class="controls-row">
+  <h4>{{label}}</h4>
+  <span class="spacer"></span>
+  <button mat-icon-button mat-dialog-close class="close-icon" (click)="cancel()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<div mat-dialog-content class="dialogContent">
+  <div>
+    <json-editor [value]="config" (change)="setContent($event)"></json-editor>
+  </div>
+</div>
+<div mat-dialog-actions class="buttons controls-row">
+  <span class="spacer"></span>
+  <button mat-raised-button class="marginRight" (click)="cancel()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="save()">Save</button>
+</div>

@@ -1,0 +1,21 @@
+<div class="controls-row dialog-header">
+  <div class="spacer"></div>
+  <h4 *ngIf="!showMsgTitle" class="bold">Notification Detail</h4>
+  <h4 *ngIf="showMsgTitle" class="bold">Message Detail</h4>
+  <div class="spacer"></div>
+  <div>
+    <mat-icon (click)="onClick()" matTooltip="Close">close</mat-icon>
+  </div>
+</div>
+<div class="row fixDiv" *ngIf="message">
+  <div class="col-lg-12 col-md-12 col-12">
+    <div class="fromDiv">{{message?.from?.profile?.firstName}} {{message?.from?.profile?.lastName}} <span
+        class="dateText">{{message.date | time: 'ago'}}</span></div>
+    <div class="title">{{message.subject}}</div>
+    <div id='message-body' class="detail"> {{injectBody('message-body', message.body)}}
+    </div>
+  </div>
+</div>
+<div *ngIf="message && !hideGoTo" class="btnDiv">
+  <oa-goto-entity-button [entity]="message.conversation.entity" (done)="onClick()"></oa-goto-entity-button>
+</div>

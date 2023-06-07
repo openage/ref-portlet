@@ -1,0 +1,14 @@
+<div class="flex-row {{noOfColumns}} stats" *ngIf="analytics?.stats && analytics?.stats.length">
+
+  <div *ngFor="let item of analytics.stats">
+    <div class="stat {{view}}">
+      <label>{{item.label}}</label>
+      <div class="value">{{item.value}}</div>
+    </div>
+  </div>
+  <div *ngFor="let item of links">
+    <div class="{{view}}">
+      <!-- <ser-create-rfq-button *ngIf="item.name === 'create-rfq'" [view]="'button'"></ser-create-rfq-button> -->
+    </div>
+  </div>
+</div>

@@ -1,0 +1,121 @@
+<div mat-dialog-title class="controls-row">
+  <h4>Insert Files</h4>
+  <span class="spacer"></span>
+  <button mat-icon-button mat-dialog-close class="close-icon" (click)="dialogRef.close()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<mat-tab-group (selectedTabChange)="onTabChange($event)">
+  <mat-tab label="Upload">
+    <div [ngClass]="{'custom':!doc.isPlaceholder}" class="placeholder">
+      <ng-container *ngIf="doc && doc.meta">
+        <div *ngIf="doc.meta.identifier">
+          <label>{{doc.meta.identifier.label || 'Number'}}</label>
+          <div class="oa-input">
+            <input name="identifier" [(ngModel)]="doc.identifier" type="string">
+          </div>
+          <oa-error [value]="doc.identifier" [type]="'code'" [required]="doc.meta.identifier.required">
+          </oa-error>
+        </div>
+        <div *ngIf="doc.meta.from">
+          <label>{{doc.meta.from.label || 'Valid From'}}</label>
+          <oa-date-picker [value]="doc.from" (change)="onFromChange($event)"></oa-date-picker>
+          <oa-error [value]="doc.from" [min]="doc.meta.from.min" [max]="doc.till" [type]="'date'"
+            [label]="doc.meta.from.label || 'Valid From'" [required]="doc.meta.from.required"></oa-error>
+        </div>
+        <div *ngIf="doc.meta.till">
+          <label>{{doc.meta.till.label || 'Expires On'}}</label>
+          <oa-date-picker [value]="doc.till" (change)="onTillChange($event)"></oa-date-picker>
+          <oa-error [value]="doc.till" [min]="doc.from || minDate" [type]="'date'"
+            [label]="doc.meta.till.label || 'Expires On'" [required]="doc.meta.till.required"></oa-error>
+        </div>
+      </ng-container>
+      <div *ngIf="!doc.isPlaceholder">
+        <label>Name of file</label>
+        <div class="oa-input">
+          <input name="identifier" [(ngModel)]="doc.name" type="string">
+        </div>
+        <div class="space"></div>
+      </div>
+      <div class="fileSection">
+        <div class="removePad" *ngIf="file">
+          <div class="controls-row">
+            <div class="controls-row">
+              <div><span class="material-icons icon-color">attach_file</span></div>
+              <div class="chooseText">{{file.name}}</div>
+            </div>
+            <div class="spacer"></div>
+            <div class="icon">
+              <span class="fa fa-times-circle" aria-hidden="true" (click)="file = null && type='file'">
+              </span>
+            </div>
+          </div>
+          <hr class="divider">
+        </div>
+      </div>
+      <oa-icon-file-picker [view]="'layout'" [value]="doc.content" [accept]="accept"
+        [label]="doc.name? doc.name: 'Select File'" (change)="setFile($event)">
+        <div class="controls-row">
+          <div class="spacer"></div>
+          <p class="textHeader">Drag files here</p>
+          <div class="spacer"></div>
+        </div>
+        <div class="controls-row">
+          <div class="spacer"></div>
+          <p class="Or">— or —</p>
+          <div class="spacer"></div>
+        </div>
+        <div class="controls-row">
+          <div class="spacer"></div>
+          <button class="select">Select files from your device</button>
+          <div class="spacer"></div>
+        </div>
+      </oa-icon-file-picker>
+    </div>
+  </mat-tab>
+  <div *ngIf="!doc.isPlaceholder && !auth.hasPermission('customer.normal')">
+    <mat-tab label="Link">
+      <div>
+        <div *ngIf="!doc.isPlaceholder" class="custom">
+          <label>Name of file</label>
+          <div class="oa-input">
+            <input name="identifier" [(ngModel)]="doc.name" type="string">
+          </div>
+          <div class="space"></div>
+          <div class="padUrl">
+            <label>Link</label>
+            <div class="oa-input">
+              <input name="identifier" [(ngModel)]="url" (click)="changeDocType('link')">
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+  </div>
+  <div *ngIf="!doc.isPlaceholder && !auth.hasPermission('customer.normal')">
+    <mat-tab label="HTML">
+      <label>Name of file</label>
+      <div class="oa-input">
+        <input name="identifier" [(ngModel)]="doc.name" type="string">
+      </div>
+      <div class="space"></div>
+      <oa-content-editor [value]="doc.content" (changed)="onHTMLChange($event)"></oa-content-editor>
+    </mat-tab>
+  </div>
+</mat-tab-group>
+
+<hr>
+<div mat-dialog-actions *ngIf="doc.isPlaceholder" class="buttons controls-row">
+  <button mat-raised-button color="primary" [disabled]="!isValid() || isProcessing"
+    (click)="updatePlaceholdeFile()">Submit</button>
+  <button mat-button (click)="dialogRef.close()">Cancel</button>
+  <span class="spacer"></span>
+</div>
+
+<div mat-dialog-actions *ngIf="!doc.isPlaceholder" class="buttons controls-row">
+  <button mat-raised-button color="primary" [disabled]="!isValid() || isProcessing"
+    (click)="createByType()">Upload</button>
+  <button mat-button (click)="dialogRef.close()">Cancel</button>
+  <span class="spacer"></span>
+</div>

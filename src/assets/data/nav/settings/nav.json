@@ -1,0 +1,17 @@
+{
+  "code": "settings",
+  "icon": "fa-tools",
+  "title": "Settings",
+  "url": "/settings/dashboard",
+  "permissions": [
+    "organization.admin"
+  ],
+  "items": [
+    {
+      "code": "settings.profile",
+      "icon": "fa-user",
+      "title": "Profile",
+      "url": "/settings/profile"
+    }
+  ]
+}

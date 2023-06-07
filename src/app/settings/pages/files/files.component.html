@@ -1,0 +1,22 @@
+<div class="main" [class.hidden]="!isCurrent">
+  <div class="header">
+    <h5>{{page?.title}}</h5>
+    <span class="spacer"></span>
+    <ng-container *ngIf="type === 'employee'">
+      <directory-user-picker [placeholder]="'Employee'" [value]="user" (changed)="employeeSelect($event)">
+      </directory-user-picker>
+    </ng-container>
+    <button *ngIf="folder" mat-icon-button (click)="onRefresh()">
+      <mat-icon>refresh</mat-icon>
+    </button>
+  </div>
+  <ng-container *ngIf="folder">
+    <drive-folder-detail #details [properties]="folder" (selectedDoc)="onSelect($event)" [view]="'grid'">
+    </drive-folder-detail>
+  </ng-container>
+  <ng-container *ngIf="!folder">
+    <drive-folder-detail #details [code]="type" (selectedDoc)="onSelect($event)" [view]="'grid'">
+    </drive-folder-detail>
+  </ng-container>
+</div>
+<router-outlet></router-outlet>

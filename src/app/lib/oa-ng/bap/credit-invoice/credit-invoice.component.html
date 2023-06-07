@@ -1,0 +1,23 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+
+<ng-container [ngSwitch]="view">
+    <ng-container *ngSwitchCase="'dialog'">
+        <div mat-dialog-title class="controls-row mt-n2">
+            <h4><b>Add Credit Note</b></h4>
+            <span class="spacer"></span>
+            <button mat-icon-button mat-dialog-close class="close-icon mt-n1 mr-n2" (click)="dialogRef.close()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+
+        <mat-dialog-content class="mat-typography">
+            <bap-invoice-editor [invoice]="invoice" [readonly]="false" [config]="editorConfig"></bap-invoice-editor>
+        </mat-dialog-content>
+
+        <hr>
+        <div mat-dialog-actions class="buttons controls-row flex-row-reverse mt-auto">
+            <button mat-raised-button color="primary" (click)="onSave()">Save</button>
+            <button mat-button mat-dialog-close (click)="dialogRef.close()">Cancel</button>
+        </div>
+    </ng-container>
+</ng-container>

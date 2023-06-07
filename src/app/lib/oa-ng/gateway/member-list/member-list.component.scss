@@ -1,0 +1,109 @@
+.team-list {
+  padding: 5px;
+  margin-bottom: 5px;
+  border: 1px solid var(--subtle);
+  border-radius: 5px;
+  background: #ffffff;
+
+}
+
+
+.team-summary {
+  &>.member {
+    height: 30px;
+    // width: 30px;
+    border-radius: 15px;
+    // border: 2px solid white;
+    //background-size: cover;
+    // box-shadow: 0px 4px 8px 0px #88888852;
+    // margin-left: 2px;
+    // margin-top: -23px;
+
+    &.selected {
+      border: 2px solid var(--primary);
+      background: var(--primaryBackground);
+      color: var(--primaryTextColor);
+    }
+  }
+}
+
+h5 {
+  padding: 5px;
+}
+
+// .member {
+//   height: auto;
+//   border-radius: 3px;
+//   margin: 8px 5px;
+//   padding: 10px !important
+// }
+
+.member mat-icon {
+  float: left;
+}
+
+.add-member {
+  margin-top: 5px;
+}
+
+mat-list-item {
+  border: 1px solid gray;
+  border-radius: 3px;
+  background-color: white
+}
+
+.mat-expansion-panel {
+  margin: 5px 0px;
+}
+
+.mat-expansion-panel-body {
+  padding: 0px !important;
+}
+
+.mat-chip.mat-standard-chip {
+  background-color: inherit;
+  color: rgba(0, 0, 0, .87);
+  border: 1px solid var(--subtle);
+}
+
+input.mat-chip-input {
+  border-radius: 40px;
+  border: 1px solid #efefef;
+  height: 32px;
+  padding: 5px 10px;
+}
+
+.heading {
+  font-size: 14px;
+}
+
+.mat-chip {
+  border: 1px solid #a2a2a2 !important;
+  background: #fff;
+  border-radius: 40px;
+  font-size: 12px;
+  color: var(--disabled) !important;
+}
+
+.closeIcon {
+  margin-top: auto !important;
+  margin-bottom: auto !important;
+  font-size: 15px !important;
+}
+
+.mat-standard-chip {
+  min-height: 28px !important;
+}
+
+.searchBox {
+  width: 50%;
+  margin-bottom: 10px;
+}
+
+.iconDiv {
+  padding-top: 7px;
+}
+
+.picker{
+  margin-bottom: 5px;
+}

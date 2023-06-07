@@ -1,0 +1,31 @@
+<div mat-dialog-title class="controls-row">
+  <h4 class="header">{{view}} Invoices</h4>
+  <span class="spacer"></span>
+  <button mat-icon-button mat-dialog-close class="close-icon" (click)="dialogRef.close()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<div mat-dialog-content>
+  <ng-container [ngSwitch]="view">
+
+    <ng-container *ngSwitchCase="'customer'">
+      <bap-invoice-list [entity]="entity" [sellerOrganization]="{code: 'yatra'}" [columns]="columns"
+        (selected)="onSelect($event)" (fetched)="onCustomerFetch()">
+      </bap-invoice-list>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'supplier'">
+      <bap-invoice-list [entity]="entity" [buyerOrganization]="{code: 'yatra'}" [columns]="columns"
+        (selected)="onSelect($event)" (fetched)="onSupplierFetch()">
+      </bap-invoice-list>
+    </ng-container>
+
+  </ng-container>
+</div>
+
+<div mat-dialog-actions class="buttons controls-row">
+  <span class="spacer"></span>
+  <button mat-button (click)="dialogRef.close()">Cancel</button>
+  <!-- <button mat-raised-button color="primary" (click)="onSubmit()">Ok</button> -->
+</div>

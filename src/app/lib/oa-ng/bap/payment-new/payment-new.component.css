@@ -1,0 +1,31 @@
+table {
+    width: 100%;
+}
+
+.number {
+    width: 15%
+}
+  
+.amount {
+    width: 15%
+}
+  
+.date {
+    width: 15%
+}
+
+.mode {
+    width: 10%;
+}
+  
+.remarks {
+    width: 25%;
+}
+  
+.action {
+    width: 5%
+}
+
+.save {
+    height: 30px;
+}

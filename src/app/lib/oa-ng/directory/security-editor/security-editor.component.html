@@ -1,0 +1,90 @@
+<ng-container *ngIf="selectedRole">
+
+  <div class="flex-row three">
+    <directory-role-type-picker [readonly]="readonly" [label]="'Role'" [placeholder]="'Select'"
+      [roleType]="selectedRole.type" (changed)="roleTypeSelected($event)">
+    </directory-role-type-picker>
+  </div>
+
+  <div class="permission-container" *ngIf="selectedRoleTypePermissions.length">
+    <h5>Permissions</h5>
+    <ng-container
+      *ngTemplateOutlet="permissionsTemplate; context: { items: selectedRoleTypePermissions, columns:['group', 'name', 'code', 'description'] }">
+    </ng-container>
+  </div>
+
+  <div class="permission-container" *ngIf="filteredRolePermissions.length">
+    <h5>Additional Permissions</h5>
+    <ng-container
+      *ngTemplateOutlet="permissionsTemplate; context: { items: filteredRolePermissions ,columns:['group', 'name', 'code', 'description','action']}">
+    </ng-container>
+  </div>
+
+  <div (click)="openDialog()"><a class="add-row">Add Permission</a></div>
+</ng-container>
+
+<ng-template #permissionsTemplate let-items="items" let-columns="columns">
+  <table mat-table [dataSource]="items">
+
+    <ng-container matColumnDef="group">
+      <th mat-header-cell *matHeaderCellDef>Group</th>
+      <td class="pointer" mat-cell *matCellDef="let item" [class.deleted]="item.isDeleted"
+        [class.processing]="item.isProcessing">
+        {{item.group || '--'}}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td class="pointer" mat-cell *matCellDef="let item" [class.deleted]="item.isDeleted"
+        [class.processing]="item.isProcessing">{{item.name}}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="code">
+      <th mat-header-cell *matHeaderCellDef>Code</th>
+      <td class="pointer" mat-cell *matCellDef="let item" [class.deleted]="item.isDeleted"
+        [class.processing]="item.isProcessing">
+        {{item.code || '--'}}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef>Description</th>
+      <td class="pointer" mat-cell *matCellDef="let item" [class.deleted]="item.isDeleted"
+        [class.processing]="item.isProcessing">
+        {{item.description || '--'}}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef>Action</th>
+      <td class="pointer" mat-cell *matCellDef="let item" [class.deleted]="item.isDeleted"
+        [class.processing]="item.isProcessing">
+        <button style="margin-right: 5px;" mat-icon-button [disabled]="item.isProcessing" matTooltip="Delete"
+          (click)="onRemove(item)">
+          <mat-icon class="subtle">delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+  </table>
+</ng-template>
+
+
+
+<!-- <div class="form-group role">
+  <ng-container *ngIf="!selectedRole">
+    <div class="form-container flex-row">
+      <mat-form-field appearance="outline">
+        <label for="role">Role</label>
+        <mat-select id="role" name="type" [(ngModel)]="selectedRoleId" (selectionChange)="onRoleChange($event)"
+          placeholder="Select role" [required]="true">
+          <mat-option *ngFor="let item of items" [value]="item.id">{{item.type.name || item.type.code}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </ng-container>
+</div> -->

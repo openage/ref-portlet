@@ -1,0 +1,62 @@
+<h4>Create File</h4>
+
+<div>
+  <div class="flex-row two">
+    <div>
+      <label>Name</label>
+      <mat-form-field [floatLabel]="'never'">
+        <mat-label>Name</mat-label>
+        <input matInput [(ngModel)]="name">
+      </mat-form-field>
+    </div>
+    <div>
+      <label>Select Type</label>
+      <mat-form-field [floatLabel]="'never'">
+        <mat-label>Select Type</mat-label>
+        <mat-select [(ngModel)]="type" (selectionChange)="changeType()">
+          <mat-option value="file">File</mat-option>
+          <mat-option value="link">Link</mat-option>
+          <mat-option value="html">Html</mat-option>
+          <mat-option value="json">Json</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+
+<div class="textAlignCenter">OR</div>
+
+<div [ngClass]="{fileDisallow: type !== 'file'}" style="text-align: center; ">
+  <div class="divColor" *ngIf="!file">
+    <oa-icon-file-picker (change)="setfiles($event)">
+      <div><i class="drag-and-drop"></i></div>
+      <p>Drag and Drop file here</p>
+      <p>Or</p>
+      <div class="button">Choose file</div>
+    </oa-icon-file-picker>
+  </div>
+  <div *ngIf="file" class="fileName controls-row">
+    <div>Name: {{file.name}}</div>
+    <div class="spacer"></div>
+    <div (click)="file = undefined">
+      <span class="material-icons">
+        close
+      </span>
+    </div>
+  </div>
+</div>
+
+<div class="textAlignCenter">OR</div>
+
+<div [ngClass]="{linkDisallow: type !== 'link'}">
+  <label>URL of file</label>
+  <mat-form-field [floatLabel]="'never'">
+    <mat-label>URL of file</mat-label>
+    <input matInput [(ngModel)]="url">
+  </mat-form-field>
+</div>
+
+<div>
+  <button mat-raised-button (click)="close(null)">Cancel</button>
+  <button mat-raised-button color="primary" (click)="create(file)">Create</button>
+</div>

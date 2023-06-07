@@ -1,0 +1,35 @@
+:host {
+    display: block;
+  }
+  
+  .widgets {
+    margin-top: 10px
+  }
+  
+  .head {
+    color: black;
+    font-weight: bold;
+    font-size: 14px;
+  }
+  
+  .cont {
+    width: 46%;
+    margin: 2%;
+  }
+  
+  .wide {
+    width: 96%;
+    margin: 2%;
+  }
+  
+  .target {
+    color: grey;
+    font-size: 14px;
+    margin-left: 4px;
+  }
+  
+  .variance {
+    color: grey;
+    font-size: 14px;
+    margin-left: 4px;
+  }

@@ -1,0 +1,141 @@
+.header-bar {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  color: #fff;
+  background: linear-gradient(180deg, rgba(0, 0, 0, .65) 0, transparent);
+  z-index: 1;
+  width: 100%
+}
+
+.icon {
+  margin-right: 15px;
+}
+
+.overlay-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+  /* margin-top: 40px; */
+  margin-top: 110px;
+  user-select: none;
+}
+
+.overlay-inner-content {
+  width: 100%;
+  max-width: 550px;
+  height: auto;
+}
+
+.thumbnail-container {
+  position: absolute;
+  width: auto;
+  display: flex;
+  overflow-x: auto;
+  bottom: 0;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.thumbnail {
+  display: flex;
+  border-radius: 2px;
+  margin: 0 10px 0 10px;
+}
+
+.thumbnail.active {
+  border: 3px solid var(--primary);
+
+}
+
+.left-icon {
+  padding: 0;
+  position: absolute;
+  left: 10px;
+  display: flex;
+  height: 30px;
+  border-radius: 100%;
+  width: 30px;
+  font-size: 20px;
+  color: white;
+  /* border-radius: 10%; */
+  background: var(--disabled);
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.right-icon {
+  padding: 0;
+  position: absolute;
+  right: 10px;
+  display: flex;
+  height: 30px;
+  border-radius: 100%;
+  width: 30px;
+  font-size: 20px;
+  color: white;
+  /* border-radius: 10%; */
+  background: var(--disabled);
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.right-icon:hover {
+  background-color: var(--primary);
+}
+
+.left-icon:hover {
+  background-color: var(--primary);
+}
+
+::ng-deep.cdk-global-overlay-wrapper {
+  pointer-events: auto;
+}
+
+.pdf-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+::ng-deep.mat-select,
+.mat-select:focus {
+  background-color: #000000 !important;
+  width: 200px;
+  border: none;
+}
+
+
+::ng-deep.mat-select-arrow,
+.mat-select-value {
+  color: white !important;
+}
+
+.selector {
+  width: 200px;
+}
+
+@media only screen and (max-width:568px) {
+  .icon {
+    margin-right: 5px;
+  }
+
+  .header-bar mat-select {
+    margin-bottom: 0px;
+  }
+
+  .ng2-pdf-viewer-container {
+    right: -4px;
+  }
+
+  .header-bar {
+    padding: 13px 5px;
+  }
+}

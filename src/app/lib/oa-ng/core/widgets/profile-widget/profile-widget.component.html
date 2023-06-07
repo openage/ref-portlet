@@ -1,0 +1,22 @@
+<ng-container>
+  <div class="flex-row" [ngClass]="style?.container?.class" [ngStyle]="style?.container?.style">
+    <div *ngFor="let column of fields; let i = index " class="spacer">
+      <div [ngStyle]="column.style?.header?.style || style?.header?.style" [class.clickable]="column.click"
+        [ngClass]="column.style?.header?.class || style?.header?.class">
+        <div class="profile" >
+          <div class="profile-image">
+            <oa-avatar [profile]="items[i]?.profile" type="thumbnail"></oa-avatar>
+          </div>
+          <div class="profile-name" [matTooltip]="items[i]?.profile?.firstName + ' ' +items[i]?.profile?.lastName"> {{items[i]?.profile?.firstName || '---'}} {{items[i]?.profile?.lastName}}</div>
+        </div>
+
+        <div class="stacked" [ngStyle]="column.style?.title?.style || style?.title?.style"
+          [ngClass]="column.style?.title?.class || style?.title?.class">
+          <div class="spacer"></div>
+          <div>{{column.label || items[i]?.label}}</div>
+          <div class="spacer"></div>              
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

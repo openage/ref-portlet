@@ -1,0 +1,52 @@
+mat-form-field{
+    width: 100%;
+}
+
+h2{
+    text-align: center;
+    font-weight: 600;
+}
+
+.mat-raised-button {
+    margin-right: 15px;
+}
+
+.mat-slide-toggle {
+    width: 100%;
+    margin-bottom: 50px;
+}
+
+::ng-deep .mat-slide-toggle-content {
+    margin-right: auto;
+    font-weight: 600 !important;
+}
+
+img{
+    max-width: 100%;
+}
+
+.imgDiv{
+    margin-bottom: 10px;
+    cursor: pointer;
+    height: 130px;
+    text-align: center;
+    width: 100%;
+}
+
+.sideSection> div>div{
+    margin-bottom: 5px;
+}
+
+.headingText{
+    font-weight: 600;
+}
+
+.DescriptionText{
+    height: 80px;
+    max-height: 80px;
+    overflow: auto;
+}
+
+.material-icons {
+    font-size: 130px;
+}

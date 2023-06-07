@@ -1,0 +1,27 @@
+<div class="controls-row main-row header-top">
+  <ng-container *ngIf="currentRole;  then appHeader else wwwHeader"> </ng-container>
+</div>
+
+<ng-template #wwwHeader>
+  <core-branding view="logo"></core-branding>
+  <div class="spacer"></div>
+  <app-nav view="header"></app-nav>
+</ng-template>
+
+<ng-template #appHeader>
+  <button *ngIf="device === 'mobile'" mat-icon-button (click)="uxService.showSideNav(true)">
+    <i class="logo logo-mob xx-md"></i>
+  </button>
+  <div>
+    <core-branding view="organization"></core-branding>
+    <oa-core-breadcrumb></oa-core-breadcrumb>
+  </div>
+  <div flex class="spacer"></div>
+  <oa-search view="text"></oa-search>
+  <!-- TODO: commenting out for now
+  <send-it-new-notification [from]="'!me'" [apiLimit]="5" [autoRefreshTime]="300"></send-it-new-notification>
+  <send-it-desktop-notification></send-it-desktop-notification>
+  -->
+  <oa-current-role></oa-current-role>
+
+</ng-template>

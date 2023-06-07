@@ -1,0 +1,16 @@
+<div mat-dialog-title class="controls-row">
+  <h4>{{title}}</h4>
+  <span class="spacer"></span>
+  <button mat-icon-button mat-dialog-close class="close-icon" (click)="onCancel()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<div mat-dialog-content>
+  <ng-container *ngTemplateOutlet="bodyTemplate;"></ng-container>
+</div>
+
+<div mat-dialog-actions class="footer">
+  <span class="spacer"></span>
+  <oa-action *ngFor="let item of actions" [item]="item"></oa-action>
+</div>

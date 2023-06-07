@@ -1,0 +1,46 @@
+<!-- <processing-indicator *ngIf="isProcessing"></processing-indicator> -->
+<div>
+  <div class="profile-image-editor">
+    <div>
+      <img *ngIf="user.profile.pic && user.profile.pic.url" [src]="user.profile.pic.url"
+        (click)="openThumbnailSelector()">
+    </div>
+    <div *ngIf="!user.profile.pic || !user.profile.pic.url" (click)="openThumbnailSelector()" class="default">
+      <img src="../../../../assets/images/logo.png">
+    </div>
+    <i (click)="openThumbnailSelector()" class="md picture-upload">
+    </i>
+  </div>
+
+  <!-- <h4>User Details</h4> -->
+  <div class="flex-row two">
+    <oa-input label="First Name" type="text" [(value)]="user.profile.firstName" [required]="true"
+      [validate]="validationService.isNameValid" (errored)="error = $event" [options]="{format: {trim: true}}">
+    </oa-input>
+    <oa-input label="Last Name" type="text" [(value)]="user.profile.lastName" [required]="true"
+      [validate]="validationService.isNameValid" (errored)="error = $event" [options]="{format: {trim: true}}">
+    </oa-input>
+  </div>
+
+  <div class="flex-row two">
+    <oa-input label="Email" type="email" [(value)]="user.email" [required]="true" [validate]="checkPhoneOrEmail"
+      (errored)="error = $event" [options]="{format: {trim: true}}">
+    </oa-input>
+    <oa-input label="Phone" type="phone" [(value)]="user.phone" [required]="true" [validate]="checkPhoneOrEmail"
+      (errored)="error = $event" [options]="{format: {trim: true}}">
+    </oa-input>
+
+    <oa-input label="Password" type="password" [(value)]="password" [required]="true"
+      [validate]="validationService.isPasswordValid" (errored)="error = $event" [options]="{format: {trim: true}}">
+    </oa-input>
+
+    <oa-input label="Confirm Password" type="password" [(value)]="confirmPassword" [required]="true"
+      (errored)="error = $event" [validate]="isConfirmPasswordValid" [options]="{format: {trim: true}}">
+    </oa-input>
+
+    <!-- <div class="controls-row">
+    <span class="spacer"></span>
+    <button mat-raised-button class="nextBtn" (click)="updateUser()" color="primary">Register</button>
+    <span class="spacer"></span>
+  </div> -->
+  </div>

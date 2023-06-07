@@ -1,0 +1,84 @@
+<ng-container [ngSwitch]="view">
+  <oa-autocomplete *ngSwitchCase="'picker'" [value]="value && value.code? value : null " [options]="{
+    label: label,
+    placeholder: placeholder,
+    required:required,
+    search: {
+      field: 'name',
+      params: {
+        type: type,
+        status: status
+      },
+      limit: 10
+    },
+    templates: {
+      value: valueTemplate
+    }
+  }" [api]="organizationService" (changed)="onSelect($event)" [readonly]="readonly" [componentName]="componentName"
+    [storeKeys]="storeKeys">
+  </oa-autocomplete>
+
+  <div *ngSwitchCase="'form'">
+    <div class="form-container flex-row four">
+
+      <ng-container *ngIf="!me">
+        <oa-autocomplete [value]="value && value.code? value : null " [options]="{
+          label: 'Name*',
+          search: {
+            field: 'name',
+            params: {
+              type: type,
+              status: status      
+            }
+          }
+        }" [api]="organizationService" (changed)="onSelect($event)" [readonly]="readonly"></oa-autocomplete>
+      </ng-container>
+
+      <ng-container *ngIf="me">
+        <mat-form-field appearance="outline">
+          <label for="type">Name<span class="mandatory">*</span></label>
+          <mat-select id="type" name="type" [(value)]="value.code" placeholder="" [disabled]="readonly"
+            [required]="!readonly" (selectionChange)="onSelection($event.value)">
+            <mat-option disabled="" value=" ">Select an {{type}}</mat-option>
+            <mat-option [value]="item.code" *ngFor="let item of items">{{item.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </ng-container>
+
+      <mat-form-field appearance="outline">
+        <label>Contact</label>
+        <input matInput name="contact" [readonly]="!!value.id" [(ngModel)]="value.meta.contact" type="string">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <label>Email*</label>
+        <input matInput name="email" [readonly]="!!value.id" [(ngModel)]="value.email" type="email">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <label>Phone*</label>
+        <input matInput name="phone" [readonly]="!!value.id" [(ngModel)]="value.phone" type="number">
+      </mat-form-field>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #valueTemplate let-item="value">
+  <div [class.readonly]="readonly" class="value input">
+    <ng-container *ngIf="options.show.icon">
+      <img class="avatar" *ngIf="item.logo && item.logo.url" [src]="item.logo.url">
+      <img class="avatar" *ngIf="!item.logo || !item.logo.url" src="/assets/images/customers/default.png">
+    </ng-container>
+    <span>{{item.name}}</span>
+  </div>
+</ng-template>
+
+<!-- <ng-template #itemTemplate let-item="value">
+  <div [class.readonly]="readonly" class="value">
+    <img class="avatar" *ngIf="item.logo && item.logo.url" [src]="item.logo.url">
+    <img class="avatar" *ngIf="!item.logo || !item.logo.url" src="/assets/images/customers/default.png">
+    <span>{{item.name}}</span>
+  </div>
+</ng-template> -->
+
+<ng-template #placeholderTemplate>
+  <div class="input">{{placeholder}}</div>
+</ng-template>

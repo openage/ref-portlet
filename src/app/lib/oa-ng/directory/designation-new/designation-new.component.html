@@ -1,0 +1,11 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+<div>
+  <h5>New Designation</h5>
+  <oa-input type="text" label="Code" [(value)]="designation.code" [required]="true"></oa-input>
+  <oa-input type="text" label="Name" [(value)]="designation.name" [required]="true"></oa-input>
+  <div class="row">
+    <button mat-raised-button color="primary" [disabled]="isProcessing" (click)="create(designation)">
+      Create
+    </button>
+  </div>
+</div>

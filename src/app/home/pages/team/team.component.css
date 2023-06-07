@@ -1,0 +1,20 @@
+.marginLeft{
+    margin-left: auto;
+}
+
+.marginRight{
+    margin-right: auto;
+}
+
+.dateBox{
+    border: 1px solid black;
+    padding-right: 3px;
+    padding-left: 10px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    border-radius: 5px;
+}
+.date{
+    border: none;
+    background: 0 0;
+}

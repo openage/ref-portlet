@@ -1,0 +1,55 @@
+.file-input {
+  display: none;
+}
+
+.row {
+  width: 95%;
+  margin: 0px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.title {
+  font-size: 20px;
+  text-align: center;
+  margin-top: 15px;
+  margin-bottom: 20px;
+}
+
+.cardBackground {
+  width: 100%;
+  background: rgba(175, 227, 252, 1);
+  padding-top: 10px;
+  padding-bottom: 10px;
+  cursor: pointer;
+}
+
+.drop-zone {
+  width: 100%;
+  /* margin-left: auto;
+  margin-right: auto; */
+  height: 100%;
+}
+
+.drop-zone.ready-for-drop {
+  border: 1px dashed var(--accent);
+}
+
+.drop-zone.uploading {
+  border: 1px dashed var(--disabled);
+}
+
+.textUpload {
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  padding-top: 15px;
+}
+
+.mat-icon {
+  float: right;
+  margin-right: 12px;
+  color: rgb(197, 200, 208);
+  cursor: pointer;
+}

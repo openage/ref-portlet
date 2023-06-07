@@ -1,0 +1,149 @@
+<div class="sectionDiv">
+  <div>
+    <mat-expansion-panel (opened)="addPage()">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <h5>Page</h5>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="flex-row two" *ngIf="config.page">
+        <div class="customPaddingRight">
+          <mat-form-field>
+            <mat-label>Orientation</mat-label>
+            <mat-select [(ngModel)]="config.page.orientation">
+              <mat-option value="landscape">Landscape</mat-option>
+              <mat-option value="portrait">Portrait</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="customPaddingLeft">
+          <mat-form-field>
+            <mat-label>Paper</mat-label>
+            <mat-select [(ngModel)]="config.page.size">
+              <mat-option value="a4">A4</mat-option>
+              <mat-option value="letter">Letter</mat-option>
+              <mat-option value="id-card">Id Card</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="customPaddingRight">
+          <mat-form-field>
+            <mat-label>Height</mat-label>
+            <input matInput placeholder="Height" [(ngModel)]="config.page.height" type="number">
+          </mat-form-field>
+        </div>
+
+        <div class="customPaddingLeft">
+          <mat-form-field>
+            <mat-label>Width</mat-label>
+            <input matInput placeholder="Width" [(ngModel)]="config.page.width" type="number">
+          </mat-form-field>
+        </div>
+
+        <div class="customPaddingRight">
+          <mat-form-field>
+            <mat-label>Left</mat-label>
+            <input matInput placeholder="Left" [(ngModel)]="config.page.border.left" type="number">
+          </mat-form-field>
+        </div>
+
+        <div class="customPaddingLeft">
+          <mat-form-field>
+            <mat-label>Top</mat-label>
+            <input matInput placeholder="Top" [(ngModel)]="config.page.border.top" type="number">
+          </mat-form-field>
+        </div>
+
+        <div class="customPaddingRight">
+          <mat-form-field>
+            <mat-label>Right</mat-label>
+            <input matInput placeholder="Right" [(ngModel)]="config.page.border.right" type="number">
+          </mat-form-field>
+        </div>
+
+        <div class="customPaddingLeft">
+          <mat-form-field>
+            <mat-label>Bottom</mat-label>
+            <input matInput placeholder="Bottom" [(ngModel)]="config.page.border.bottom" type="number">
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </div>
+
+  <hr>
+
+  <!-- <div>
+    <mat-expansion-panel (opened)="addModes()">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <h5>Modes</h5>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div>
+        <div class="flex-row three" *ngIf="config.modes">
+          <mat-checkbox [(ngModel)]="config.modes.email">Email</mat-checkbox>
+          <mat-checkbox [(ngModel)]="config.modes.sms">SMS</mat-checkbox>
+          <mat-checkbox [(ngModel)]="config.modes.push">Push</mat-checkbox>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </div>
+
+  <hr> -->
+
+  <!-- <div>
+    <mat-expansion-panel (opened)="addTo()" (closed)="closeTo()">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <h5>To</h5>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div>
+        <div *ngIf="config.to">
+          <label>To</label>
+          <input class="form-control" placeholder="Field" [(ngModel)]="config.to.field">
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </div>
+
+  <hr> -->
+
+  <div>
+    <mat-expansion-panel (opened)="addEntity()" (closed)="closeEntity()">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <h5>Conversation Entity</h5>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div>
+        <div class="flex-row three" *ngIf="config.entity">
+          <div class="customPaddingRight">
+            <mat-form-field>
+              <mat-label>Entity Type</mat-label>
+              <input matInput placeholder="Entity Type" [(ngModel)]="config.entity.type">
+            </mat-form-field>
+          </div>
+
+          <div class="customPaddingBoth">
+            <mat-form-field>
+              <mat-label>Entity Name</mat-label>
+              <input matInput placeholder="Entity Name" [(ngModel)]="config.entity.name">
+            </mat-form-field>
+          </div>
+
+          <div class="customPaddingLeft">
+            <mat-form-field>
+              <mat-label>Entity Id</mat-label>
+              <input matInput placeholder="Entity Id" [(ngModel)]="config.entity.id">
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </div>
+
+</div>

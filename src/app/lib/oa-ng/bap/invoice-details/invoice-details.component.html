@@ -1,0 +1,219 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+<ng-container *ngIf="properties">
+  <div class="list">
+    <div class="section">
+      <div class="header">
+        <div class="d-flex align-items-center">
+          <label class="m-0">Invoice No:</label>
+          <span class="code"
+            *ngIf="!isCodeSelected && (properties.status === 'awaited'|| properties.status === 'approved')">
+            {{ properties.code? properties.code:'Not Available'}}</span>
+          <span class="code pointer"
+            *ngIf="!isCodeSelected && (properties.status !== 'awaited'&& properties.status !== 'approved')"
+            (click)="isCodeSelected=true">
+            {{ properties.code? properties.code:'Not Available'}}</span>
+          <ng-container *ngIf="isCodeSelected">
+            <input class="oa-input" *ngIf="isCodeSelected" autofocus name='code' [value]="properties.code || ''"
+              (blur)="setCode($event)">
+          </ng-container>
+        </div>
+        <div class="spacer"></div>
+        <!-- <div class="d-flex align-items-center">
+          <label class="m-0">Invoice Date:</label>
+          <ng-container *ngIf="properties.date">
+            <oa-date-picker [value]="properties.date"
+              [readonly]="properties.status === 'awaited'||properties.status === 'approved'" [options]="{inline:true}">
+            </oa-date-picker>
+          </ng-container>
+          <ng-container *ngIf="!properties.date">
+            <oa-date-picker [readonly]="properties.status === 'awaited'||properties.status === 'approved'"
+              [value]="properties.date">
+            </oa-date-picker>
+          </ng-container>
+        </div>
+        <div class="spacer"></div>
+        <div class="d-flex align-items-center">
+          <label class="m-0">
+            Invoice Received Date:
+          </label>
+          <ng-container *ngIf="properties.receivedDate">
+            <oa-date-picker [value]="properties.receivedDate"
+              [readonly]="properties.status === 'awaited'||properties.status === 'approved'" [options]="{inline:true}">
+            </oa-date-picker>
+          </ng-container>
+          <ng-container *ngIf="!properties.receivedDate">
+            <oa-date-picker [readonly]="properties.status === 'awaited'||properties.status === 'approved'"
+              [value]="properties.receivedDate">
+            </oa-date-picker>
+          </ng-container>
+
+        </div>
+        <div class="spacer"></div>
+        <div class="d-flex align-items-center">
+          <label class="m-0">Payment Due Date:</label>
+          <ng-container *ngIf="properties.dueDate">
+            <oa-date-picker [value]="properties.dueDate"
+              [readonly]="properties.status === 'awaited'||properties.status === 'approved'" [options]="{inline:true}">
+            </oa-date-picker>
+          </ng-container>
+          <ng-container *ngIf="!properties.dueDate">
+            <oa-date-picker [readonly]="properties.status === 'awaited'||properties.status === 'approved'"
+              [value]="properties.dueDate">
+            </oa-date-picker>
+          </ng-container>
+        </div>
+        <div class="spacer"></div> -->
+        <!-- <div class="d-flex align-items-center">
+          <label class="m-0">Job No.:</label>
+          <span class="text-capitalize sub-text list-sub-text pointer active pointer code"
+            (click)="onSelectJob(properties?.entity?.id )">
+            {{(properties?.entity?.id | uppercase)||"Not Available"}}</span>
+        </div> -->
+        <div class="spacer"></div>
+        <div> <button mat-raised-button color="primary" class="primary" (click)="save(properties)">Save</button></div>
+      </div>
+      <div class=" d-flex w-100 flex-3-1">
+        <div class="flex-1-1-1">
+          <div class="d-flex ">
+            <div class="editor-div">
+              <label>Buyer</label>
+              <ng-container *ngIf="properties?.buyerBillingEntity">
+                <div class="expansion-background border-round p-2">
+                  <bap-billing-entity-details [code]="properties?.buyerBillingEntity?.code" [view]="'detail'"
+                    (changed)="onChange($event,'customerEntity')">
+                  </bap-billing-entity-details>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="properties.buyer">
+                <div class="mt-2 contact-person">
+                  <directory-user-picker
+                    *ngIf="properties.buyerOrganization && properties.buyerOrganization.code === 'yatra'"
+                    [label]="'Contact person'" [value]="properties.buyer" (changed)="onChange($event,'customerUser')"
+                    [isAgent]="true">
+                  </directory-user-picker>
+                  <directory-user-picker></directory-user-picker>
+                  <directory-user-picker
+                    *ngIf="properties.buyerOrganization && properties.buyerOrganization.code !== 'yatra'"
+                    [label]="'Contact person'" [organization]="properties.buyerOrganization"
+                    (changed)="onChange($event,'customerUser')" [value]="properties.buyer">
+                  </directory-user-picker>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+          <div class="d-flex">
+            <div class="editor-div">
+              <label>Seller</label>
+              <ng-container *ngIf="properties?.sellerBillingEntity">
+                <div class="expansion-background position-relative border-round p-2">
+
+                  <bap-billing-entity-details [code]="properties?.sellerBillingEntity?.code" [view]="'detail'"
+                    (changed)="onChange($event,'supplierEntity')">
+                  </bap-billing-entity-details>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="properties.seller">
+                <div class="mt-2 contact-person">
+                  <directory-user-picker
+                    *ngIf="properties.sellerOrganization && properties.sellerOrganization.code === 'yatra'"
+                    [label]="'Contact person'" [value]="properties.seller" (changed)="onChange($event,'supplierUser')"
+                    [isAgent]="true">
+                  </directory-user-picker>
+                  <directory-user-picker
+                    *ngIf="properties.sellerOrganization && properties.sellerOrganization.code !== 'yatra'"
+                    [label]="'Contact person'" [organization]="properties.sellerOrganization"
+                    (changed)="onChange($event,'supplierUser')" [value]="properties.seller">
+                  </directory-user-picker>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+          <div class="d-flex">
+            <div class="editor-div">
+              <div class="mt-2">
+                <label>Invoice Number</label>
+                <input class="oa-input" [(ngModel)]="properties.code">
+              </div>
+              <div class="mt-2">
+                <label>Invoice Date</label>
+                <oa-date-picker [value]="properties.date" (change)="onDateChange($event)">
+                </oa-date-picker>
+              </div>
+              <div class="mt-2">
+                <label>Invoice Received Date</label>
+                <oa-date-picker [readonly]="properties.status === 'awaited'|| properties.status === 'approved'"
+                  [value]="properties.receivedDate" (change)="onRecievedDateChange($event)">
+                </oa-date-picker>
+              </div>
+              <div class="mt-2">
+                <label>Payment Due Date</label>
+                <oa-date-picker [readonly]="properties.status === 'awaited' || properties.status === 'approved'"
+                  [value]="properties.dueDate" (change)="onDueDateChange($event)">
+                </oa-date-picker>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="d-flex justify-content-center">
+            <div class="total-container mt-3" style="min-width:200px">
+              <div class="controls-row">
+                <div><label class="m-0"></label>{{properties.credit?.duration||'0'}} Days
+                </div>
+                <!-- <span class="spacer"></span>
+              <div>{{(100*properties.total?.margin/properties.total?.cost) | number}} %</div> -->
+              </div>
+              <div class="amount">
+                <label>Total Amount</label>
+                <oa-value-editor [view]="'inline'" [readonly]='true' [decimal]="2" [type]="'currency'" [value]="{
+                value: properties.amount,
+                unit: {
+                  code: properties?.currency?.name
+                }
+            }"></oa-value-editor>
+              </div>
+
+              <!-- <label class="title">Total Amount</label>
+            <oa-value-editor [view]="'inline'" [readonly]='true' [decimal]="0" [type]="'currency'" [value]="{
+                value: properties.amount,
+                unit: {
+                  code: properties?.currency?.name
+                }
+              }"></oa-value-editor> -->
+              <!-- <h4>{{properties?.currency?.name}} {{properties.amount | value:'comma'}}</h4> -->
+            </div>
+            <ng-container>
+              <div class="currency-section" *ngFor="let item of currencies">
+                <ng-container *ngIf="item.currency !== 'INR'">
+                  <div>
+                    <span *ngIf="!item.isSelected" class="sub-text colorAccent cursorPointer">1
+                      {{item.currency}} = {{item.ratio | value:'comma'}}
+                      {{properties?.currency?.name}}</span>
+
+                    <div *ngIf="item.isSelected" class="controls-row">
+                      <label class="editText">{{item.currency}} = </label>
+                      <div class="controls-row">
+                        <div class="oa-input">
+                          <input type="number" [(ngModel)]="item.ratio" (blur)="setCurrencyRatio($event,item.currency)">
+                        </div>
+                        <div>
+                          <mat-icon class="cursorPointer" [matTooltip]="'Close'">cancel</mat-icon>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+                <ng-template #currencyRatioView>
+                  <span class="sub-text">1
+                    {{item.currency}} = {{item.ratio | value:'comma'}}
+                    {{properties?.currency?.name}}</span>
+                </ng-template>
+
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

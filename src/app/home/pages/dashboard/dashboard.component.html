@@ -1,0 +1,18 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+<!-- <div class="main" *ngIf="!isProcessing" [class.hidden]="!isCurrent">
+  <core-page-divs [isEditing]="isEditing" [divs]="page?.meta?.divs" [templates]="templates" [areaCode]="'dashboard'"
+    (selected)="onStatSelect($event)" [filters]="filters">
+  </core-page-divs>
+</div> -->
+<router-outlet></router-outlet>
+<ng-template #templates let-item="widget" class="dashboard-widget">
+  <ng-container [ngSwitch]="item.widget.code">
+    <gateway-task-list *ngSwitchCase="'todo-list'" [isClosed]="false" [assignee]="item.config?.assignee"
+      [view]="item.config?.view || item?.widget?.config?.view" [params]="item.config?.params">
+    </gateway-task-list>
+    <insight-journal-list *ngSwitchCase="'recent-activities'" [view]="item.config?.view || item?.widget?.config?.view"
+      [user]="'my'"></insight-journal-list>
+    <send-it-inbox *ngSwitchCase="'notifications'" [config]="item.widget.config"></send-it-inbox>
+    <oa-no-data-found *ngSwitchDefault [message]=" item.widget.code + ' widget not found'"></oa-no-data-found>
+  </ng-container>
+</ng-template>

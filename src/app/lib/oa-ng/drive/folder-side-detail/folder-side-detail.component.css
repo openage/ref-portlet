@@ -1,0 +1,19 @@
+h4{
+    text-transform: capitalize;
+}
+
+.public{
+    text-transform: capitalize;
+}
+
+div{
+    margin-bottom: 5px;
+}
+
+.imgDiv{
+    margin-bottom: 10px;
+    cursor: pointer;
+    height: 200px;
+    text-align: center;
+    width: 100%;
+}

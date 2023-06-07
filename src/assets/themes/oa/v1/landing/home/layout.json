@@ -1,0 +1,204 @@
+{
+  "script": "",
+  "class": "",
+  "style": {
+    "background": ""
+  },
+  "divs": [
+    {
+      "class": "",
+      "style": {
+        "background": ""
+      },
+      "title": {
+        "text": "",
+        "style": {}
+      },
+      "layout": {
+        "divs": [
+          {
+            "widget": {
+              "code": "folder-widget",
+              "view": "banner",
+              "parent": {
+                "code": "root|landing|home|banner",
+                "ownerCode": "system"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "class": "",
+      "style": {
+        "text-align": "center",
+        "margin-top": "50px",
+        "margin-bottom": "30px"
+      },
+      "title": {
+        "text": "",
+        "style": {
+          "font-size": "30px",
+          "padding": "0px",
+          "font-weight": "bold"
+        }
+      },
+      "layout": {
+        "divs": [
+          {
+            "widget": {
+              "code": "file-widget",
+              "view": "image",
+              "file": {
+                "code": "root|landing|home|mechanism",
+                "ownerCode": "system"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "class": "",
+      "style": {
+        "margin-bottom": "60px"
+      },
+      "title": {
+        "text": "",
+        "style": {}
+      },
+      "layout": {
+        "divs": [
+          {
+            "widget": {
+              "code": "folders-widget",
+              "view": "grid",
+              "class": "four",
+              "config": {
+                "onClick": {
+                  "url": "/landing/services",
+                  "append": "code"
+                }
+              },
+              "parent": {
+                "code": "root|landing|services",
+                "owner": {
+                  "code": "system"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "class": "",
+      "style": {
+        "margin-bottom": "60px",
+        "margin-top": "84px"
+      },
+      "title": {
+        "text": "",
+        "style": {}
+      },
+      "layout": {
+        "divs": [
+          {
+            "widget": {
+              "code": "files-widget",
+              "view": "grid",
+              "folder": {
+                "code": "root|landing|projects",
+                "ownerCode": "system"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "class": "",
+      "style": {
+        "margin-bottom": "60px",
+        "margin-top": "84px"
+      },
+      "title": {
+        "text": "",
+        "style": {}
+      },
+      "layout": {
+        "divs": [
+          {
+            "widget": {
+              "code": "files-widget",
+              "view": "cards",
+              "folder": {
+                "code": "root|landing|news",
+                "ownerCode": "system"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "class": "",
+      "layout": {
+        "class": "flex-1-2",
+        "style": {
+          "padding": "8px 50px 10px 19px"
+        },
+        "divs": [
+          {
+            "style": {
+              "margin-top": "231px"
+            },
+            "title": {
+              "text": "Industry Solutions",
+              "style": {
+                "font-size": "24px",
+                "text-align": "center",
+                "margin-top": "40px",
+                "color": "#008000cc",
+                "font-weight": "bold"
+              }
+            },
+            "body": {
+              "text": "Address the challenges in your industry.",
+              "style": {
+                "font-size": "15px",
+                "text-align": "center",
+                "margin-top": "40px",
+                "color": "#008000cc",
+                "font-weight": "bold"
+              }
+            }
+          },
+          {
+            "widget": {
+              "code": "folders-widget",
+              "view": "grid",
+              "class": "three",
+              "config": {
+                "onClick": {
+                  "url": "/landing/solutions",
+                  "append": "code"
+                }
+              },
+              "parent": {
+                "code": "root|landing|solutions",
+                "owner": {
+                  "code": "system"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "footer"
+    }
+  ]
+}

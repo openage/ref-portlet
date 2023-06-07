@@ -1,0 +1,60 @@
+<div mat-dialog-title class="controls-row">
+  <h4>{{options.title}}</h4>
+  <span class="spacer"></span>
+  <button mat-icon-button mat-dialog-close class="close-icon" (click)="dialogRef.close()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<div mat-dialog-content>
+  <div class="flex-row two">
+    <div class="customPaddingBottom">
+      <directory-designation-picker [view]="'new'" [label]="'Designation'" [readonly]="false"
+        [value]="employee.designation" [required]="true" (changed)="employee.designation = $event">
+      </directory-designation-picker>
+    </div>
+
+    <div class="customPaddingBottom">
+      <directory-department-picker [view]="'new'" [label]="'Department'" [readonly]="false"
+        [value]="employee.department" [required]="true" (changed)="employee.department = $event">
+      </directory-department-picker>
+    </div>
+
+    <div>
+      <label for="email"> Email<span class="mandatory">*</span></label>
+      <div class="oa-input">
+        <input name="email" [(ngModel)]="employee.email" type="string">
+      </div>
+      <oa-error [type]="'email'" [value]="employee.email" [label]="'Email'" [required]="true">
+      </oa-error>
+    </div>
+
+    <div>
+      <label for="phone"> Phone<span class="mandatory">*</span></label>
+      <div class="oa-input">
+        <input name="phone" [(ngModel)]="employee.phone" numbersOnly>
+      </div>
+      <oa-error [type]="'mobile'" [value]="employee.phone" [label]="'Phone'" [required]="true">
+      </oa-error>
+    </div>
+
+    <div class="customPaddingBottom">
+      <label for="firstName">First Name<span class="mandatory">*</span></label>
+      <div class="oa-input">
+        <input name="firstName" id="firstName" [(ngModel)]="employee.profile.firstName" type="text">
+      </div>
+    </div>
+
+    <div class="customPaddingBottom">
+      <label for="lastName">Last Name<span class="mandatory">*</span></label>
+      <div class="oa-input">
+        <input name="lastName" id="lastName" [(ngModel)]="employee.profile.lastName" type="text">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div mat-dialog-actions class="footer">
+  <span class="spacer"></span>
+  <button mat-button (click)="dialogRef.close()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="onSubmit()">Submit</button>
+</div>

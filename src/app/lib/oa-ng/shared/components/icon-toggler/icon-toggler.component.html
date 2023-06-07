@@ -1,0 +1,46 @@
+<ng-container [ngSwitch]="view">
+  <ng-container *ngSwitchCase="'icon'">
+    <oa-icon *ngIf="selected" [value]="selected.icon" (click)="readonly?'': onToggle()" [class]="selected.class"
+      [title]="selected.label"></oa-icon>
+  </ng-container>
+
+  <button mat-mini-fab *ngSwitchCase="'mini-fab'" [class]="selected?.class" [style]="selected?.style"
+    (click)="onToggle()" [disabled]="disabled">
+    <oa-icon [value]="selected.icon" [title]="selected.label"></oa-icon>
+  </button>
+
+  <oa-autocomplete *ngSwitchCase="'select'" [value]="selected" [options]="{
+    search: {
+      items: items
+    },
+    templates: {
+      value: valueTemplate
+    }
+  }" (changed)="onSelect($event)" [readonly]="readonly">
+  </oa-autocomplete>
+
+  <!-- <select [(ngModel)]="selected.code">
+      <option *ngFor="let item of items" (click)="onSelect(item)" [value]="item">
+        <div class="flex-row">
+          <div *ngIf="item.icon">
+            <mat-icon *ngIf="item.icon.mat">{{item.icon.mat}} </mat-icon>
+            <i *ngIf="item.icon.oa" class="md {{item.icon.oa}}"></i>
+            <i *ngIf="item.icon.fa" class="fa-2x fa fa-{{item.icon.fa}}"></i>
+            <div *ngIf="item.icon.url" [style.background]="'url('+ item.icon.url + ')'">
+            </div>
+          </div>
+          <div class="spacer">{{item.label}}</div>
+        </div>
+      </option>
+    </select> -->
+
+</ng-container>
+
+<ng-template #valueTemplate let-item="value">
+  <div [class.readonly]="readonly" class="value input flex-row">
+    <div *ngIf="item.icon" class="spacing">
+      <oa-icon [value]="item.icon" class="md {{item.class}}"></oa-icon>
+    </div>
+    <div class="spacer">{{item.label}}</div>
+  </div>
+</ng-template>

@@ -1,0 +1,11 @@
+<div class="main">
+  <div class="header">
+    <h5>{{error.title}}</h5>
+    <span class="spacer"></span>
+    <button mat-raised-button color="primary" routerLink="/home/dashboard">Home</button>
+  </div>
+  <div class="error-container">
+    <i [class]="error.code"></i>
+    <div [innerHTML]="error.description"></div>
+  </div>
+</div>

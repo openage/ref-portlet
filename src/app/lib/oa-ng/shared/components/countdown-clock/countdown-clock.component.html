@@ -1,0 +1,12 @@
+<div class="timer">
+  <div *ngIf="!from">
+    <button mat-button (click)="start()">Start</button>
+  </div>
+  <div *ngIf="from && secondsLeft > 0" [class.warn]="secondsLeft < 60">
+    {{timeLeft}}
+  </div>
+
+  <div *ngIf="from && secondsLeft <= 0">
+    <button mat-button (click)="finish()">Finish</button>
+  </div>
+</div>

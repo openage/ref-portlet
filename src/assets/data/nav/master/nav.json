@@ -1,0 +1,106 @@
+{
+  "code": "master",
+  "icon": "fa-database",
+  "title": "Master",
+  "url": "/master/dashboard",
+  "permissions": [
+    "user"
+  ],
+  "items": [
+    {
+      "code": "master.employees",
+      "icon": "fa-users",
+      "title": "Employees",
+      "url": "/master/employees",
+      "meta": {
+        "ref": "/assets/data/nav/master/employees.json"
+      },
+      "permissions": [
+        "employee.all"
+      ],
+      "items": [
+        {
+          "code": "master.employee",
+          "icon": "fa-users",
+          "title": "Employee",
+          "url": "/master/employees/:code",
+          "meta": {
+            "ref": "/assets/data/nav/master/employee.json"
+          }
+        }
+      ]
+    },
+    {
+      "code": "master.designations",
+      "icon": "fa-users",
+      "title": "Designations",
+      "url": "/master/designations",
+      "meta": {
+        "ref": "/assets/data/nav/master/designations.json"
+      },
+      "permissions": [],
+      "items": [
+        {
+          "code": "master.designation",
+          "icon": "fa-users",
+          "title": "Designation",
+          "url": "/master/designations/:code",
+          "meta": {
+            "ref": "/assets/data/nav/master/designation.json"
+          }
+        }
+      ]
+    },
+    {
+      "code": "master.departments",
+      "icon": "fa-users",
+      "title": "Departments",
+      "url": "/master/departments",
+      "meta": {
+        "ref": "/assets/data/nav/master/departments.json"
+      },
+      "permissions": [],
+      "items": [
+        {
+          "code": "master.department",
+          "icon": "fa-users",
+          "title": "Department",
+          "url": "/master/departments/:code",
+          "meta": {
+            "ref": "/assets/data/nav/master/department.json"
+          }
+        }
+      ]
+    },
+    {
+      "code": "master.divisons",
+      "icon": "fa-users",
+      "title": "Divisions",
+      "url": "/master/divisions",
+      "meta": {
+        "ref": "/assets/data/nav/master/divisions.json"
+      },
+      "permissions": [],
+      "items": [
+        {
+          "code": "master.division",
+          "icon": "fa-users",
+          "title": "Division",
+          "url": "/master/divisions/:code",
+          "meta": {
+            "ref": "/assets/data/nav/master/division.json"
+          }
+        },
+        {
+          "code": "master.division.new",
+          "icon": "fa-users",
+          "title": "NewDivision",
+          "url": "/master/divisions/new",
+          "meta": {
+            "ref": "/assets/data/nav/master/division-new.json"
+          }
+        }
+      ]
+    }
+  ]
+}

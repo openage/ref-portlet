@@ -1,0 +1,14 @@
+.accept{
+  background:darkcyan;
+}
+.voucherButton{
+  height:30px;
+  color:white;
+  display: flex;
+  width:80px;
+  justify-content:center;
+  align-items:center;
+}
+.paid{
+  background:green;
+}

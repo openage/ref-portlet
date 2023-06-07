@@ -1,0 +1,57 @@
+<ng-container [ngSwitch]="view">
+  <ng-container *ngSwitchCase="'table'">
+    <div class="flex-row three">
+      <div *ngFor="let template of items">
+        <mat-checkbox (change)="onChange(template, $event)" [checked]="template.isSelected">{{template.name |
+          uppercase}}
+        </mat-checkbox>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'grid'">
+    <div class="grid-container">
+      <ng-container [ngSwitch]="category" *ngFor="let category of templateTypes">
+        <div class="grid-item" *ngSwitchCase="'marketing'">
+          <ng-container *ngTemplateOutlet="categoryBox; context: { templateArray: marketingArray, category: category }"></ng-container>
+        </div>
+
+        <div class="grid-item" *ngSwitchCase="'enquiry'">
+          <ng-container *ngTemplateOutlet="categoryBox; context: { templateArray: enquiryArray, category: category }"></ng-container>
+        </div>
+
+        <div class="grid-item" *ngSwitchCase="'tracking'">
+          <ng-container *ngTemplateOutlet="categoryBox; context: { templateArray: trackingArray, category: category }"></ng-container>
+        </div>
+
+        <div class="grid-item" *ngSwitchCase="'miscellaneous'">
+          <ng-container *ngTemplateOutlet="categoryBox; context: { templateArray: miscellaneousArray, category: category }"></ng-container>
+        </div>
+      </ng-container>
+    </div>
+  </ng-container>
+
+</ng-container>
+
+<ng-template #checkBox let-template="template">
+  <div class="checkbox">
+    <mat-checkbox (change)="onChange(template, $event)" [checked]="template.isSelected">{{template.name | uppercase}}
+    </mat-checkbox>
+  </div>
+</ng-template>
+
+<ng-template #categoryBox let-category="category" let-templateArray="templateArray">
+  <div class="category-title">
+    <span class="code">{{category}}</span>
+  </div>
+  <div class="template-section">
+    <ng-template [ngIf]="templateArray.length" [ngIfElse]="noData">
+      <ng-container *ngFor="let item of templateArray">
+        <ng-container *ngTemplateOutlet="checkBox; context: { template: item }"></ng-container>
+      </ng-container>
+    </ng-template>
+    <ng-template #noData>
+      <oa-no-data-found [message]="'No templates Found for this category'"></oa-no-data-found>
+    </ng-template>
+  </div>
+</ng-template>

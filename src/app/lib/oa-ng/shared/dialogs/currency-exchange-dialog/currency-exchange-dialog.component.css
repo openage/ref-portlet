@@ -1,0 +1,14 @@
+.currency-selector {
+  width: 50%;
+}
+
+.minWidth {
+  min-width: 370px;
+}
+
+.add-new {
+  /* color: var(--primary); */
+  font-size: 12px;
+  margin-bottom: 0px;
+  margin-top: 5px;
+}

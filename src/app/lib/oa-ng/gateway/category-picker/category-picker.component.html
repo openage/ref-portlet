@@ -1,0 +1,48 @@
+<ng-container [ngSwitch]="view">
+  <div class="inline" *ngSwitchCase="'picker'">
+    <div (click)="onTogglePopup()" #categoryIcon>
+      <oa-icon class="not-subtle md" [value]="value.icon" [title]="value.name"></oa-icon>
+    </div>
+
+    <div *ngIf="isSelected" class="popup mat-elevation-z2 {{position}}" #popup>
+      <mat-icon class="md pointer close" (click)="onTogglePopup()">close</mat-icon>
+      <ng-container *ngTemplateOutlet="content"></ng-container>
+    </div>
+  </div>
+
+  <div *ngSwitchCase="'readonly'">
+    <div *ngIf="value && value.code" class="category">{{value?.name}}</div>
+  </div>
+
+  <ng-container *ngSwitchDefault>
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+  </ng-container>
+
+</ng-container>
+
+
+<ng-template #content>
+  <oa-autocomplete *ngIf="!readonly" [value]="value && value.code? value : null " [options]="{
+    label: label,
+    search: {
+      field: searchField,
+      params: params,
+      limit: 20
+    },
+    view: {
+      inline: view === 'picker'
+    },
+    preFetch: true,
+    templates: {
+      value: valueTemplate
+    }
+  }" [api]="categoryService" (changed)="onSelect($event)" [readonly]="readonly">
+  </oa-autocomplete>
+</ng-template>
+
+<ng-template #valueTemplate let-item="value">
+  <div [class.readonly]="readonly" class="value input flex-row">
+    <oa-icon class="not-subtle md" [value]="item.icon" [title]=""></oa-icon>
+    <span>{{item.name}}</span>
+  </div>
+</ng-template>

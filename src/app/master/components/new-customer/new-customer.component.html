@@ -1,0 +1,106 @@
+<div class="main" [class.hidden]="!isCurrent">
+  <div class="header">
+    <h5>{{page.title}}</h5>
+    <span class="spacer"></span>
+  </div>
+
+  <div *ngIf="organization" class="flex-1-3">
+    <mat-card class="side tabs">
+      <div class="active">
+        <div class="controls-row">
+          <i class="md section-details"></i>
+          <div>Basic Details</div>
+        </div>
+      </div>
+      <div>
+        <div class="controls-row">
+          <i class="md section-administrative"></i>
+          <div>Administrative</div>
+        </div>
+      </div>
+      <div>
+        <div class="controls-row">
+          <i class="md section-business"></i>
+          <div>Business</div>
+        </div>
+      </div>
+      <div>
+        <div class="controls-row">
+          <i class="md section-bank"></i>
+          <div>Bank Details</div>
+        </div>
+      </div>
+      <!-- <div>
+        <div class="controls-row">
+          <i class="md members"></i>
+          <div>Promoters/Directors</div>
+        </div>
+      </div> -->
+      <!-- <div>
+        <div class="controls-row">
+          <i class="md section-requests"></i>
+          <div>Requests</div>
+        </div>
+      </div> -->
+    </mat-card>
+    <div class="cards">
+      <mat-card>
+        <div>
+          <h5>Basic Details</h5>
+          <div class="row">
+            <div class="col-lg-3 col-md-3 col-12">
+              <div class="profile-image-editor">
+                <div>
+                  <img *ngIf="organization.logo && organization.logo.url" [src]="organization.logo.url"
+                    (click)="openThumbnailSelector()">
+                </div>
+                <div *ngIf="!organization.logo || !organization.logo.url" (click)="openThumbnailSelector()"
+                  class="default">
+                  LOGO</div>
+                <i (click)="openThumbnailSelector()" class="md picture-upload">
+                </i>
+              </div>
+            </div>
+            <div class="col-lg-9 col-md-9 col-12">
+              <div class="form-container flex-row">
+                <oa-input label="Company Name" type="text" [(value)]="organization.name" [required]="true"
+                  [validate]="checkOrgName" (errored)="error = $event" [options]="{format: {trim: true}}"></oa-input>
+              </div>
+              <div class="form-container flex-row two">
+                <oa-input label="Email" type="email" [(value)]="organization.email" [required]="true"
+                  [validate]="checkPhoneOrEmail" (errored)="error = $event" [options]="{format: {trim: true}}">
+                </oa-input>
+                <oa-input label="Phone" type="phone" [(value)]="organization.phone" [options]="{format: {trim: true}}">
+                </oa-input>
+                <oa-input label="Contact Person" type="text" [(value)]="organization.meta.contactPerson"
+                  [options]="{format: {trim: true}}"></oa-input>
+                <mat-form-field appearance="outline">
+                  <label [for]="'source'">Source</label>
+                  <mat-select [name]="'source'" [id]="'source'" [(value)]="organization.meta['source']">
+                    <mat-option [value]="'direct'">Direct</mat-option>
+                    <mat-option [value]="'online'">Online</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div class="form-container flex-row two">
+
+                <bap-billing-entity-gst-editor [(value)]="organization.meta.gst" (errored)="error = $event" trimSpace>
+                </bap-billing-entity-gst-editor>
+
+                <oa-address-editor [(value)]="organization.address"></oa-address-editor>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="btnDiv">
+          <button mat-raised-button color="primary" (click)="onCreate()">Create</button>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+</div>
+<processing-indicator *ngIf="isProcessing" [progressTaskId]="progressTaskId" (done)="onDone($event)"
+  (error)="onError($event)" [view]="progressTaskId? 'progress-bar': 'bars'">
+</processing-indicator>

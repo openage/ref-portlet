@@ -1,0 +1,41 @@
+<processing-indicator *ngIf="isProcessing"></processing-indicator>
+<div class="cards" *ngIf="employee.role && employee.role.id">
+  <mat-card>
+    <directory-role-details [code]="employee.role.id" [readonly]="readonly" (fetched)="afterFetchRole($event)"
+      #roleDetails>
+    </directory-role-details>
+  </mat-card>
+  <ng-container>
+    <mat-card>
+      <div class="tabs horizontal">
+        <div [ngClass]="{active: view === 'dashboard'}" (click)="view = 'dashboard'">
+          <i class="md error-wip"></i>
+          <div>Dashboard</div>
+        </div>
+        <div [ngClass]="{active: view === 'timelog'}" (click)="view = 'timelog'">
+          <i class="md section-account"></i>
+          <div>TimeLog</div>
+        </div>
+        <div [ngClass]="{active: view === 'security'}" (click)="view = 'security'">
+          <i class="md section-security"></i>
+          <div>Security</div>
+        </div>
+      </div>
+
+      <ng-container [ngSwitch]="view">
+        <div *ngSwitchCase="'dashboard'">
+          <oa-under-construction></oa-under-construction>
+        </div>
+
+        <div *ngSwitchCase="'timelog'">
+          <gateway-time-log-list view="calendar" [roleId]="employee.role.id"></gateway-time-log-list>
+        </div>
+
+        <div *ngSwitchCase="'security'">
+          <directory-security-editor [role]="role"></directory-security-editor>
+        </div>
+
+      </ng-container>
+    </mat-card>
+  </ng-container>
+</div>
